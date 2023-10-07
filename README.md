@@ -7,7 +7,6 @@ Welcome to the Kampuni Repository!
    - if you already have installed node.js in your laptop you can check which version you have by typing 'node -v' in the powershell
    - The version should be 20.8.0
    - If you get an administrative error
-   - If you get an administrative error
    - Go to your powershell , run as administrator , 'Set-ExecutionPolicy RemoteSigned' , 'Y' 
 3. Download the Code from this Github repository 
 4. Open the terminal and type 'npm run serve'
