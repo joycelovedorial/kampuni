@@ -1,8 +1,9 @@
 <template>
+    <h2>Signup</h2>
     <form>
-        <input type="text" value="Display Name" v-model="displayName">
-        <input type="email" value="Email" v-model="email">
-        <input type="password" value="password" v-model="password">
+        <input type="text" required placeholder="Display Name" v-model="displayName">
+        <input type="email" required placeholder="Email" v-model="email">
+        <input type="password" required placeholder="password" v-model="password">
         <button>Sign Up</button>
     </form>
 </template>
