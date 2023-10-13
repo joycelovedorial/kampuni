@@ -17,9 +17,10 @@ export default {
         const displayName=''
         const email =''
         const password = ''
+        const image = ''
 
 
-        return {displayName,email,password}
+        return {displayName,email,password, image}
     }
 }
 </script>
