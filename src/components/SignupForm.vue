@@ -7,7 +7,8 @@
         <br><br>
         Re-Enter Password <input type="password" required placeholder="password" v-model="password">
         <br><br>
-        <button>Next</button>
+        <div id="errors"></div>
+        <button onclick="checkPassword()">Next</button>
 
         <br><br><br><br>
 
@@ -43,18 +44,26 @@
 <script>
 
 export default {
-    setup(){
-        const displayName=''
-        const email =''
-        const password = ''
+    data(){
+        var email=''
+        var password1 =''
+        var password2 = ''
 
+        return {email, password1, password2}
 
-        return {displayName,email,password}
+    },
 
+    checkPassword(){
+        error_msg = "";
+        if (password1 != password2){
+            error_msg += "passwords do not match";
+        }
+        document.getElementById("errors").innerHTML = error_msg;
     }
     
 }
 
+    
 
 </script>
 
