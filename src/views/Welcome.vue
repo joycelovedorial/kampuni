@@ -31,5 +31,12 @@ export default {
 </script>
 
 <style>
-
+#logo{
+    margin: 0 auto;
+    border-radius: 20px;
+}
+#logo{
+    width: 100%;
+    height: 100%;
+}
 </style>
