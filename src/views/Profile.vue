@@ -9,10 +9,9 @@
 </template>
 
 <script>
-import LoginForm from '@/components/LoginForm.vue';
-import SignupForm from '@/components/SignupForm.vue';
+import ProfileEdit from '@/components/ProfileEdit.vue';
 export default {
-    components: { LoginForm, SignupForm}
+    components: { ProfileEdit }
 }
 </script>
 
