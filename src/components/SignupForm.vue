@@ -3,12 +3,12 @@
     <form>
         Email <input type="email" required placeholder="Email" v-model="email">
         <br><br>
-        Password <input type="password" required placeholder="password" v-model="password">
+        Password <input type="password" required placeholder="password" v-model="password1">
         <br><br>
-        Re-Enter Password <input type="password" required placeholder="password" v-model="password">
+        Re-Enter Password <input type="password" required placeholder="password" v-model="password2">
         <br><br>
         <div id="errors"></div>
-        <button onclick="checkPassword()">Next</button>
+        <button v-on:click="checkPassword()">Next</button>
 
         <br><br><br><br>
 
@@ -45,22 +45,22 @@
 
 export default {
     data(){
-        var email=''
-        var password1 =''
-        var password2 = ''
+        return {
+            email: "",
+            password1: "",
+            password2: "",
 
-        return {email, password1, password2}
-
-    },
-
-    checkPassword(){
-        error_msg = "";
-        if (password1 != password2){
-            error_msg += "passwords do not match";
         }
-        document.getElementById("errors").innerHTML = error_msg;
-    }
-    
+    },
+    methods:{
+        checkPassword(){
+            var error_msg = "";
+            if (password1 != password2){
+                error_msg += "passwords do not match";
+            }
+            document.getElementById("errors").innerHTML = error_msg;
+        }
+    }    
 }
 
     
