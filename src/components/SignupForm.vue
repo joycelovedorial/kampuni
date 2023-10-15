@@ -7,8 +7,8 @@
         <br><br>
         Re-Enter Password <input type="password" required placeholder="password" v-model="password2">
         <br><br>
-        <div id="errors"></div>
-        <button v-on:click="checkPassword()">Next</button>
+        <button v-on:click="checkValidity()">Next</button>
+        <div id="errors">{{ error_msg }}</div>
 
         <br><br><br><br>
 
@@ -16,7 +16,7 @@
         <br><br>
         Lastname <input type="text">
         <br><br>
-        Birthday <Calendar v-model="date" showIcon />
+        Birthday <input type="date"/>
         <br><br>
         Country <input type="text">
         <br><br>
@@ -27,8 +27,10 @@
         <br><br><br><br>
 
         <p>Add a bio: </p>
+        <input type="text-area"/>
         <br><br>
         <p>Profile pic: </p>
+        <input type="file"/>
         <br><br>
         <button>Back</button>
         <br><br>
@@ -49,16 +51,16 @@ export default {
             email: "",
             password1: "",
             password2: "",
-
+            error_msg: "",
         }
     },
     methods:{
-        checkPassword(){
-            var error_msg = "";
-            if (password1 != password2){
-                error_msg += "passwords do not match";
+        checkValidity(){
+            // Check if the passwords match
+            if (this.password1 != this.password2){
+                this.error_msg = "passwords do not match";
             }
-            document.getElementById("errors").innerHTML = error_msg;
+            
         }
     }    
 }

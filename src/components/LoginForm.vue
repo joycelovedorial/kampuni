@@ -5,23 +5,29 @@
         <br><br>
         <input type="password" required placeholder="password" v-model="password">
         <br><br>
-        <button>Login</button>
+        <button v-on:click="checkValidity()">Login</button>
         <p>or</p>
         <button>Sign Up</button>
+        <br><br><br><br>
     </form>
 </template>
 
 <script>
 export default {
-    setup(){
-        const displayName=''
-        const email =''
-        const password = ''
-        const image = ''
-
-
-        return {displayName,email,password, image}
-    }
+    data(){
+        return {
+            email: "",
+            password: "",
+            error_msg: "",
+        }
+    },
+    methods:{
+        checkValidity(){
+            // 1. Check if email exists
+            // 2. Check if password matches email
+            // Not sure how to retrieve these info from firebase :")
+        }
+    }    
 }
 </script>
 
