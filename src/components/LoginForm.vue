@@ -1,33 +1,39 @@
 <template>
-    <img src="kampuni_logo.jpg"/> 
+    <img src="assets/kampuni_logo.jpg"/> 
     <form>
-        <input type="email" required placeholder="Email" v-model="email">
-        <br><br>
-        <input type="password" required placeholder="password" v-model="password">
-        <br><br>
-        <button v-on:click="checkValidity()">Login</button>
-        <p>or</p>
-        <button>Sign Up</button>
-        <br><br><br><br>
+        <input type="email" required placeholder="email" v-model="email">
+        <input type="password" required placeholder='password' v-model="password">
+        <div class="error">{{ error }}</div>
+        <button>Login</button>
+        <button @click="signupGoogle">Google</button>
     </form>
 </template>
 
 <script>
+import { ref } from 'vue'
+import useLogin from '../composables/useLogin'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
+import { auth } from "@/firebase/config"
 export default {
-    data(){
-        return {
-            email: "",
-            password: "",
-            error_msg: "",
+   setup(){
+        const email = ref("")
+        const password = ref("")
+
+        const {error, login} =useLogin()
+        const handleSubmit = async () => {
+            await login(email.value, password.value)
+            if (!error.value){
+              context.emit('login')
+            }
         }
-    },
-    methods:{
-        checkValidity(){
-            // 1. Check if email exists
-            // 2. Check if password matches email
-            // Not sure how to retrieve these info from firebase :")
-        }
-    }    
+        const signupGoogle = async () => {
+            const provider = new GoogleAuthProvider();
+            return signInWithPopup(auth, provider);
+            };
+
+        return { email, password, handleSubmit,signupGoogle}
+   }  
 }
 </script>
 

@@ -8,14 +8,17 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "firebase": "^10.4.0",
+    "firebase": "^10.5.0",
+    "firebase-admin": "^11.11.0",
+    "firebase-tools": "^12.7.0",
     "primevue": "^3.35.0",
     "vue": "^3.2.13",
+    "vue-firebase": "^1.0.8",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "^5.0.8"
   }
 }
