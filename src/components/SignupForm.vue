@@ -1,108 +1,56 @@
 <template>
     <h2>Signup</h2>
-    <form>
-        Email <input type="email" required placeholder="Email" v-model="email">
-        <br><br>
-        Password <input type="password" required placeholder="password" v-model="password1">
-        <br><br>
-        Re-Enter Password <input type="password" required placeholder="password" v-model="password2">
-        <br><br>
-        <button v-on:click="checkValidity()">Next</button>
-        <button v-on:click="addData()">Try adding</button>
-        <div id="errors">{{ error_msg }}</div>
-
-        <br><br><br><br>
-
-        Firstname <input type="text">
-        <br><br>
-        Lastname <input type="text">
-        <br><br>
-        Birthday <input type="date"/>
-        <br><br>
-        Country <input type="text">
-        <br><br>
-        <button>Back</button>
-        <br><br>
-        <button>Next</button>
-
-        <br><br><br><br>
-
-        <p>Add a bio: </p>
-        <input type="text-area"/>
-        <br><br>
-        <p>Profile pic: </p>
-        <input type="file"/>
-        <br><br>
-        <button>Back</button>
-        <br><br>
-        <button>Next</button>
-
-        <br><br><br><br>
-
-        <h2>You've successfully created your account! Please login to your new account below</h2>
-
+    <form @submit.prevent="handleSubmit">
+        <input type="text" required placeholder="First Name" v-model ="firstName">
+        <input type="text" required placeholder="Last Name" v-model ="lastName">
+        <input type="email" required placeholder="email" v-model="email">
+        <input type="password" required placeholder='password' v-model="password">
+        <input type="date" id="birthday" v-model="birthday">
+        <input type="text" v-model="country" placeholder="country" id="country">
+        <textarea id="bio" v-model="bio" cols="30" rows="10" placeholder="bio"></textarea>
+        <div class="error">{{ error }}</div>
+        <button>Sign Up</button>
+        <button @click="signupGoogle">Google</button>
     </form>
 </template>
 
 <script>
+import { ref } from 'vue';
+import useSignup from '@/composables/useSignUp';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/firebase/config'
 
-
-/*
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyB31YYfSk-z2dIVU-_8fYXuWf4MlviXtdc",
-    authDomain: "kampuni-85a88.firebaseapp.com",
-    projectId: "kampuni-85a88",
-    storageBucket: "kampuni-85a88.appspot.com",
-    messagingSenderId: "983837246823",
-    appId: "1:983837246823:web:67afb33c5b6a5d80751bc2",
-    measurementId: "G-JEKE4M40CN"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-
-*/
 
 export default {
-    data(){
-        return {
-            email: "",
-            password1: "",
-            password2: "",
-            error_msg: "",
-        }
-    },
-    methods:{
-        checkValidity(){
-            // Check if the passwords match
-            if (this.password1 != this.password2){
-                this.error_msg = "passwords do not match";
-            }
-        },
-        addData(){
-            // Add a new document in collection "cities"
-            setDoc(doc(projectFirestore, "users"), {
-            email: this.email,
-            password: this.password1,
-            });
+    setup(props,context){
+        
+        const firstName = ref("")
+        const lastName = ref("")
+        const birthday = ref("")
+        const country = ref("")
+        const bio = ref("")
+        const email = ref("")
+        const password = ref("")
 
+        const {error, signup} = useSignup()
+
+        const handleSubmit = async () => {
+            await signup(email.value, password.value, firstName.value)
+            if (!error.value){
+              context.emit('signup')
+            }
         }
+
+        const signupGoogle = async () => {
+            const provider = new GoogleAuthProvider();
+            return signInWithPopup(auth, provider);
+            };
+
+        return { firstName,lastName,country,birthday,bio, email, password, handleSubmit, error, signupGoogle}
     }    
 }
 
-
     
-
 
 </script>
 

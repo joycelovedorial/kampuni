@@ -1,25 +1,42 @@
 <template>
     <div>Logo Container</div>
         <p>Welcome</p>
-        <div>
+        <div v-if="registered">
             <LoginForm/>
+        <button @click="registered=!registered">Click here to Sign Up</button>
         </div>
-        <div>
+        <div v-else>
             <SignupForm/>
+        <button @click="registered=!registered">Click here to Login</button>
+
         </div>
+       
         
 </template>
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
 import SignupForm from '@/components/SignupForm.vue';
+import { ref } from 'vue';
 export default {
 
-    components: { LoginForm, SignupForm}
+    components: { LoginForm, SignupForm },
+    setup(){
+        const registered = ref(true)
+
+        return {registered}
+    }
     
 }
 </script>
 
 <style>
-
+#logo{
+    margin: 0 auto;
+    border-radius: 20px;
+}
+#logo{
+    width: 100%;
+    height: 100%;
+}
 </style>
