@@ -8,6 +8,7 @@
         Re-Enter Password <input type="password" required placeholder="password" v-model="password2">
         <br><br>
         <button v-on:click="checkValidity()">Next</button>
+        <button v-on:click="addData()">Try adding</button>
         <div id="errors">{{ error_msg }}</div>
 
         <br><br><br><br>
@@ -45,32 +46,8 @@
 
 <script>
 
-export default {
-    data(){
-        return {
-            email: "",
-            password1: "",
-            password2: "",
-            error_msg: "",
-        }
-    },
-    methods:{
-        checkValidity(){
-            // Check if the passwords match
-            if (this.password1 != this.password2){
-                this.error_msg = "passwords do not match";
-            }
-            else{
-                addDoc(collection(db, "users"), {
-                    email: this.email,
-                    password: this.password, 
-                })
-            }
-            
-        }
-    }    
-}
 
+/*
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -92,8 +69,40 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = firebase(app);
+const db = getFirestore(app);
+
+*/
+
+export default {
+    data(){
+        return {
+            email: "",
+            password1: "",
+            password2: "",
+            error_msg: "",
+        }
+    },
+    methods:{
+        checkValidity(){
+            // Check if the passwords match
+            if (this.password1 != this.password2){
+                this.error_msg = "passwords do not match";
+            }
+        },
+        addData(){
+            // Add a new document in collection "cities"
+            setDoc(doc(projectFirestore, "users"), {
+            email: this.email,
+            password: this.password1,
+            });
+
+        }
+    }    
+}
+
+
     
+
 
 </script>
 
