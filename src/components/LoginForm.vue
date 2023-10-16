@@ -15,8 +15,8 @@
 import { ref } from 'vue'
 import useLogin from '../composables/useLogin'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
 import { auth } from "@/firebase/config"
+
 export default {
    setup(){
         const email = ref("")
