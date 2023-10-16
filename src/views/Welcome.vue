@@ -2,11 +2,11 @@
     <div>Logo Container</div>
         <p>Welcome</p>
         <div v-if="registered">
-            <LoginForm/>
+            <LoginForm @login="handleLogin"/>
         <button @click="registered=!registered">Click here to Sign Up</button>
         </div>
         <div v-else>
-            <SignupForm/>
+            <SignupForm @signup="handleLogin"/>
         <button @click="registered=!registered">Click here to Login</button>
 
         </div>
@@ -26,7 +26,7 @@ export default {
 
         return {registered}
     }
-    
+
 }
 </script>
 

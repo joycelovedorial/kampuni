@@ -1,14 +1,10 @@
 <template>
-  Navbar
-  <p>Dashboard</p>
-  <p>Chatrooms</p>
-  <p>Profile</p>
   <p>Outings</p>
 </template>
 
 <script>
 export default {
-  
+
 }
 </script>
 

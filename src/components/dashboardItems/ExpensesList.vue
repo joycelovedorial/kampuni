@@ -1,5 +1,5 @@
 <template>
-  
+  <p>ExpensesList for Dashboard</p>
 </template>
 
 <script>

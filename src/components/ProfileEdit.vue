@@ -10,6 +10,7 @@
             Birthday:
             Country: 
             Bio:
+            Community: Can choose to leave community but will be prompted to joinCommunity.vue
             <input type="email" required placeholder="Email" v-model="email">
             <input type="password" required placeholder="password" v-model="password">
             <button>Login</button>
