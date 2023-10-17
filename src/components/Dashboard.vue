@@ -8,7 +8,7 @@ import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
 import ChatDashboard from './dashboardItems/ChatDashboard.vue';
 import ExpensesList from './dashboardItems/ExpensesList.vue';
 export default {
-  components: {Tasklist, ExpensesList, OutingsCarousel, ChatDashboard}
+  components: { Tasklist, ExpensesList, OutingsCarousel, ChatDashboard}
 }
 </script>
 
