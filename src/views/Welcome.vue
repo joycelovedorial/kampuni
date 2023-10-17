@@ -1,4 +1,5 @@
 <template>
+    <div class="bg-fixed" style="background-image: url(...)"></div>
     <div>Logo Container</div>
         <p>Welcome</p>
         <div v-if="registered">
