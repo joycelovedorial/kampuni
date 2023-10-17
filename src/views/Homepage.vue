@@ -1,5 +1,5 @@
 <template>
-  
+    
 </template>
 
 <script>
@@ -10,5 +10,7 @@ export default {
 </script>
 
 <style>
-
+    * {
+        background-image: url();
+    }
 </style>
