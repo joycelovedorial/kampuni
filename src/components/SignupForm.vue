@@ -20,6 +20,11 @@ import useSignup from '@/composables/useSignUp';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/firebase/config'
 
+import { doc, setDoc } from "firebase/firestore"; 
+
+
+
+
 
 export default {
     setup(props,context){
@@ -37,7 +42,7 @@ export default {
         const handleSubmit = async () => {
             await signup(email.value, password.value, firstName.value)
             if (!error.value){
-              context.emit('signup')
+                context.emit('signup')
             }
         }
 
@@ -45,6 +50,13 @@ export default {
             const provider = new GoogleAuthProvider();
             return signInWithPopup(auth, provider);
             };
+
+        // Add a new document in collection "cities"
+        setDoc(doc(db, "users"), {
+        email: this.email,
+        state: "CA",
+        country: "USA"
+        });
 
         return { firstName,lastName,country,birthday,bio, email, password, handleSubmit, error, signupGoogle}
     }    

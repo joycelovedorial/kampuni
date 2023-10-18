@@ -4,7 +4,7 @@
             <button>Edit Profile</button>
             <!-- retrieve these details from firebase -->
             Profile Pic
-            First Name: 
+            First Name:  
             Last Name:
             Email:
             Birthday:
@@ -18,20 +18,12 @@
     </template>
     
     <script>
+import { ref } from 'vue'
     export default {
-        data(){
-        return {
-            email: "",
-            password: "",
-            error_msg: "",
+        setup(){
+            const firstName = ref("")
+            
         }
-        },
-        methods:{
-            checkValidity(){
-                // 1. Check if email exists
-                // 2. Check if password matches email
-                // Not sure how to retrieve these info from firebase :")
-            }
         }    
     }
     </script>
