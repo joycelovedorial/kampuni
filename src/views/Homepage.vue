@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap.css';
 
 import Dashboard from '@/components/Dashboard.vue';
 export default {

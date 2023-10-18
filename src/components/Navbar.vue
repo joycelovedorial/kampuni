@@ -1,18 +1,17 @@
 <template>
   <nav class="bg-transparent py-1">
-    <div class="container mx-auto flex justify-between items-center">
+    <img class="inline" src="../assets/kampuni_logo.png" alt="">
+    <router-link to="../Homepage" class="button text-black">Home</router-link>
+    <router-link to="../chatroom/Chatrooms" class="button text-black">Chats</router-link>
+    <router-link to="../Calendar" class="button text-black">Calendar</router-link>
+    <router-link to="../Expenses" class="button text-black">Expenses</router-link>
+    <router-link to="../Expenses" class="button text-black"><img class="w-12 inline profile" src="../assets/profiles/anyu.jpg" alt=""></router-link>
+    <!-- <div class="container mx-auto flex justify-between items-center">
       <div class="container flex space-x-4 justify-between">
-        <div class="ml-auto"> <!-- Use ml-auto to push content to the right -->
-          <img class="inline" src="../assets/kampuni_logo.png" alt="">
-          <router-link to="../views/Homepage.vue" class="button text-black">Home</router-link>
-          <router-link to="../views/chatroom/Chatrooms.vue" class="button text-black">Chats</router-link>
-          <router-link to="../views/Calendar.vue" class="button text-black">Calendar</router-link>
-          <router-link to="../views/Expenses.vue" class="button text-black">Expenses</router-link>
-          <router-link to="../views/Expenses.vue" class="button text-black"><img class="w-12 inline profile" src="../assets/profiles/anyu.jpg" alt=""></router-link>
-          <!-- Your right-aligned content, e.g., login, user profile, etc. -->
+        <div class="ml-auto">
         </div>
       </div>
-    </div>
+    </div> -->
   </nav>
 </template>
 
