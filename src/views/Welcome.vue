@@ -43,8 +43,6 @@ export default {
     width: 100%;
     height: 100%;
 }
-body {
-    background-image: url('../assets/background_img/background1.PNG') ;
-    }
+
 
 </style>

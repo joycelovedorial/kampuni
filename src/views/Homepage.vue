@@ -1,6 +1,64 @@
+
 <template>
-<div class="landing-page">
-        <div class="div-3">
+    <!-- <div class="container-fluid"> -->
+        <div>
+            <img id='background' src="../assets/background_img/background1.png">
+        </div>
+
+    <div class="container-fluid" id="first-container">
+        <div class="row">
+            <div class="col-lg-7 col-md-7 d-flex justify-content-end">
+                <img class='justify-content-end' id='logo' src="../assets/logo.png">
+            </div>
+            
+        
+            <div class="col-lg-5 col-md-5 ">
+                <ul class="nav"> 
+                    <li id="home" class="nav-item"> 
+                        <a class=" nav-link active" aria-current="page" href="#">Home</a> 
+                    </li> 
+                    <li id="chat" class="nav-item"> 
+                        <a class="nav-link" href="#">Chat</a> 
+                    </li> 
+                    <li id="calendar" class="nav-item"> 
+                        <a class="nav-link" href="#">Calendar</a> 
+                    </li> 
+                    <li id="tasks" class="nav-item"> 
+                        <a class="nav-link">Tasks</a> 
+                    </li> 
+                </ul> 
+            </div>
+        <!-- <div class="container">
+            <div class="row toprow">
+                <div class="col-4">
+                    <h1>Hello</h1>
+                    <ul>
+                        <li>
+                            15 Decenmber 2023, Friday
+                        </li>
+                        <li>
+                            6pm-10pm
+                        </li>
+                        <li>
+                            Teo Heng @ Buona Vista
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-4">
+                    <h1>Hello</h1>
+                </div>
+
+                <div class="col-4">
+                    <h1>Hello</h1>
+                </div>
+            </div>
+        </div> -->
+        </div>
+    </div>
+    <!-- </div> -->
+        
+        <!-- <div class="div-3">
             <div class="body">
                 <div class="text-wrapper-22">Welcome back, An Yu!</div>
             </div>
@@ -19,35 +77,151 @@
             </div>
             <div class="overlap-10">
                 <div class="text-wrapper-26">View More</div>
-            </div>
-        </div>
-    </div>
+            </div> -->
+        <!-- </div> -->
+
+
+
+
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.css';
+
 import Dashboard from '@/components/Dashboard.vue';
 export default {
     components: { Dashboard },
 }
 
-const app = Vue.createApp({ 
-    data() { 
-        return { 
-            path: require('../assets/kampuni_logo.jpg')
-        };
-    },
-    methods: {
-        methodName() {
-            
-        }
-    } // methods
-});
-const vm = app.mount('#app'); 
 </script>
 
 <style>
+#first-container{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    background:bisque;
+}
+.container{
+    height:100%;
+    width:100%;
+    
+    position:absolute;
+    top:200px;
+    right:200px;
+}
 
-.landing-page {
+#background{
+    position: relative;
+    /* display:flex; */
+    width: 100%;
+    height: 100%;
+    /* z-index: -1; */
+    /* justify-content: center */
+}
+
+.nav-link{
+    color:#2ec4b6;
+}
+.active{
+    color:#ffbf69;
+}
+#navbar{
+    
+    /* padding-top:900px; */
+    width: 40%;
+    /* height: 100px; */
+    /* top:0; */
+    /* right:200px; this moves the nav bar to the right */
+    /* display:flex; */
+    /* justify-content: end; */
+    /* margin-top:70px;
+    margin-right:30px; */
+    
+    
+}
+
+.li{
+    font-size:5px;
+}
+
+#home{	margin-top: 40px;
+    /* margin-right: 0px; */
+	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text */
+	list-style: none;
+	background-image: url("../assets/background_img/home.png");
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-size: 35px;
+    font-size:20px;
+    /* display:flex;
+    justify-content: center;
+    align-content: center; */
+}
+#chat{	margin-top: 40px;
+    /* margin-right: 0px; */
+	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text */
+	list-style: none;
+	background-image: url("../assets/background_img/home.png");
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-size: 35px;
+    font-size:20px;
+    /* display:flex;
+    justify-content: center;
+    align-content: center; */
+}
+#calendar{	margin-top: 40px;
+    /* margin-right: 0px; */
+	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text */
+	list-style: none;
+	background-image: url("../assets/background_img/home.png");
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-size: 35px;
+    font-size:20px;
+    /* display:flex;
+    justify-content: center;
+    align-content: center; */
+}
+#tasks{	margin-top: 40px;
+    /* margin-right: 0px; */
+	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text */
+	list-style: none;
+	background-image: url("../assets/background_img/home.png");
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-size: 35px;
+    font-size:20px;
+    /* display:flex; */
+    /* justify-content: center;
+    align-content: center; */
+}
+
+.toprow{
+    background:pink;
+    top:0;
+}
+
+#logo{
+    /* position: absolute; */
+    margin:0;
+    width:265px;
+    height:100px;
+    /* padding:0; */
+    /* margin-left:925px; */
+    /* margin-right:0px; */
+    /* justify-content: center; */
+
+
+    /* display:flex */
+}
+/* .col-6{
+    position:absolute;
+} */
+
+/* .landing-page {
     background-image: url('../assets/background_img/background1.PNG');
     background-color:blue;
     display: flex;
@@ -169,5 +343,5 @@ const vm = app.mount('#app');
     position: absolute;
     top: 190px;
     width: 75px;
-} 
+}  */
 </style>
