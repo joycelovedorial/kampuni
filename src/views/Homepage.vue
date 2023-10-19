@@ -1,87 +1,28 @@
 
 <template>
-    <!-- <div class="container-fluid"> -->
-        <div>
-            <img id='background' src="../assets/background_img/background1.PNG">
-        </div>
-
-    <div class="container-fluid" id="first-container">
-        <div class="row">
-            <div class="col-lg-7 col-md-7 d-flex justify-content-end">
-                <img class='justify-content-end' id='logo' src="../assets/logo.png">
-            </div>
-            
-        
-            <div class="col-lg-5 col-md-5 ">
-                <ul class="nav"> 
-                    <li id="home" class="nav-item"> 
-                        <router-link to="/homepage">Home</router-link>
-                    </li> 
-                    <li id="chat" class="nav-item"> 
-                        <a class="nav-link">z
-                            <router-link to="/Chatrooms">Chats</router-link>
-                        </a> 
-                    </li> 
-                    <li id="calendar" class="nav-item"> 
-                        <a class="nav-link">
-                            <router-link to="/Chatrooms">Calendar</router-link>
-                        </a>
- 
-                    </li> 
-                    <li id="tasks" class="nav-item"> 
-                        <a class="nav-link">
-                            <router-link to="/Chatrooms">Tasklist</router-link>
-                        </a> 
-                    </li> 
-                </ul> 
-            </div>
-       <!-- <div class="container">
-            <div class="row toprow">
-                <div class="col-4">
-                    <h1>Hello</h1>
-                    <ul>
-                        <li>
-                            15 Decenmber 2023, Friday
-                        </li>
-                        <li>
-                            6pm-10pm
-                        </li>
-                        <li>
-                            Teo Heng @ Buona Vista
-                        </li>
-                    </ul>
-                </div>
-
-            <div class="col-2"> </div>
-
-        <h1 id="outing">Upcoming Outings </h1>
-            <div class="col-10 container" id="first-container">
-                <div class="row">
-                    <div class="col-lg-5 col-md-5 ">
-                    </div> 
-                </div>
-            </div>
-
-            <div class="col-2">
-
-            </div> -->
-        </div>
-    </div>
-
+    <Navbar/>
+    <Dashboard/>
 </template>
 
 <script>
 import { useRouter } from "vue-router"
 import Dashboard from '@/components/Dashboard.vue';
+import Navbar from "@/components/Navbar.vue";
 export default {
     components:{
-    Navbar,
+    Navbar, Dashboard
     }
 }
 
 </script>
 
 <style>
+
+/* PLS READ -> FOR STYLES HERE, THEY WILL AFFECT ALL THE COMPONENTS MOUNTED HERE
+SO THAT INCLUDES Navbar AND Dashboard -> Dashboard HAS COMPONENTS ON IT TOO
+
+THIS PAGE SHOULD ONLY INCLUDE Navbar AND Dashboard AND MAYBE THE POPUP CHAT
+*/
 #outing{
     position:absolute;
 }

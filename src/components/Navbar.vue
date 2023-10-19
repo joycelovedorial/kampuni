@@ -28,7 +28,7 @@
           Expenses
         </router-link>
       </ul>
-      <router-link to="../Expenses" class="button text-black"><img class="w-12 inline profile" src="../assets/profiles/anyu.jpg" alt=""></router-link>
+      <router-link to="../Profile" class="button text-black"><img class="w-12 inline profile" src="../assets/profiles/anyu.jpg" alt=""></router-link>
     </nav>
   </div>
 </template>
