@@ -1,10 +1,8 @@
-const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
-  transpileDependencies: true
-})
+const { defineConfig } = require('@vue/cli-service');
 
-module.exports = {
-  chainWebpack: config => {
+module.exports = defineConfig({
+  transpileDependencies: true,
+  chainWebpack: (config) => {
     config.module
       .rule('background_img')
       .test(/\.PNG$/)
@@ -14,8 +12,4 @@ module.exports = {
         name: 'img/[name].[hash:8].[ext]',
       });
   },
-};
-
-// module.exports = {
-//   entry: './path/to/my/entry/file.js',
-// };
+});
