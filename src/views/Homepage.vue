@@ -35,7 +35,7 @@
                     </li> 
                 </ul> 
             </div>
-        <!-- <div class="container">
+       <!-- <div class="container">
             <div class="row toprow">
                 <div class="col-4">
                     <h1>Hello</h1>
@@ -52,43 +52,21 @@
                     </ul>
                 </div>
 
-                <div class="col-4">
-                    <h1>Hello</h1>
-                </div>
+            <div class="col-2"> </div>
 
-                <div class="col-4">
-                    <h1>Hello</h1>
+        <h1 id="outing">Upcoming Outings </h1>
+            <div class="col-10 container" id="first-container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 ">
+                    </div> 
                 </div>
             </div>
-        </div> -->
+
+            <div class="col-2">
+
+            </div> -->
         </div>
     </div>
-    <!-- </div> -->
-        
-        <!-- <div class="div-3">
-            <div class="body">
-                <div class="text-wrapper-22">Welcome back, An Yu!</div>
-            </div>
-            <Overlap />
-            <NavBarWrapper />
-            <Outings />
-            <div class="text-wrapper-23">Upcoming outings</div>
-            <div class="text-wrapper-24">Today’s Task</div>
-            <div class="text-wrapper-25">Expenses</div>
-            <Tasks />
-            <div class="overlap-8">
-                <div class="text-wrapper-26">View More</div>
-            </div>
-            <div class="overlap-9">
-                <div class="text-wrapper-26">View More</div>
-            </div>
-            <div class="overlap-10">
-                <div class="text-wrapper-26">View More</div>
-            </div> -->
-        <!-- </div> -->
-
-
-
 
 </template>
 
@@ -96,27 +74,29 @@
 import { useRouter } from "vue-router"
 import Dashboard from '@/components/Dashboard.vue';
 export default {
-    components: { Dashboard },
+    components:{
+    Navbar,
+    }
 }
 
 </script>
 
 <style>
+#outing{
+    position:absolute;
+}
 #first-container{
+    background:beige;
     position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    background:bisque;
-}
-.container{
+    width:80%;
     height:100%;
-    width:100%;
-    
-    position:absolute;
-    top:200px;
-    right:200px;
+    right:175px;
+    left:175px;
+    /* left:0; */
+    top:50%;
+    /* transform: translateX(-50%); */
 }
+
 
 #background{
     position: relative;
@@ -174,13 +154,13 @@ export default {
 	background-position: left top;
 	background-size: 35px;
     font-size:20px;
-    /* display:flex;
+     display:flex;
     justify-content: center;
-    align-content: center; */
+    align-content: center; 
 }
 #calendar{	margin-top: 40px;
-    /* margin-right: 0px; */
-	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text */
+    margin-right: 0px; 
+	padding: 0px 20px 20px 20px; /* this adjusts the space between the image and the text 
 	list-style: none;
 	background-image: url("../assets/background_img/home.png");
 	background-repeat: no-repeat;
@@ -211,23 +191,22 @@ export default {
 }
 
 #logo{
-    /* position: absolute; */
+    position: absolute;
     margin:0;
     width:265px;
     height:100px;
-    /* padding:0; */
-    /* margin-left:925px; */
-    /* margin-right:0px; */
-    /* justify-content: center; */
+    padding:0;
+    margin-left:925px; 
+    margin-right:0px; 
+    justify-content: center;
 
 
-    /* display:flex */
 }
-/* .col-6{
+ .col-6{
     position:absolute;
-} */
+} 
 
-/* .landing-page {
+ .landing-page {
     background-image: url('../assets/background_img/background1.PNG');
     background-color:blue;
     display: flex;
@@ -349,5 +328,5 @@ export default {
     position: absolute;
     top: 190px;
     width: 75px;
-}  */
-</style>
+}  
+</style> 
