@@ -1,4 +1,5 @@
 <template>
+    <body>
     <div>Logo Container</div>
         <p>Welcome</p>
         <div v-if="registered">
@@ -10,12 +11,15 @@
         <button @click="registered=!registered">Click here to Login</button>
 
         </div>
-       
-        
+    </body>
 </template>
+
+<!-- // In your component's template -->
+
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
+// import backgroundImage from '@/assets/background_img/background1.PNG';
 import SignupForm from '@/components/SignupForm.vue';
 import { ref } from 'vue';
 export default {
@@ -39,4 +43,6 @@ export default {
     width: 100%;
     height: 100%;
 }
+
+
 </style>
