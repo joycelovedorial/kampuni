@@ -1,115 +1,58 @@
 
 <template>
-    <!-- <div class="container-fluid"> -->
-        <div>
-            <img id='background' src="../assets/background_img/background1.png">
-        </div>
-
-    <div class="container-fluid" id="first-container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-7 col-md-7 d-flex justify-content-end">
-                <img class='justify-content-end' id='logo' src="../assets/logo.png">
-            </div>
-            
-        
-            <div class="col-lg-5 col-md-5 ">
-                <ul class="nav"> 
-                    <li id="home" class="nav-item"> 
-                        <a class=" nav-link active" aria-current="page" href="#">Home</a> 
-                    </li> 
-                    <li id="chat" class="nav-item"> 
-                        <a class="nav-link" href="#">Chat</a> 
-                    </li> 
-                    <li id="calendar" class="nav-item"> 
-                        <a class="nav-link" href="#">Calendar</a> 
-                    </li> 
-                    <li id="tasks" class="nav-item"> 
-                        <a class="nav-link">Tasks</a> 
-                    </li> 
-                </ul> 
-            </div>
-        <!-- <div class="container">
-            <div class="row toprow">
-                <div class="col-4">
-                    <h1>Hello</h1>
-                    <ul>
-                        <li>
-                            15 Decenmber 2023, Friday
-                        </li>
-                        <li>
-                            6pm-10pm
-                        </li>
-                        <li>
-                            Teo Heng @ Buona Vista
-                        </li>
-                    </ul>
-                </div>
+            <Navbar />
+                <img id='background' src="../assets/background_img/background1.png">
+        </div>
+        <div class="row">
 
-                <div class="col-4">
-                    <h1>Hello</h1>
-                </div>
+            <div class="col-2"> </div>
 
-                <div class="col-4">
-                    <h1>Hello</h1>
+        <!-- <h1 id="outing">Upcoming Outings </h1> -->
+            <div class="col-10 container" id="first-container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 ">
+                    </div> 
                 </div>
             </div>
-        </div> -->
+
+            <div class="col-2">
+
+            </div>
         </div>
     </div>
-    <!-- </div> -->
-        
-        <!-- <div class="div-3">
-            <div class="body">
-                <div class="text-wrapper-22">Welcome back, An Yu!</div>
-            </div>
-            <Overlap />
-            <NavBarWrapper />
-            <Outings />
-            <div class="text-wrapper-23">Upcoming outings</div>
-            <div class="text-wrapper-24">Today’s Task</div>
-            <div class="text-wrapper-25">Expenses</div>
-            <Tasks />
-            <div class="overlap-8">
-                <div class="text-wrapper-26">View More</div>
-            </div>
-            <div class="overlap-9">
-                <div class="text-wrapper-26">View More</div>
-            </div>
-            <div class="overlap-10">
-                <div class="text-wrapper-26">View More</div>
-            </div> -->
-        <!-- </div> -->
-
-
-
 
 </template>
 
 <script>
 
-import Dashboard from '@/components/Dashboard.vue';
+import Navbar from '@/components/Navbar.vue';
+
 export default {
-    components: { Dashboard },
+    components:{
+    Navbar,
+    }
 }
 
 </script>
 
 <style>
+#outing{
+    position:absolute;
+}
 #first-container{
+    background:beige;
     position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    background:bisque;
-}
-.container{
+    width:80%;
     height:100%;
-    width:100%;
-    
-    position:absolute;
-    top:200px;
-    right:200px;
+    right:175px;
+    left:175px;
+    /* left:0; */
+    top:50%;
+    /* transform: translateX(-50%); */
 }
+
 
 #background{
     position: relative;
