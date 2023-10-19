@@ -2,7 +2,7 @@
 <template>
     <!-- <div class="container-fluid"> -->
         <div>
-            <img id='background' src="../assets/background_img/background1.png">
+            <img id='background' src="../assets/background_img/background1.PNG">
         </div>
 
     <div class="container-fluid" id="first-container">
@@ -15,16 +15,23 @@
             <div class="col-lg-5 col-md-5 ">
                 <ul class="nav"> 
                     <li id="home" class="nav-item"> 
-                        <a class=" nav-link active" aria-current="page" href="#">Home</a> 
+                        <router-link to="/homepage">Home</router-link>
                     </li> 
                     <li id="chat" class="nav-item"> 
-                        <a class="nav-link" href="#">Chat</a> 
+                        <a class="nav-link">z
+                            <router-link to="/Chatrooms">Chats</router-link>
+                        </a> 
                     </li> 
                     <li id="calendar" class="nav-item"> 
-                        <a class="nav-link" href="#">Calendar</a> 
+                        <a class="nav-link">
+                            <router-link to="/Chatrooms">Calendar</router-link>
+                        </a>
+ 
                     </li> 
                     <li id="tasks" class="nav-item"> 
-                        <a class="nav-link">Tasks</a> 
+                        <a class="nav-link">
+                            <router-link to="/Chatrooms">Tasklist</router-link>
+                        </a> 
                     </li> 
                 </ul> 
             </div>
@@ -86,7 +93,7 @@
 </template>
 
 <script>
-
+import { useRouter } from "vue-router"
 import Dashboard from '@/components/Dashboard.vue';
 export default {
     components: { Dashboard },
