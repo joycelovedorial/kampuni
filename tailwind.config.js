@@ -18,15 +18,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        cyanprimary: '#2EC4B6',
-        cyansecondary: '#CBF3F0',
-        orangeprimary: '#FF9F1C',
-        orangesecondary: '#FFBF69',
+        cyanp: '#2EC4B6',
+        cyans: '#CBF3F0',
+        orangep: '#FF9F1C',
+        oranges: '#FFBF69',
         primary: '#FF5733',
         secondary: colors.blue,
       },
       fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
+        sans: ['Roboto', 'Arial', 'sans-serif', 'Fredoka', 'Plus Jakarta Sans'],
       },
       spacing: {
         '72': '18rem',

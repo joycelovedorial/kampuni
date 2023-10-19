@@ -1,22 +1,30 @@
 <template>
-  <div class="object-right w-auto">
+  <div class="object-left w-auto">
     <nav class="bg-transparent py-1 flex justify-between items-center">
       <img class="logo inline" src="../assets/kampuni_logo.png" alt="">
-      <ul class="flex space-x-4">
-        <router-link to="../Homepage" class="button text-cyanprimary">
-          <Icons name="home"/>
+      <ul class="flex space-x-1">
+        <router-link to="../Homepage" class="button text-cyanp">
+          <svg class="inline w-5 h-5 text-cyanp" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+          </svg>
           Home
         </router-link>
-        <router-link to="../chatroom/Chatrooms" class="button text-cyanprimary">
-          <!-- <img class="inline" src="../assets/icons/chats.png" alt=""> -->
+        <router-link to="../chatroom/Chatrooms" class="button text-cyanp">
+          <svg class="inline w-5 h-5 text-cyanp" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+          </svg>
           Chats
         </router-link>
-        <router-link to="../Calendar" class="button text-cyanprimary">
-          <!-- <img class="inline" src="../assets/icons/calendar.png" alt=""> -->
+        <router-link to="../Calendar" class="button text-cyanp">
+          <svg class="inline w-5 h-5 text-cyanp" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+          </svg>
           Calendar
         </router-link>
-        <router-link to="../Expenses" class="button text-cyanprimary">
-          <!-- <img class="inline" src="../assets/icons/expenses.png" alt=""> -->
+        <router-link to="../Expenses" class="button text-cyanp">
+          <svg class="inline w-5 h-5 text-cyanp" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+          </svg>
           Expenses
         </router-link>
       </ul>
@@ -26,11 +34,10 @@
 </template>
 
 <script>
-  import Icons from '@/components/Icons.vue'; // Import the SvgIcon component
+  import '@/assets/main.css';
 
   export default {
     components: {
-      Icons, // Include the SvgIcon component
     },
   };
 </script>
