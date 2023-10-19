@@ -24,7 +24,7 @@ import { ref } from 'vue'
             const firstName = ref("")
             
         }
-        }    
+           
     }
     </script>
     

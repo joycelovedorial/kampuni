@@ -6,8 +6,8 @@
         <input type="email" required placeholder="email" v-model="email">
         <input type="password" required placeholder='password' v-model="password">
         <input type="date" id="birthday" v-model="birthday">
-        <input type="text" v-model="country" placeholder="country" id="country">
-        <textarea id="bio" v-model="bio" cols="30" rows="10" placeholder="bio"></textarea>
+        <input type="text" placeholder="country" id="country" v-model="country">
+        <textarea id="bio" cols="30" rows="10" placeholder="bio" v-model="bio"></textarea>
         <div class="error">{{ error }}</div>
         <button>Sign Up</button>
         <button @click="signupGoogle">Google</button>
@@ -18,11 +18,8 @@
 import { ref } from 'vue';
 import useSignup from '@/composables/useSignUp';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/firebase/config'
-
-import { doc, setDoc } from "firebase/firestore"; 
-
-
+import { auth, db } from '@/firebase/config'
+import { doc, addDoc, setDoc, collection } from "firebase/firestore"; 
 
 
 
@@ -31,19 +28,30 @@ export default {
         
         const firstName = ref("")
         const lastName = ref("")
+        const email = ref("")
+        const password = ref("")
         const birthday = ref("")
         const country = ref("")
         const bio = ref("")
-        const email = ref("")
-        const password = ref("")
 
         const {error, signup} = useSignup()
-
+        const userref = collection(db, 'users')
         const handleSubmit = async () => {
             await signup(email.value, password.value, firstName.value)
             if (!error.value){
                 context.emit('signup')
+                await addDoc(userref, {
+                    firstname: firstName.value,
+                    lastname: lastName.value,
+                    email: email.value,
+                    password: password.value,
+                    birthday: birthday.value,
+                    country: country.value,
+                    bio: bio.value, 
+                    });
+
             }
+            
         }
 
         const signupGoogle = async () => {
@@ -52,12 +60,7 @@ export default {
             };
 
         // Add a new document in collection "cities"
-        setDoc(doc(db, "users"), {
-        email: this.email,
-        state: "CA",
-        country: "USA"
-        });
-
+        
         return { firstName,lastName,country,birthday,bio, email, password, handleSubmit, error, signupGoogle}
     }    
 }
