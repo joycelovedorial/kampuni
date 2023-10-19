@@ -18,6 +18,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        cyanprimary: '#2EC4B6',
+        cyansecondary: '#CBF3F0',
+        orangeprimary: '#FF9F1C',
+        orangesecondary: '#FFBF69',
         primary: '#FF5733',
         secondary: colors.blue,
       },
