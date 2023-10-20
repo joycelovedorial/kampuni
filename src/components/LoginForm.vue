@@ -1,10 +1,8 @@
 <template>
-    <div>
-        <img id="logo" src="src/assets/logo.jpg"/> 
-    </div>
     <form>
-        <input type="email" required placeholder="email" v-model="email">
-        <input type="password" required placeholder='password' v-model="password">
+        
+        <input class="form-control" type="email" required placeholder="email" v-model="email">
+        <input class="form-control" type="password" required placeholder='password' v-model="password">
         <div class="error">{{ error }}</div>
         <button>Login</button>
         <button @click="signupGoogle">Google</button>
