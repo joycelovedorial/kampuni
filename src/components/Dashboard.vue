@@ -1,6 +1,29 @@
 <template>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10"> <OutingsCarousel/> </div>
+      <div class="col-1"></div>
+
+    </div>
+    <!-- <div class="row">
+      <div class="col-2"></div>
+      <div class="col-2"><Tasklist/></div>
+      <div class="col-6"><ChatDashboard/></div>
+      <div class="col-2"></div>
+    </div> -->
+    
+    
+    
+    <!-- <ExpensesList/> -->
+  </div>
+
+
   <p>Components Here: Leaderboard, Calendar</p>
   
+
 </template>
 
 <script>
