@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-1"></div>
-      <div class="col-10"> <OutingsCarousel/> </div>
+      <div class="col-10 inline-block"> <OutingsCarousel/> </div>
       <div class="col-1"></div>
 
     </div>

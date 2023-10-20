@@ -1,10 +1,11 @@
 <template>
 
-<div class="container">
+<div class="container custom-container">
 
 <!-- add three cards in a carousel -->
   <!-- BS card: Start --> 
-  <div class="card col-lg-5" style="width: 25rem;">  <!--v-for{{outing}}-->
+  <div class="bscard">
+  <div class="card col-lg-3" style="width: 25rem;">  <!--v-for{{outing}}-->
     <div class="container">
       <div class="row"> 
       <!-- <img src="..." class="card-img-top" alt="...">  -->
@@ -59,8 +60,9 @@
     </div>
   </div> 
 
+  </div>
 
-  <div class="card col-lg-6" style="width: 25rem;">  <!--v-for{{outing}}-->
+  <div class="card col-lg-3" style="width: 25rem;">  <!--v-for{{outing}}-->
     <div class="container">
       <div class="row"> 
       <!-- <img src="..." class="card-img-top" alt="...">  -->
@@ -68,7 +70,7 @@
           <div class="row">
             <h5 class="card-title col-4"><img id='icon' src="../../assets/profiles/amos.jpg"></h5> 
             <div class="card-title col-8 bg-orange-300" id="name_container">
-              <h5 class="fw-bold pt-2 pb-1">Amos</h5> <!--{{name}}--> 
+              <h5 class="fw-bold pt-2 pb-1">2</h5> <!--{{name}}--> 
               <p class=" pb-2 pt-1">TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
             </div>
           </div>
@@ -116,7 +118,7 @@
   </div> 
 
 
-  <div class="card col-lg-6" style="width: 25rem;">  <!--v-for{{outing}}-->
+  <div class="card col-lg-3" style="width: 25rem;">  <!--v-for{{outing}}-->
     <div class="container">
       <div class="row"> 
       <!-- <img src="..." class="card-img-top" alt="...">  -->
@@ -124,7 +126,7 @@
           <div class="row">
             <h5 class="card-title col-4"><img id='icon' src="../../assets/profiles/amos.jpg"></h5> 
             <div class="card-title col-8 bg-orange-300" id="name_container">
-              <h5 class="fw-bold pt-2 pb-1">Amos</h5> <!--{{name}}--> 
+              <h5 class="fw-bold pt-2 pb-1">3</h5> <!--{{name}}--> 
               <p class=" pb-2 pt-1">TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
             </div>
           </div>
@@ -185,8 +187,10 @@ export default {
 
 <style>
 
-.container{
+.custom-container{
 padding-bottom:0px;
+display: inline;
+background-color: white;
 
 }
 
