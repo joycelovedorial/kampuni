@@ -1,25 +1,26 @@
 <template>
     <body>
-    <div>Logo Container</div>
-        <p>Welcome</p>
-        <div v-if="registered">
-            <LoginForm @login="handleLogin"/>
-        <button @click="registered=!registered">Click here to Sign Up</button>
-        </div>
-        <div v-else>
-            <SignupForm @signup="handleLogin"/>
-        <button @click="registered=!registered">Click here to Login</button>
-
+    <div class="logo-container container-fluid">
+        <img id="logo" src="../assets/logo.png"/> 
+    </div>
+       
+        <div class="container-fluid loginform">
+            <div v-if="registered">
+                <LoginForm @login="handleLogin"/>
+                <button @click="registered=!registered">Click here to Sign Up</button>
+            </div>
+            <div v-else>
+                <SignupForm @signup="handleLogin"/>
+                <button @click="registered=!registered">Click here to Login</button>
+            </div>
         </div>
     </body>
 </template>
 
-<!-- // In your component's template -->
 
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
-// import backgroundImage from '@/assets/background_img/background1.PNG';
 import SignupForm from '@/components/SignupForm.vue';
 import { ref } from 'vue';
 export default {
@@ -43,6 +44,21 @@ export default {
     width: 100%;
     height: 100%;
 }
+.logo-container {
+    width:400px;
+
+}
+
+.loginform{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginform input{
+    border-radius: 10px;
+}
+
 
 
 </style>
