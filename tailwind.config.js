@@ -26,7 +26,8 @@ module.exports = {
         secondary: colors.blue,
       },
       fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif', 'Fredoka', 'Plus Jakarta Sans'],
+        sans: ['Jakarta Sans'],
+        fredoka: ['Fredoka']
       },
       spacing: {
         '72': '18rem',
