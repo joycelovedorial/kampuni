@@ -1,5 +1,6 @@
 <template>
 
+
   <div class="container">
     <div class="row">
       <div class="col-2"></div>
@@ -19,15 +20,19 @@
     <!-- <ExpensesList/> -->
   </div>
 
+
+  <p>Components Here: Leaderboard, Calendar</p>
+  
+
 </template>
 
 <script>
-import Tasklist from './dashboardItems/Tasklist.vue';
+import TodayTask from './dashboardItems/TodayTask.vue';
 import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
 import ChatDashboard from './dashboardItems/ChatDashboard.vue';
 import ExpensesList from './dashboardItems/ExpensesList.vue';
 export default {
-  components: { Tasklist, ExpensesList, OutingsCarousel, ChatDashboard}
+  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard}
 }
 </script>
 

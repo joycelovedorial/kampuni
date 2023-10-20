@@ -1,6 +1,9 @@
 
 <template>
     <Navbar/>
+    <h1>Welcome back, Name
+        <!-- {{ name }} Pull name data from getUser-->
+    </h1>
     <Dashboard/>
 </template>
 
@@ -23,5 +26,8 @@ SO THAT INCLUDES Navbar AND Dashboard -> Dashboard HAS COMPONENTS ON IT TOO
 
 THIS PAGE SHOULD ONLY INCLUDE Navbar AND Dashboard AND MAYBE THE POPUP CHAT
 */
-
+h1{
+    margin: 0 auto;
+    text-align: center;
+}
 </style> 
