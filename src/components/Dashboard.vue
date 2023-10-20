@@ -5,9 +5,17 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10 inline-block"> <OutingsCarousel/> </div>
-      <div class="col-1"></div>
 
+      <div class="col-1"></div>
     </div>
+<!-- 
+    </div>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-4 inline-block"> <TodayTask/> </div>
+      <div class="col-4 inline-block"> <ExpensesList/> </div>
+      <div class="col-1"></div>
+    </div> -->
     <!-- <div class="row">
       <div class="col-2"></div>
       <div class="col-2"><Tasklist/></div>
