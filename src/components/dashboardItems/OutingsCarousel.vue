@@ -4,7 +4,6 @@
 
 <!-- add three cards in a carousel -->
   <!-- BS card: Start --> 
-  <div class="bscard">
   <div class="card col-lg-3" style="width: 25rem;">  <!--v-for{{outing}}-->
     <div class="container">
       <div class="row"> 
@@ -60,7 +59,7 @@
     </div>
   </div> 
 
-  </div>
+
 
   <div class="card col-lg-3" style="width: 25rem;">  <!--v-for{{outing}}-->
     <div class="container">
@@ -192,6 +191,10 @@ padding-bottom:0px;
 display: inline;
 background-color: white;
 
+}
+
+.card{
+  display:inline-block;
 }
 
 .option_box{
