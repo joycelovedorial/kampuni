@@ -8,6 +8,7 @@ import Outings from '../views/Outings.vue'
 import Profile from '../views/Profile.vue'
 import Chatroom from '../views/chatroom/Chatroom.vue'
 import Tasklist from '../views/Tasklist.vue'
+import TaskMarket from '../views/Calendar.vue'
 
 // import { projectAuth } from '../firebase/config'
 
@@ -75,8 +76,12 @@ const routes = [
     path:'/Tasklist',
     name: 'Tasklist',
     component: Tasklist
+  },
+  {
+    path:'/TaskMarket',
+    name: 'TaskMarket',
+    component: TaskMarket
   }
-
   
 ]
 

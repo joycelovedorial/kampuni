@@ -33,17 +33,20 @@
     </div>
     <div v-if="displayTask">
       TasklistComponent
+      <TaskMarket />
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import TaskMarket from '@/components/calendaritems/TaskMarket.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
     Navbar,
+    TaskMarket,
   },
   setup() {
     const displayOutings = ref(false);
@@ -55,8 +58,15 @@ export default {
 };
 </script>
 
-<style>
-  /* body {
-    background-image: url('../assets/background_img/background1.png');
-  } */
+<style scoped>
+  #calendar-page {
+    background-image: url('../assets/background_img/background3.png');
+    background-color: #f2f2f2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh; /* 100% of viewport height */
+    margin: 0; /* Remove default margin to cover the entire viewport */
+  }
 </style>
+
