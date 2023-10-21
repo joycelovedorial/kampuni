@@ -1,11 +1,11 @@
 <template>
     <div>form</div>
-  <div>
-    <form @submit.prevent>
-        <input class="form-control name" type="text" required placeholder="Community Name" v-model="comName">
-        <button type="submit" @click="ComCreate">Create</button>
-    </form>
-  </div>
+    <div>
+        <form @submit.prevent>
+            <input class="form-control name" type="text" required placeholder="Community Name" v-model="comName">
+            <button type="submit" @click="ComCreate">Create</button>
+        </form>
+    </div>
 </template>
 
 <script>
