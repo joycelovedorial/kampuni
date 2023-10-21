@@ -11,10 +11,14 @@
 
   
     <div class="row">
-      <div class="col-1"></div>
-      <div class="col-4 inline-block"> <TodayTask/> </div>
-      <div class="col-4 inline-block"> <ExpensesList/> </div>
-      <div class="col-1"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 "></div>
+      <div class="col-lg-5 col-md-10 col-sm-10 "> 
+        <div> <TodayTask/> </div>
+        <div> <TodayTask/> </div>
+        <div> <TodayTask/> </div>
+      </div>
+      <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
+      <div class="col-lg-1 col-md-1 col-sm-1"></div>
     </div>
     <!-- <div class="row">
       <div class="col-2"></div>
