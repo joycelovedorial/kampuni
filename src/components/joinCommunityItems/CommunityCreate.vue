@@ -15,22 +15,28 @@ import { doc, addDoc, collection } from "firebase/firestore";
 import { useRouter } from "vue-router";
 export default {
     setup () {
+        const router = useRouter()
         const comName = ref("")
-        const ComCreate = () => {
+
+        const ComCreate = async () => {
             const user = auth.currentUser
             const uid = user.uid
-            const createdRef = async () => {
-                await addDoc(collection(db,"communities"), {
+            try {
+                await addDoc(collection(db, "communities"), {
                 communityName: comName.value,
                 homies: [uid]
-                });
-            }
-            if(!createdRef){
-                router.push({name:"Homepage"})
+            });
+
+            router.push({ name: "Homepage" });
+            } catch (error) {
+            console.error("Error creating community:", error);
             }
         }
+                
+            
+        
 
-        return { ComCreate}
+        return { comName, ComCreate }
     }
 
 }

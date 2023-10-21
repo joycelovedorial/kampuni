@@ -12,7 +12,7 @@
             <button @click="registered=!registered">Click here to Sign Up</button>
         </div>
         <div v-else>
-            <SignupForm @signup="handleSignup"/>
+            <SignupForm @signup="handleLogin"/>
             <button @click="registered=!registered">Click here to Login</button>
         </div>
     </div>
@@ -24,7 +24,9 @@
 import LoginForm from '@/components/LoginForm.vue';
 import SignupForm from '@/components/SignupForm.vue';
 import { ref } from 'vue';
+import { auth,db } from "@/firebase/config"
 import {useRouter} from 'vue-router'
+import { doc,getDoc } from 'firebase/firestore';
 
 
 export default {
@@ -34,15 +36,28 @@ export default {
         const registered = ref(true)
         const router = useRouter()
 
-        const handleLogin = () =>{
-            // need if statement to redirect to joinCommunity page
-            router.push({name:"Homepage"})
+        const handleLogin = async () => {
+            const user = auth.currentUser;
+            const uid = user.uid;
+            const docRef = doc(db, "users", uid);
+
+            try {
+                const docSnap = await getDoc(docRef);
+                const userData = docSnap.data();
+
+                if (!userData?.community) {
+                    router.push({ name: "joinCommunity" });
+                } else {
+                    router.push({ name: "Homepage" });
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
         }
 
-        const handleSignup = () => {
-            router.push({name:"joinCommunity"})
-        }
-        return {registered,handleLogin,handleSignup}
+
+    
+        return {registered,handleLogin,}
     }
 }
 </script>
