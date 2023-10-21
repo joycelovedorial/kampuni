@@ -47,10 +47,6 @@
 
 
 <style>
-  body {
-    background-image: url('../assets/background_img/background1.png');
-    background-size: cover;
-  }
   ul {
     list-style-type: none;
     margin: 0;
