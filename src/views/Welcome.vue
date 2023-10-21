@@ -40,8 +40,7 @@ export default {
         // Google Authentication way
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                router.push({ name: "joinCommunity" });
-                if (!userData?.community) {
+                if (!user.community) {
                     router.push({ name: "joinCommunity" });
                 } else {
                     router.push({ name: "Homepage" });
