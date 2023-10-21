@@ -1,6 +1,5 @@
 <template>
-    <form>
-        
+    <form  @submit.prevent="handleSubmit">
         <input class="form-control" type="email" required placeholder="email" v-model="email">
         <input class="form-control" type="password" required placeholder='password' v-model="password">
         <div class="error">{{ error }}</div>
@@ -11,22 +10,28 @@
 
 <script>
 import { ref } from 'vue'
-import useLogin from '../composables/useLogin'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from "@/firebase/config"
 
 export default {
-   setup(){
+   setup(props,context){
         const email = ref("")
         const password = ref("")
+        const error = ref(null)
+        const errorMessage = ref("")
 
-        const {error, login} =useLogin()
         const handleSubmit = async () => {
-            await login(email.value, password.value)
-            if (!error.value){
+            signInWithEmailAndPassword(auth,email.value,password.value)
+            .then((cred)=> {
+              console.log("signed in")
               context.emit('login')
-            }
+            }).catch((error)=>{
+                console.log(error.value)
+                const errorMessage = error.message
+            })
         }
+        
         const signupGoogle = async () => {
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider)
@@ -51,7 +56,7 @@ export default {
             });
             };
 
-        return { email, password, handleSubmit,signupGoogle}
+        return { email, password, handleSubmit,signupGoogle, errorMessage,error}
    }  
 }
 </script>
