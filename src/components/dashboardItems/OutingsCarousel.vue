@@ -62,7 +62,9 @@ export default {
       }
     }
   }
-  
+  onMounted(() => {
+            fetchData(); // Fetch data after the component is mounted
+        });
 
   }
 }
