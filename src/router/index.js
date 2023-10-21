@@ -9,6 +9,7 @@ import Profile from '../views/Profile.vue'
 import Chatroom from '../views/chatroom/Chatroom.vue'
 import Tasklist from '../views/Tasklist.vue'
 import TaskMarket from '../views/Calendar.vue'
+import Expenses from '@/views/Expenses.vue'
 
 
 // import { projectAuth } from '../firebase/config'
@@ -39,7 +40,7 @@ const routes = [
     component: Welcome
   },
   {
-    path:'/homepage/:community',
+    path:'/homepage',
     name: 'Homepage',
     component: Homepage,
     props: true
@@ -83,7 +84,13 @@ const routes = [
     path:'/TaskMarket',
     name: 'TaskMarket',
     component: TaskMarket
+  },
+  {
+    path:'/Expenses',
+    name: 'Expenses',
+    component: Expenses
   }
+
   
 ]
 

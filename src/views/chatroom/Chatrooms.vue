@@ -1,11 +1,13 @@
 <template>
-  <p>ListOfChats</p>
+  <Navbar/>
 </template>
 
 <script>
 import Chatlist from '@/components/chatroomitems/Chatlist.vue';
+
+import Navbar from '@/components/Navbar.vue';
 export default {
-  components: { Chatlist }
+  components: { Chatlist, Navbar }
 
 }
 </script>
