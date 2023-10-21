@@ -27,7 +27,7 @@ export default {
                 homies: [uid]
             });
 
-            router.push({ name: "Homepage" });
+            router.push({ name: "Homepage", params: {community:comId} });
             } catch (error) {
             console.error("Error creating community:", error);
             }

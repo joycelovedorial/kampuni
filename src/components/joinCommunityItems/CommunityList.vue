@@ -2,7 +2,7 @@
     <div class="container">
         <div v-if="communityArray.length > 0">
             <div v-for="com in communityArray" :key="com.id">
-                <span>{{ com.communityName }}</span>
+                <span> {{ com.communityName }} </span>
                 <button @click="joinCom(com.id)">Join</button>
             </div>
         </div>
@@ -55,12 +55,11 @@ export default {
             await updateDoc(userRef, {
                 community:comId
             });
-        }else{
-            router.push({name:"Homepage"})
-        }
-           
-            
         
+        }else{
+            console.error("userDoc doesnt exist");
+        }
+        router.push({name:"Homepage", params: {community:comId}})  
     }
 
 
