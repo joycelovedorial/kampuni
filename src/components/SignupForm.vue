@@ -16,8 +16,7 @@
 
 <script>
 import { ref } from 'vue';
-import useSignup from '@/composables/useSignUp';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup,createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase/config'
 import { doc, addDoc, setDoc, collection } from "firebase/firestore"; 
 
@@ -25,7 +24,7 @@ import { doc, addDoc, setDoc, collection } from "firebase/firestore";
 
 export default {
     setup(props,context){
-        
+        const error = ref(null)
         const firstName = ref("")
         const lastName = ref("")
         const email = ref("")
@@ -33,26 +32,27 @@ export default {
         const birthday = ref("")
         const country = ref("")
         const bio = ref("")
+        const errorMessage = ref("")
 
-        const {error, signup} = useSignup()
         const userref = collection(db, 'users')
         const handleSubmit = async () => {
-            await signup(email.value, password.value, firstName.value)
-            if (!error.value){
-                context.emit('signup')
-                await addDoc(userref, {
+            await createUserWithEmailAndPassword(auth, email.value, password.value)
+            .then((cred) => {
+                setDoc(doc(db,"users",cred.user.uid),{
                     firstname: firstName.value,
                     lastname: lastName.value,
                     email: email.value,
-                    password: password.value,
                     birthday: birthday.value,
                     country: country.value,
                     bio: bio.value, 
-                    });
-
+                    community: null,
+                })
+                context.emit('signup')
+            }).catch((error)=>{
+                console.log(error)
+            })
             }
-            
-        }
+        
 
         const signupGoogle = async () => {
             const provider = new GoogleAuthProvider();
@@ -77,9 +77,17 @@ export default {
             });
             };
 
-        // Add a new document in collection "cities"
+
         
-        return { firstName,lastName,country,birthday,bio, email, password, handleSubmit, error, signupGoogle}
+        return {
+                firstName,lastName,
+                country,birthday,
+                bio, 
+                email, password, 
+                handleSubmit, 
+                error,
+                signupGoogle
+        }
     }    
 }
 
