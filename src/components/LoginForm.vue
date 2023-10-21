@@ -4,7 +4,7 @@
         <input class="form-control" type="password" required placeholder='password' v-model="password">
         <div class="error">{{ error }}</div>
         <button>Login</button>
-        <button @click="signupGoogle">Google</button>
+        <button @click="signinGoogle">Google</button>
     </form>
 </template>
 
@@ -32,9 +32,8 @@ export default {
             })
         }
         
-        const signupGoogle = async () => {
+        const signinGoogle = async () => {
             const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
             signInWithPopup(auth, provider)
             .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
@@ -56,7 +55,7 @@ export default {
             });
             };
 
-        return { email, password, handleSubmit,signupGoogle, errorMessage,error}
+        return { email, password, handleSubmit,signinGoogle, errorMessage,error}
    }  
 }
 </script>
