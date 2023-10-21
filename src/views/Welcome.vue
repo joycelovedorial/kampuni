@@ -27,6 +27,7 @@ import { ref } from 'vue';
 import { auth,db } from "@/firebase/config"
 import {useRouter} from 'vue-router'
 import { doc,getDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from "firebase/auth";
 
 
 export default {
@@ -35,6 +36,18 @@ export default {
     setup(){
         const registered = ref(true)
         const router = useRouter()
+
+        // Google Authentication way
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                router.push({ name: "joinCommunity" });
+                if (!userData?.community) {
+                    router.push({ name: "joinCommunity" });
+                } else {
+                    router.push({ name: "Homepage" });
+                }
+            }
+        })
 
         const handleLogin = async () => {
             const user = auth.currentUser;

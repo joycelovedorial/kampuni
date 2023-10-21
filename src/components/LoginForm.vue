@@ -13,6 +13,7 @@ import { ref } from 'vue'
 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from "@/firebase/config"
+import {useRouter} from 'vue-router'
 
 export default {
    setup(props,context){
@@ -43,6 +44,7 @@ export default {
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
             // ...
+
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
