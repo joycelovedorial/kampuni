@@ -53,9 +53,9 @@ export default {
     const displayCalendar = ref(true);
     const displayTask = ref(false);
 
-    return { displayOutings, displayCalendar, displayTask };
-  },
-};
+      return { displayOutings, displayCalendar, displayTask }
+    }
+}
 </script>
 
 <style scoped>

@@ -39,9 +39,23 @@ import TodayTask from './dashboardItems/TodayTask.vue';
 import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
 import ChatDashboard from './dashboardItems/ChatDashboard.vue';
 import ExpensesList from './dashboardItems/ExpensesList.vue';
+import { db,auth } from '@/firebase/config';
+import { ref } from 'vue';
+
 export default {
-  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard}
+  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard },
+  props: {
+    community: String, // Define the "community" prop as a string
+  },
+  setup(props) {
+    const comId = props.community;
+
+    // Use comId as needed
+
+    // Rest of your component logic here
+  }
 }
+
 </script>
 
 <style>
