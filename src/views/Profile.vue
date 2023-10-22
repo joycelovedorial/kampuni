@@ -1,6 +1,8 @@
 <template>
-    <div>Logo Container</div>
-        <p>Profile</p>
+    <div>
+        <Navbar/>
+    </div>
+    
         <div>
             <ProfileEdit/>
         </div>
@@ -10,8 +12,10 @@
 
 <script>
 import ProfileEdit from '@/components/ProfileEdit.vue';
+import Navbar from '@/components/Navbar.vue';
+
 export default {
-    components: { ProfileEdit }
+    components: { ProfileEdit, Navbar, Navbar }
 }
 </script>
 
