@@ -31,52 +31,49 @@
 
 <script>
 import singlecarousel from '@/components/dashboardItems/singlecarousel';
-import { ref } from 'vue';
-import { auth } from '@/firebase/config';
-import { collection, query, where, getDocs } from "firebase/firestore";
-
-
+import { ref, onMounted } from 'vue';
+import { auth,db } from '@/firebase/config';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { startOfDay } from 'date-fns'; // Import the startOfDay function
 
 export default {
-  // backend needs testing
   components: { singlecarousel },
   props: {
-    community: String, // Define the "community" prop in the child component
+    community: String,
   },
   setup(props) {
-  const uid = auth.currentUser.uid;
-  const cid = props.community;
-  const outingArray = ref([]);
-  const filteredOutingList = ref([]);
-  const now = new Date(); // Get the current date and time
-  const startOfToday = startOfDay(now); // Get the start of the current day
+    const uid = auth.currentUser.uid;
+    const cid = props.community;
+    const outingArray = ref([]);
+    const filteredOutingList = ref([]);
+    const now = new Date();
+    const startOfToday = startOfDay(now); // Use the startOfDay function
 
-  // Define the query with a date filter
-  const q = query(
-    collection(db, "outings"),
-    where("communityID", "==", cid),
-    where("date", ">=", startOfToday) // Filter for outings dated today and after
-  );
+    const q = query(
+      collection(db, 'outings'),
+      where('communityID', '==', cid),
+      where('date', '>=', startOfToday)
+    );
 
-  const fetchData = async () => {
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      outingArray.value.push({ ...doc.data(), id: doc.id });
-    });
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, ' => ', doc.data());
+        outingArray.value.push({ ...doc.data(), id: doc.id });
+      });
 
-    for (const out of outingArray.value) {
-      if (!out.usersInvoled.includes(uid)) {
-        filteredOutingList.push(out);
+      for (const out of outingArray.value) {
+        if (!out.usersInvoled.includes(uid)) {
+          filteredOutingList.push(out);
+        }
       }
-    }
-  }
+    };
 
-  onMounted(() => {
-    fetchData();
-  });
-}
-}
+    onMounted(() => {
+      fetchData();
+    });
+  },
+};
 
 
 </script>
