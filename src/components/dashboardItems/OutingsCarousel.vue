@@ -3,7 +3,7 @@
 <!-- <singlecarousel/> -->
 
 <div class="carousel rounded-box">
-  <div class="carousel-item">
+  <!-- <div class="carousel-item">
     <img src="../../assets/logo.png">
   </div> 
   <div class="carousel-item">
@@ -23,26 +23,27 @@
   </div> 
   <div class="carousel-item">
     <singlecarousel/>
-  </div>
+  </div> -->
 </div>
 </template>
 
 
 
 <script>
-import singlecarousel from '@/components/dashboardItems/singlecarousel';
+// import singlecarousel from '@/components/dashboardItems/singlecarousel';
 import { ref, onMounted } from 'vue';
 import { auth,db } from '@/firebase/config';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { startOfDay } from 'date-fns'; // Import the startOfDay function
 
 export default {
-  components: { singlecarousel },
+  components: { },
   props: {
     community: String,
   },
   setup(props) {
-    const uid = auth.currentUser.uid;
+    const user = auth.currentUser
+    const uid = user.uid;
     const cid = props.community;
     const outingArray = ref([]);
     const filteredOutingList = ref([]);
