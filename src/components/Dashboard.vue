@@ -55,6 +55,8 @@ export default {
     // Use comId as needed
 
     // Rest of your component logic here
+    const user = auth.currentUser
+    
   }
 }
 

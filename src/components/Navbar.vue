@@ -31,18 +31,36 @@
           Expenses
         </router-link>
       </ul>
+      <button class="button text-orange-400" @click="handleLogout">Logout</button>
       <router-link to="../Profile" class="button text-black"><img class="rounded-full border-black border-2 w-12 inline profile " src="../assets/profiles/anyu.jpg" alt=""></router-link>
     </nav>
   </div>
 </template>
 
 <script>
-  import '@/assets/main.css';
+import '@/assets/main.css';
+import { ref } from 'vue';
+import { auth } from '@/firebase/config';
+import { useRouter } from 'vue-router'; // Import the useRouter function
 
-  export default {
-    components: {
-    },
-  };
+export default {
+    setup() {
+        const router = useRouter(); // Initialize the router
+
+        const handleLogout = async () => {
+            try {
+                await auth.signOut();
+                // Redirect to the login page (Welcome page)
+                router.push({ name: 'Welcome' });
+            } catch (error) {
+                // Handle the sign-out error if needed
+                console.error('Error signing out:', error);
+            }
+        };
+
+        return { handleLogout };
+    }
+};
 </script>
 
 
