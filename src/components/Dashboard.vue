@@ -13,9 +13,7 @@
     <div class="row">
       <div class="col-lg-1 col-md-1 col-sm-1 "></div>
       <div class="col-lg-5 col-md-10 col-sm-10 "> 
-        <div> <TodayTask/> </div>
-        <div> <TodayTask/> </div>
-        <div> <TodayTask/> </div>
+         <TodayTask/> 
       </div>
       <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
