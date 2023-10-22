@@ -40,7 +40,6 @@ export default {
         const toEdit = ref(true)
         const fetchData = async () => {
             const user = auth.currentUser;
-
             if (user) {
                 const uid = user.uid;
                 const docRef = doc(db, "users", uid);
@@ -59,7 +58,6 @@ export default {
                     bio.value = userData.bio;  // Use .value
                     email.value = userData.email;  // Use .value
                     community.value = commData.communityName;  // Use .value
-
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 }
@@ -75,7 +73,7 @@ export default {
         });
             return {updateEdit,firstname, lastname, birthday, country, bio, email, community,toEdit,
                     editfirstname,editlastname,editemail,editcountry,editbirthday,editbio,editcommunity,
-          }
+            }
     }
 }
 </script>
