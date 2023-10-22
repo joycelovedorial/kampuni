@@ -1,23 +1,42 @@
 <template>
 
 
-  <div class="container">
-    <div class="row">
+  <div class="container bg-transparent">
+    <div class="row mb-3">
       <div class="col-1"></div>
-      <div class="col-10 inline-block"> <!----<OutingsCarousel/>--> </div>
+      <div class="col-10 inline-block"> <OutingsCarousel/>  </div>
 
       <div class="col-1"></div>
     </div>
 
   
+    <!-- <div class="row ">
+
+        <div class="col-lg-1"></div>
+        <div class='col-lg-5'>
+        <h1 class="text-start text-orangep font-black text-3xl p-4 bg-white pl-0">Today Task</h1>
+        </div>
+        <div class="col-lg-4">
+          hello
+        </div>
+        <div class='col-lg-5'>
+        <h1 class="text-start text-orangep font-black text-3xl p-4 bg-white pl-0">Expenses</h1>
+        </div>
+        <div class="col-lg-1"></div> -->
+
+
     <div class="row">
       <div class="col-lg-1 col-md-1 col-sm-1 "></div>
-      <div class="col-lg-5 col-md-10 col-sm-10 "> 
+      <div class="col-lg-5 col-md-10 col-sm-10 flex-nowrap overflow-y-scroll h-32"> 
+         <TodayTask/> 
+         <TodayTask/> 
+         <TodayTask/> 
          <TodayTask/> 
       </div>
       <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
     </div>
+  </div>
     <!-- <div class="row">
       <div class="col-2"></div>
       <div class="col-2"><Tasklist/></div>
@@ -28,12 +47,7 @@
     
     
     <!-- <ExpensesList/> -->
-  </div>
-
-
-  <p>Components Here: Leaderboard, Calendar</p>
   
-
 </template>
 
 <script>
@@ -61,5 +75,7 @@ export default {
 </script>
 
 <style>
-
+.container{
+  /* background-image:url("@/assets/background_img/background1.png"); */
+}
 </style>

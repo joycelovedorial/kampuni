@@ -1,10 +1,13 @@
 
 <template>
+    
     <Navbar/>
-    <h1>Welcome back, Name
+    <body id="bg1">
+    <h1 class="font-black" id="welcome">Welcome back, Name
         <!-- {{ name }} Pull name data from getUser-->
     </h1>
     <Dashboard/>
+    </body>
 </template>
 
 <script>
@@ -26,8 +29,15 @@ SO THAT INCLUDES Navbar AND Dashboard -> Dashboard HAS COMPONENTS ON IT TOO
 
 THIS PAGE SHOULD ONLY INCLUDE Navbar AND Dashboard AND MAYBE THE POPUP CHAT
 */
-h1{
+#welcome{
     margin: 0 auto;
     text-align: center;
+    font-size :4.5rem;
+    color:cyan;
+    
+}
+
+#bg1{
+    background-image: url('@/assets/background_img/background1.png');
 }
 </style> 
