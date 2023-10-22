@@ -101,27 +101,43 @@
 </template>
 
 <script>
-import { db,auth } from "@/firebase/config"
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { auth, db } from "@/firebase/config";
 import { collection, query, where, getDocs } from "firebase/firestore";
-export default {
 
-  el: "app",
-  data(){
-    return{
-    isChecked: false,
-    }
-  },
-  methods:{
-    is_checked(){
-      if ((this.isChecked) == false){
-      this.isChecked = true;
-    }
-    else{
-      this.isChecked = false;
-    }
-    
-    }
+export default {
+  setup() {
+    const user = auth.currentUser;
+    const uid = user.uid;
+    const tasks = ref([]);
+    const isChecked = ref(false);
+
+    // Create a date object for today's date at midnight (00:00:00)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Use the "today" variable to query based on today's date
+    const q = query(collection(db, 'users', uid, 'tasksUnique'), where('whenToDo', '>=', today), where('whenToDo', '<', new Date(today.getTime() + 24 * 60 * 60 * 1000)));
+
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, ' => ', doc.data());
+        tasks.value.push({ ...doc.data(), id: doc.id });
+      });
+    };
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    // Define the `is_checked` method using Composition API
+    const is_checked = () => {
+      isChecked.value = !isChecked.value;
+    };
+
+    return { tasks, isChecked, is_checked };
   }
 };
 
