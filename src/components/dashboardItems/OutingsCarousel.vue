@@ -31,7 +31,7 @@
 
 <script>
 import singlecarousel from '@/components/dashboardItems/singlecarousel';
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
 import { auth } from '@/firebase/config';
 import { collection, query, where, getDocs } from "firebase/firestore";
 
