@@ -38,15 +38,15 @@ export default {
         const router = useRouter()
 
         // Google Authentication way
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                if (!user.community) {
-                    router.push({ name: "joinCommunity" });
-                } else {
-                    router.push({ name: "Homepage" });
-                }
-            }
-        })
+        // onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         if (!user.community) {
+        //             router.push({ name: "joinCommunity" });
+        //         } else {
+        //             router.push({ name: "Homepage" });
+        //         }
+        //     }
+        // })
 
         const handleLogin = async () => {
             const user = auth.currentUser;
@@ -58,8 +58,10 @@ export default {
                 const userData = docSnap.data();
 
                 if (!userData?.community) {
+                    console.log("User has no community. Redirecting to 'joinCommunity'");
                     router.push({ name: "joinCommunity" });
                 } else {
+                    console.log("User has a community. Redirecting to 'Homepage'");
                     router.push({ name: "Homepage" });
                 }
             } catch (error) {

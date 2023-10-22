@@ -6,7 +6,7 @@
       <button @click="createCom=true;">Create</button>
   </div>
   <div v-if="createCom">
-    <CommunityCreate/>
+    <CommunityCreate/>c
   </div>
 </template>
 
