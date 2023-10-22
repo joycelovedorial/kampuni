@@ -22,7 +22,8 @@
     "primevue": "^3.35.0",
     "vue": "^3.2.13",
     "vue-firebase": "^1.0.8",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vueperslides": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
