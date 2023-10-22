@@ -2,10 +2,9 @@
     <div>
         <Navbar/>
     </div>
-    
-        <div>
-            <ProfileEdit/>
-        </div>
+    <div>
+        <ProfileEdit/>
+    </div>
 
         
 </template>
