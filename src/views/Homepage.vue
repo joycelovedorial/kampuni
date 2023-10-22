@@ -6,7 +6,6 @@
         <!-- {{ name }} Pull name data from getUser-->
     </h1>
     <Dashboard :community="comId"/>
-    <Dashboard :community="comId"/>
     </body>
 </template>
 
@@ -59,6 +58,7 @@ export default {
 
 
 </script>
+
 <style>
 
 /* PLS READ -> FOR STYLES HERE, THEY WILL AFFECT ALL THE COMPONENTS MOUNTED HERE

@@ -25,7 +25,7 @@
     <div v-else>
         <ProfileEdit/>
     </div>
-
+   
     <button @click="toEdit=!toEdit">Edit</button>
 
         
@@ -80,7 +80,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return {firstname, lastname, birthday, country, bio, email, community, toEdit}
+            return {firstname, lastname, birthday, country, bio, email, community,toEdit}
     }
 }
 </script>

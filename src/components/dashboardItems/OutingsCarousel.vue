@@ -1,30 +1,15 @@
 <template>
+<div class= "overflow-x-scroll outer_container">
+  <div class="flex flex-nowrap content-center" >
+    <div class="col-lg-7 p-3 col-md-7 col-sm-12"><singlecarousel/> </div>
+    <div class="col-lg-7 p-3 col-md-7 col-sm-12" ><singlecarousel/> </div>
+    <div class="col-lg-7 p-3 col-md-7 col-sm-12"><singlecarousel/> </div>
 
-<!-- <singlecarousel/> -->
-
-<div class="carousel rounded-box">
-  <!-- <div class="carousel-item">
-    <img src="../../assets/logo.png">
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> 
-  <div class="carousel-item">
-    <singlecarousel/>
-  </div> -->
+  </div>
 </div>
+
+
+
 </template>
 
 <script>
@@ -86,6 +71,13 @@ export default {
 
 
 <style>
-
+.testing{
+  overflow:scroll
+}
+.outer_container{
+  width:auto;
+  height:300px;
+  
+}
 </style>
 

@@ -29,9 +29,9 @@
       <div class="col-lg-1 col-md-1 col-sm-1 "></div>
       <div class="col-lg-5 col-md-10 col-sm-10 flex-nowrap overflow-y-scroll h-32"> 
          <TodayTask/> 
-         <!-- <TodayTask/> 
          <TodayTask/> 
-         <TodayTask/>  -->
+         <TodayTask/> 
+         <TodayTask/> 
       </div>
       <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
