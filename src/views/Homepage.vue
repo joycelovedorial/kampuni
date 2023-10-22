@@ -1,7 +1,7 @@
 
 <template>
     <Navbar/>
-    <h1>Welcome back, Name
+    <h1>Welcome back, Name!@
         <!-- {{ name }} Pull name data from getUser-->
     </h1>
     <Dashboard/>
