@@ -37,7 +37,7 @@ export default {
         const editbirthday = ref("")
         const editbio = ref("")
         const editcommunity = ref('')
-        const edittoEdit = ref(true)
+        const toEdit = ref(true)
         const fetchData = async () => {
             const user = auth.currentUser;
 
@@ -75,7 +75,7 @@ export default {
         });
             return {updateEdit,firstname, lastname, birthday, country, bio, email, community,toEdit,
                     editfirstname,editlastname,editemail,editcountry,editbirthday,editbio,editcommunity,
-          }
+            }
     }
 }
 </script>
