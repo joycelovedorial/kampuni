@@ -58,7 +58,7 @@ import { db,auth } from '@/firebase/config';
 import { ref } from 'vue';
 
 export default {
-  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard },
+  components: { TodayTask, ExpensesList, OutingsCarousel},
   props: {
     community: String,
   },
