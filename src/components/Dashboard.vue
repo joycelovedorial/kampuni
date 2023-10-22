@@ -53,7 +53,6 @@
 <script>
 import TodayTask from './dashboardItems/TodayTask.vue';
 import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
-import ChatDashboard from './dashboardItems/ChatDashboard.vue';
 import ExpensesList from './dashboardItems/ExpensesList.vue';
 import { db,auth } from '@/firebase/config';
 import { ref } from 'vue';
