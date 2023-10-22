@@ -61,16 +61,17 @@ import { ref } from 'vue';
 export default {
   components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard },
   props: {
-    community: String, // Define the "community" prop as a string
+    community: String,
   },
   setup(props) {
+    console.log("this is dashboard" + props.community);
     const comId = props.community;
 
     // Use comId as needed
 
     // Rest of your component logic here
     const user = auth.currentUser
-    
+    return {comId}
   }
 }
 

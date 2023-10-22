@@ -2,10 +2,10 @@
     
     <Navbar/>
     <body id="bg1">
-    <h1 class="font-black" id="welcome">Welcome back, Name {{ name }}
+    <h1 class="font-black" id="welcome">Welcome back, {{ name }}
         <!-- {{ name }} Pull name data from getUser-->
     </h1>
-    <Dashboard/>
+    <Dashboard :community="comId"/>
     </body>
 </template>
 
@@ -24,29 +24,35 @@ export default {
     components: {Navbar, Dashboard},
     setup() {
         const name = ref("")
-        const router = useRouter
+        const router = useRouter()
+        const comId = ref(""); 
 
         const fetchCid = async () => {
             const user = auth.currentUser;
             if(user){
-                console.log(user);
+                
                 const uid = user.uid;
                 const docRef = doc(db, "users", uid);
 
                 try{
+                  
                     const docSnap = await getDoc(docRef);
                     const userData=docSnap.data();
-                    const cid = userData.community;
-                    name = userData.firstname
+                    comId.value = userData.community;
+                    
+                    name.value = userData.firstname
+                    
                 }catch(error){
                     console.error("Error fetching user data:", error)
                 }
             } else{
                 router.push({name:"Welcome"})
             }
-            
-
         }
+        onMounted(() => {
+            fetchCid();
+            });
+            return {name,comId,};
     }
 }
 
