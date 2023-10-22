@@ -42,6 +42,7 @@ export default {
                     firstname: firstName.value,
                     lastname: lastName.value,
                     email: email.value,
+                    password: password.value,
                     birthday: birthday.value,
                     country: country.value,
                     bio: bio.value, 
@@ -64,7 +65,10 @@ export default {
             // The signed-in user info.
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
-            // ...
+            // Getting user id 
+            const uid = user.uid;
+            const googleEmail = user.email;
+
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -86,7 +90,8 @@ export default {
                 email, password, 
                 handleSubmit, 
                 error,
-                signupGoogle
+                signupGoogle,
+                
         }
     }    
 }
