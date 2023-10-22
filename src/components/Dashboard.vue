@@ -4,7 +4,7 @@
   <div class="container bg-transparent">
     <div class="row mb-3">
       <div class="col-1"></div>
-      <div class="col-10 inline-block"> <OutingsCarousel/>  </div>
+      <div class="col-10 inline-block"> <OutingsCarousel :community="comId"/>  </div>
 
       <div class="col-1"></div>
     </div>
