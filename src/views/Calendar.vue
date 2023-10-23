@@ -26,13 +26,10 @@
     </nav>
   
     <div v-if="displayOutings">
-      OutingsComponent
     </div>
     <div v-if="displayCalendar">
-      CalendarComponent
     </div>
     <div v-if="displayTask">
-      TasklistComponent
       <TaskMarket />
     </div>
   </div>

@@ -1,37 +1,35 @@
 <template>
     <div class="flex space-x-2 mx-4">
-        <div class="w-3/4 bg-cyans rounded-lg px-2.5">
-            <h1 class="text-xl font-bold font-fredoka text-left text-cyanp my-1">Assignments</h1>
-            <h2>{{ formattedDate }}</h2>
+        <div class="w-3/4 bg-white rounded-lg px-2.5">
+            <h1 class="text-xl font-bold font-fredoka text-left text-cyanp my-1">{{ formattedDate }}</h1>
 
             <table>
-            <tr class="text-center">
-                <th v-for="(day, index) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="index">{{ day }}</th>
-            </tr>
-            <tr v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)">
-                <td v-for="dayIndex in 7" :key="dayIndex">
-                <span v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
-                    {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
-                </span>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <th v-for="(day, index) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="index">{{ day }}</th>
+                </tr>
+                <tr v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)">
+                    <td v-for="dayIndex in 7" :key="dayIndex">
+                    <span v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
+                        {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
+                    </span>
+                    </td>
+                </tr>
             </table>
 
         </div>
         <div class="w-1/4 px-2.5">
             <h1 class="text-xl font-bold font-fredoka text-left text-cyanp my-1">Task Market</h1>
-            <div class="task">
-                <div class="task-detail">
-                    <div class="w-4/5">
-                        <p class="text-cyanp font-bold">sweep living room</p>
-                        <p>created on: 08:05 AM</p>
-                        <p class="text-orangep">automatically assigned in 6hrs</p>
-                    </div>
-                    <div class="w-1/5 text-center">
-                        <div class="bg-cyanp font-fredoka font-bold text-2xl rounded-lg">
-                            <p class="text-cyans">20</p>
-                        </div>
+            <div class="task flex flex-col space-y-2">
+                <div class="task-detail p-3">
+                    <div class="w-1/5 text-center inline-block align-middle">
+                        <!-- <div class="points bg-cyanp font-fredoka font-bold text-2xl rounded-lg"> -->
+                            <span class="bg-cyanp font-fredoka font-bold text-2xl rounded-lg text-cyans inline-block align-middle p-2">20</span>
+                        <!-- </div> -->
                         <p>points</p>
+                    </div>
+                    <div class="w-4/5 pl-3">
+                        <p class="text-cyanp font-bold">sweep living room</p>
+                        <p class="text-black text-sm pt-2">automatically assigned in 6hrs.</p>
                     </div>
                 </div>
                 <div class="flex justify-center items-center">
@@ -55,7 +53,7 @@
         components: {
         },
         data () {
-            const currentDate = new Date(2023, 9); // October 2023 (0-indexed month)
+            const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             const firstDay = new Date(year, month, 1);
@@ -90,37 +88,34 @@ table {
     /* Adjust column widths evenly */
 }
 
-th, td {
+th {
     border: solid #2EC4B6 2px;
-    text-align: center; /* Center-align content */
-    padding: 8px; /* Adjust cell padding as needed */
+    padding: 2px; /* Adjust cell padding as needed */
 }
 
 th {
+    text-align: center;
     font-family: 'Fredoka One', sans-serif;
-    font-size: 20px;
-    background-color: #2EC4B6; /* Add background color for header */
-    color: white; /* Add text color for header */
+    font-size: 18px;
+    background-color: rgba(203, 243, 240, 0.50); /* Add background color for header */
+    color: black; /* Add text color for header */
 }
 
-tr:nth-child(1):td {
-    border-top-left-radius: 100px;
-    border-top-right-radius: 100px;
+td {
+    border: solid #2EC4B6 2px;
+    text-align: right;
+    vertical-align: top;
+    height: 70px;
 }
 
-tr:last-child td {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.task-detail {
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
 }
 
-/* Apply rounded corners to the first and last columns */
-tr td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+.points {
+    height: 65%;
 }
 
-tr td:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
 </style>

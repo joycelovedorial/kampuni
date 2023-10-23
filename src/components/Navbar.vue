@@ -81,6 +81,6 @@ export default {
   }
 
   a {
-    padding: 24px;
+    padding: 0 24px;
   }
 </style>
