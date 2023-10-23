@@ -1,12 +1,14 @@
 <template>
     
+    
     <Navbar/>
-    <body id="bg1">
-    <h1 class="font-black" id="welcome">Welcome back, Name
+    <body id="bg1" >
+    <h1 class="font-extrabold" id="welcome">Welcome back, Name
         <!-- {{ name }} Pull name data from getUser-->
     </h1>
     <Dashboard/>
     </body>
+    
 </template>
 
 <script>
@@ -33,11 +35,17 @@ THIS PAGE SHOULD ONLY INCLUDE Navbar AND Dashboard AND MAYBE THE POPUP CHAT
     margin: 0 auto;
     text-align: center;
     font-size :4.5rem;
-    color:cyan;
-    
+    color:#2EC4B6;
 }
 
 #bg1{
     background-image: url('@/assets/background_img/background1.png');
+    background-color: #f2f2f2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh; /* 100% of viewport height */
+    margin: 0;
+     /* Remove default margin to cover the entire viewport */
 }
 </style>

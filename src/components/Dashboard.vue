@@ -26,13 +26,18 @@
 
 
     <div class="row">
+      
       <div class="col-lg-1 col-md-1 col-sm-1 "></div>
-      <div class="col-lg-5 col-md-10 col-sm-10 flex-nowrap overflow-y-scroll h-32"> 
-         <TodayTask/> 
-         <TodayTask/> 
-         <TodayTask/> 
-         <TodayTask/> 
+      <div class="col-lg-5 col-md-10 col-sm-10 "> 
+        <h1 class="mb-2 font-bold text-cyanp text-2xl">Today Task</h1>
+        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6">
+        <TodayTask/> 
+        <TodayTask/> 
+        <TodayTask/> 
+        <TodayTask/> 
       </div>
+      </div>
+     
       <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
     </div>

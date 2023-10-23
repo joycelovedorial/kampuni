@@ -5,7 +5,7 @@
                     <div class="row"> 
                         <div class="card-body container  bg-orange-100"> 
                             <div class="row">
-                                <h5 class="card-title col-4 justify-center flex"><img id='icon' class="" src="../../assets/profiles/amos.jpg"></h5> 
+                                <h5 class="card-title col-4 justify-center flex"><img id='icon' class=" ml-8" src="../../assets/profiles/amos.jpg"></h5> 
                                 <div class="card-title col-7 bg-orange-300" id="name_container">
                                     <h5 class="fw-bold pt-2 pb-1">Amos</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1">TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
@@ -33,14 +33,15 @@
                         </ul> 
                     </div>
                     <div class="row">
-                        <button class="col-5 bg-orange-300 option_box text-green-700 "> 
-                        <svg class='w-5 h-5 inline' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+                        <button class="col-5 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : clicked_green}" @click="has_clicked_green" > 
+                            <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+                            </svg>
                         Count me in</button>
         
                         <div class="col-2 pl-0 pr-0"></div>
         
-                        <button class="col-5 bg-orange-300 option_box text-red-700 px-0 ">
+                        <button class="col-5 bg-orange-300 option_box text-red-700 px-0 " @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': clicked_red }" v-on:click="has_clicked_red"  >
                         <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
                         Count me out</button>
@@ -57,10 +58,68 @@ import '@/assets/main.css';
 export default {
     components: {
     },
+
+    data() {
+    return {
+        isHovered_green: false,
+        isHovered_red: false,
+        clicked_green: false,
+        clicked_red:false
+    };
+},
+methods: {
+    has_clicked_green() {
+        if (this.clicked_green == true) {
+            this.clicked_green = false;
+        } else {
+      this.clicked_green = true;
+      this.clicked_red = false;
+      }
+    },
+    has_clicked_red() {
+        if (this.clicked_red == true) {
+            this.clicked_red = false;
+        } else {
+      this.clicked_red = true;
+      this.clicked_green = false;
+      }
+    },
+  },
+
+
 }
 </script>
 
 <style>
+
+.clicked_style_green{
+    background-color: #FF9F1C!important;
+    transform: scale(1.05);
+    color: rgb(4, 84, 4) !important;
+    border:rgb(4, 84, 4) solid 1px;
+    
+}
+.clicked_style_red{
+    background-color: #FF9F1C!important;
+    transform: scale(1.05);
+    color: rgb(173, 7, 7) !important;
+    border:rgb(173, 7, 7)  solid 1px;
+    
+}
+
+.hovered_green{
+    background-color: #FF9F1C!important;
+    transform: scale(1.05);
+    transition: all .15s ease-in-out;
+    color: rgb(4, 84, 4) !important;
+}
+
+.hovered_red{
+    background-color: #FF9F1C!important;
+    transform: scale(1.05);
+    transition: all .15s ease-in-out;
+    color: rgb(173, 7, 7) !important;;
+}
 
 .custom-container{
 padding-bottom:0px;
