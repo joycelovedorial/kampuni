@@ -1,30 +1,33 @@
 <template>
-  <Navbar/>
-  <template>
-  <div class="chat-list-left">
-    <ul class="chatlist-container">
-      <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
-        {{ chatroom.name }}
-      </li>
-    </ul>
-  </div>
-  <div class="chatroom-right">
-    <ChatWindow :selectedChat="selectedChat" />
+  <div>
+    <Navbar/>
+    <div class="chat-list-left">
+      <!-- Chat list content -->
+      <ul class="chatlist-container">
+        <li v-for="chatroom in chatlist.value" :key="chatroom.id" @click="selectChat(chatroom.id)">
+          <div><p>hi</p></div>
+          <div>{{ chatroom.name }}</div>
+        </li>
+      </ul>
+    </div>
+    <div class="chatroom-right">
+      <ChatWindow :selectedChat="selectedChat" />
+    </div>
   </div>
 </template>
-</template>
+
 
 <script>
 import ChatWindow from '@/components/chatroomitems/ChatWindow.vue';
 import { ref,onMounted } from 'vue'
-import { collection, doc, getDocs,getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
+import { collection, doc, getDocs,getDoc,query,where } from "firebase/firestore"; 
 import Navbar from '@/components/Navbar.vue';
 import { useRouter } from 'vue-router';
 import{ auth,db} from '@/firebase/config';
 export default {
   components: { Navbar,ChatWindow },
   setup() {
-    const chatlist = ref([])
+    const chatlist = ref([]);
     const router = useRouter();
     const selectedChat = ref(null);
 
@@ -44,7 +47,6 @@ export default {
             id: doc.id,
             ...doc.data()
           }))
-          console.log("this is querysnapshot" + chatlist.value);
            // Separate chatrooms into two arrays: with communityID and without
           const withCommunityID = chatlist.value.filter(room => room.communityID);
           const withoutCommunityID = chatlist.value.filter(room => !room.communityID);
@@ -68,6 +70,7 @@ export default {
           if (chatlist.value.length > 0) {
             selectedChat.value = chatlist.value[0].id;
           }
+          console.log(chatlist.value[0].name);
           console.log("Query Successful");
         }catch(error){
           console.error("Could not fetch data",error);
@@ -84,11 +87,14 @@ export default {
       fetchData();
     })
 
-    return {chatlist,selectChat,selectedChat}
+    return { chatlist,selectChat,selectedChat }
   }
 }
 </script>
 
 <style>
+.chatlist-container{
+  background-color:cyan ;
+}
 
 </style>
