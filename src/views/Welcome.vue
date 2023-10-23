@@ -1,12 +1,108 @@
 <template>
-    <div class="logo-container container-fluid">
-        <img id="logo" src="../assets/logo.png" />
+<html>    
+  <body class="flex">
+    <img src="@/assets/kampuni_logo.png" id="logo">
+    <div class="outermost-container mb-32" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
+      <div class="form-container register-container">
+        <form @submit.prevent class="overflow-x-scroll">
+          <h1 class="text-orangep text-3xl font-medium">Register here</h1>
+          <div >
+            <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
+            <input class="form-control mb-1" type="text" required placeholder="Last Name" v-model ="lastName">
+            <input class="form-control mb-1" type="email" required placeholder="email" v-model="email">
+            <input class="form-control mb-1" type="password" required placeholder='password' v-model="password">
+            <input class="form-control mb-1" type="date" id="birthday" v-model="birthday">
+            <input class="form-control mb-1" type="text" placeholder="country" id="country" v-model="country">
+            <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
+        </div>
+            <input class="form-control mb-1" type="password" id="password" placeholder="Password" />
+        <div>
+          <button type="submit" value="submit" class="px-2 mt-1" @click="handleRegister">Register</button>
+        </div>
+
+          <span>or Sign Up using your google account</span>
+          <div class="social-container">
+            <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
+          </div>
+        </form>
+      </div>
+
+      <!-- <form @submit.prevent="handleSubmit">
+        <input type="text" required placeholder="First Name" v-model ="firstName">
+        <input type="text" required placeholder="Last Name" v-model ="lastName">
+        <input type="email" required placeholder="email" v-model="email">
+        <input type="password" required placeholder='password' v-model="password">
+        <input type="date" id="birthday" v-model="birthday">
+        <input type="text" placeholder="country" id="country" v-model="country">
+        <textarea id="bio" cols="30" rows="10" placeholder="bio" v-model="bio"></textarea>
+        <div class="error">{{ error }}</div> -->
+
+            <!-- <form  @submit.prevent="handleSubmit">
+        <input class="form-control" type="email" required placeholder="email" v-model="email">
+        <input class="form-control" type="password" required placeholder='password' v-model="password">
+        <div class="error">{{ error }}</div>
+        <button>Login</button>
+        <button @click="signinGoogle">Google</button>
+    </form> -->
+      <!-- <div v-if="registered">
+        <LoginForm @login="handleLogin" />
+        <button @click="registered = !registered">Click here to Sign Up</button> -->
+        <div v-if="registered" class="form-container login-container">
+        <!-- <LoginForm @login="handleLogin" /> -->
+        <form @submit.prevent="handleLogin" class="form-lg">
+            <h1 class="text-orangep text-3xl font-medium">Login here</h1>
+            <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
+            <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
+            <div class="content">
+            <div class="pass-link">
+                <button class="px-2 mr-2">Forgot password</button>
+                <button type="submit" value="submit" class="px-2" @click="handleLogin">Login</button>
+            </div>
+        </div>
+        
+        <div>Or login using your Google account</div>
+        <div class="social-container">
+            <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
+          </div>
+        </form>
+      </div>
+
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left ml-24" >
+            <h1 class="title">
+              <br> Hello <br/>
+              friends 
+            </h1>
+            <p>If you have an account, login here and have fun</p>
+            <button class="ghost px-2 mt-1" id="login" @click="togglePanel" > 
+              Login
+            </button>
+          </div>
+
+          <div class="overlay-panel overlay-right">
+            <h1 class="title">
+              Live with <br />
+              Kampuni now
+            </h1>
+            <p>
+              If you do not have an account yet, click here to join us
+            </p>
+            <button class="ghost mt-2 px-2" id="register" @click="togglePanel" >
+                
+                Register
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  <!-- <div class="flex flex-col items-center">
-        <label for="first-name" class="block text-sm font-medium text-gray-900 mb-1">First name</label>
-        <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    </div> -->
-    <div class="container-fluid loginform">
+  </body>
+
+</html>
+  <!-- <script src="main.js"></script> -->
+
+<!-- 
+  <div class="container-fluid loginform">
         <div v-if="registered">
         <LoginForm @login="handleLogin" />
         <button @click="registered = !registered">Click here to Sign Up</button>
@@ -16,70 +112,187 @@
         <button @click="registered = !registered">Click here to Login</button>
     </div>
     </div>
+</body>
+</html> -->
 </template>
 
-
 <script>
-import LoginForm from "@/components/LoginForm.vue";
-import SignupForm from "@/components/SignupForm.vue";
-import { ref } from "vue";
-import { auth, db } from "@/firebase/config";
-import { useRouter } from "vue-router";
-import { doc, getDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import LoginForm from '@/components/LoginForm.vue'
+import SignupForm from '@/components/SignupForm.vue'
+import { ref } from 'vue'
+import { auth, db } from '@/firebase/config'
+import { useRouter } from 'vue-router'
+import { onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
 
+// Animations
 export default {
+  
   components: { LoginForm, SignupForm },
-  setup() {
-    const registered = ref(true);
-    const router = useRouter();
+  
+  setup () {
+    const registered = ref(true)
+    const router = useRouter()
+    const isRightPanelActive = ref(false);
+    //handleRegister
+    const Rerror = ref(null)
+    const firstName = ref("")
+    const lastName = ref("")
+    const email = ref("")
+    const password = ref("")
+    const birthday = ref("")
+    const country = ref("")
+    const bio = ref("")
 
-    // Google Authentication way
-    // onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         if (!user.community) {
-    //             router.push({ name: "joinCommunity" });
-    //         } else {
-    //             router.push({ name: "Homepage" });
-    //         }
-    //     }
-    // })
+
+    const handleRegister = async () => {
+        try {
+            const cred = await createUserWithEmailAndPassword(auth, email.value, password.value);
+            setDoc(doc(db, "users", cred.user.uid), {
+              firstname: firstName.value,
+              lastname: lastName.value,
+              email: email.value,
+              birthday: birthday.value,
+              country: country.value,
+              bio: bio.value,
+              community: null,
+            });
+
+            const uid = cred.user.uid;
+            const docRef = doc(db, 'users', uid);
+
+                try {
+                  const docSnap = await getDoc(docRef);
+                  const userData = docSnap.data();
+
+                  if (!userData?.community) {
+                    router.push({ name: 'joinCommunity' });
+                  } else {
+                    router.push({ name: 'Homepage' });
+                  }
+                } catch (error) {
+                  console.error('Error fetching user data:', error);
+                }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    //handlelogin
+    const loginEmail = ref("")
+    const loginPassword = ref("")
+    const error = ref(null)
+    const errorMessage = ref("")
 
     const handleLogin = async () => {
-      const user = auth.currentUser;
-      const uid = user.uid;
-      const docRef = doc(db, "users", uid);
 
       try {
+
+        const cred = await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+        const uid = cred.user.uid;
+        const docRef = doc(db, 'users', uid);
         const docSnap = await getDoc(docRef);
         const userData = docSnap.data();
 
         if (!userData?.community) {
-          router.push({ name: "joinCommunity" });
+          router.push({ name: 'joinCommunity' });
         } else {
-          router.push({ name: "Homepage" });
+          router.push({ name: 'Homepage' });
         }
+
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
+
+        // Handle the specific error or log the error message
+        console.log(error.code);
+        console.log(error.message);
       }
     };
 
-    return { registered, handleLogin };
-  },
-};
+
+    const signinGoogle = async () => {
+        try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          
+          // The signed-in user info.
+          const user = result.user;
+          const uid = user.uid;
+          const docRef = doc(db, 'users', uid);
+          
+              try {
+                const docSnap = await getDoc(docRef);
+                const userData = docSnap.data();
+
+                if (!userData?.community) {
+                  router.push({ name: 'joinCommunity' });
+                } else {
+                  router.push({ name: 'Homepage' });
+                }
+              } catch (error) {
+                console.error('Error fetching user data:', error);
+              }
+
+          } catch (error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // Handle the specific error or log the error message
+            console.error('Google sign-in error:', errorCode, errorMessage);
+          }
+        };
+
+    //after Authenticated
+    const handleAuth = async () => {
+      const user = auth.currentUser
+      const uid = user.uid
+      const docRef = doc(db, 'users', uid)
+
+      try {
+        const docSnap = await getDoc(docRef)
+        const userData = docSnap.data()
+
+        if (!userData?.community) {
+          router.push({ name: 'joinCommunity' })
+        } else {
+          router.push({ name: 'Homepage' })
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+
+    const togglePanel = () =>{
+      isRightPanelActive.value = !isRightPanelActive.value
+    }
+    return { registered, handleAuth,isRightPanelActive,togglePanel,loginEmail, loginPassword, handleLogin,signinGoogle, errorMessage,error,
+      handleRegister,firstName,lastName,country,birthday,bio, email, password, Rerror
+    }
+}
+}
 </script>
 
 <style>
 #logo {
-  margin: 0 auto;
-  border-radius: 20px;
+  margin-bottom: 5px auto;
+  
+
 }
 #logo {
-  width: 100%;
-  height: 100%;
+  width: 30%;
+  height: 20%;
 }
 .logo-container {
-  width: 400px;
+  width: 250px;
 }
 
 .loginform {
@@ -91,4 +304,394 @@ export default {
 .loginform input {
   border-radius: 10px;
 }
+
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
+
+* {
+  /* margin: 0;
+    padding: 0; */
+  box-sizing: border-box;
+}
+
+body {
+  background: url(@/assets/background_img/newnew.jpg)
+    top center / cover no-repeat;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 0;
+  margin-bottom: 15px;
+  padding:20px;
+}
+
+h1.title {
+  font-size: 45px;
+  line-height: 45px;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
+}
+
+p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+  text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
+}
+
+span {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+a {
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0;
+  transition: 0.3s ease-in-out;
+}
+
+a:hover {
+  color: #4bb6b7;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.content .checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content input {
+  accent-color: #333;
+  width: 12px;
+  height: 12px;
+}
+
+.content label {
+  font-size: 14px;
+  user-select: none;
+  padding: 5px;
+}
+
+button {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid #4bb6b7;
+  background-color: #4bb6b7;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 20px;
+  padding: 12px 80px;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+button:hover {
+  letter-spacing: 3px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+#login i {
+  position: absolute;
+  left: 50px;
+}
+
+#register i {
+  position: absolute;
+  right: 50px;
+}
+
+button.ghost i {
+  position: absolute;
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+  z-index: 6;
+}
+
+button.ghost i.register {
+  right: 70px;
+}
+
+button.ghost i.login {
+  left: 70px;
+}
+
+form {
+  background-color: #fff;
+  
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+}
+
+input {
+  background-color: #fff;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #adadad;
+  padding: 12px 0px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.outermost-container {
+  border-radius: 25px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 0px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 500px;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.form-control {
+  width: 100%;
+  position: relative;
+}
+
+.form-control2 {
+  width: 100%;
+  position: relative;
+}
+
+.form-control2 span {
+  position: absolute;
+  border-bottom: 3px solid #2691d9;
+  left: 0;
+  bottom: 8px;
+  width: 0%;
+  transition: all 0.3s ease;
+}
+
+.form-control2 input:focus ~ span {
+  width: 100%;
+}
+.form-control small {
+  color: red;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.form-control span {
+  position: absolute;
+  border-bottom: 3px solid #2691d9;
+  left: 0;
+  bottom: 8px;
+  width: 0%;
+  transition: all 0.3s ease;
+}
+
+.form-control input:focus ~ span {
+  width: 100%;
+}
+
+.form-control2 small {
+  color: red;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.form-control2 span {
+  position: absolute;
+  border-bottom: 3px solid #2691d9;
+  left: 0;
+  bottom: 8px;
+  width: 0%;
+  transition: all 0.3s ease;
+}
+
+.form-control2 input:focus ~ span {
+  width: 100%;
+}
+
+.login-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.container.right-panel-active .login-container {
+  transform: translateX(100%);
+  animation: show 0.6s;
+}
+
+.register-container {
+  /* position: relative; */
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.outermost-container.right-panel-active .register-container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: show 0.6s;
+}
+
+@keyframes show {
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+.outermost-container.right-panel-active .overlay-container {
+  transform: translate(-100%);
+}
+
+.overlay {
+  background-image: url("@/assets/background_img/newnew.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(46, 94, 109, 0.4) 40%,
+    rgba(46, 94, 109, 0)
+  );
+}
+
+.outermost-container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+  transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.outermost-container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+.social-container {
+  margin: 20px 0;
+}
+
+.social-container a {
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+  transition: 0.3s ease-in-out;
+}
+
+.social-container a:hover {
+  border: 1px solid #4bb6b7;
+}
+
 </style>
