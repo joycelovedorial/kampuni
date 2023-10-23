@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Chatlist from '@/components/chatroomitems/Chatlist.vue';
+import ChatWindow from '@/components/chatroomitems/ChatWindow.vue';
 
 import Navbar from '@/components/Navbar.vue';
 export default {

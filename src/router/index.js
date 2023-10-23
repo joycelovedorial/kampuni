@@ -5,7 +5,6 @@ import Planner from '../views/Planner.vue';
 import Chatrooms from '../views/chatroom/Chatrooms.vue'
 import joinCommunity from '../views/joinCommunity.vue'
 import Profile from '../views/Profile.vue'
-import Chatroom from '../views/chatroom/Chatroom.vue'
 import Expenses from '@/views/Expenses.vue'
 
 
@@ -62,11 +61,7 @@ const routes = [
     name:'Profile',
     component: Profile
   },
-  {
-    path:'/Chatrooms/:id',
-    name: 'Chatroom',
-    component: Chatroom
-  },
+
   {
     path:'/Expenses',
     name: 'Expenses',
