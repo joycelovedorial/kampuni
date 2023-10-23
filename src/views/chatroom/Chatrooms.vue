@@ -15,15 +15,15 @@
 
 
 <script>
-import ChatWindow from '@/components/chatroomitems/ChatWindow.vue';
+import ChatWindow from '@/components/ChatWindow.vue';
 import { ref,onMounted } from 'vue'
 import { collection, doc, getDocs,getDoc,query,where } from "firebase/firestore"; 
 import Navbar from '@/components/Navbar.vue';
 import { useRouter } from 'vue-router';
 import{ auth,db} from '@/firebase/config';
-import Chatlist from '@/components/chatroomitems/Chatlist.vue';
+
 export default {
-  components: { Navbar,ChatWindow,Chatlist },
+  components: { Navbar,ChatWindow },
   setup() {
     const chatlist = ref([]);
     const router = useRouter();
