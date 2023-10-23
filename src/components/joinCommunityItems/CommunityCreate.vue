@@ -28,7 +28,7 @@ export default {
                  });
                 const comId = comRef.id;
                 const chatRef = await addDoc(collection(db,"chatrooms"),{
-                    usersInvoled: [uid],
+                    usersInvolved: [uid],
                     name:comName.value,
                     //comId is the id of the communities document created above
                     communityID: comId,
