@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <Navbar/>
-    <div class="chat-list-left">
-      <Chatlist/>
+  <div class="chat-list-left">
       <!-- Chat list content -->
       <ul class="chatlist-container">
         <li v-for="chatroom in chatlist.value" :key="chatroom.id">
@@ -11,23 +8,19 @@
         </li>
       </ul>
     </div>
-    <div class="chatroom-right">
-      <ChatWindow :selectedChat="selectedChat" />
-    </div>
-  </div>
 </template>
 
-
 <script>
-import ChatWindow from '@/components/chatroomitems/ChatWindow.vue';
+
+
 import { ref,onMounted } from 'vue'
 import { collection, doc, getDocs,getDoc,query,where } from "firebase/firestore"; 
 import Navbar from '@/components/Navbar.vue';
 import { useRouter } from 'vue-router';
 import{ auth,db} from '@/firebase/config';
-import Chatlist from '@/components/chatroomitems/Chatlist.vue';
+
 export default {
-  components: { Navbar,ChatWindow,Chatlist },
+
   setup() {
     const chatlist = ref([]);
     const router = useRouter();
