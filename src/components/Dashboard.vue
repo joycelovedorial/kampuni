@@ -4,7 +4,7 @@
   <div class="container bg-transparent">
     <div class="row mb-3">
       <div class="col-1"></div>
-      <div class="col-10 inline-block"> <OutingsCarousel/>  </div>
+      <div class="col-10 inline-block"> <OutingsCarousel :community="comId"/>  </div>
 
       <div class="col-1"></div>
     </div>
@@ -58,24 +58,24 @@
 <script>
 import TodayTask from './dashboardItems/TodayTask.vue';
 import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
-import ChatDashboard from './dashboardItems/ChatDashboard.vue';
 import ExpensesList from './dashboardItems/ExpensesList.vue';
 import { db,auth } from '@/firebase/config';
 import { ref } from 'vue';
 
 export default {
-  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard },
+  components: { TodayTask, ExpensesList, OutingsCarousel},
   props: {
-    community: String, // Define the "community" prop as a string
+    community: String,
   },
   setup(props) {
+    console.log("this is dashboard" + props.community);
     const comId = props.community;
 
     // Use comId as needed
 
     // Rest of your component logic here
     const user = auth.currentUser
-    
+    return {comId}
   }
 }
 

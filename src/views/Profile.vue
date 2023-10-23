@@ -2,29 +2,31 @@
     <div>
         <Navbar/>
     </div>
-    <div class="profile">
-        <div id="firstname">
+    <div v-if="toEdit" class="profile">
+        <div class="text" id="firstname">
             Name:{{firstname.value}}
         </div>
-        <div id="lastname">
+        <div class="text" id="lastname">
             Surname:{{lastname.value}}
         </div>
-        <div id="profileEmail">
+        <div class="text" id="profileEmail">
             Email:{{email.value}}
         </div>
-        <div id="country">
+        <div class="text" id="country">
             Country:{{country.value}}
         </div>
-        <div id="birthday">
+        <div class="text" id="birthday">
             Birthday:{{birthday.value}}
         </div>
-        <div id="community">
+        <div class="text" id="community">
             Community:{{community.value}}
         </div>
     </div>
-    <div>
-        <!-- <ProfileEdit/> -->
+    <div v-else>
+        <ProfileEdit/>
     </div>
+   
+    <button @click="toEdit=!toEdit">Edit</button>
 
         
 </template>
@@ -45,7 +47,7 @@ export default {
         const birthday = ref("")
         const bio = ref("")
         const community = ref('')
-
+        const toEdit = ref(true)
         const fetchData = async () => {
             const user = auth.currentUser;
 
@@ -57,16 +59,16 @@ export default {
                     const docSnap = await getDoc(docRef);
                     const userData = docSnap.data();
                     console.log(userData);
-                    const cid = userData.community
-                    const commSnap = getDoc(doc(db,"communities",cid))
-                    const commData = (await commSnap).data();
-                    firstname = userData.firstname
-                    lastname = userData.lastname
-                    birthday = userData.birthday
-                    country = userData.country
-                    bio = userData.bio
-                    email = userData.email
-                    community = commData.communityName
+                    const cid = userData.community;
+                    const commSnap = await getDoc(doc(db, "communities", cid));
+                    const commData = commSnap.data();
+                    firstname.value = userData.firstname;  // Use .value
+                    lastname.value = userData.lastname;  // Use .value
+                    birthday.value = userData.birthday;  // Use .value
+                    country.value = userData.country;  // Use .value
+                    bio.value = userData.bio;  // Use .value
+                    email.value = userData.email;  // Use .value
+                    community.value = commData.communityName;  // Use .value
 
                 } catch (error) {
                     console.error("Error fetching user data:", error);
@@ -78,7 +80,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return {firstname, lastname, birthday, country, bio, email, community}
+            return {firstname, lastname, birthday, country, bio, email, community,toEdit}
     }
 }
 </script>
@@ -88,5 +90,8 @@ export default {
   display: flex;
   flex-direction: column; 
   align-items: flex-start; 
+}
+.text{
+    padding: 40px;
 }
 </style>
