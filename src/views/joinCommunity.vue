@@ -3,7 +3,7 @@
   <CommunityList/>
   <div>
       <h2>Create Your Community! </h2>
-      <button @click="createCom=true;">Create</button>
+      <button @click="createCom=!createCom;">Create</button>
   </div>
   <div v-if="createCom">
     <CommunityCreate/>
@@ -27,20 +27,23 @@ export default {
     const createCom = ref(false)
     const router = useRouter()
     const user = auth.currentUser
-    console.log("this is supposed to be user " +  user);
-    
+
     const fetchData = async () => {
       if (user) {
-      console.log(user);
-      const uid = user.uid;
-      const docRef = doc(db,"users",uid)
+        console.log(user);
+        const uid = user.uid;
+        const docRef = doc(db,"users",uid)
 
-      const docSnap = await getDoc(docRef)
-      const userData = docSnap.data()
-      console.log("this is supposed to be user Data" +  userData);
-      if (userData.community) {
-            router.push({ name: 'Homepage' });
-      }
+        const docSnap = await getDoc(docRef)
+        const userData = docSnap.data()
+        console.log("this is supposed to be user Data" +  userData);
+
+
+        if (userData && userData.community != null) {
+              router.push({ name: 'Homepage' });
+        } 
+
+
       }else{
         router.push({name:"Welcome"})
       }

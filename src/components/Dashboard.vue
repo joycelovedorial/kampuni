@@ -77,7 +77,4 @@ export default {
 </script>
 
 <style>
-.container{
-  /* background-image:url("@/assets/background_img/background1.png"); */
-}
 </style>
