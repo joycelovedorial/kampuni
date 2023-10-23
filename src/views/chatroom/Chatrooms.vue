@@ -3,7 +3,7 @@
   <div class="chat-list-left">
     <ul class="chatlist-container">
       <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
-        {{ chatroom.name }}
+        <div>{{ chatroom.name }}</div>
       </li>
     </ul>
   </div>
