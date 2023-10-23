@@ -20,14 +20,12 @@ import { useRouter } from 'vue-router';
 export default {
     setup(){
      const communityArray = ref([])
-        const router = useRouter()
-
+     const router = useRouter()
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
             querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
                 communityArray.value.push({...doc.data(),id:doc.id}); 
-                console.log(communityArray)// Access the ref using .value
+                // console.log(communityArray)// Access the ref using .value
             
             });
         };
@@ -35,7 +33,7 @@ export default {
     const joinCom = async (comId) => {
 
         const user = auth.currentUser;
-        console.log(user)
+        // console.log(user)
         const uid = user.uid
         const communityRef = doc(db, "communities", comId);
         const communityDoc = await getDoc(communityRef);
@@ -61,7 +59,6 @@ export default {
         }
         router.push({name:"Homepage", params: {community:comId}})  
     }
-
 
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
