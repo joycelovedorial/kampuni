@@ -1,15 +1,25 @@
 <template>
   <Navbar/>
-  <div class="chat-list-left">
-    <ul class="chatlist-container">
-      <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
-        <div>{{ chatroom.name }}</div>
-      </li>
-    </ul>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-1"></div>
+
+      <div class="chat-list-left  col-2">
+        <ul class="chatlist-container">
+          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
+            <div>{{ chatroom.name }}</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="chatroom-right col-8">
+        <ChatWindow :selectedChat="selectedChat"/>
+      </div>
+
+    <div class="col-1"></div>
   </div>
-  <div class="chatroom-right">
-    <ChatWindow :selectedChat="selectedChat"/>
-  </div>
+</div>
 
 </template>
 
@@ -106,6 +116,9 @@ export default {
 </script>
 
 <style>
-
+.chatlist-container{
+  justify-content:flex;
+  flex-direction: column;
+}
 
 </style>
