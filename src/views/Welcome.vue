@@ -4,7 +4,7 @@
     <img src="@/assets/kampuni_logo.png" id="logo">
     <div class="outermost-container mb-32" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container">
-        <form @submit.prevent="handleSubmit" class="overflow-x-scroll">
+        <form @submit.prevent class="overflow-x-scroll">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
@@ -17,12 +17,12 @@
         </div>
             <input class="form-control mb-1" type="password" id="password" placeholder="Password" />
         <div>
-          <button type="submit" value="submit" class="px-2 mt-1">Register</button>
+          <button type="submit" value="submit" class="px-2 mt-1" @click="handleRegister">Register</button>
         </div>
 
           <span>or Sign Up using your google account</span>
           <div class="social-container">
-            <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
+            <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
           </div>
         </form>
       </div>
@@ -49,20 +49,20 @@
         <button @click="registered = !registered">Click here to Sign Up</button> -->
         <div v-if="registered" class="form-container login-container">
         <!-- <LoginForm @login="handleLogin" /> -->
-        <form @submit.prevent="handleSubmit" class="form-lg">
+        <form @submit.prevent="handleLogin" class="form-lg">
             <h1 class="text-orangep text-3xl font-medium">Login here</h1>
-            <input class="form-control mb-1" type="email" required placeholder="email" v-model="email">
-            <input class="form-control" type="password" required placeholder='password' v-model="password">
+            <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
+            <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
             <div class="content">
             <div class="pass-link">
                 <button class="px-2 mr-2">Forgot password</button>
-                <button type="submit" value="submit" class="px-2">Login</button>
+                <button type="submit" value="submit" class="px-2" @click="handleLogin">Login</button>
             </div>
         </div>
         
         <div>Or login using your Google account</div>
         <div class="social-container">
-            <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
+            <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
           </div>
         </form>
       </div>
@@ -122,32 +122,136 @@ import SignupForm from '@/components/SignupForm.vue'
 import { ref } from 'vue'
 import { auth, db } from '@/firebase/config'
 import { useRouter } from 'vue-router'
-import { doc, getDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
 
 // Animations
 export default {
-  data() {
-    return {
-      isRightPanelActive: false,
-    };
-  },
-  methods: {
-    togglePanel() {
-      this.isRightPanelActive = !this.isRightPanelActive;
-    },
-  },
+  
   components: { LoginForm, SignupForm },
   
   setup () {
     const registered = ref(true)
     const router = useRouter()
     const isRightPanelActive = ref(false);
+    //handleRegister
+    const Rerror = ref(null)
+    const firstName = ref("")
+    const lastName = ref("")
+    const email = ref("")
+    const password = ref("")
+    const birthday = ref("")
+    const country = ref("")
+    const bio = ref("")
 
-    const emitTogglePanel = (isRegister) => {
-      isRightPanelActive.value = isRegister;
-    };
+
+    const handleRegister = async () => {
+        try {
+            const cred = await createUserWithEmailAndPassword(auth, email.value, password.value);
+            setDoc(doc(db, "users", cred.user.uid), {
+              firstname: firstName.value,
+              lastname: lastName.value,
+              email: email.value,
+              birthday: birthday.value,
+              country: country.value,
+              bio: bio.value,
+              community: null,
+            });
+
+            const uid = cred.user.uid;
+            const docRef = doc(db, 'users', uid);
+
+                try {
+                  const docSnap = await getDoc(docRef);
+                  const userData = docSnap.data();
+
+                  if (!userData?.community) {
+                    router.push({ name: 'joinCommunity' });
+                  } else {
+                    router.push({ name: 'Homepage' });
+                  }
+                } catch (error) {
+                  console.error('Error fetching user data:', error);
+                }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    //handlelogin
+    const loginEmail = ref("")
+    const loginPassword = ref("")
+    const error = ref(null)
+    const errorMessage = ref("")
+
     const handleLogin = async () => {
+
+      try {
+
+        const cred = await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+        const uid = cred.user.uid;
+        const docRef = doc(db, 'users', uid);
+        const docSnap = await getDoc(docRef);
+        const userData = docSnap.data();
+
+        if (!userData?.community) {
+          router.push({ name: 'joinCommunity' });
+        } else {
+          router.push({ name: 'Homepage' });
+        }
+
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+
+        // Handle the specific error or log the error message
+        console.log(error.code);
+        console.log(error.message);
+      }
+    };
+
+
+    const signinGoogle = async () => {
+        try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          
+          // The signed-in user info.
+          const user = result.user;
+          const uid = user.uid;
+          const docRef = doc(db, 'users', uid);
+          
+              try {
+                const docSnap = await getDoc(docRef);
+                const userData = docSnap.data();
+
+                if (!userData?.community) {
+                  router.push({ name: 'joinCommunity' });
+                } else {
+                  router.push({ name: 'Homepage' });
+                }
+              } catch (error) {
+                console.error('Error fetching user data:', error);
+              }
+
+          } catch (error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // Handle the specific error or log the error message
+            console.error('Google sign-in error:', errorCode, errorMessage);
+          }
+        };
+
+    //after Authenticated
+    const handleAuth = async () => {
       const user = auth.currentUser
       const uid = user.uid
       const docRef = doc(db, 'users', uid)
@@ -166,7 +270,13 @@ export default {
       }
     }
 
-    return { registered, handleLogin}
+
+    const togglePanel = () =>{
+      isRightPanelActive.value = !isRightPanelActive.value
+    }
+    return { registered, handleAuth,isRightPanelActive,togglePanel,loginEmail, loginPassword, handleLogin,signinGoogle, errorMessage,error,
+      handleRegister,firstName,lastName,country,birthday,bio, email, password, Rerror
+    }
 }
 }
 </script>
