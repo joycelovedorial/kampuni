@@ -5,8 +5,7 @@
       <!-- Chat list content -->
       <ul class="chatlist-container">
         <li v-for="chatroom in chatlist.value" :key="chatroom.id" @click="selectChat(chatroom.id)">
-          <div><p>hi</p></div>
-          <div>{{ chatroom.name }}</div>
+          <div>{{chatroom.name}}</div>
         </li>
       </ul>
     </div>
@@ -30,6 +29,7 @@ export default {
     const chatlist = ref([]);
     const router = useRouter();
     const selectedChat = ref(null);
+    
 
 
     const fetchData = async () => {
@@ -51,16 +51,20 @@ export default {
           const withCommunityID = chatlist.value.filter(room => room.communityID);
           const withoutCommunityID = chatlist.value.filter(room => !room.communityID);
 
-          withoutCommunityID.forEach(async room => {
+          for (const room of withoutCommunityID) {
               const otherUserId = room.usersInvolved.find(userId => userId !== uid);
-
               // Fetch the other user's first name from the users collection
               const userDoc = await getDoc(doc(db, 'users', otherUserId));
+
               if (userDoc.exists()) {
                 room.name = userDoc.data().firstname;
+                
               }
-            }); 
-
+            }
+          console.log("post forloop wocid:");
+          withoutCommunityID.forEach(room => {
+              console.log(room);
+            });
           // Sort chatrooms with communityID based on communityID
           withCommunityID.sort((a, b) => a.communityID.localeCompare(b.communityID));
 
@@ -70,7 +74,10 @@ export default {
           if (chatlist.value.length > 0) {
             selectedChat.value = chatlist.value[0].id;
           }
-          console.log(chatlist.value[0].name);
+          console.log(chatlist.value[0].id);
+          console.log(chatlist.value[1].id);
+          console.log(chatlist.value[2].id);
+
           console.log("Query Successful");
         }catch(error){
           console.error("Could not fetch data",error);
@@ -87,14 +94,12 @@ export default {
       fetchData();
     })
 
-    return { chatlist,selectChat,selectedChat }
+    return { chatlist ,selectChat,selectedChat }
   }
 }
 </script>
 
 <style>
-.chatlist-container{
-  background-color:cyan ;
-}
+
 
 </style>
