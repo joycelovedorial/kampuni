@@ -82,7 +82,7 @@
     </fieldset>
   </form> -->
 
-<div id="app" class="container pb-1"> 
+<div id="app" class="container pt-2 bg-transparent"> 
   <div class ='row bg-oranges relative rounded p-3'>
     <div class='col'>
     <input type="checkbox" v-on:click="is_checked" class='larger'>
