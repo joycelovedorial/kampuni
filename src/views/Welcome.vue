@@ -1,8 +1,8 @@
 <template>
 <html>    
-  <body>
+  <body class="flex">
     <img src="@/assets/kampuni_logo.png" id="logo">
-    <div class="outermost-container" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
+    <div class="outermost-container mb-32" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container">
         <form @submit.prevent="handleSubmit" class="overflow-x-scroll">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
@@ -174,13 +174,13 @@ export default {
 
 <style>
 #logo {
-  margin-top: 0px auto;
-  border-radius: 20px;
+  margin-bottom: 5px auto;
+  
 
 }
 #logo {
-  width: 50%;
-  height: 30%;
+  width: 30%;
+  height: 20%;
 }
 .logo-container {
   width: 250px;
@@ -207,7 +207,7 @@ export default {
 body {
   background: url(@/assets/background_img/newnew.jpg)
     top center / cover no-repeat;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   flex-direction: column;
