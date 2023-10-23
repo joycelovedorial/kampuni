@@ -62,7 +62,6 @@
         
         <div>Or login using your Google account</div>
         <div class="social-container">
-
             <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
           </div>
         </form>
