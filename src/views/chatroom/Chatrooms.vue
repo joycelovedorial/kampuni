@@ -4,8 +4,11 @@
 
 <script>
 import ChatWindow from '@/components/chatroomitems/ChatWindow.vue';
-
+import { ref,onMounted } from 'vue'
+import { collection, doc, getDocs,getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
 import Navbar from '@/components/Navbar.vue';
+import { useRouter } from 'vue-router';
+import{ auth,db} from '@/firebase/config';
 export default {
   components: { Navbar,ChatWindow },
   setup() {
