@@ -1,37 +1,40 @@
 <template>
-    <div>
-        <img id="logo" src="src/assets/logo.jpg"/> 
-    </div>
-    <form>
-        <input type="email" required placeholder="email" v-model="email">
-        <input type="password" required placeholder='password' v-model="password">
+    <form  @submit.prevent="handleSubmit">
+        <input class="form-control" type="email" required placeholder="email" v-model="email">
+        <input class="form-control" type="password" required placeholder='password' v-model="password">
         <div class="error">{{ error }}</div>
         <button>Login</button>
-        <button @click="signupGoogle">Google</button>
+        <button @click="signinGoogle">Google</button>
     </form>
 </template>
 
 <script>
 import { ref } from 'vue'
-import useLogin from '../composables/useLogin'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from "@/firebase/config"
+import {useRouter} from 'vue-router'
 
 export default {
-   setup(){
+   setup(props,context){
         const email = ref("")
         const password = ref("")
+        const error = ref(null)
+        const errorMessage = ref("")
 
-        const {error, login} =useLogin()
         const handleSubmit = async () => {
-            await login(email.value, password.value)
-            if (!error.value){
+            signInWithEmailAndPassword(auth,email.value,password.value)
+            .then((cred)=> {
+              console.log("signed in")
               context.emit('login')
-            }
+            }).catch((error)=>{
+                console.log(error.value)
+                const errorMessage = error.message
+            })
         }
-        const signupGoogle = async () => {
+        
+        const signinGoogle = async () => {
             const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
             signInWithPopup(auth, provider)
             .then((result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
@@ -41,6 +44,7 @@ export default {
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
             // ...
+
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -53,7 +57,7 @@ export default {
             });
             };
 
-        return { email, password, handleSubmit,signupGoogle}
+        return { email, password, handleSubmit,signinGoogle, errorMessage,error}
    }  
 }
 </script>

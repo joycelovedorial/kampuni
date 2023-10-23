@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Welcome from '../views/Welcome.vue'
 import Homepage from '../views/Homepage.vue'
-import Calendar from '../views/Calendar.vue'
+import Planner from '../views/Planner.vue';
 import Chatrooms from '../views/chatroom/Chatrooms.vue'
 import joinCommunity from '../views/joinCommunity.vue'
-import Outings from '../views/Outings.vue'
 import Profile from '../views/Profile.vue'
 import Chatroom from '../views/chatroom/Chatroom.vue'
+import Expenses from '@/views/Expenses.vue'
 
 
 // import { projectAuth } from '../firebase/config'
@@ -39,12 +39,13 @@ const routes = [
   {
     path:'/homepage',
     name: 'Homepage',
-    component: Homepage
+    component: Homepage,
+    props: true
   },
   {
-    path: '/Calendar',
-    name: 'Calendar',
-    component: Calendar
+    path: '/Planner',
+    name: 'Planner',
+    component: Planner
   },
   {
     path: '/Chatrooms',
@@ -62,14 +63,14 @@ const routes = [
     component: Profile
   },
   {
-    path:'/Outings',
-    name:'Outings',
-    component: Outings
-  },
-  {
     path:'/Chatrooms/:id',
     name: 'Chatroom',
     component: Chatroom
+  },
+  {
+    path:'/Expenses',
+    name: 'Expenses',
+    component: Expenses
   }
 
   
