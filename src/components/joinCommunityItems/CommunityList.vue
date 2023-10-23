@@ -93,10 +93,6 @@ export default {
             })
 
         }
-
-
-
-
         router.push({name:"Homepage", params: {community:comId}})  
     }
 

@@ -1,5 +1,17 @@
 <template>
   <Navbar/>
+  <template>
+  <div class="chat-list-left">
+    <ul class="chatlist-container">
+      <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
+        {{ chatroom.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="chatroom-right">
+    <ChatWindow :selectedChat="selectedChat" />
+  </div>
+</template>
 </template>
 
 <script>
