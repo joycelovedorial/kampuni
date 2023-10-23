@@ -16,12 +16,12 @@
           </svg>
           Chats
         </router-link>
-        <router-link to="../Calendar" class="button text-cyanp font-bold">
+        <router-link to="../Planner" class="button text-cyanp font-bold">
           <!-- <img class="inline" src="../assets/icons/calendar.png" alt=""> -->
           <svg class="inline w-5 h-5 text-cyanp" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
           </svg>
-          Calendar
+          Planner
         </router-link>
         <router-link to="../Expenses" class="button text-cyanp  font-bold">
           <!-- <img class="inline" src="../assets/icons/expenses.png" alt=""> -->
@@ -31,26 +31,40 @@
           Expenses
         </router-link>
       </ul>
-      <router-link to="../Expenses" class="button text-black"><img class="rounded-full border-black border-2 w-12 inline profile " src="../assets/profiles/anyu.jpg" alt=""></router-link>
+      <button class="button text-orange-400" @click="handleLogout">Logout</button>
+      <router-link to="../Profile" class="button text-black"><img class="rounded-full border-black border-2 w-12 inline profile " src="../assets/profiles/anyu.jpg" alt=""></router-link>
     </nav>
   </div>
 </template>
 
 <script>
-  import '@/assets/main.css';
+import '@/assets/main.css';
+import { ref } from 'vue';
+import { auth } from '@/firebase/config';
+import { useRouter } from 'vue-router'; // Import the useRouter function
 
-  export default {
-    components: {
-    },
-  };
+export default {
+    setup() {
+        const router = useRouter(); // Initialize the router
+
+        const handleLogout = async () => {
+            try {
+                await auth.signOut();
+                // Redirect to the login page (Welcome page)
+                router.push({ name: 'Welcome' });
+            } catch (error) {
+                // Handle the sign-out error if needed
+                console.error('Error signing out:', error);
+            }
+        };
+
+        return { handleLogout };
+    }
+};
 </script>
 
 
 <style>
-  body {
-    background-image: url('../assets/background_img/background1.png');
-    background-size: cover;
-  }
   ul {
     list-style-type: none;
     margin: 0;
@@ -67,6 +81,6 @@
   }
 
   a {
-    padding: 24px;
+    padding: 0 24px;
   }
 </style>

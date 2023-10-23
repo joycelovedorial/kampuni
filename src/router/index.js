@@ -1,14 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Welcome from '../views/Welcome.vue'
 import Homepage from '../views/Homepage.vue'
-import Calendar from '../views/Calendar.vue'
+import Planner from '../views/Planner.vue';
 import Chatrooms from '../views/chatroom/Chatrooms.vue'
 import joinCommunity from '../views/joinCommunity.vue'
-import Outings from '../views/Outings.vue'
 import Profile from '../views/Profile.vue'
-import Chatroom from '../views/chatroom/Chatroom.vue'
-import Tasklist from '../views/Tasklist.vue'
-import TaskMarket from '../views/Calendar.vue'
 import Expenses from '@/views/Expenses.vue'
 
 
@@ -46,9 +42,9 @@ const routes = [
     props: true
   },
   {
-    path: '/Calendar',
-    name: 'Calendar',
-    component: Calendar
+    path: '/Planner',
+    name: 'Planner',
+    component: Planner
   },
   {
     path: '/Chatrooms',
@@ -64,26 +60,6 @@ const routes = [
     path:'/Profile',
     name:'Profile',
     component: Profile
-  },
-  {
-    path:'/Outings',
-    name:'Outings',
-    component: Outings
-  },
-  {
-    path:'/Chatrooms/:id',
-    name: 'Chatroom',
-    component: Chatroom
-  },
-  {
-    path:'/Tasklist',
-    name: 'Tasklist',
-    component: Tasklist
-  },
-  {
-    path:'/TaskMarket',
-    name: 'TaskMarket',
-    component: TaskMarket
   },
   {
     path:'/Expenses',

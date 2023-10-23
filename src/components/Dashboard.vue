@@ -1,15 +1,14 @@
 <template>
-
-
   <div class="container bg-transparent">
     <div class="row mb-3">
       <div class="col-1"></div>
-      <div class="col-10 inline-block"> <OutingsCarousel :community="comId"/>  </div>
+      <div class="col-10 inline-block">
+        <OutingsCarousel :community="comId" />
+      </div>
 
       <div class="col-1"></div>
     </div>
 
-  
     <!-- <div class="row ">
 
         <div class="col-lg-1"></div>
@@ -24,60 +23,66 @@
         </div>
         <div class="col-lg-1"></div> -->
 
-
     <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1 "></div>
-      <div class="col-lg-5 col-md-10 col-sm-10 flex-nowrap overflow-y-scroll h-32"> 
-         <TodayTask/> 
-         <!-- <TodayTask/> 
-         <TodayTask/> 
-         <TodayTask/>  -->
+      <div class="col-lg-1 col-md-1 col-sm-1"></div>
+      <div class="col-lg-5 col-md-10 col-sm-10">
+        <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
+        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test">
+          <TodayTask />
+          <TodayTask />
+          <TodayTask />
+          <TodayTask />
+        </div>
       </div>
-      <div class="col-lg-5 col-md-10 col-sm-10 "> <ExpensesList/> </div>
+
+      <div class="col-lg-5 col-md-10 col-sm-10"><ExpensesList /></div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
     </div>
   </div>
-    <!-- <div class="row">
-      <div class="col-2"></div>
-      <div class="col-2"><Tasklist/></div>
-      <div class="col-6"><ChatDashboard/></div>
-      <div class="col-2"></div>
-    </div> -->
-    
-    
-    
-    <!-- <ExpensesList/> -->
-  
 </template>
 
 <script>
-import TodayTask from './dashboardItems/TodayTask.vue';
-import OutingsCarousel from './dashboardItems/OutingsCarousel.vue';
-import ChatDashboard from './dashboardItems/ChatDashboard.vue';
-import ExpensesList from './dashboardItems/ExpensesList.vue';
-import { db,auth } from '@/firebase/config';
-import { ref } from 'vue';
+import TodayTask from "./dashboardItems/TodayTask.vue";
+import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
+import ExpensesList from "./dashboardItems/ExpensesList.vue";
+import { db, auth } from "@/firebase/config";
+import { ref } from "vue";
 
 export default {
-  components: { TodayTask, ExpensesList, OutingsCarousel, ChatDashboard },
+  components: { TodayTask, ExpensesList, OutingsCarousel },
   props: {
-    community: String, // Define the "community" prop as a string
+    community: String,
   },
   setup(props) {
+    console.log("this is dashboard" + props.community);
     const comId = props.community;
 
     // Use comId as needed
 
     // Rest of your component logic here
-    const user = auth.currentUser
-    
-  }
-}
-
+    const user = auth.currentUser;
+    return { comId };
+  },
+};
 </script>
 
 <style>
-.container{
-  /* background-image:url("@/assets/background_img/background1.png"); */
+:root {
+  --primary: #2ec4b6;
+  --secondary: #FF9F1C;
+}
+
+.test::-webkit-scrollbar {
+  width: 8px;
+  margin-left: 2px;
+}
+
+.test::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.test::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 10px;
 }
 </style>

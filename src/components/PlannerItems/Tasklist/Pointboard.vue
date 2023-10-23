@@ -1,5 +1,5 @@
 <template>
-  <p>ToSeeASingleTask or to Edit it</p>
+  Pointboard
 </template>
 
 <script>

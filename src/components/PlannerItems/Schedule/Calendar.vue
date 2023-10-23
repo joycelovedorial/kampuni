@@ -1,5 +1,5 @@
 <template>
-  Outings
+  Calendar (Actual)
 </template>
 
 <script>
