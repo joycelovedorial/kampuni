@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import VueGapi from 'vue-gapi'
 
+
 const app = createApp({})
 
 app.use(VueGapi, {
