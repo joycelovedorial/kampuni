@@ -2,7 +2,7 @@
 <template>
   <Navbar />
   <body id="bg-container">
-    <h1 class="font-black" id="welcome">Welcome back, {{ name }}</h1>
+    <h1 class="text-black font-fredoka" id="welcome">Welcome back, {{ name }}</h1>
     <Dashboard :community="comId" />
   </body>
 </template>
