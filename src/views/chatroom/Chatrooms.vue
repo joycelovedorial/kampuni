@@ -69,9 +69,9 @@ export default {
               }
             }
 
-          withoutCommunityID.forEach(room => {
-              console.log(room);
-            });
+          // withoutCommunityID.forEach(room => {
+          //     console.log(room);
+          //   });
           // Sort chatrooms with communityID based on communityID
           withCommunityID.sort((a, b) => a.communityID.localeCompare(b.communityID));
 
@@ -100,7 +100,7 @@ export default {
 
     const selectChat = (chatroomId) => {
       selectedchat.value = chatroomId;
-      console.log(selectedchat);
+      console.log("selectChat has been clicked, this is new ",  selectedchat.value);
     };
 
     onMounted(()=>{

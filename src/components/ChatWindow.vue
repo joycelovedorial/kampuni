@@ -25,21 +25,22 @@ export default {
     },
     setup(props){
         // Query a reference to a subcollection
-        const selectedchat = props.selectedchat
-        console.log("this should be comId ", typeof(selectedchat),selectedchat);
+        const selectedchat= ref(props.selectedchat)
+        // console.log("this should be comId ", typeof(props.selectedchat),props.selectedchat);
         const messages = ref(null)
         const documents= ref([])
 
         const fetchData = async() =>{
-          console.log(props.selectedchat);
-          const querySnapshot = await getDocs(collection(db, "chatrooms", selectedchat, "messages"));
+          console.log("ChatWindow fetchdata", props.selectedchat);
+
+          const querySnapshot = await getDocs(collection(db, "chatrooms", props.selectedchat, "messages"));
               documents.value = querySnapshot.docs.map(doc => ({
               id:doc.id,
               ...doc.data()
             }))
             console.log(documents.value);
             documents.value = [...documents.value];
-            console.log("data-fetched");
+            // console.log("data-fetched");
             };
 
         const formattedDocuments = computed(()=>{
@@ -58,6 +59,8 @@ export default {
         })
         watch(() => props.selectedchat, () => {
           fetchData();
+          selectedchat.value= props.selectedchat
+          console.log("swapped new cid->",props.selectedchat);
         });
 
 
