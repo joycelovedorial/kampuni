@@ -4,13 +4,6 @@
     <nav class="flex items-center justify-center h-16">
       <a
         class="button font-fredoka text-sm text-black rounded-l-md border-1 border-orangep p-2"
-        :class="{ 'bg-oranges': !displayOutings, 'bg-white': displayOutings }"
-        @click="displayTask = false; displayCalendar = false; displayOutings = true"
-      >
-        Outings
-      </a>
-      <a
-        class="button font-fredoka text-sm text-black border-1 border-orangep p-2"
         :class="{ 'bg-oranges': !displayCalendar, 'bg-white': displayCalendar }"
         @click="displayTask = false; displayCalendar = true; displayOutings = false"
       >
@@ -24,10 +17,6 @@
         Tasklist
       </a>
     </nav>
-  
-    <div v-if="displayOutings">
-      OutingsComponent
-    </div>
     <div v-if="displayCalendar">
       CalendarComponent
     </div>
