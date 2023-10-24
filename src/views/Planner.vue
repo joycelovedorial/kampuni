@@ -40,8 +40,8 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
-import TaskMarket from '@/components/calendaritems/TaskMarket.vue';
-import schedule from '@/components/calendaritems/schedule.vue';
+import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
+import schedule from '@/components/PlannerItems/Tasklist/schedule.vue';
 import { ref } from 'vue';
 
 export default {
