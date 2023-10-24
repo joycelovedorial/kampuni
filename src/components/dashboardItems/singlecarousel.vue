@@ -5,7 +5,7 @@
                     <div class="row"> 
                         <div class="card-body container  bg-orange-100"> 
                             <div class="row">
-                                <h5 class="card-title col-4 justify-center flex"><img id='icon' class=" ml-8" src="../../assets/profiles/amos.jpg"></h5> 
+                                <h5 class="card-title col-2 justify-center flex"><img id='icon' class=" ml-8 h-5 w-auto" src="../../assets/profiles/amos.jpg"></h5> 
                                 <div class="card-title col-7 bg-orange-300" id="name_container">
                                     <h5 class="fw-bold pt-2 pb-1">Amos</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1">TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
