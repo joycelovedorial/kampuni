@@ -14,7 +14,7 @@
       </div>
 
       <div class="chatroom-right col-8">
-        <ChatWindow :selectedChat="selectedChat"/>
+        <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
       </div>
 
     <div class="col-1"></div>
@@ -22,7 +22,6 @@
 </div>
 
 </template>
-
 
 <script>
 import ChatWindow from '@/components/ChatWindow.vue';
@@ -33,13 +32,12 @@ import { useRouter } from 'vue-router';
 import{ auth,db} from '@/firebase/config';
 
 export default {
-  components: { Navbar,ChatWindow },
+  components: { Navbar, ChatWindow },
   setup() {
     const chatlist = ref([]);
     const router = useRouter();
-    const selectedChat = ref(null);
+    const selectedchat = ref(null);
     
-
 
     const fetchData = async () => {
       const user = auth.currentUser
@@ -86,11 +84,9 @@ export default {
      
 
           if (chatlist.value.length > 0) {
-            selectedChat.value = chatlist.value[0].id;
+            
+            selectedchat.value = chatlist.value[0].id;
           }
-          console.log(chatlist.value[0].name);
-          console.log(chatlist.value[1].name);
-          console.log(chatlist.value[2].name);
 
           console.log("Query Successful");
         }catch(error){
@@ -103,14 +99,15 @@ export default {
     }
 
     const selectChat = (chatroomId) => {
-      selectedChat.value = chatroomId;
+      selectedchat.value = chatroomId;
+      console.log(selectedchat);
     };
 
     onMounted(()=>{
       fetchData();
     })
 
-    return { chatlist ,selectChat,selectedChat, }
+    return { chatlist ,selectChat,selectedchat, }
   }
 }
 </script>
