@@ -1,12 +1,15 @@
 <template>
-  <div class="chat-window">
+  <div class="chat-window" style="background-color: white;">
     <!-- <div v-if="error">{{ error }}</div> -->
+    <div>chatroom.name</div>
     <div v-if="documents" class="messages" ref="messages">
-        <div v-for="doc in formattedDocuments" :key="doc.id" class="single">
-            <span class="created-at">{{ doc.createdAt }}</span>
-            <span class="name">{{ doc.name }}</span>
-            <span class="message">{{ doc.message }}</span>
-        </div>
+        <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
+            <span class="name" style="margin-left: 25%;">{{ doc.name }}</span>
+            <div style="background-color: #FFBF69; border-radius: 10px 10px 0 10px; padding: 1%; width: 75%; margin-left: 25%;">
+              <span class="message">{{ doc.message }}</span>
+              <span class="created-at" style="color: #878787; margin-left: 90%;">{{ doc.createdAt }}</span>
+            </div>
+          </div>
     </div>
   </div>
   <div class="chatform">

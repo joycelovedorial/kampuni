@@ -4,8 +4,8 @@
       placeholder="Type a message and hit enter to send..."
       v-model="message"
       @keypress.enter.prevent="handleSubmit"
+      style="background-color: rgba(255, 191, 105, 0.8); color: white; margin-bottom: 1%;in"
       >
-  
       </textarea>
       <!-- <div class="error">{{ error }}</div> -->
     </form>

@@ -1,24 +1,21 @@
 <template>
   <Navbar/>
     <div class="row" id="chat-container">
-    <div class="col-1"></div>
-      <div class="chat-list-left  col-2">
+      <div class="chat-list-left  col-3" style="margin-top: 20px;">
+        <input type="text" placeholder=" &#128269     Search for Chats" style="border-radius: 75px; margin-bottom: 20px; background-color: #2EC4B6; color:white; size: 3; width: 100%;">
         <ul class="chatlist-container">
-          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)" class="font-fredoka">
-            <div>{{ chatroom.name }}</div>
+          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)" class="font-fredoka" style="border: 2px solid #2EC4B6; padding: 5px; border-radius: 10px; margin-bottom: 10px; font-weight: bold; background-color: rgba(46, 196, 182, 0.5);display: flex;">
+            <div style="width: 50px; height:50px; border-radius: 50%; border-color: #2EC4B6; border-width: 2px;">image</div>
+            <div style="margin-left: 10px;">{{ chatroom.name }}</div>
           </li>
         </ul>
       </div>
 
-      <div class="chatroom-right col-8">
-        
+      <div class="chatroom-right col-9">
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
     
         
       </div>
-
-
-    <div class="col-1"></div>
   </div>
 
 
