@@ -14,7 +14,7 @@
   <script>
   import { ref,onMounted,watch } from 'vue'
   import {auth,db} from '@/firebase/config'
-  import { doc, getDoc,collection,addDoc,FieldValue, serverTimestamp} from "firebase/firestore";
+  import { doc, getDoc,collection,addDoc, serverTimestamp} from "firebase/firestore";
   
   export default {
     props:{
@@ -25,29 +25,28 @@
           const uid = user.uid
           const displayName = ref('')
           const message = ref('')
+          const selectedChat = ref('')
           
           const fetchData=async()=>{
-
-            console.log("this is chatform ",props.selectedchat);
-
             const docRef = doc(db, "users", uid);
             const docSnap = await getDoc(docRef); 
             const docData = docSnap.data()
-            console.log(docData);
             displayName.value = docData.firstname
             console.log(displayName.value);
           }
 
           const handleSubmit = async () => {
             try {
-                const docRef = await addDoc(collection(db, "chatrooms", props.selectedchat, "messages"), {
+                const chatRoom = selectedChat.value; // Capture selectedchat in a local variable
+                console.log("handleEvent",chatRoom);
+
+                const docRef = await addDoc(collection(db, "chatrooms", chatRoom, "messages"), {
                     name: displayName.value,
                     message: message.value,
                     createdAt: serverTimestamp(),
                     });
                 console.log("doc added ",docRef.id)
                 message.value = '';
-                context.emit('chat-sent')
             } catch (error) {
                 console.error('Error adding document: ', error);
             }
@@ -55,10 +54,12 @@
 
         onMounted(()=>{
           fetchData()
+          selectedChat.value = props.selectedchat
+          console.log("mounted:",props.selectedchat);
         })
         watch(() => props.selectedchat, () => {
-          console.log("swapped new cid in chatform->",props.selectedchat);
-
+          console.log("check",props.selectedchat);
+          selectedChat.value = props.selectedchat
           fetchData();
         });
           return { message, handleSubmit}

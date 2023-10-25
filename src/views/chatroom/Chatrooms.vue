@@ -101,7 +101,7 @@ export default {
 
     const selectChat = (chatroomId) => {
       selectedchat.value = chatroomId;
-      console.log("selectChat has been clicked, this is new ",  selectedchat.value);
+      console.log("selectChat has been clicked in Chatrooms, this is new ",  selectedchat.value);
     };
 
     onMounted(()=>{
