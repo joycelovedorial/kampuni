@@ -11,8 +11,12 @@
       </div>
 
       <div class="chatroom-right col-8">
+        
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
+    
+        
       </div>
+
 
     <div class="col-1"></div>
   </div>
@@ -66,9 +70,9 @@ export default {
               }
             }
 
-          withoutCommunityID.forEach(room => {
-              console.log(room);
-            });
+          // withoutCommunityID.forEach(room => {
+          //     console.log(room);
+          //   });
           // Sort chatrooms with communityID based on communityID
           withCommunityID.sort((a, b) => a.communityID.localeCompare(b.communityID));
 
@@ -97,7 +101,7 @@ export default {
 
     const selectChat = (chatroomId) => {
       selectedchat.value = chatroomId;
-      console.log(selectedchat);
+      console.log("selectChat has been clicked, this is new ",  selectedchat.value);
     };
 
     onMounted(()=>{

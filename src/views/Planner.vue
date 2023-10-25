@@ -18,25 +18,30 @@
       </a>
     </nav>
     <div v-if="displayCalendar">
-      CalendarComponent
+      <Calendar></Calendar>
     </div>
     <div v-if="displayTask">
       TasklistComponent
       <TaskMarket />
     </div>
-  </div>
+
+    <!-- Just for self comfort -->
+    <iframe src="https://calendar.google.com/calendar/embed?src=80648a128124b84f8e91f2a5dd563e9b8d7f03f8ea9db0d699a269fa1cf37ecf%40group.calendar.google.com&ctz=Asia%2FSingapore" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+  </div> 
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
+import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
-import schedule from '@/components/PlannerItems/Tasklist/schedule.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
     Navbar,
     TaskMarket,
+    Calendar,
   },
   setup() {
     const displayOutings = ref(false);
@@ -55,7 +60,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 100vh; /* 100% of viewport height */
+    height: 88vh; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 </style>

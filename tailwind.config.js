@@ -22,6 +22,8 @@ module.exports = {
         cyans: '#CBF3F0',
         orangep: '#FF9F1C',
         oranges: '#FFBF69',
+        cwhite: '#F2F2F2',
+        cblack: '#2F2F2F',
         primary: '#FF5733',
         secondary: colors.blue,
       },
