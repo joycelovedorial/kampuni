@@ -32,6 +32,7 @@ export default {
         const messages = ref(null)
         const documents= ref([])
 
+        
         const fetchData = async() =>{
           console.log("ChatWindow fetchdata", props.selectedchat);
 
