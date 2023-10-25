@@ -1,8 +1,8 @@
 <template>
   <Navbar/>
-  <div class="container">
-    <div class="row">
-      <div class="chat-list-left  col-4">
+    <div class="row" id="chat-container">
+    <div class="col-1"></div>
+      <div class="chat-list-left  col-2">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)" class="font-fredoka">
             <div>{{ chatroom.name }}</div>
@@ -20,7 +20,7 @@
 
     <div class="col-1"></div>
   </div>
-</div>
+
 
 </template>
 
@@ -117,6 +117,9 @@ export default {
 .chatlist-container{
   justify-content:flex;
   flex-direction: column;
+}
+#chat-container{
+  margin: 10px 0;
 }
 
 </style>

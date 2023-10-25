@@ -109,11 +109,14 @@ export default {
 
 <style>
     .chat-window {
-    background: #fafafa;
+    background: #a7e5f0;
     padding: 30px 20px;
+    border-radius: 20px;
+    border: 2px orange solid;
   }
   .single {
     margin: 18px 0;
+    border-bottom: 1px grey solid;
   }
   .created-at {
     display: block;
