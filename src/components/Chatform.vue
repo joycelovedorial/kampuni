@@ -20,7 +20,7 @@
     props:{
         selectedchat: String,
     },
-      setup(props) {
+      setup(props,context) {
           const user = auth.currentUser
           const uid = user.uid
           const displayName = ref('')
@@ -47,6 +47,7 @@
                     });
                 console.log("doc added ",docRef.id)
                 message.value = '';
+                context.emit('chat-sent')
             } catch (error) {
                 console.error('Error adding document: ', error);
             }

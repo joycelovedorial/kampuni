@@ -2,20 +2,21 @@
   <Navbar/>
   <div class="container">
     <div class="row">
-
-      <div class="col-1"></div>
-
-      <div class="chat-list-left  col-2">
+      <div class="chat-list-left  col-4">
         <ul class="chatlist-container">
-          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)">
+          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)" class="font-fredoka">
             <div>{{ chatroom.name }}</div>
           </li>
         </ul>
       </div>
 
       <div class="chatroom-right col-8">
+        
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
+    
+        
       </div>
+
 
     <div class="col-1"></div>
   </div>

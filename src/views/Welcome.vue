@@ -27,30 +27,8 @@
           </div>
         </form>
       </div>
-
-      <!-- <form @submit.prevent="handleSubmit">
-        <input type="text" required placeholder="First Name" v-model ="firstName">
-        <input type="text" required placeholder="Last Name" v-model ="lastName">
-        <input type="email" required placeholder="email" v-model="email">
-        <input type="password" required placeholder='password' v-model="password">
-        <input type="date" id="birthday" v-model="birthday">
-        <input type="text" placeholder="country" id="country" v-model="country">
-        <textarea id="bio" cols="30" rows="10" placeholder="bio" v-model="bio"></textarea>
-        <div class="error">{{ error }}</div> -->
-
-            <!-- <form  @submit.prevent="handleSubmit">
-        <input class="form-control" type="email" required placeholder="email" v-model="email">
-        <input class="form-control" type="password" required placeholder='password' v-model="password">
-        <div class="error">{{ error }}</div>
-        <button>Login</button>
-        <button @click="signinGoogle">Google</button>
-    </form> -->
-      <!-- <div v-if="registered">
-        <LoginForm @login="handleLogin" />
-        <button @click="registered = !registered">Click here to Sign Up</button> -->
         <div v-if="registered" class="form-container login-container">
-        <!-- <LoginForm @login="handleLogin" /> -->
-        <form @submit.prevent="handleLogin" class="form-lg">
+          <form @submit.prevent="handleLogin" class="form-lg">
             <h1 class="text-orangep text-3xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
