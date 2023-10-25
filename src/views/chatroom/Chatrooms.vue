@@ -14,8 +14,12 @@
       </div>
 
       <div class="chatroom-right col-8">
+        
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
+    
+        
       </div>
+
 
     <div class="col-1"></div>
   </div>

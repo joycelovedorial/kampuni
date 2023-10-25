@@ -9,21 +9,23 @@
         </div>
     </div>
   </div>
-  <Chatform :selectedchat="selectedchat"/>
+  <div class="chatform" @chat-sent="fetchData">
+        <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
+  </div>
 </template>
 
 <script>
-import Chatform from './Chatform.vue';
+import Chatform from '@/components/Chatform.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onUpdated,ref,onMounted,watch} from 'vue'
 import { doc, getDocs,collection } from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
-    components:{ Chatform },
+    components:{Chatform},
     props: {
     selectedchat: String, // or the appropriate type
     },
-    setup(props){
+    setup(props,context){
         // Query a reference to a subcollection
         const selectedchat= ref(props.selectedchat)
         // console.log("this should be comId ", typeof(props.selectedchat),props.selectedchat);
@@ -38,7 +40,7 @@ export default {
               id:doc.id,
               ...doc.data()
             }))
-            console.log(documents.value);
+            console.log("document updated: ",documents.value);
             documents.value = [...documents.value];
             // console.log("data-fetched");
             };
@@ -70,7 +72,7 @@ export default {
           }
         })
 
-        return {documents,formattedDocuments,selectedchat,messages}
+        return {documents,formattedDocuments,selectedchat,messages,fetchData}
       
     }
 
