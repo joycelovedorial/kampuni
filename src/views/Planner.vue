@@ -20,13 +20,12 @@
     <div v-if="displayCalendar">
       <Calendar></Calendar>
     </div>
-    <div v-if="displayTask">
-      TasklistComponent
+    <div v-if="displayTask" class="flex space-x-2">
       <TaskMarket />
-    </div>
+      <Leaderboard />
 
-    <!-- Just for self comfort -->
-    <iframe src="https://calendar.google.com/calendar/embed?src=80648a128124b84f8e91f2a5dd563e9b8d7f03f8ea9db0d699a269fa1cf37ecf%40group.calendar.google.com&ctz=Asia%2FSingapore" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+
+    </div>
   </div> 
 </template>
 
@@ -35,13 +34,15 @@ import Navbar from '@/components/Navbar.vue';
 import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
 import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
+import Leaderboard from '@/components/PlannerItems/Tasklist/Leaderboard.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
     Navbar,
-    TaskMarket,
     Calendar,
+    TaskMarket,
+    Leaderboard,
   },
   setup() {
     const displayOutings = ref(false);
@@ -55,7 +56,7 @@ export default {
 
 <style scoped>
   #calendar-page {
-    background-image: url('../assets/background_img/background3.png');
+    background-image: url('../assets/background_img/background4.png');
     background-color: #f2f2f2;
     background-size: cover;
     background-repeat: no-repeat;

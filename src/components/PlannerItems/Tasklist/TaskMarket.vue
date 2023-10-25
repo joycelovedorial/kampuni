@@ -1,46 +1,29 @@
 <template>
-    <div class="flex space-x-2 mx-4">
-        <div class="w-3/4 bg-white rounded-lg px-2.5">
-            <h1 class="text-xl font-bold font-fredoka text-left text-cyanp my-1">{{ formattedDate }}</h1>
-
-            <table>
-                <tr class="text-center">
-                    <th v-for="(day, index) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="index">{{ day }}</th>
-                </tr>
-                <tr v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)">
-                    <td v-for="dayIndex in 7" :key="dayIndex">
-                    <span v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
-                        {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
-                    </span>
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-        <div class="w-1/4 px-2.5">
-            <h1 class="text-xl font-bold font-fredoka text-left text-cyanp my-1">Task Market</h1>
-            <div class="task flex flex-col space-y-2">
-                <div class="task-detail p-3">
-                    <div class="w-1/5 text-center inline-block align-middle">
-                        <!-- <div class="points bg-cyanp font-fredoka font-bold text-2xl rounded-lg"> -->
-                            <span class="bg-cyanp font-fredoka font-bold text-2xl rounded-lg text-cyans inline-block align-middle p-2">20</span>
-                        <!-- </div> -->
-                        <p>points</p>
-                    </div>
-                    <div class="w-4/5 pl-3">
-                        <p class="text-cyanp font-bold">sweep living room</p>
-                        <p class="text-black text-sm pt-2">automatically assigned in 6hrs.</p>
-                    </div>
+    <div class="w-3/12 flex flex-col items-center">
+        <button class="bg-cyanp text-cwhite font-bold w-11/12 rounded-full py-2 hover:drop-shadow-md hover:opacity-90">
+            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            Create a task
+        </button>
+        <div class="h-3/6 overflow-y-scroll my-2 overflow-x-hidden">
+            <div v-for="task in tasks" class="bg-white flex items-center m-2 rounded-md h-20"> <!-- Add a flex container for side-by-side elements -->
+                <div class="inline-block w-9/12 p-2">
+                    <p class="text-cyanp font-bold">
+                    {{ task.taskname }}
+                    </p>
+                    <p class="text-black text-sm">
+                    automatically assigned in &nbsp;{{ task.countdown }}.
+                    </p>
                 </div>
-                <div class="flex justify-center items-center">
-                    <button class="px-4 py-2 text-black bg-oranges rounded hover:bg-orangep focus:outline-none focus:ring focus:ring-oranges">
-                        <svg class="text-black h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                <div class="items-center inline-block p-2">
+                    <button class="bg-cyans text-cblack text-center items-center w-16 h-16 rounded-md shadow-md hover:bg-cyans hover:opacity-70">
+                        <svg class="h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"/>
                         </svg>
-                        i'll do it!
+                        <p class="text-xs">i'll do it!</p>
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -52,28 +35,42 @@
     export default {
         components: {
         },
-        data () {
-            const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const firstDayOfWeek = firstDay.getDay(); // 0 (Sunday) to 6 (Saturday)
+        // data () {
+        //     const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
+        //     const year = currentDate.getFullYear();
+        //     const month = currentDate.getMonth();
+        //     const firstDay = new Date(year, month, 1);
+        //     const lastDay = new Date(year, month + 1, 0);
+        //     const daysInMonth = lastDay.getDate();
+        //     const firstDayOfWeek = firstDay.getDay(); // 0 (Sunday) to 6 (Saturday)
 
+        //     return {
+        //         year,
+        //         month,
+        //         daysInMonth,
+        //         firstDayOfWeek: firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1, // Adjust for Monday as the start of the week (0 => 6, 1 => 0, ..., 6 => 5)
+        //     };
+        // },
+        // computed: {
+        // formattedDate() {
+        //     const options = { year: 'numeric', month: 'long' };
+        //     return new Date(this.year, this.month).toLocaleString(undefined, options);
+        // },
+    // },
+        data() {
             return {
-                year,
-                month,
-                daysInMonth,
-                firstDayOfWeek: firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1, // Adjust for Monday as the start of the week (0 => 6, 1 => 0, ..., 6 => 5)
-            };
-        },
-        computed: {
-        formattedDate() {
-            const options = { year: 'numeric', month: 'long' };
-            return new Date(this.year, this.month).toLocaleString(undefined, options);
-        },
-},
+                tasks: [
+                    {taskname: 'sweep living room', countdown: '2 minutes', taken: false},
+                    {taskname: 'buy milk', countdown: '1 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                ]
+            }
+        }
 
     };
 </script>

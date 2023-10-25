@@ -1,5 +1,5 @@
 <template>
-  Pointboard
+  Leaderboard
 </template>
 
 <script>
