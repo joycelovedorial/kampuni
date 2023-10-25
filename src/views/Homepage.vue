@@ -2,7 +2,7 @@
 <template>
   <Navbar />
   <body id="bg-container">
-    <h1 class="text-black font-fredoka" id="welcome">Welcome back, {{ name }}</h1>
+    <h1 class="text-black font-fredoka text-" id="welcome">Welcome back, {{ name }}</h1>
     <Dashboard :community="comId" />
   </body>
 </template>
@@ -53,19 +53,19 @@ export default {
 #welcome {
   margin: 0 auto;
   text-align: center;
-  font-size: 4.5rem;
+  /* font-size: 4.5rem; */
   font-weight: lighter;
   /* color: #2ec4b6; */
   color:black;
 }
 
 #bg-container {
-  background-image: url("@/assets/background_img/new_background.png");
-  background-color: #f2f2f2;
+  background-image: url("@/assets/background_img/background1.png");
+  /* background-color: #f2f2f2; */
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 200vh;
+  height: max-content;
   margin: 0;
   /* z-index: -1; */
 }
