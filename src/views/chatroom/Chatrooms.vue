@@ -13,7 +13,6 @@
       <div class="chatroom-right col-8">
         
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
-    
         
       </div>
 
@@ -63,7 +62,6 @@ export default {
               const otherUserId = room.usersInvolved.find(userId => userId !== uid);
               // Fetch the other user's first name from the users collection
               const userDoc = await getDoc(doc(db, 'users', otherUserId));
-
               if (userDoc.exists()) {
                 room.name = userDoc.data().firstname;
                 
