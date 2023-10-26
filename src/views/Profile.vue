@@ -4,22 +4,22 @@
     </div>
     <div v-if="toEdit" class="profile">
         <div class="text" id="firstname">
-            Name:{{firstname.value}}
+            Name: {{firstname}}
         </div>
         <div class="text" id="lastname">
-            Surname:{{lastname.value}}
+            Surname: {{lastname}}
         </div>
         <div class="text" id="profileEmail">
-            Email:{{email.value}}
+            Email: {{email}}
         </div>
         <div class="text" id="country">
-            Country:{{country.value}}
+            Country: {{country}}
         </div>
         <div class="text" id="birthday">
-            Birthday:{{birthday.value}}
+            Birthday: {{birthday}}
         </div>
         <div class="text" id="community">
-            Community:{{community.value}}
+            Community: {{community}}
         </div>
     </div>
     <div v-else>
@@ -62,6 +62,7 @@ export default {
                     const cid = userData.community;
                     const commSnap = await getDoc(doc(db, "communities", cid));
                     const commData = commSnap.data();
+                    console.log(commData);
                     firstname.value = userData.firstname;  // Use .value
                     lastname.value = userData.lastname;  // Use .value
                     birthday.value = userData.birthday;  // Use .value
@@ -77,6 +78,7 @@ export default {
                 console.error("User is not authenticated.");
             }
         }
+        fetchData();
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
