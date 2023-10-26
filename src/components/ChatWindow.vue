@@ -1,15 +1,24 @@
 <template>
   <div class="chat-window" style="background-color: white;">
     <!-- <div v-if="error">{{ error }}</div> -->
-    <div>{{name}}</div>
+    <div class="chatTitle">{{name}}</div>
     <div v-if="documents" class="messages" ref="messages">
         <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
-            <span class="name" style="margin-left: 25%;">{{ doc.name }}</span>
-            <div style="background-color: #FFBF69; border-radius: 10px 10px 0 10px; padding: 1%; width: 75%; margin-left: 25%;">
+          <div v-if="thisName==doc.name">
+            <span class="name">{{ doc.name }}</span>
+            <div class="single-chat-container" >
               <span class="message">{{ doc.message }}</span>
-              <span class="created-at" style="color: #878787; margin-left: 90%;">{{ doc.createdAt }}</span>
+              <span class="created-at">{{ doc.createdAt }}</span>
             </div>
           </div>
+          <div v-else class="self">
+            <span class="name-self">{{ doc.name }}</span>
+            <div class="single-chat-container-self" >
+              <span class="message-self">{{ doc.message }}</span>
+              <span class="created-at-self">{{ doc.createdAt }}</span>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
   <div class="chatform">
@@ -20,8 +29,8 @@
 <script>
 import Chatform from '@/components/Chatform.vue';
 import { formatDistanceToNow } from 'date-fns'
-import { computed, onUpdated,ref,watch} from 'vue'
-import { collection, query,orderBy, onSnapshot } from "firebase/firestore";
+import { computed, onMounted, onUpdated,ref,watch} from 'vue'
+import { collection, query,orderBy, onSnapshot,doc,getDoc} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform},
@@ -38,6 +47,17 @@ export default {
       const documents= ref([])
       const error = ref(null)
       const name = ref(props.name)
+      const thisName=ref("")
+      const fetchName = async () => {
+        const user = auth.currentUser
+        const uid = user.uid
+        const docRef =doc(db,"users",uid)
+        const docSnap = await getDoc(docRef)
+        const docData = docSnap.data()
+        thisName.value = docData.firstname
+      }
+      fetchName();
+
       console.log("setup",props.name);
       
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
@@ -106,7 +126,7 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name}
+      return {documents,formattedDocuments,selectedchat,messages,name,thisName}
       
     }
 
@@ -114,7 +134,49 @@ export default {
 </script>
 
 <style>
-    .chat-window {
+  .created-at{
+    color: #878787;
+    margin-left: 90%;
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .created-at-self{
+    color: #878787;
+    margin-left: 90%;
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .single-chat-container{
+    background-color: #FFBF69;
+    border-radius: 10px 10px 0 10px; 
+    padding: 1%;
+    width: 75%;
+    margin-left: 25%;
+  }
+  .single-chat-container-self{
+    background-color: #79f8ff;
+    border-radius: 10px 10px 0 10px; 
+    padding: 1%;
+    width: 75%;
+    margin-right: 25%;
+  }
+  .name{
+    margin-left: 25%;
+    font-weight: bold;
+    margin-right: 6px;
+    color: orange;
+  }
+  .name-self{
+    color:#79f8ff;
+    font-weight: bold;
+    
+  }
+
+  .chat-window {
     background: #a7e5f0;
     padding: 30px 20px;
     border-radius: 20px;
@@ -124,19 +186,14 @@ export default {
     margin: 10px 0;
     border-bottom: 1px grey solid;
   }
-  .created-at {
-    display: block;
-    color: #999;
-    font-size: 12px;
-    margin-bottom: 4px;
-  }
-  .name {
-    font-weight: bold;
-    margin-right: 6px;
-    color: orange;
-  }
+
   .messages {
     max-height: 400px;
     overflow: auto;
+  }
+  .chatTitle{
+    font-size: large;
+    font-weight:bold;
+    color: grey;
   }
 </style>
