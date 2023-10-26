@@ -2,18 +2,18 @@
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left  col-3" style="margin-top: 20px;">
-        <input type="text" placeholder=" &#128269     Search for Chats" style="border-radius: 75px; margin-bottom: 20px; background-color: #2EC4B6; color:white; size: 3; width: 100%;">
+        <input type="text" placeholder="Search for Chats" style="border-radius: 75px; margin-bottom: 20px; background-color: #2EC4B6; color:white; size: 3; width: 100%;">
         <ul class="chatlist-container">
-          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id)" class="font-fredoka" style="border: 2px solid #2EC4B6; padding: 5px; border-radius: 10px; margin-bottom: 10px; font-weight: bold; background-color: rgba(46, 196, 182, 0.5);display: flex;">
+          <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
+          class="font-fredoka singlelist">
             <div style="width: 50px; height:50px; border-radius: 50%; border-color: #2EC4B6; border-width: 2px;">image</div>
-            <div style="margin-left: 10px;">{{ chatroom.name }}</div>
+            <div style="margin-left: 10px;">{{chatroom.name}}</div>
           </li>
         </ul>
       </div>
 
       <div class="chatroom-right col-9">
-        <ChatWindow v-if="selectedchat" :selectedchat="selectedchat"/>
-        
+        <ChatWindow v-if="selectedchat" :selectedchat="selectedchat" :name="name"/>
       </div>
   </div>
 
@@ -34,7 +34,7 @@ export default {
     const chatlist = ref([]);
     const router = useRouter();
     const selectedchat = ref(null);
-    
+    const name=ref(null)
 
     const fetchData = async () => {
       const user = auth.currentUser
@@ -76,12 +76,12 @@ export default {
           const tempArr = [];
           for (const room of chatlist.value){
             tempArr.push(room)
+            console.log(room);
           }
      
-
           if (chatlist.value.length > 0) {
-            
             selectedchat.value = chatlist.value[0].id;
+            name.value = chatlist.value[0].name
           }
 
           console.log("Query Successful");
@@ -94,8 +94,9 @@ export default {
       }
     }
 
-    const selectChat = (chatroomId) => {
+    const selectChat = (chatroomId,chatName) => {
       selectedchat.value = chatroomId;
+      name.value = chatName
       console.log("selectChat has been clicked in Chatrooms, this is new ",  selectedchat.value);
     };
 
@@ -103,7 +104,7 @@ export default {
       fetchData();
     })
 
-    return { chatlist ,selectChat,selectedchat, }
+    return { chatlist ,selectChat,selectedchat,name }
   }
 }
 </script>
@@ -116,5 +117,18 @@ export default {
 #chat-container{
   margin: 10px 0;
 }
-
+.singlelist{
+  border: 2px solid #2EC4B6;
+  padding: 5px; 
+  border-radius: 10px; 
+  margin-bottom: 10px; 
+  font-weight: bold;
+  background-color: rgba(46, 196, 182, 0.5);
+  display: flex;
+}
+.singlelist:hover{
+  border: 2px solid #2EC4B6;
+  background-color: rgba(37, 149, 138, 0.5);
+  
+}
 </style>
