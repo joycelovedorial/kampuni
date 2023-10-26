@@ -1,7 +1,7 @@
 <template>
   <div class="chat-window" style="background-color: white;">
     <!-- <div v-if="error">{{ error }}</div> -->
-    <div>chatroom.name</div>
+    <div>{{name}}</div>
     <div v-if="documents" class="messages" ref="messages">
         <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
             <span class="name" style="margin-left: 25%;">{{ doc.name }}</span>
@@ -20,24 +20,25 @@
 <script>
 import Chatform from '@/components/Chatform.vue';
 import { formatDistanceToNow } from 'date-fns'
-import { computed, onUpdated,ref,onMounted,watch} from 'vue'
-import { doc, getDocs,collection, query,orderBy, onSnapshot } from "firebase/firestore";
+import { computed, onUpdated,ref,watch} from 'vue'
+import { collection, query,orderBy, onSnapshot } from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform},
     props: {
-    selectedchat: String, // or the appropriate type
+    selectedchat: String, 
+    name: String,
     },
     setup(props,context){
         // Query a reference to a subcollection
-        console.log("Chatwindow setup");
-        const selectedchat= ref(props.selectedchat)
-        // console.log("this should be comId ", typeof(props.selectedchat),props.selectedchat);
-        const messages = ref(null)
-        const documents= ref([])
-        const error = ref(null)
-        
-      
+      console.log("Chatwindow setup");
+      const selectedchat= ref(props.selectedchat)
+      // console.log("this should be comId ", typeof(props.selectedchat),props.selectedchat);
+      const messages = ref(null)
+      const documents= ref([])
+      const error = ref(null)
+      const name = ref(props.name)
+      console.log("setup",props.name);
       
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
@@ -93,6 +94,8 @@ export default {
           });
         }
       selectedchat.value = props.selectedchat
+      name.value = props.name
+      console.log("check for name", name.value);
       console.log("watchcehck",selectedchat.value);
       });
 
@@ -103,7 +106,7 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages}
+      return {documents,formattedDocuments,selectedchat,messages,name}
       
     }
 
@@ -118,7 +121,7 @@ export default {
     border: 2px orange solid;
   }
   .single {
-    margin: 18px 0;
+    margin: 10px 0;
     border-bottom: 1px grey solid;
   }
   .created-at {
