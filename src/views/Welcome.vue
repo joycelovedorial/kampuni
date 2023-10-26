@@ -126,6 +126,8 @@ export default {
     const birthday = ref("")
     const country = ref("")
     const bio = ref("")
+    //hm
+    const googles = ref("")
 
 
     const handleRegister = async () => {
@@ -226,6 +228,7 @@ export default {
                       community: null,
                   });
 
+                  this.googles = "yars";
                   router.push({ name: 'joinCommunity' });
               }
           } catch (error) {
@@ -265,7 +268,7 @@ export default {
       isRightPanelActive.value = !isRightPanelActive.value
     }
     return { registered, handleAuth,isRightPanelActive,togglePanel,loginEmail, loginPassword, handleLogin,signinGoogle, errorMessage,error,
-      handleRegister,firstName,lastName,country,birthday,bio, email, password, Rerror
+      handleRegister,firstName,lastName,country,birthday,bio, email, password, Rerror, googles
     }
 }
 }
