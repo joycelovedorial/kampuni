@@ -21,6 +21,7 @@
           </button>
 
         </div>
+        <div v-if="Rerror" class="error">{{ Rerror.value }}</div>
 
           <span>or Sign Up using your google account</span>
           <div class="social-container">
@@ -28,30 +29,8 @@
           </div>
         </form>
       </div>
-
-      <!-- <form @submit.prevent="handleSubmit">
-        <input type="text" required placeholder="First Name" v-model ="firstName">
-        <input type="text" required placeholder="Last Name" v-model ="lastName">
-        <input type="email" required placeholder="email" v-model="email">
-        <input type="password" required placeholder='password' v-model="password">
-        <input type="date" id="birthday" v-model="birthday">
-        <input type="text" placeholder="country" id="country" v-model="country">
-        <textarea id="bio" cols="30" rows="10" placeholder="bio" v-model="bio"></textarea>
-        <div class="error">{{ error }}</div> -->
-
-            <!-- <form  @submit.prevent="handleSubmit">
-        <input class="form-control" type="email" required placeholder="email" v-model="email">
-        <input class="form-control" type="password" required placeholder='password' v-model="password">
-        <div class="error">{{ error }}</div>
-        <button>Login</button>
-        <button @click="signinGoogle">Google</button>
-    </form> -->
-      <!-- <div v-if="registered">
-        <LoginForm @login="handleLogin" />
-        <button @click="registered = !registered">Click here to Sign Up</button> -->
         <div v-if="registered" class="form-container login-container">
-        <!-- <LoginForm @login="handleLogin" /> -->
-        <form @submit.prevent="handleLogin" class="form-lg">
+          <form @submit.prevent="handleLogin" class="form-lg">
             <h1 class="text-orangep text-3xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
@@ -59,13 +38,15 @@
             <div class="flex">
                 <button type="submit" value="submit" class="flex-initial w-64" @click="handleLogin">Login</button>
             </div>
+          
+            <div v-if="error" class="error">{{ error.value }}</div>
+
         
-        
-        <div>Or login using your Google account</div>
-        <div class="social-container">
-            <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
-          </div>
-        </form>
+            <div>Or login using your Google account</div>
+            <div class="social-container">
+              <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
+            </div>
+          </form>
       </div>
 
       <div class="overlay-container">
@@ -131,6 +112,7 @@ import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
+// import { UserRecord } from 'firebase-admin/lib/auth/user-record'
 
 // Animations
 export default {
@@ -181,7 +163,7 @@ export default {
                   console.error('Error fetching user data:', error);
                 }
         } catch (error) {
-          console.log(error);
+          Rerror.value=error.message;
         }
       };
     //handlelogin
@@ -207,7 +189,7 @@ export default {
         }
 
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        error.value=error.message;
 
         // Handle the specific error or log the error message
         console.log(error.code);
@@ -217,44 +199,52 @@ export default {
 
 
     const signinGoogle = async () => {
-        try {
-          const provider = new GoogleAuthProvider();
-          const result = await signInWithPopup(auth, provider);
-          
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          
-          // The signed-in user info.
-          const user = result.user;
-          const uid = user.uid;
-          const docRef = doc(db, 'users', uid);
-          
-              try {
-                const docSnap = await getDoc(docRef);
-                const userData = docSnap.data();
+          try {
+              const provider = new GoogleAuthProvider();
+              const result = await signInWithPopup(auth, provider);
 
-                if (!userData?.community) {
+              // This gives you a Google Access Token. You can use it to access the Google API.
+              const credential = GoogleAuthProvider.credentialFromResult(result);
+              const token = credential.accessToken;
+
+              // The signed-in user info.
+              const user = result.user;
+              const uid = user.uid;
+              const docRef = doc(db, 'users', uid);
+
+              const docSnap = await getDoc(docRef);
+
+              if (docSnap.exists() && docSnap.data().community !== null) {
+                  router.push({ name: "Homepage" });
+                  
+              } else {
+                  // Check if result.additionalUserInfo exists and has a profile property
+                  const googleAdditionalInfo = result.additionalUserInfo;
+                  const googleProfile = googleAdditionalInfo && googleAdditionalInfo.profile ? googleAdditionalInfo.profile : null;
+
+                  setDoc(doc(db, "users", uid), {
+                      firstname: googleProfile && googleProfile.given_name ? googleProfile.given_name : null,
+                      lastname: googleProfile && googleProfile.family_name ? googleProfile.family_name : null,
+                      email: user.email,
+                      birthday: null,
+                      country: null,
+                      bio: null,
+                      community: null,
+                  });
+
                   router.push({ name: 'joinCommunity' });
-                } else {
-                  router.push({ name: 'Homepage' });
-                }
-              } catch (error) {
-                console.error('Error fetching user data:', error);
               }
-
           } catch (error) {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // Handle the specific error or log the error message
-            console.error('Google sign-in error:', errorCode, errorMessage);
+              // Handle Errors here.
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              const email = error.customData && error.customData.email ? error.customData.email : null;
+              const credential = GoogleAuthProvider.credentialFromError(error);
+
+              // Handle the specific error or log the error message
+              console.error('Google sign-in error:', errorCode, errorMessage);
           }
-        };
+      };
 
     //after Authenticated
     const handleAuth = async () => {

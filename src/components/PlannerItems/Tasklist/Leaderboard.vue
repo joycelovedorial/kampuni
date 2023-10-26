@@ -1,5 +1,5 @@
 <template>
-  <p>listofchats</p>
+  Leaderboard
 </template>
 
 <script>

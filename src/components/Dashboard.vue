@@ -2,32 +2,18 @@
   <div class="container bg-transparent">
     <div class="row mb-3">
       <div class="col-1"></div>
-      <div class="col-10 inline-block">
+      <div class="col-10">
         <OutingsCarousel :community="comId" />
       </div>
 
-      <div class="col-1"></div>
+      <div class="col-1 "></div>
     </div>
 
-    <!-- <div class="row ">
-
-        <div class="col-lg-1"></div>
-        <div class='col-lg-5'>
-        <h1 class="text-start text-orangep font-black text-3xl p-4 bg-white pl-0">Today Task</h1>
-        </div>
-        <div class="col-lg-4">
-          hello
-        </div>
-        <div class='col-lg-5'>
-        <h1 class="text-start text-orangep font-black text-3xl p-4 bg-white pl-0">Expenses</h1>
-        </div>
-        <div class="col-lg-1"></div> -->
-
     <div class="row">
-      <div class="col-lg-1 col-md-1 col-sm-1"></div>
-      <div class="col-lg-5 col-md-10 col-sm-10">
+      <div class="col-1"></div>
+      <div class="col-xl-5 col-lg-10 col-md-10 col-sm-10">
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test">
+        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test  bg-cyan-400 bg-opacity-40">
           <TodayTask />
           <TodayTask />
           <TodayTask />
@@ -35,7 +21,7 @@
         </div>
       </div>
 
-      <div class="col-lg-5 col-md-10 col-sm-10"><ExpensesList /></div>
+      <div class="col-lg-5 col-md-10 col-sm-10 " ><ExpensesList /></div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
     </div>
   </div>
@@ -74,7 +60,7 @@ export default {
 
 .test::-webkit-scrollbar {
   width: 8px;
-  margin-left: 2px;
+  margin-left: 5px;
 }
 
 .test::-webkit-scrollbar-track {

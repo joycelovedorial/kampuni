@@ -18,25 +18,31 @@
       </a>
     </nav>
     <div v-if="displayCalendar">
-      CalendarComponent
+      <Calendar></Calendar>
     </div>
-    <div v-if="displayTask">
-      TasklistComponent
+    <div v-if="displayTask" class="flex space-x-2">
       <TaskMarket />
+      <Leaderboard />
+
+
     </div>
-  </div>
+  </div> 
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
+import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
-import schedule from '@/components/PlannerItems/Tasklist/schedule.vue';
+import Leaderboard from '@/components/PlannerItems/Tasklist/Leaderboard.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
     Navbar,
+    Calendar,
     TaskMarket,
+    Leaderboard,
   },
   setup() {
     const displayOutings = ref(false);
@@ -50,12 +56,12 @@ export default {
 
 <style scoped>
   #calendar-page {
-    background-image: url('../assets/background_img/background3.png');
+    background-image: url('../assets/background_img/background4.png');
     background-color: #f2f2f2;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 100vh; /* 100% of viewport height */
+    height: 88vh; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 </style>

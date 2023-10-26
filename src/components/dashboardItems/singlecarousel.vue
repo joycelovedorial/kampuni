@@ -1,20 +1,26 @@
 <template>
 
-    <div class="cardbg-orange-100" >  <!--v-for{{outing}}-->
-                <div class="container bg-orange-100">
-                    <div class="row"> 
-                        <div class="card-body container  bg-orange-100"> 
-                            <div class="row">
-                                <h5 class="card-title col-2 justify-center flex"><img id='icon' class=" ml-8 h-5 w-auto" src="../../assets/profiles/amos.jpg"></h5> 
-                                <div class="card-title col-7 bg-orange-300" id="name_container">
-                                    <h5 class="fw-bold pt-2 pb-1">Amos</h5> <!--{{name}}--> 
-                                    <p class=" pb-2 pt-1">TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
+    <div class="cardbg-orange-100 rounded-md border-blue-900" id="custom-container">  <!--v-for{{outing}}-->
+                <div class="container bg-orange-100 rounded-lg border-white">
+                    <div class="grid grid-cols-12"> 
+                        <!-- <div class="card-body container  bg-orange-100">  -->
+                            <!-- <div class="col-span-1 content-center justify-center flex align-item-center"> -->
+                                <h5 class="col-span-2"><img class="w-100" id='icon' src="../../assets/profiles/amos.jpg"></h5> 
+                            <!-- </div> -->
+                                <!-- <div class="col-span-1"></div> -->
+                                <div class="col-span-10 ">
+                                    <div class="w-auto self-center justify-content-center align-middle card-title bg-orange-300" id="name_container" style="height:fit-content; width:fit-content">
+                                        <!-- <div class="px-2"> -->
+                                            <h5 class="fw-bold pt-2 pb-1 px-1">Amos</h5> <!--{{name}}--> 
+                                            <p class=" pb-2 pt-1 px-1" >TGIF!! Dinner & Karaoke??!</p> <!--{{message}}--> 
+                                        <!-- </div> -->
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            <!-- </div> -->
+                        <!-- </div> -->
                     </div> 
-                    <div class="row">
-                        <ul class="list-group list-group-flush "  style="list-style-image:url('../../assets/icons/clock.svg')" > 
+                    <div class="row ">
+                        <ul class="list-group list-group-flush p-0"  style="list-style-image:url('../../assets/icons/clock.svg')" > 
                             <li id="date" class="list-group-item bg-orange-100" style="list-style-image:url('../../assets/icons/clock.svg')"> 
 
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -32,19 +38,23 @@
                             </svg>Teo Heng @ Buona </li> <!--{{location}}--> 
                         </ul> 
                     </div>
-                    <div class="row">
-                        <button class="col-5 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : clicked_green}" @click="has_clicked_green" > 
+                    <div class="row grid-col-2">
+                        <div class="col-6">
+                            <button class="w-100 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : clicked_green}" @click="has_clicked_green" > 
+                                <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+                                </svg>
+                            Count me in</button>
+                        </div>
+        
+                        <!-- <div class="col-xl-1 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
+        
+                        <div class="col-6">
+                            <button class="w-100 bg-orange-300 option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': clicked_red }" v-on:click="has_clicked_red"  >
                             <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-                            </svg>
-                        Count me in</button>
-        
-                        <div class="col-2 pl-0 pr-0"></div>
-        
-                        <button class="col-5 bg-orange-300 option_box text-red-700 px-0 " @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': clicked_red }" v-on:click="has_clicked_red"  >
-                        <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
-                        Count me out</button>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+                            Count me out</button>
+                        </div>
                     </div>
                 </div>
             </div> 
@@ -135,11 +145,16 @@ background-color: orange !important;
 
 .option_box{
 border-radius: 10px;
-font-size:16px;
-padding:10px;
+font-size:10px;
+padding-top:10px;
+padding-right:5px;
+padding-right:5px;
+padding-bottom:10px;
+margin-bottom:10px;
 height:fit-content;
-margin-top:20px;
-box-shadow: 3px 10px 7px rgb(194, 194, 194);
+width:fit-content;
+/* margin-top:20px; */
+
 }
 #name_container{
   /* margin-left:1rem; */
@@ -148,12 +163,19 @@ border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 border-bottom-right-radius: 10px;
 margin-top:10px;
+margin-left:10px;
 height:fit-content;
 }
 #icon{
-width:5rem;
-border:2px black solid ;
+width:auto;
+height:auto;
+min-width:35px;
+
+/* margin-left:10px; */
+min-height: 35px;
+border:1px black solid ;
 border-radius:100%;
+margin-top:30px;
   /* margin-top:3rem; */
 }
 svg{
@@ -162,5 +184,62 @@ margin-right:3px;
 }
 
 
+@media (max-width:768px){
+    #custom-container{
+        font-size:14px;
+    }
+}
 
+@media (max-width:576px){
+    #custom-container{
+        font-size:10px;
+    }
+}
+
+
+@media (max-width:768px){
+    #icon{
+    width:auto;
+    height:auto;
+    border:1px black solid ;
+    border-radius:100%;
+    margin:0px;
+    }
+}
+    @media (max-width:992px){
+    #icon{
+    width: 200px;
+    height:auto;
+    border:1px black solid ;
+    border-radius:100%;
+    }
+}
+    @media (max-width:1024px){
+    #icon{
+    /* width: 200px; */
+    /* height:auto; */
+    margin-right:20px;
+    border:1px black solid ;
+    border-radius:100%;
+    }
+
+@media (max-width:576px){
+    .option_box{
+        font-size:10px;
+    }
+}
+
+@media (max-width:768px){
+    .option_box{
+        font-size:10px;
+    }
+}
+
+@media (max-width:1280px){
+    .option_box{
+        font-size:10px !important;
+    }
+}
+
+}
 </style>

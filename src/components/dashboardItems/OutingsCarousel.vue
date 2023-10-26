@@ -1,9 +1,10 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container">
-    <div class="flex flex-nowrap content-center">
-      <div class="col-lg-7 p-3 col-md-7 col-sm-12"><singlecarousel /></div>
-      <div class="col-lg-7 p-3 col-md-7 col-sm-12"><singlecarousel /></div>
-      <div class="col-lg-7 p-3 col-md-7 col-sm-12"><singlecarousel /></div>
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-cyan-400 bg-opacity-40" style="height:fit-content">
+    <div class="flex flex-nowrap content-center " >
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
     </div>
     <div class="scrollbar"></div>
   </div>
@@ -70,6 +71,8 @@ export default {
   width: auto;
   height: 300px;
   scrollbar-color: #2ec4b6 #f4a261;
+  /* border: solid 1px ; */
+  /* background-color:#2ec4b6; */
 }
 
 :root {
