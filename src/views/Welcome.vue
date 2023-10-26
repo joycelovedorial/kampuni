@@ -86,21 +86,6 @@
   </body>
 
 </html>
-  <!-- <script src="main.js"></script> -->
-
-<!-- 
-  <div class="container-fluid loginform">
-        <div v-if="registered">
-        <LoginForm @login="handleLogin" />
-        <button @click="registered = !registered">Click here to Sign Up</button>
-    </div>
-    <div v-else>
-        <SignupForm @signup="handleLogin" />
-        <button @click="registered = !registered">Click here to Login</button>
-    </div>
-    </div>
-</body>
-</html> -->
 </template>
 
 <script>
