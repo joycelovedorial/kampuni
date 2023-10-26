@@ -1,10 +1,14 @@
 <template>
-  CreateTask
+  
 </template>
 
 <script>
 export default {
+  setup() {
+    function addTask() {
 
+    }
+  }
 }
 </script>
 
