@@ -13,7 +13,7 @@
       <div class="col-1"></div>
       <div class="col-xl-5 col-lg-10 col-md-10 col-sm-10">
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test  bg-cyan-400 bg-opacity-40">
+        <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test  bg-white bg-opacity-25 rounded-lg">
           <TodayTask />
           <TodayTask />
           <TodayTask />
@@ -55,7 +55,7 @@ export default {
 <style>
 :root {
   --primary: #2ec4b6;
-  --secondary: #FF9F1C;
+  --secondary: #ffffff;
 }
 
 .test::-webkit-scrollbar {
