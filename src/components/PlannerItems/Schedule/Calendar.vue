@@ -4,7 +4,7 @@
 
   <div id="calendar">
     <!-- Please just display the calendar here -->
-    <iframe src="https://calendar.google.com/calendar/embed?src=80648a128124b84f8e91f2a5dd563e9b8d7f03f8ea9db0d699a269fa1cf37ecf%40group.calendar.google.com&ctz=Asia%2FSingapore" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    
   </div>
 
 </template>
@@ -28,12 +28,14 @@ export default {
     
     const myGoogleCalendar = async() => {
 
-      gapi.load('client:auth2', () => {
+      if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        // You might want to prompt the user to sign in here.
+        gapi.load('client:auth2', () => {
             gapi.client.init({
               apiKey: 'AIzaSyB31YYfSk-z2dIVU-_8fYXuWf4MlviXtdc',
               clientId: '983837246823-812neqdil8dm6u63esa1nalqub3iknpo.apps.googleusercontent.com',
               discoveryDocs: ['https://www.googleapis.com/auth/calendar'],
-              scope: 'https://www.googleapis.com/auth/spreadsheets',
+              scope: 'https://www.googleapis.com/auth/calendar',
             }).then(() => {
                 gapi.auth2.getAuthInstance().signIn();
 
@@ -58,6 +60,8 @@ export default {
             });
         });
 
+      }
+      
     return {login, myGoogleCalendar}
     }
   }
