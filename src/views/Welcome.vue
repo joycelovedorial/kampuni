@@ -2,8 +2,8 @@
 <html>    
   <body class="flex">
     <img src="@/assets/kampuni_logo.png" id="logo">
-    <div class="outermost-container mb-32" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
-      <div class="form-container register-container">
+    <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
+      <div class="form-container register-container ">
         <form @submit.prevent class="overflow-x-scroll">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
           <div >
@@ -16,8 +16,10 @@
             <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
         </div>
             <input class="form-control mb-1" type="password" id="password" placeholder="Password" />
-        <div>
-          <button type="submit" value="submit" class="px-2 mt-1" @click="handleRegister">Register</button>
+        <div class="flex">
+          <button type="submit" value="submit" class="flex-initial w-64" @click="handleRegister">Register
+          </button>
+
         </div>
 
           <span>or Sign Up using your google account</span>
@@ -53,12 +55,11 @@
             <h1 class="text-orangep text-3xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
-            <div class="content">
-            <div class="pass-link">
-                <button class="px-2 mr-2">Forgot password</button>
-                <button type="submit" value="submit" class="px-2" @click="handleLogin">Login</button>
+            
+            <div class="flex">
+                <button type="submit" value="submit" class="flex-initial w-64" @click="handleLogin">Login</button>
             </div>
-        </div>
+        
         
         <div>Or login using your Google account</div>
         <div class="social-container">
@@ -69,18 +70,21 @@
 
       <div class="overlay-container">
         <div class="overlay">
-          <div class="overlay-panel overlay-left ml-24" >
+          <div class="overlay-panel overlay-left" >
             <h1 class="title">
               <br> Hello <br/>
               friends 
             </h1>
             <p>If you have an account, login here and have fun</p>
-            <button class="ghost px-2 mt-1" id="login" @click="togglePanel" > 
+            <button class="ghost flex" id="login" @click="togglePanel" > 
+              <svg class='w-7 h-5 pr-2 pt-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+              </svg>
               Login
             </button>
           </div>
 
-          <div class="overlay-panel overlay-right">
+          <div class="overlay-panel overlay-right ">
             <h1 class="title">
               Live with <br />
               Kampuni now
@@ -88,9 +92,11 @@
             <p>
               If you do not have an account yet, click here to join us
             </p>
-            <button class="ghost mt-2 px-2" id="register" @click="togglePanel" >
-                
+            <button class="ghost flex" id="register" @click="togglePanel" >
                 Register
+                <svg class="w-7 h-5 pl-2 pt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+                </svg>
             </button>
           </div>
         </div>
@@ -284,12 +290,15 @@ export default {
 <style scoped>
 #logo {
   margin-bottom: 5px auto;
+  margin-top:60px;
+  /* padding-top:20px; */
+  padding-bottom:10px;
   
 
 }
 #logo {
-  width: 30%;
-  height: 20%;
+  width: 22rem;
+  height: auto;
 }
 .logo-container {
   width: 250px;
@@ -401,7 +410,7 @@ button {
   font-size: 15px;
   font-weight: 700;
   margin: 20px;
-  padding: 12px 80px;
+  padding: 12px;
   letter-spacing: 1px;
   text-transform: capitalize;
   transition: 0.3s ease-in-out;
@@ -626,6 +635,8 @@ input {
 
 .overlay::before {
   content: "";
+  /* margin-left:30px;
+  margin-right:30px; */
   position: absolute;
   left: 0;
   right: 0;
@@ -651,6 +662,7 @@ input {
   padding: 0 40px;
   text-align: center;
   top: 0;
+  
   height: 100%;
   width: 50%;
   transform: translateX(0);
@@ -658,7 +670,8 @@ input {
 }
 
 .overlay-left {
-  transform: translateX(-20%);
+  
+  transform: translateX(0);
 }
 
 .container.right-panel-active .overlay-left {
@@ -693,5 +706,8 @@ input {
 .social-container a:hover {
   border: 1px solid #4bb6b7;
 }
+
+
+
 
 </style>
