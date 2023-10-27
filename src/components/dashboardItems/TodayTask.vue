@@ -21,7 +21,7 @@
 <script>
 import { ref, onMounted,computed } from 'vue';
 import { auth, db } from "@/firebase/config";
-import { collection, query, where, getDocs, onSnapshot, setDoc, doc} from "firebase/firestore";
+import { collection, query, where, getDoc, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
 import { formatDistanceToNow } from 'date-fns';
 
 
@@ -59,8 +59,11 @@ export default {
       })
 
     const taskDone = async(taskid) =>{
-      await setDoc(doc(db,"tasks",taskid),{
-        taskstatus:true,
+      const docSnap = await getDoc(doc(db,"tasks",taskid))
+      const docData = docSnap.data()
+      const status = docData.taskstatus
+      await updateDoc(doc(db,"tasks",taskid),{
+        taskstatus:!status,
       })
     }
     // const fetchData = async () => {
