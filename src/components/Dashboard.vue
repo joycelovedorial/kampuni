@@ -15,9 +15,6 @@
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
         <div class="flex-nowrap overflow-y-scroll overflow-x-hidden h-3/6 test  bg-white bg-opacity-25 rounded-lg">
           <TodayTask />
-          <TodayTask />
-          <TodayTask />
-          <TodayTask />
         </div>
       </div>
 

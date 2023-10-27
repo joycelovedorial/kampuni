@@ -7,7 +7,7 @@
             Create a task 
         </button>
         <div class="h-3/6 overflow-y-scroll my-2 overflow-x-hidden">
-            <div v-for="task in tasks" :key="task.id" class="bg-white flex items-center m-2 rounded-md h-20"> <!-- Add a flex container for side-by-side elements -->
+            <div v-for="task in tasksFormatted" :key="task.id" class="bg-white flex items-center m-2 rounded-md h-20"> <!-- Add a flex container for side-by-side elements -->
                 <div class="inline-block w-9/12 p-2">
                     <p class="text-cyanp font-bold">
                     {{ task.taskname }}
@@ -17,7 +17,7 @@
                     </p>
                 </div>
                 <div class="items-center inline-block p-2">
-                    <button class="bg-cyans text-cblack text-center items-center w-16 h-16 rounded-md shadow-md hover:bg-cyans hover:opacity-70">
+                    <button class="bg-cyans text-cblack text-center items-center w-16 h-16 rounded-md shadow-md hover:bg-cyans hover:opacity-70" @click="claimTask(task.id)">
                         <svg class="h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"/>
                         </svg>
@@ -30,54 +30,55 @@
 </template>
 
 <script>
-    import '@/assets/main.css';
-import { auth } from '@/firebase/config';
+import '@/assets/main.css';
+import { db,auth } from '@/firebase/config';
+import { onMounted, ref,computed } from 'vue';
+import { collection, onSnapshot, query, setDoc, updateDoc, where, doc } from 'firebase/firestore';
+import { formatDistanceToNow } from 'date-fns';
 
-    export default {
-        components: {
-        },
-        setup() {
-            const tasks =[
-                    {taskname: 'sweep living room', countdown: '2 minutes', taken: false},
-                    {taskname: 'buy milk', countdown: '1 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                ]
-            
+export default {
+    components: {
+    },
+    setup() {
+        const tasks = ref([])
+        
+    
 
-          
-            
-                   // data () {
-        //     const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
-        //     const year = currentDate.getFullYear();
-        //     const month = currentDate.getMonth();
-        //     const firstDay = new Date(year, month, 1);
-        //     const lastDay = new Date(year, month + 1, 0);
-        //     const daysInMonth = lastDay.getDate();
-        //     const firstDayOfWeek = firstDay.getDay(); // 0 (Sunday) to 6 (Saturday)
-
-        //     return {
-        //         year,
-        //         month,
-        //         daysInMonth,
-        //         firstDayOfWeek: firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1, // Adjust for Monday as the start of the week (0 => 6, 1 => 0, ..., 6 => 5)
-        //     };
-        // },
-        // computed: {
-        // formattedDate() {
-        //     const options = { year: 'numeric', month: 'long' };
-        //     return new Date(this.year, this.month).toLocaleString(undefined, options);
-        // },
-    // },
-            return {
-                tasks }
-
+        const q = query(collection(db,"tasks"),where("userid","==",null))
+        const unsub = onSnapshot(q,(snap)=>{
+            const results= [];
+            snap.forEach((doc)=>{
+                results.push({ ...doc.data(), id: doc.id })
+            })
+            tasks.value=results
+        })
+    
+        const claimTask = async (taskId) => {
+            const user = auth.currentUser
+            const uid = user.uid
+            const taskRef = doc(db,"tasks",taskId)
+            await updateDoc(taskRef,{
+                userid:uid
+            });
         }
+        const tasksFormatted = computed(()=>{
+          if (tasks.value){
+              return tasks.value.map(doc => {
+                  let time = formatDistanceToNow(doc.countdown.toDate())
+                  return { ...doc, countdown: time}
+              })
+          }else{
+            return []
+          }
+      })
+        
+        
+
+        return {
+            tasks, claimTask, tasksFormatted }
+
     }
+}
 </script>
 
 <style>
@@ -121,3 +122,26 @@ td {
 }
 
 </style>
+        
+<!-- // data () {
+    //     const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
+    //     const year = currentDate.getFullYear();
+    //     const month = currentDate.getMonth();
+    //     const firstDay = new Date(year, month, 1);
+    //     const lastDay = new Date(year, month + 1, 0);
+    //     const daysInMonth = lastDay.getDate();
+    //     const firstDayOfWeek = firstDay.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+    //     return {
+    //         year,
+    //         month,
+    //         daysInMonth,
+    //         firstDayOfWeek: firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1, // Adjust for Monday as the start of the week (0 => 6, 1 => 0, ..., 6 => 5)
+    //     };
+    // },
+    // computed: {
+    // formattedDate() {
+    //     const options = { year: 'numeric', month: 'long' };
+    //     return new Date(this.year, this.month).toLocaleString(undefined, options);
+    // },
+// }, -->

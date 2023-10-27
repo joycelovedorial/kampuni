@@ -5,6 +5,9 @@
                 <span> {{ com.communityName }} </span>
                 <button @click="joinCom(com.id)">Join</button>
             </div>
+            <div v-if="error">
+                <p class="text-red-500">{{ error }}</p>
+            </div>
         </div>
         <div v-else>
             <p>No communities available.</p>
@@ -21,6 +24,7 @@ export default {
     setup(){
      const communityArray = ref([])
      const router = useRouter()
+     const error = ref(null);
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
@@ -31,75 +35,86 @@ export default {
         };
      
     const joinCom = async (comId) => {
-
+        
         const user = auth.currentUser;
         // console.log(user)
         const uid = user.uid
         const communityRef = doc(db, "communities", comId);
         const communityDoc = await getDoc(communityRef);
-        //updating community doc where the user is added into the array
-        if (communityDoc.exists()) {
-            await updateDoc(communityRef, {
-                homies: arrayUnion(uid)
+        const comData = communityDoc.data()
+        const pw = comData.password
+        const inputPass = prompt("Password: ")
+
+        if (inputPass==pw){
+            if (communityDoc.exists()) {
+                    await updateDoc(communityRef, {
+                        homies: arrayUnion(uid)
+                    });
+                    console.log("user joined community");
+            } else {
+                console.error("Community document does not exist.");
+            }
+
+            //Updating the User document to have a community it is included in
+            const userRef = doc(db,"users",uid)
+            const userDoc = await getDoc(userRef)
+
+            if (userDoc.exists()){
+                await updateDoc(userRef, {
+                    community:comId
+                });
+            
+            }else{
+                console.error("userDoc doesnt exist");
+            }
+
+            const communityData = communityDoc.data();
+            const homies = communityData.homies.filter((memberUid) => memberUid !== uid);
+            const chatQuery = query(collection(db,'chatrooms'),where('communityID',"==",comId))
+            const chatSnapshot = await getDocs(chatQuery);
+
+            if (!chatSnapshot.empty){
+            chatSnapshot.forEach(async (chatroomDoc) => {
+                // Add the current user to the chatroom's usersInvolved array
+                const chatroomId = chatroomDoc.id;
+                const chatroomRef = doc(db, "chatrooms", chatroomId);
+                await updateDoc(chatroomRef, {
+                    usersInvolved: arrayUnion(uid),
+                });
+                console.log("user added to communityChatroom");
             });
-            console.log("user joined community");
-        } else {
-            console.error("Community document does not exist.");
+            }else{
+                console.error("Chatroom does not exist")
+            }
+            //need to create private cahtroom\\
+            for (const otherUid of homies){
+                const messagesRef = await addDoc(collection(db,"chatrooms"),{
+                    usersInvolved:[uid,otherUid]
+                })
+                const messagesId = messagesRef.id
+                const messagesDoc = doc(db,'chatrooms',messagesId)
+                const messageCollectionRef = collection(messagesDoc,'messages')
+                addDoc(messageCollectionRef,{
+                    createdAt: new Date(),
+                    name: "Admin",
+                    message:"Private Chat Created"
+                })
+
+            }
+            router.push({name:"Homepage", params: {community:comId}})  
+        }else {
+        // Password is incorrect
+            error.value = "Incorrect password. Please try again.";
         }
 
-        //Updating the User document to have a community it is included in
-        const userRef = doc(db,"users",uid)
-        const userDoc = await getDoc(userRef)
-
-        if (userDoc.exists()){
-            await updateDoc(userRef, {
-                community:comId
-            });
-        
-        }else{
-            console.error("userDoc doesnt exist");
-        }
-        const communityData = communityDoc.data();
-        const homies = communityData.homies.filter((memberUid) => memberUid !== uid);
-
-        const chatQuery = query(collection(db,'chatrooms'),where('communityID',"==",comId))
-        const chatSnapshot = await getDocs(chatQuery);
-
-        if (!chatSnapshot.empty){
-        chatSnapshot.forEach(async (chatroomDoc) => {
-            // Add the current user to the chatroom's usersInvolved array
-            const chatroomId = chatroomDoc.id;
-            const chatroomRef = doc(db, "chatrooms", chatroomId);
-            await updateDoc(chatroomRef, {
-                usersInvolved: arrayUnion(uid),
-            });
-            console.log("user added to communityChatroom");
-         });
-        }else{
-            console.error("Chatroom does not exist")
-        }
-        //need to create private cahtroom\\
-        for (const otherUid of homies){
-            const messagesRef = await addDoc(collection(db,"chatrooms"),{
-                usersInvolved:[uid,otherUid]
-            })
-            const messagesId = messagesRef.id
-            const messagesDoc = doc(db,'chatrooms',messagesId)
-            const messageCollectionRef = collection(messagesDoc,'messages')
-            addDoc(messageCollectionRef,{
-                createdAt: new Date(),
-                name: "Admin",
-                message:"Private Chat Created"
-            })
-
-        }
-        router.push({name:"Homepage", params: {community:comId}})  
     }
+        //updating community doc where the user is added into the array
+        
 
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return { communityArray, joinCom }
+            return { communityArray, joinCom, error }
     } 
 }
 </script>
