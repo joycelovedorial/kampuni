@@ -42,15 +42,15 @@ export default {
                 const countdownTimestamp = Timestamp.fromDate(new Date(currentDateTime.getTime() + cd)); // Create a Timestamp
                 const datelineTimestamp = Timestamp.fromDate(datelineDate);
                 const docRef = await addDoc(collection(db, "tasks"), {
-                userid: null,
-                commid: cid,
-                taskname: taskname.value,
-                taskstatus: false,
-                description: description.value,
-                points: 20,
-                overdue: false,
-                countdown: countdownTimestamp,
-                dateline: datelineTimestamp,
+                    userid: null,
+                    commid: cid,
+                    taskname: taskname.value,
+                    taskstatus: false,
+                    description: description.value,
+                    points: 20,
+                    overdue: false,
+                    countdown: countdownTimestamp,
+                    dateline: datelineTimestamp,
                 });
 
                 if (docRef) {
