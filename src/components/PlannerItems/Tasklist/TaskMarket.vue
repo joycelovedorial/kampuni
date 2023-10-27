@@ -1,13 +1,13 @@
 <template>
     <div class="w-3/12 flex flex-col items-center">
-        <button class="bg-cyanp text-cwhite font-bold w-11/12 rounded-full py-2 hover:drop-shadow-md hover:opacity-90">
+        <button class="bg-cyanp text-cwhite font-bold w-11/12 rounded-full py-2 hover:drop-shadow-md hover:opacity-90" @click="$emit('eCreate')">
             <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
-            Create a task
+            Create a task 
         </button>
         <div class="h-3/6 overflow-y-scroll my-2 overflow-x-hidden">
-            <div v-for="task in tasks" class="bg-white flex items-center m-2 rounded-md h-20"> <!-- Add a flex container for side-by-side elements -->
+            <div v-for="task in tasks" :key="task.id" class="bg-white flex items-center m-2 rounded-md h-20"> <!-- Add a flex container for side-by-side elements -->
                 <div class="inline-block w-9/12 p-2">
                     <p class="text-cyanp font-bold">
                     {{ task.taskname }}
@@ -31,11 +31,27 @@
 
 <script>
     import '@/assets/main.css';
+import { auth } from '@/firebase/config';
 
     export default {
         components: {
         },
-        // data () {
+        setup() {
+            const tasks =[
+                    {taskname: 'sweep living room', countdown: '2 minutes', taken: false},
+                    {taskname: 'buy milk', countdown: '1 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
+                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
+                ]
+            
+
+          
+            
+                   // data () {
         //     const currentDate = new Date(2023, 8); // October 2023 (0-indexed month)
         //     const year = currentDate.getFullYear();
         //     const month = currentDate.getMonth();
@@ -57,22 +73,11 @@
         //     return new Date(this.year, this.month).toLocaleString(undefined, options);
         // },
     // },
-        data() {
             return {
-                tasks: [
-                    {taskname: 'sweep living room', countdown: '2 minutes', taken: false},
-                    {taskname: 'buy milk', countdown: '1 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                    {taskname: 'wash dishes', countdown: '3 hours', taken: true},
-                    {taskname: 'empty the trashcan', countdown: '6 hours', taken: false},
-                ]
-            }
-        }
+                tasks }
 
-    };
+        }
+    }
 </script>
 
 <style>

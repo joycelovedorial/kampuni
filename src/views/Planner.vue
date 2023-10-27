@@ -20,17 +20,19 @@
     <div v-if="displayCalendar">
       <Calendar></Calendar>
     </div>
-    <div v-if="displayTask" class="flex space-x-2">
-      <TaskMarket />
+    <div v-if="displayTask" class="flex space-x-2" id="tasklist">
+      <TaskMarket @eCreate="handleCreateTask"/>
       <Leaderboard />
-
-
+      <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateTask">
+        <createTask/>
+      </div>
     </div>
   </div> 
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import createTask from '@/components/PlannerItems/Tasklist/createTask.vue';
 import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
 import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
@@ -43,18 +45,26 @@ export default {
     Calendar,
     TaskMarket,
     Leaderboard,
+    createTask
   },
-  setup() {
+  setup(props,context) {
+    const displayCreateTask = ref(false)
     const displayOutings = ref(false);
     const displayCalendar = ref(true);
     const displayTask = ref(false);
 
-      return { displayOutings, displayCalendar, displayTask }
+    const handleCreateTask = () => {
+      displayCreateTask.value = !displayCreateTask.value;
+    };
+      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask }
     }
 }
 </script>
 
 <style scoped>
+  #tasklist{
+    position: relative
+  }
   #calendar-page {
     background-image: url('../assets/background_img/background4.png');
     background-color: #f2f2f2;

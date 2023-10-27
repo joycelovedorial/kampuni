@@ -186,53 +186,61 @@ export default {
 
 
     const signinGoogle = async () => {
-          try {
-              const provider = new GoogleAuthProvider();
-              const result = await signInWithPopup(auth, provider);
+      try {
+        const provider = new GoogleAuthProvider();
 
-              // This gives you a Google Access Token. You can use it to access the Google API.
-              const credential = GoogleAuthProvider.credentialFromResult(result);
-              const token = credential.accessToken;
+        // Request additional scopes to access user profile data
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
 
-              // The signed-in user info.
-              const user = result.user;
-              const uid = user.uid;
-              const docRef = doc(db, 'users', uid);
+        const result = await signInWithPopup(auth, provider);
 
-              const docSnap = await getDoc(docRef);
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
 
-              if (docSnap.exists() && docSnap.data().community !== null) {
-                  router.push({ name: "Homepage" });
-                  
-              } else {
-                  // Check if result.additionalUserInfo exists and has a profile property
-                  const googleAdditionalInfo = result.additionalUserInfo;
-                  const googleProfile = googleAdditionalInfo && googleAdditionalInfo.profile ? googleAdditionalInfo.profile : null;
+        // The signed-in user info.
+        const user = result.user;
+        const uid = user.uid;
+        const docRef = doc(db, 'users', uid);
 
-                  setDoc(doc(db, "users", uid), {
-                      firstname: googleProfile && googleProfile.given_name ? googleProfile.given_name : null,
-                      lastname: googleProfile && googleProfile.family_name ? googleProfile.family_name : null,
-                      email: user.email,
-                      birthday: null,
-                      country: null,
-                      bio: null,
-                      community: null,
-                  });
+        const docSnap = await getDoc(docRef);
 
-                  this.googles = "yars";
-                  router.push({ name: 'joinCommunity' });
-              }
-          } catch (error) {
-              // Handle Errors here.
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              const email = error.customData && error.customData.email ? error.customData.email : null;
-              const credential = GoogleAuthProvider.credentialFromError(error);
+        if (docSnap.exists() && docSnap.data().community !== null) {
+          router.push({ name: "Homepage" });
+        } else {
+          // Check if result.additionalUserInfo exists and has a profile property
+          const additionalUserInfo = result.additionalUserInfo;
+          if (additionalUserInfo.profile) {
+            const googleProfile = additionalUserInfo.profile;
 
-              // Handle the specific error or log the error message
-              console.error('Google sign-in error:', errorCode, errorMessage);
+            setDoc(doc(db, "users", uid), {
+              firstname: googleProfile.given_name,
+              lastname: googleProfile.family_name,
+              email: user.email,
+              birthday: null,
+              country: null,
+              bio: null,
+              community: null,
+            });
+
+            this.googles = "yars";
+            router.push({ name: 'joinCommunity' });
+          } else {
+            console.error('Google sign-in error: Profile data not available');
           }
-      };
+        }
+      } catch (error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData && error.customData.email ? error.customData.email : null;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+
+        // Handle the specific error or log the error message
+        console.error('Google sign-in error:', errorCode, errorMessage);
+      }
+    };
 
     //after Authenticated
     const handleAuth = async () => {
