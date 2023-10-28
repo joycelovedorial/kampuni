@@ -18,6 +18,9 @@
         <div class="text" id="birthday">
             Birthday: {{birthday}}
         </div>
+        <div class="text" id="bio"> 
+            Bio: {{bio}}
+        </div>
         <div class="text" id="community">
             Community: {{community}}
         </div>
