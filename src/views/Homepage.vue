@@ -2,7 +2,7 @@
 <template>
   <Navbar />
   <body id="bg-container">
-    <h1 class="text-black font-fredoka text-" id="welcome">Welcome back, {{ name }}</h1>
+    <h1 class="text-black font-Roboto text-" id="welcome">Welcome back, {{ name }}</h1>
     <Dashboard :community="comId" />
   </body>
 </template>
@@ -60,8 +60,9 @@ export default {
 }
 
 #bg-container {
-  background-image: url("@/assets/background_img/background1.png");
-  /* background-color: #f2f2f2; */
+  background-image: url("@/assets/background_img/background4.png");
+
+  /* background-color: rgb(137, 255, 255); */
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

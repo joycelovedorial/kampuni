@@ -1,16 +1,32 @@
 <template>
 
+<<<<<<< Updated upstream
 <div id="app" class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
   <div class ='row bg-oranges relative rounded p-3 w-105'>
     <div class='col'>
     <input type="checkbox" @click="taskDone(task.id)" class='larger'>
     <label :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>{{task.taskname}}</label>
+=======
+<div id="app" class="container px-4 py-3 p rounded-m bg-transparent border-black border-solid "> 
+  <div class ='row relative rounded p-3 w-105 ' :class="{'checked_style' : isChecked, 'bg-cyans' : !isChecked}">
+    <div class='col pl-0'>
+
+    <label :style="{'text-decoration-line' : isChecked ? 'line-through' : 'none' }"  class='rounded text-xl ' :class="{'text-white' : isChecked}" >
+      <input type="checkbox" v-on:click="is_checked" class='pr-5 pt-0 mb-1 form-checkbox h-6 w-6' style="color:#fb5454 ; t">
+      <span class="pl-5">IS 216 Consultation</span>
+    </label>
+>>>>>>> Stashed changes
     </div>
 
     
     <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
+<<<<<<< Updated upstream
       <p class="text-center font-bold">{{ task.points }}</p>
       <p class="text-center rounded bg-orangep px-2">POINTS</p>
+=======
+      <p class="text-center font-bold" :class="{'text-white' : isChecked}" >10</p>
+      <p class="text-center rounded px-2" :class="{'checked_style2' : isChecked, 'bg-cyans' : !isChecked}">POINTS</p>
+>>>>>>> Stashed changes
     </div>
     
   </div>
@@ -82,6 +98,7 @@ export default {
     // Define the `is_checked` method using Composition API
     const is_checked = () => {
       isChecked.value = !isChecked.value;
+      console.log(isChecked.value)
     };
 
     return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
@@ -98,6 +115,18 @@ export default {
 input.larger{
   width: 20px;
   height: 20px;
+  accent-color: #f0f9ff !important;
 }
+
+.checked_style{
+  background-color:#fb5454;
+  color:white;
+}
+
+.checked_style2{
+  background-color:#fb5454;
+  color:white;
+}
+
 
 </style>

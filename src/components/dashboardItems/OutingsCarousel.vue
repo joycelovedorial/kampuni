@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" style="height:fit-content">
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25 will-change-scroll" style="height:fit-content">
     <div class="flex flex-nowrap content-center " >
       <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
       <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
