@@ -1,7 +1,7 @@
 <template>
   Calendar (Actual)
   <h1>Hullooo</h1>
-
+  <CreateOuting/>
   <div id="calendar">
     <!-- Please just display the calendar here -->
     
@@ -17,11 +17,14 @@ import Vue from 'vue'
 import VueGapi from 'vue-gapi'
 import { createGapi } from 'vue-gapi'
 import { useGapi } from 'vue-gapi'
-
+import CreateOuting from './CreateOuting.vue';
 
 
 
 export default {
+  components:{
+    CreateOuting
+  },
   setup(){
 
     const gapi = useGapi();

@@ -1,10 +1,9 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25 will-change-scroll" style="height:fit-content">
-    <div class="flex flex-nowrap content-center " >
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel /></div>
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" style="height:fit-content">
+  
+    <div class="flex flex-nowrap content-center " v-for="out in outingArray" :key="out.id" >
+      <span>hi</span>
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel :outid="out.id"/></div>
     </div>
     <div class="scrollbar"></div>
   </div>
@@ -12,51 +11,65 @@
 
 <script>
 import singlecarousel from "./singlecarousel.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted,onBeforeMount } from "vue";
 import { auth, db } from "@/firebase/config";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { startOfDay } from "date-fns"; // Import the startOfDay function
+import {doc,collection, query, where, getDocs,Timestamp,getDoc, onSnapshot } from "firebase/firestore";
+import { startOfDay,addDays } from "date-fns"; // Import the startOfDay function
 
 export default {
   components: { singlecarousel },
   props: {
-    community: String,
+
   },
-
-  setup(props) {
+    
+    setup() {
     const user = auth.currentUser;
-    const uid = user.uid;
-    const cid = props.community;
-    console.log("this is in outings carousel" + cid);
-    const outingArray = ref([]);
-    const filteredOutingList = ref([]);
+    const outingArray = ref([])
+    const uid = user.uid
+    const comid = ref('');
     const now = new Date();
-    const startOfToday = startOfDay(now); // Use the startOfDay function
+    now.setHours(0, 0, 0, 0);
+    const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
+    const endOfWeek = addDays(startOfToday.toDate(), 7);
 
-    const q = query(
-      collection(db, "outings"),
-      where("communityID", "==", cid),
-      where("date", ">=", startOfToday)
-    );
+    onBeforeMount(async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const uid = user.uid;
+        const docRef = doc(db, 'users', uid);
 
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        outingArray.value.push({ ...doc.data(), id: doc.id });
-      });
+        try {
+          const docSnap = await getDoc(docRef);
+          const userData = docSnap.data();
+          comid.value = userData.community;
+          console.log('in fetch', comid.value);
 
-      for (const out of outingArray.value) {
-        if (!out.usersInvoled.includes(uid)) {
-          filteredOutingList.push(out);
+          // Now that you have comid, you can perform the query here
+          const q = query(
+            collection(db, 'outings'),
+            where('community', '==', comid.value),
+            where('date', '>=', startOfToday),
+            where('date', '<=', endOfWeek)
+          );
+
+          const unsub = onSnapshot(q, (snap) => {
+            const results = [];
+            snap.forEach((doc) => {
+              results.push({ ...doc.data(), id: doc.id });
+            });
+            outingArray.value = results;
+            console.log(outingArray.value);
+          });
+        } catch (error) {
+          console.error('Error fetching user data:', error);
         }
+      } else {
+        router.push({ name: 'Welcome' });
       }
-      console.log(filteredOutingList.value);
-    };
-
-    onMounted(() => {
-      fetchData();
     });
+
+    return { outingArray }
+    // ...
   },
 };
 </script>

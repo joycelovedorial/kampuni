@@ -1,9 +1,9 @@
 <template>
   <div class="container bg-transparent">
     <div class="row mb-3">
-      <!-- <div class="col-1"></div> -->
-      <div class="col-12">
-        <OutingsCarousel :community="comId" />
+      <div class="col-1"></div>
+      <div class="col-10">
+        <OutingsCarousel />
       </div>
 
       <!-- <div class="col-1 "></div> -->
@@ -15,15 +15,6 @@
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
         <div class="flex-nowrap overflow-y-scroll overflow-x-hidden test h-96 bg-white bg-opacity-25 rounded-lg will-change-scroll">
           <TodayTask />
-<<<<<<< Updated upstream
-=======
-          <TodayTask />
-          <TodayTask />
-          <TodayTask />
-          <TodayTask />
-          <TodayTask />
-
->>>>>>> Stashed changes
         </div>
       </div>
       <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div>
@@ -49,17 +40,13 @@ import { ref } from "vue";
 export default {
   components: { TodayTask, ExpensesList, OutingsCarousel },
   props: {
-    community: String,
   },
   setup(props) {
-    console.log("this is dashboard" + props.community);
-    const comId = props.community;
 
     // Use comId as needed
 
     // Rest of your component logic here
-    const user = auth.currentUser;
-    return { comId };
+    return { };
   },
 };
 </script>

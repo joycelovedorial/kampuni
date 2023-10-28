@@ -5,7 +5,6 @@
             <input class="form-control name" type="text" required placeholder="Community Name" v-model="comName">
             <input class="form-control name" type="text" required placeholder="Password" v-model="password">
             <input class="form-control name" type="text" required placeholder="Confirm Password" v-model="cfmpassword">
-
             <button type="submit" @click="ComCreate">Create</button>
         </form>
     </div>
@@ -55,13 +54,8 @@ export default {
                     }
             }else{
                 alert("Password Mismatch or Empty!","Try again","error")
-            }
-            
+            }    
         }
-                
-            
-        
-
         return { comName, ComCreate,password,cfmpassword }
     }
 

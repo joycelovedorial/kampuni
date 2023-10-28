@@ -2,6 +2,8 @@
 <template>
   <Navbar />
   <body id="bg-container">
+    <h1 class="text-black font-fredoka text-" id="welcome">Welcome back, {{ name }}</h1>
+    <Dashboard :community="comid" />
     <h1 class="text-black font-Roboto text-" id="welcome">Welcome back, {{ name }}</h1>
     <Dashboard :community="comId" />
   </body>
@@ -20,8 +22,7 @@ export default {
   setup() {
     const name = ref("");
     const router = useRouter();
-    const comId = ref("");
-
+    const comid = ref(null)
     const fetchCid = async () => {
       const user = auth.currentUser;
       if (user) {
@@ -31,8 +32,7 @@ export default {
         try {
           const docSnap = await getDoc(docRef);
           const userData = docSnap.data();
-          comId.value = userData.community;
-
+          comid.value= userData.community;
           name.value = userData.firstname;
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -44,7 +44,7 @@ export default {
     onMounted(() => {
       fetchCid();
     });
-    return { name, comId };
+    return { name, comid };
   },
 };
 </script>
