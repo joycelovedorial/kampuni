@@ -11,52 +11,65 @@
 
 <script>
 import singlecarousel from "./singlecarousel.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted,onBeforeMount } from "vue";
 import { auth, db } from "@/firebase/config";
-import { collection, query, where, getDocs,Timestamp, onSnapshot } from "firebase/firestore";
-import { startOfDay } from "date-fns"; // Import the startOfDay function
+import {doc,collection, query, where, getDocs,Timestamp,getDoc, onSnapshot } from "firebase/firestore";
+import { startOfDay,addDays } from "date-fns"; // Import the startOfDay function
 
 export default {
   components: { singlecarousel },
   props: {
-    community: String,
-  },
 
-  setup(props) {
+  },
+    
+    setup() {
     const user = auth.currentUser;
-    const uid = user.uid;
-    const cid = props.community;
-    console.log("this is in outings carousel" + cid);
-    const outingArray = ref([]);
+    const outingArray = ref([])
+    const uid = user.uid
+    const comid = ref('');
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
+    const endOfWeek = addDays(startOfToday.toDate(), 7);
 
-    const q = query(
-      collection(db, "outings"),
-      where("community", "==", cid),
-      where("date", ">=", startOfToday)
-    );
+    onBeforeMount(async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const uid = user.uid;
+        const docRef = doc(db, 'users', uid);
 
-    
+        try {
+          const docSnap = await getDoc(docRef);
+          const userData = docSnap.data();
+          comid.value = userData.community;
+          console.log('in fetch', comid.value);
 
-    const fetchData = async () => {
-      console.log("fetching in outingcaorou");
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        outingArray.value.push({ ...doc.data(), id: doc.id });
-        console.log(outingArray);
-      });
+          // Now that you have comid, you can perform the query here
+          const q = query(
+            collection(db, 'outings'),
+            where('community', '==', comid.value),
+            where('date', '>=', startOfToday),
+            where('date', '<=', endOfWeek)
+          );
 
-    };
-    fetchData()
-
-    onMounted(() => {
-      fetchData();
+          const unsub = onSnapshot(q, (snap) => {
+            const results = [];
+            snap.forEach((doc) => {
+              results.push({ ...doc.data(), id: doc.id });
+            });
+            outingArray.value = results;
+            console.log(outingArray.value);
+          });
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      } else {
+        router.push({ name: 'Welcome' });
+      }
     });
 
     return { outingArray }
+    // ...
   },
 };
 </script>

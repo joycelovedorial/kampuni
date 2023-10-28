@@ -56,9 +56,9 @@ export default {
                 if (docRef) {
                 console.log("Task created");
                 }
-            } else {
-                console.error("Invalid date format in Allocate By");
-            }
+                } else {
+                    console.error("Invalid date format in Allocate By");
+                }
             };
 
 

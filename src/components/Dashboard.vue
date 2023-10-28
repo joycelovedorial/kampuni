@@ -3,7 +3,7 @@
     <div class="row mb-3">
       <div class="col-1"></div>
       <div class="col-10">
-        <OutingsCarousel :community="comId" />
+        <OutingsCarousel />
       </div>
 
       <div class="col-1 "></div>
@@ -34,17 +34,13 @@ import { ref } from "vue";
 export default {
   components: { TodayTask, ExpensesList, OutingsCarousel },
   props: {
-    community: String,
   },
   setup(props) {
-    console.log("this is dashboard" + props.community);
-    const comId = props.community;
 
     // Use comId as needed
 
     // Rest of your component logic here
-    const user = auth.currentUser;
-    return { comId };
+    return { };
   },
 };
 </script>

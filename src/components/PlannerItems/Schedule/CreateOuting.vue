@@ -60,17 +60,31 @@ export default {
                     estimatedCost: eCost.value,
                 });
 
-                if (outRef) {
-                console.log("Outing created");
-                }
-
-                const outID = outRef.id
-                const subcolInvolved = collection(db,'outings',outID,"usersInvolved");
-                //maybe for this might add every single user? then set imIn to false for them first, wah but the u need pull communityDoc then loop thru homies...shag...
-                addDoc(subcolInvolved,{
-                    user:uid,
+            if (outRef) {
+            console.log("Outing created");
+            }
+            const comSnap = await getDoc(doc(db,"communities",cid))
+            const comData = comSnap.data()
+            const homies = comData.homies
+            const outID = outRef.id
+            const subcolInvolved = collection(db,'outings',outID,"usersInvolved");
+            for (const homie of homies) {
+                if(homie==uid){
+                    addDoc(subcolInvolved,{
+                    user:homie,
                     imIn:true,
                 })
+                }else{
+                    addDoc(subcolInvolved,{
+                            user:homie,
+                            imIn:null,
+                    })
+                } 
+            }
+           
+            
+            //maybe for this might add every single user? then set imIn to false for them first, wah but the u need pull communityDoc then loop thru homies...shag...
+            
         }
             
      

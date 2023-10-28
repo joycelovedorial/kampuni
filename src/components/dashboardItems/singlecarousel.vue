@@ -8,8 +8,8 @@
                                 <div class="col-span-10 ">
                                     <div class="w-auto self-center justify-content-center align-middle card-title bg-orange-300" id="name_container" style="height:fit-content; width:fit-content">
                                     
-                                            <h5 class="fw-bold pt-2 pb-1 px-1">{{title.value}}</h5> <!--{{name}}--> 
-                                            <p class=" pb-2 pt-1 px-1" >{{ desc.value }}</p> <!--{{message}}--> 
+                                            <h5 class="fw-bold pt-2 pb-1 px-1">{{title}}</h5> <!--{{name}}--> 
+                                            <p class=" pb-2 pt-1 px-1" >{{ desc }}</p> <!--{{message}}--> 
 
                                     </div>
                                 </div>
@@ -20,36 +20,36 @@
 
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
-                            </svg> {{ date.value }}</li> <!--{{date}}--> 
+                            </svg> {{ date }}</li> <!--{{date}}--> 
 
                             <li id="time" class="list-group-item bg-orange-100" style="list-style-image:url('../assets/icons/clock.svg')">
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                            </svg> {{time.value}}</li> <!--{{time}}--> 
+                            </svg> {{time}}</li> <!--{{time}}--> 
         
                             <li id="location" class="list-group-item bg-orange-100" style="list-style-image:url('../assets/icons/clock.svg')">
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                            </svg>{{location.value}} </li> <!--{{location}}--> 
+                            </svg>{{location}} </li> <!--{{location}}--> 
                         </ul> 
                     </div>
                     <div class="row grid-col-2">
-                        <div class="col-6">
-                            <button class="w-100 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved.value}" @click="has_clicked_green" > 
+                         <div class="col-6">
+                            <button class="w-100 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
                                 <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
                                 </svg>
                             Count me in</button>
-                        </div>
+                        </div> 
         
-                        <!-- <div class="col-xl-1 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
+                        <div class="col-xl-1 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div>
         
                         <div class="col-6">
-                            <button class="w-100 bg-orange-300 option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved.value }" @click="has_clicked_red"  >
+                            <button class="w-100 bg-orange-300 option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
                             <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
                             Count me out</button>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div> 
@@ -58,9 +58,9 @@
 <script>
 
 import '@/assets/main.css';
-import { doc, getDoc,query,collection, setDoc ,onSnapshot} from 'firebase/firestore';
+import { doc, getDoc,query,collection, setDoc ,onSnapshot,where, updateDoc} from 'firebase/firestore';
 import { auth, db } from "@/firebase/config";
-import { onMounted } from 'vue';
+import { ref,onMounted,computed } from 'vue';
 // import '../../../public/index.html';
 
 export default {
@@ -70,7 +70,7 @@ export default {
         outid: String,
     },
     setup(props){
-        console.log("single");
+        const toDisplay = ref([])
         const title = ref("")
         const desc = ref("")
         const location = ref("")
@@ -78,11 +78,12 @@ export default {
         const eCost = ref("")
         const involved = ref(null) // if null, both buttons are pressable, if true, green button is pressed( only red is pressable), if false,vice versa
         const time = ref("")
-        console.log(props.outid);
         const isHovered_green=ref(false)
         const isHovered_red=ref(false)
         const docid = ref("")
-
+        const outID = ref(props.outid)
+        const user = auth.currentUser
+        const uid = user.uid
 
         const formatDate = (timestamp) => {
             const dateObj = new Date(timestamp.toMillis());
@@ -93,56 +94,65 @@ export default {
             return { date: formattedDate, time: formattedTime };
         };
         const fetchData = async () =>{
-            const user = auth.currentUser
-            const uid = user.uid
-            const outID = ref(props.outid)
-            const outRef = doc(db,"outings",outID)
-            const outSnap = await getDoc(outRef)
-            const outData = outSnap.data()
-            title.value = outData.title
-            desc.value = outData.description
-            location.value = outData.location
-            eCost.value = outData.estimatedCost
-            const { date: formattedDate, time: formattedTime } = formatDate(outData.date);
-            date.value = formattedDate;
-            time.value = formattedTime; // Set the time value
-            //probably need to use snap shot here... shag...
+            const outRef = doc(db,"outings",outID.value)
+            try{
+                
+                const outSnap = await getDoc(outRef)
+                const outData = outSnap.data()
+          
+                title.value = outData.title
+                desc.value = outData.description
+                location.value = outData.location
+                eCost.value = outData.estimatedCost
+                const { date: formattedDate, time: formattedTime } = formatDate(outData.date);
+                date.value = formattedDate;
+                time.value = formattedTime;
+                //probably need to use snap shot here... shag...
+            }catch{
 
-
-            const q = query(collection(db,"outings",outID,"usersInvolved"),where("user","==",uid))
-            const subcollectionRef = collection(db, "outings", outID, "usersInvolved"); // Reference to the subcollection
-
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                docid.value = change.doc.id; // This is the document ID within the subcollection
-                const uiData = change.doc.data();
-                involved.value = uiData.imIn;
-                    }
-                if (change.type === "modified") {
-                    // Handle the case where an attribute changed in an existing document
-                    const uiData = change.doc.data();
-                    // Check the attribute you want and update your reactive properties accordingly
-                    if (uiData.imIn !== involved.value) {
-                    involved.value = uiData.imIn;
-                    }
-                    // You can do similar checks for other attributes
-                }
-                });
-            });
+            }
+            
         }
         fetchData()
 
-        const has_clicked_green = async () =>{
-            await setDoc(doc(db,"outings",props.outid,"usersinvolved",docid),{
-                imIn:true
+        const q = query(collection(db,"outings",outID.value,"usersInvolved"),where("user","==",uid))
+        const subcollectionRef = collection(db, "outings", outID.value, "usersInvolved"); // Reference to the subcollection
+     
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const results = []
+            snapshot.forEach((doc)=>{
+                results.push({ ...doc.data(),id:doc.id})
+               
             })
-        }
+            toDisplay.value=results
+       
+            involved.value=results[0].imIn
+            docid.value=results[0].id
+          
+        });
+
+
+        const has_clicked_green = async () => {
+      
+            if (docid.value) {
+              
+                await updateDoc(doc(db, "outings", props.outid, "usersInvolved", docid.value), {
+                imIn: true,
+                });
+              
+            }
+        };
 
         const has_clicked_red = async () =>{
-            await setDoc(doc(db,"outings",props.outid,"usersinvolved",docid),{
-                imIn:false
-            })
+        
+            if(docid.value){
+              
+                await updateDoc(doc(db,"outings",outID.value,"usersInvolved",docid.value),{
+                    imIn:false
+                })
+              
+                
+            }       
         }
         onMounted(()=>{
             fetchData()
