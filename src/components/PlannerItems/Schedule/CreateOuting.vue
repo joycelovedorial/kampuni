@@ -1,6 +1,7 @@
 <template>
   <div class="create-outing container-fluid">
     <form class="form-control" @submit.prevent="createOuting">
+        Create Outing
         <div class="row">
             <div>
                 <label for="title">Title</label>

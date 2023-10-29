@@ -59,7 +59,7 @@
 <script>
 
 import '@/assets/main.css';
-import { doc, getDoc,query,collection, setDoc ,onSnapshot,where, updateDoc} from 'firebase/firestore';
+import { doc, addDoc,getDoc,query,collection, setDoc ,onSnapshot,where, updateDoc} from 'firebase/firestore';
 import { auth, db } from "@/firebase/config";
 import { ref,onMounted,computed } from 'vue';
 // import '../../../public/index.html';
@@ -126,34 +126,46 @@ export default {
                
             })
             toDisplay.value=results
-       
-            involved.value=results[0].imIn
-            docid.value=results[0].id
+            if(results.length>0){
+                involved.value=results[0].imIn
+                docid.value=results[0].id
+            }
+        
           
         });
 
 
         const has_clicked_green = async () => {
-      
+            const user = auth.currentUser
+            const uid = user.uid
             if (docid.value) {
               
                 await updateDoc(doc(db, "outings", props.outid, "usersInvolved", docid.value), {
                 imIn: true,
                 });
               
+            }else{
+
+                await addDoc(collection(db,"outings",outID.value,"usersInvolved"),{
+                    imIn: true,
+                    user: uid
+                })
             }
         };
 
         const has_clicked_red = async () =>{
-        
+            const user = auth.currentUser
+            const uid = user.uid
             if(docid.value){
-              
                 await updateDoc(doc(db,"outings",outID.value,"usersInvolved",docid.value),{
                     imIn:false
                 })
-              
-                
-            }       
+            } else{
+                await addDoc(collection(db,"outings",outID.value,"usersInvolved"),{
+                    imIn: true,
+                    user: uid
+                })
+            }     
         }
         onMounted(()=>{
             fetchData()
