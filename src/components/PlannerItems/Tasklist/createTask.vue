@@ -3,7 +3,7 @@
     <form @submit.prevent>
         <label for="taskname">Task Name</label>
         <input type="text" id="taskname" v-model="taskname">
-        <label for="descr">Description</label>
+        <label for="desc">Description</label>
         <input type="text" id="desc" v-model="description">
         <label for="dateline">Dateline</label>
         <input type="datetime-local" id="dateline" v-model="dateline">
