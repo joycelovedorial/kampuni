@@ -1,128 +1,116 @@
 <template>
 
-<div id="app" class="container px-4 py-3 p rounded-m bg-transparent border-black border-solid "> 
-  <div class ='row relative rounded p-3 w-105 ' :class="{'checked_style' : isChecked, 'bg-cyans' : !isChecked}">
-    <div class='col pl-0'>
-
-    <label :style="{'text-decoration-line' : isChecked ? 'line-through' : 'none' }"  class='rounded text-xl ' :class="{'text-white' : isChecked}" >
-      <input type="checkbox" v-on:click="is_checked" class='pr-5 pt-0 mb-1 form-checkbox h-6 w-6' style="color:#fb5454 ; t">
-      <span class="pl-5">IS 216 Consultation</span>
-    </label>
+  <div id="app" class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
+    <div class ='row bg-oranges relative rounded p-3 w-105'>
+      <div class='col'>
+      <input type="checkbox" @click="taskDone(task.id)" class='larger'>
+      <label :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>{{task.taskname}}</label>
+      </div>
+  
+      
+      <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
+        <p class="text-center font-bold">{{ task.points }}</p>
+        <p class="text-center rounded bg-orangep px-2">POINTS</p>
+      </div>
+      
     </div>
-
-    
-    <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
-      <p class="text-center font-bold" :class="{'text-white' : isChecked}" >10</p>
-      <p class="text-center rounded px-2" :class="{'checked_style2' : isChecked, 'bg-cyans' : !isChecked}">POINTS</p>
-    </div>
-    
   </div>
-</div>
-
-</template>
-
-<script>
-import { ref, onMounted,computed } from 'vue';
-import { auth, db } from "@/firebase/config";
-import { collection, query, where, getDoc, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
-import { formatDistanceToNow } from 'date-fns';
-
-
-export default {
-  setup() {
-    const user = auth.currentUser;
-    const uid = user.uid;
-    const tasks = ref([]);
-    const isChecked = ref(false);
-
-    // Create a date object for today's date at midnight (00:00:00)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const q = query(collection(db, 'tasks'), where('userid', '==', uid))
-    const unsub = onSnapshot(q,(snap)=>{
-        const results= [];
-        snap.forEach((doc)=>{
-            results.push({ ...doc.data(), id: doc.id })
-        })
-        tasks.value=results
-    })
-
-    const tasksFormatted = computed(()=>{
-          if (tasks.value){
-              return tasks.value.map(doc => {
-                  let time = formatDistanceToNow(doc.dateline.toDate())
-                  return { ...doc, dateline: time}
-              })
-          }else{
-            return []
-          }
-      })
-
-    const taskDone = async(taskid) =>{
+  
+  </template>
+  
+  <script>
+  import { ref, onMounted,computed } from 'vue';
+  import { auth, db } from "@/firebase/config";
+  import { collection, query, where, getDoc, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
+  import { formatDistanceToNow } from 'date-fns';
+  
+  
+  export default {
+    setup() {
       const user = auth.currentUser;
       const uid = user.uid;
-      const userSnap = await getDoc(doc(db,"users",uid))
-      
-      const docSnap = await getDoc(doc(db,"tasks",taskid))
-      const docData = docSnap.data()
-      const status = docData.taskstatus
-      console.log(status)
-      await updateDoc(doc(db,"tasks",taskid),{
-        taskstatus:!status,
+      const tasks = ref([]);
+      const isChecked = ref(false);
+  
+      // Create a date object for today's date at midnight (00:00:00)
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+  
+      const q = query(collection(db, 'tasks'), where('userid', '==', uid))
+      const unsub = onSnapshot(q,(snap)=>{
+          const results= [];
+          snap.forEach((doc)=>{
+              results.push({ ...doc.data(), id: doc.id })
+          })
+          tasks.value=results
       })
-      const userData = userSnap.data()
-      if(userData.points){
-        const val = userData.points
-        const total = val + docData.points
+  
+      const tasksFormatted = computed(()=>{
+            if (tasks.value){
+                return tasks.value.map(doc => {
+                    let time = formatDistanceToNow(doc.dateline.toDate())
+                    return { ...doc, dateline: time}
+                })
+            }else{
+              return []
+            }
+        })
+  
+      const taskDone = async(taskid) =>{
+        const user = auth.currentUser;
+        const uid = user.uid;
+        const userSnap = await getDoc(doc(db,"users",uid))
+        
+        const docSnap = await getDoc(doc(db,"tasks",taskid))
+        const docData = docSnap.data()
+        const status = docData.taskstatus
+        console.log(status)
+        await updateDoc(doc(db,"tasks",taskid),{
+          taskstatus:!status,
+        })
+        const userData = userSnap.data()
+        if(userData.points){
+          const val = userData.points
+          const total = val + docData.points
+        }
+        //point update might do at the end of day instead
+        // await updateDoc(doc(db,"users",uid),{
+        //   points: total,
+        // })
+  
       }
-      await updateDoc(doc(db,"users",uid),{
-        points: total,
-      })
+  
+      const is_checked = () => {
+        isChecked.value = !isChecked.value;
+        console.log(isChecked.value)
+      };
+  
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
     }
-<<<<<<< Updated upstream
-    // const fetchDta = async () => {
-    //   const querySnapshot = await getDocs(q);
-    //   querySnapshot.forEach((doc) => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     console.log(doc.id, ' => ', doc.data());
-    //     tasks.value.push({ ...doc.data(), id: doc.id });
-    //   });
-    // };
-=======
->>>>>>> Stashed changes
-
-    const is_checked = () => {
-      isChecked.value = !isChecked.value;
-      console.log(isChecked.value)
-    };
-
-    return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
+  };
+  
+  
+  
+  
+  </script>
+  
+  <style>
+  
+  input.larger{
+    width: 20px;
+    height: 20px;
+    accent-color: #f0f9ff !important;
   }
-};
-
-
-
-
-</script>
-
-<style>
-
-input.larger{
-  width: 20px;
-  height: 20px;
-  accent-color: #f0f9ff !important;
-}
-
-.checked_style{
-  background-color:#fb5454;
-  color:white;
-}
-
-.checked_style2{
-  background-color:#fb5454;
-  color:white;
-}
-
-
-</style>
+  
+  .checked_style{
+    background-color:#fb5454;
+    color:white;
+  }
+  
+  .checked_style2{
+    background-color:#fb5454;
+    color:white;
+  }
+  
+  
+  </style>
