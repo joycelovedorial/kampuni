@@ -33,31 +33,44 @@
    -->
 <template>
     <transition name="popup">
-        <div class="popup create-task bg-white">
-            <h1 class="font-bold leading-loose text-center">
+        <div class="popup create-task bg-white rounded-md w-9/12">
+            <h1 class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl">
                 New Task
             </h1>
             <form @submit.prevent>
-                <div class="d-block">
-                    <label class="text-sm d-block" for="taskname">Task Name</label>
-                    <input type="text" id="taskname" v-model="taskname">
+                <div class="d-block py-2">
+                    <label class="block text-sm font-medium text-gray-900" for="taskname">Task Name</label>
+                    <div class="relative mt-2 rounded-md shadow-sm">
+                        <!-- <input type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0.00"> -->
+                        <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="text" id="taskname" required v-model="taskname">
+                    </div>
                 </div>
 
-                <div class="d-block">
-                    <label class="text-sm d-block" for="desc">Description</label>
-                    <input type="text" id="desc" v-model="description">
+                <div class="d-block py-2">
+                    <label class="block text-sm font-medium text-gray-900" for="desc">Description</label>
+                    <div class="relative mt-2 rounded-md shadow-sm">
+                        <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="text" id="desc" required v-model="description">
+                    </div>
                 </div>
 
-                <div class="d-block">
-                    <label class="text-sm d-block" for="dateline">Dateline</label>
-                    <input type="datetime-local" id="dateline" v-model="dateline">
-                </div>
+                <div class="flex gap-4">
+                    <div class="d-block py-2 w-6/12">
+                        <label class="block text-sm font-medium text-gray-900" for="dateline">Deadline</label>
+                        <div class="relative mt-2 rounded-md shadow-sm">
+                            <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="dateline" required v-model="dateline">
+                        </div>
+                    </div>
 
-                <div class="d-block">
-                    <label class="text-sm d-block" for="countdown">Allocate By</label>
-                    <input type="datetime-local" id="countdown" v-model="countdown">
+                    <div class="d-block py-2 w-6/12">
+                        <label class="block text-sm font-medium text-gray-900" for="countdown">Automatically assigned in</label>
+                        <div class="relative mt-2 rounded-md shadow-sm">
+                            <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="countdown" required v-model="countdown">
+                        </div>
+                    </div>
                 </div>
-                <button @click="createTask">Create!</button>
+                <div class="flex justify-center pt-4">
+                    <button class="h-10 px-3 text-white font-bold text-sm rounded-sm bg-cyanp hover: hover:drop-shadow-md hover:shadow-oranges" @click="createTask">Create!</button>
+                </div>
             </form>
         </div>
     </transition>
@@ -119,21 +132,21 @@ export default {
 </script>
 
 <style>
-/* Style for pop-up container */
+/* Style for the pop-up container */
 .popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  /* background-color: white; */
   padding: 20px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Vue transition for the floating down effect */
 .popup-enter-active {
-  transition: transform 5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 .popup-enter-from {
   transform: translate(-50%, -70%);
@@ -142,7 +155,7 @@ export default {
   transform: translate(-50%, -50%);
 }
 .popup-leave-active {
-  transition: transform 5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 .popup-leave-to {
   transform: translate(-50%, -70%);
