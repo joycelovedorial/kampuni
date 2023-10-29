@@ -2,15 +2,9 @@
   <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" >
   
     <div class="flex flex-nowrap content-center "  >
-<<<<<<< Updated upstream
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
         <singlecarousel :outid="out.id"/>
       </div>
-=======
-      <!-- <div > -->
-        <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12" v-for="out in outingArray" :key="out.id"><singlecarousel :outid="out.id"/></div>
-      <!-- </div> -->
->>>>>>> Stashed changes
     </div>
   </div>
 </template>

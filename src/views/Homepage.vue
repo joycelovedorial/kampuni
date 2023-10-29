@@ -36,6 +36,7 @@ export default {
           const userData = docSnap.data();
           comid.value= userData.community;
           name.value = userData.firstname;
+          console.log(name.value,"name");
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -52,10 +53,9 @@ export default {
     blurOverlay.className = 'blur-overlay';
     bgContainer.appendChild(blurOverlay);
     });
-
-    return { name, comid };
   })
-
+  
+  return { name, comid };
   },
 };
 </script>

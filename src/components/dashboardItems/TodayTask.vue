@@ -68,6 +68,7 @@
         await updateDoc(doc(db,"tasks",taskid),{
           taskstatus:!status,
         })
+        
         const userData = userSnap.data()
         if(userData.points){
           const val = userData.points
@@ -95,7 +96,6 @@
   </script>
   
   <style>
-
 .hovering1{
   transition: transform 2s ease-in-out;
 }
@@ -144,6 +144,5 @@ input.larger{
     background-color:#fb5454;
     color:white;
   }
-  
   
   </style>
