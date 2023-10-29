@@ -1,19 +1,19 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-blue-900" id="custom-container">  <!--v-for{{outing}}-->
-                <div class="container bg-white rounded-lg border-white">
-                    <div class="grid grid-cols-12"> 
-     
-                                <h5 class="col-span-2"><img class="w-100" id='icon' src="../../assets/profiles/amos.jpg"></h5> 
-                           
-                                <div class="col-span-10 ">
-                                    <div class="w-auto self-center justify-content-center align-middle card-title bg-orange-300" id="name_container" style="height:fit-content; width:fit-content">
+    <div class="cardbg-orange-100 rounded-md border-orange-400 border-3 hovering bg-white p-2" id="custom-container" >  <!--v-for{{outing}}-->
+                <div class="container bg-white rounded-lg border-orange-400">
+                    <div class="row"> 
+                        <div class="col-12" id="detail-container">
+                            <div class="w-auto self-center justify-content-center align-middle card-title bg-cyans" id="name_container" style="height:fit-content; width:fit-content">
                                     
-                                            <h5 class="fw-bold pt-2 pb-1 px-1">{{title}}</h5> <!--{{name}}--> 
-                                            <p class=" pb-2 pt-1 px-1" >{{ desc }}</p> <!--{{message}}--> 
-
-                                    </div>
-                                </div>
+                                <h5 class="fw-bold pt-2 pb-1 px-3">{{title}}</h5> <!--{{name}}--> 
+                                <p class=" pb-2 pt-1 px-3" >{{ desc }}</p> <!--{{message}}--> 
+                                        
+                            </div>
+                        <div ><img id='icon' src="../../assets/profiles/josi.png"></div> 
+                    </div>
+                        
+                                
                     </div> 
                     <div class="row ">
                         <ul class="list-group list-group-flush p-0"  style="list-style-image:url('../../assets/icons/clock.svg')" > 
@@ -30,26 +30,28 @@
         
                             <li id="location" class="list-group-item bg-white" style="list-style-image:url('../assets/icons/clock.svg')">
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/>
+                            
+
                             </svg>{{location}} </li> <!--{{location}}--> 
                         </ul> 
                     </div>
                     <div class="row grid-col-2">
-                         <div class="col-6">
+                        <div class="col-6">
                             <button class="w-100 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
                                 <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
                                 </svg>
-                            Count me in</button>
+                            I'm in</button>
                         </div> 
         
-                        <div class="col-xl-1 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div>
+                        <!-- <div class="col-xl-0 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
         
                         <div class="col-6">
                             <button class="w-100 bg-orange-300 option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
                             <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
-                            Count me out</button>
+                            I'm out</button>
                         </div> 
                     </div>
                 </div>
@@ -175,38 +177,30 @@ export default {
             title,desc,location,date,eCost,time,isHovered_green,isHovered_red,involved
         }
     }
-//     data() {
-//     return {
-//         isHovered_green: false,
-//         isHovered_red: false,
-//         clicked_green: false,
-//         clicked_red:false
-//     };
-// },
-// methods: {
-//     has_clicked_green() {
-//         if (this.clicked_green == true) {
-//             this.clicked_green = false;
-//         } else {
-//       this.clicked_green = true;
-//       this.clicked_red = false;
-//       }
-//     },
-//     has_clicked_red() {
-//         if (this.clicked_red == true) {
-//             this.clicked_red = false;
-//         } else {
-//       this.clicked_red = true;
-//       this.clicked_green = false;
-//       }
-//     },
-//   },
-
-
 }
 </script>
 
 <style>
+
+
+#detail-container{
+    position:relative;
+    margin-bottom:25px;
+    margin-top:10px;
+}
+
+.hovering:hover {
+    animation: changeSize 1.2s infinite alternate; /* Add a smooth transition effect */
+}
+
+@keyframes changeSize {
+    0% {
+        transform: scale(1); /* Initial size */
+    }
+    100% {
+        transform: scale(1.05); /* Slightly larger size */
+    }
+}
 
 .clicked_style_green{
     background-color: #03b003 !important;
@@ -240,6 +234,7 @@ export default {
 
 .custom-container{
 padding-bottom:0px;
+transition: transform 1s ease-in-out;
 display: inline;
 background-color: white;
 
@@ -266,25 +261,27 @@ width:fit-content;
 #name_container{
   /* margin-left:1rem; */
 
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-border-bottom-right-radius: 10px;
-margin-top:10px;
+border-radius:10px;
+margin-top:23px;
 margin-left:10px;
+margin-bottom:15px;
 height:fit-content;
 }
 #icon{
-width:auto;
-height:auto;
+width:105px;
+height:105px ;
 min-width:35px;
+position:absolute; 
+top:0; 
+right:0;
+border-radius:50%;
+margin-bottom:20px;
+margin-left:20px;
+/* padding-bottom:40px; */
 
-/* margin-left:10px; */
-min-height: 35px;
-border:1px black solid ;
-border-radius:100%;
-margin-top:30px;
-  /* margin-top:3rem; */
+border: 10px #CBF3F0 solid;
 }
+
 svg{
 margin-bottom:3px;
 margin-right:3px;
@@ -303,7 +300,7 @@ margin-right:3px;
     }
 }
 
-
+/* 
 @media (max-width:768px){
     #icon{
     width:auto;
@@ -323,12 +320,12 @@ margin-right:3px;
 }
     @media (max-width:1024px){
     #icon{
-    /* width: 200px; */
-    /* height:auto; */
+    width: 200px;
+    height:auto;
     margin-right:20px;
     border:1px black solid ;
     border-radius:100%;
-    }
+    } */
 
 @media (max-width:576px){
     .option_box{
@@ -348,5 +345,5 @@ margin-right:3px;
     }
 }
 
-}
+
 </style>

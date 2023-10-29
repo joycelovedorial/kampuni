@@ -95,6 +95,39 @@
   </script>
   
   <style>
+
+.hovering1{
+  transition: transform 2s ease-in-out;
+}
+.hovering1:hover {
+    animation: strinkSize 1.2s infinite alternate; /* Add a smooth transition effect */
+}
+
+@keyframes strinkSize {
+    0% {
+        transform: scale(1); /* Initial size */
+    }
+    100% {
+        transform: scale(1.02); /* Initial size */
+    }
+}
+
+input.larger{
+  width: 20px;
+  height: 20px;
+  accent-color: #f0f9ff !important;
+}
+
+.checked_style{
+  background-color:#fb5454;
+  color:white;
+}
+
+.checked_style2{
+  background-color:#fb5454;
+  color:white;
+}
+
   
   input.larger{
     width: 20px;
