@@ -1,12 +1,11 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" style="height:fit-content">
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" >
   
     <div class="flex flex-nowrap content-center "  >
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12" v-for="out in outingArray" :key="out.id">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
         <singlecarousel :outid="out.id"/>
       </div>
     </div>
-    <div class="scrollbar"></div>
   </div>
 </template>
 
@@ -77,6 +76,8 @@ export default {
 
 
 <style>
+
+
 .testing {
   overflow: scroll;
 }
@@ -84,9 +85,7 @@ export default {
 .outer_container {
   width: auto;
   height: 300px;
-  scrollbar-color: #2ec4b6 #f4a261;
-  /* border: solid 1px ; */
-  /* background-color:#2ec4b6; */
+
 }
 
 :root {
@@ -95,9 +94,9 @@ export default {
 }
 
 .outer_container::-webkit-scrollbar {
-  
   border-radius:10px;
-}
+  /* width:1px; */
+} 
 
 .outer_container::-webkit-scrollbar-track {
   background: transparent;
@@ -105,7 +104,22 @@ export default {
 
 .outer_container::-webkit-scrollbar-thumb {
   background-color: var(--secondary);
+  width:1px !important;
   border-radius:10px;
+} 
+
+@media (min-height: 480px) {
+  .outer_container {
+    height: 365px;
+  }
 }
+
+@media (min-height: 600px) {
+  .outer_container {
+    height: 365px;
+  }
+}
+
+
 </style>
 

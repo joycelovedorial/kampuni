@@ -1,10 +1,14 @@
 
 <template>
   <Navbar />
-  <body id="bg-container">
-    <h1 class="text-black font-fredoka text-" id="welcome">Welcome back, {{ name }}</h1>
-    <Dashboard :community="comid" />
-  </body>
+
+    <body id="bg-container">
+      <!-- <div class='overflow-y-auto'> -->
+      <h1 class="text-black font-fredoka index1" id="welcome">Welcome back, {{ name }}</h1>
+      <Dashboard :community="comid" class="index2"/>
+      <!-- </div> -->
+    </body>
+
 </template>
 
 <script>
@@ -41,8 +45,17 @@ export default {
     };
     onMounted(() => {
       fetchCid();
+
+      document.addEventListener('DOMContentLoaded', function() {
+    const bgContainer = document.getElementById('bg-container');
+    const blurOverlay = document.createElement('div');
+    blurOverlay.className = 'blur-overlay';
+    bgContainer.appendChild(blurOverlay);
     });
+
     return { name, comid };
+  })
+
   },
 };
 </script>
@@ -58,21 +71,23 @@ export default {
 }
 
 #bg-container {
-  background-image: url("@/assets/background_img/background4.png");
-
-  /* background-color: rgb(137, 255, 255); */
+  position: relative;
+  background-image: url("@/assets/background_img/blur.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 100vh;
+  height: 170vh;
   margin: 0;
-
-  /* z-index: -1; */
+  overflow: scroll;
+  overflow: hidden; /* Ensure the overlay doesn't extend beyond the container */
 }
 
-.blur {
-  backdrop-filter: blur(5px);
+@media (min-width: 768px) {
+  #bg-container {
+    height: 125vh;
+  }
 }
+
 
 
 </style>

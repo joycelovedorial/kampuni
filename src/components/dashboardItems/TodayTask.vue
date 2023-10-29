@@ -1,6 +1,6 @@
 <template>
 
-<div id="app" class="container px-4 py-3 p rounded-m bg-transparent border-black border-solid "> 
+<div id="app" class="container hovering1 px-4 py-3 p rounded-m bg-transparent border-black border-solid "> 
   <div class ='row relative rounded p-3 w-105 ' :class="{'checked_style' : isChecked, 'bg-cyans' : !isChecked}">
     <div class='col pl-0'>
 
@@ -80,17 +80,6 @@ export default {
         points: total,
       })
     }
-<<<<<<< Updated upstream
-    // const fetchDta = async () => {
-    //   const querySnapshot = await getDocs(q);
-    //   querySnapshot.forEach((doc) => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     console.log(doc.id, ' => ', doc.data());
-    //     tasks.value.push({ ...doc.data(), id: doc.id });
-    //   });
-    // };
-=======
->>>>>>> Stashed changes
 
     const is_checked = () => {
       isChecked.value = !isChecked.value;
@@ -107,6 +96,21 @@ export default {
 </script>
 
 <style>
+.hovering1{
+  transition: transform 2s ease-in-out;
+}
+.hovering1:hover {
+    animation: strinkSize 1.2s infinite alternate; /* Add a smooth transition effect */
+}
+
+@keyframes strinkSize {
+    0% {
+        transform: scale(1); /* Initial size */
+    }
+    100% {
+        transform: scale(1.02); /* Initial size */
+    }
+}
 
 input.larger{
   width: 20px;
