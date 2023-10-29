@@ -44,8 +44,8 @@
                 </div>
 
                 <div class="d-block">
-                    <label class="text-sm d-block" for="desc">Description</label>
-                    <input type="text" id="desc" v-model="description">
+                    <label class="text-sm d-block" for="description">Description</label>
+                    <input type="text" id="description" v-model="description">
                 </div>
 
                 <div class="d-block">

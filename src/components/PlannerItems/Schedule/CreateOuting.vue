@@ -9,7 +9,7 @@
             </div>
             
             <div>
-                <label for="desc=">Description</label>
+                <label for="desc">Description</label>
                 <input class="form-control col-6" type="text" v-model="desc" id="desc">
             </div>
         </div>
