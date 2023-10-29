@@ -1,22 +1,34 @@
 <template>
-  <div class="create-outing">
-    <form class="form-control" @submit.prevent>
+  <div class="create-outing container-fluid">
+    <form class="form-control" @submit.prevent="createOuting">
+        <div class="row">
+            <div>
+                <label for="title">Title</label>
+                <input class="form-control col-6" type="text" v-model="title" id="title">
+            </div>
+            
+            <div>
+                <label for="desc=">Description</label>
+                <input class="form-control col-6" type="text" v-model="desc" id="desc">
+            </div>
+        </div>
+        <div>
+            <label for="location">Location</label>
+            <input class="form-control" type="text" v-model="location" id="location">
+        </div>
 
-        <label for="title">Title</label>
-        <input type="text" v-model="title" id="title">
 
-        <label for="desc=">Description</label>
-        <input type="text" v-model="desc" id="desc">
+        <div>
+            <label for="date">Date</label>
+            <input class="form-control" type="datetime-local" id="date" v-model="date">
+        </div>
+       
 
-        <label for="location">Location</label>
-        <input type="text" v-model="location" id="location">
-
-        <label for="date">Date</label>
-        <input type="datetime-local" id="date" v-model="date">
+        
 
         <label for="eCost">Estimated Cost</label>
         <input type="text" id="eCost" v-model="eCost">
-        <button @click="createOuting">Create</button>
+        <button @click="createOuting">Create Outing</button>
     </form>
   </div>
 </template>

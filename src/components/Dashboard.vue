@@ -6,12 +6,13 @@
         <OutingsCarousel />
       </div>
 
-      <!-- <div class="col-1 "></div> -->
+      <div class="col-1 "></div>
     </div>
 
     <div class="row">
-      <!-- <div class="col-1"></div> -->
-      <div class="col-xl-5 col-lg-10 col-md-10 col-sm-10">
+      <div class="col-1"></div>
+
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
         <div class="flex-nowrap overflow-y-scroll overflow-x-hidden test h-96 bg-white bg-opacity-25 rounded-lg will-change-scroll">
           <TodayTask />
@@ -23,10 +24,11 @@
 
         </div>
       </div>
-      <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div>
-      <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div>
 
-      <div class="col-xl-5 col-lg-10 col-md-10 col-sm-10 h-96" >
+      <!-- <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
+       <!--<div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
+
+      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 h-96" >
       <h1 class="mb-2 font-light text-cyanp text-2xl">Expenses</h1>
       <div class="bg-white bg-opacity-25 rounded-lg flex justify-center"><ExpensesList/></div>
 

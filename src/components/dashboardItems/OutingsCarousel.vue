@@ -1,9 +1,10 @@
 <template>
   <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" style="height:fit-content">
   
-    <div class="flex flex-nowrap content-center " v-for="out in outingArray" :key="out.id" >
-      <span>hi</span>
-      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12"><singlecarousel :outid="out.id"/></div>
+    <div class="flex flex-nowrap content-center "  >
+      <div class="col-xl-4 col-lg-6 px-3 pb-3 pt-3 col-md-6 col-sm-12 col-12" v-for="out in outingArray" :key="out.id">
+        <singlecarousel :outid="out.id"/>
+      </div>
     </div>
     <div class="scrollbar"></div>
   </div>

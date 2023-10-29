@@ -222,6 +222,7 @@ export default {
               country: null,
               bio: null,
               community: null,
+              points: 0,
             });
 
             this.googles = "yars";

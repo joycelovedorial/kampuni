@@ -39,8 +39,6 @@ export default {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Use the "today" variable to query based on today's date
-    // const q = query(collection(db, 'users', uid, 'tasksUnique'), where('whenToDo', '>=', today), where('whenToDo', '<', new Date(today.getTime() + 24 * 60 * 60 * 1000)));
     const q = query(collection(db, 'tasks'), where('userid', '==', uid))
     const unsub = onSnapshot(q,(snap)=>{
         const results= [];
@@ -62,13 +60,27 @@ export default {
       })
 
     const taskDone = async(taskid) =>{
+      const user = auth.currentUser;
+      const uid = user.uid;
+      const userSnap = await getDoc(doc(db,"users",uid))
+      
       const docSnap = await getDoc(doc(db,"tasks",taskid))
       const docData = docSnap.data()
       const status = docData.taskstatus
+      console.log(status)
       await updateDoc(doc(db,"tasks",taskid),{
         taskstatus:!status,
       })
+      const userData = userSnap.data()
+      if(userData.points){
+        const val = userData.points
+        const total = val + docData.points
+      }
+      await updateDoc(doc(db,"users",uid),{
+        points: total,
+      })
     }
+<<<<<<< Updated upstream
     // const fetchDta = async () => {
     //   const querySnapshot = await getDocs(q);
     //   querySnapshot.forEach((doc) => {
@@ -77,12 +89,9 @@ export default {
     //     tasks.value.push({ ...doc.data(), id: doc.id });
     //   });
     // };
+=======
+>>>>>>> Stashed changes
 
-    // onMounted(() => {
-    //   fetchData();
-    // });
-
-    // Define the `is_checked` method using Composition API
     const is_checked = () => {
       isChecked.value = !isChecked.value;
       console.log(isChecked.value)
