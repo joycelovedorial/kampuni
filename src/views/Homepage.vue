@@ -72,7 +72,8 @@ export default {
 
 #bg-container {
   position: relative;
-  background-image: url("@/assets/background_img/blur.png");
+  background-image: url("@/assets/background_img/clearbackground1.png");
+  background-color:rgb(137, 235, 235);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
