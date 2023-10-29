@@ -4,8 +4,6 @@
   <body id="bg-container">
     <h1 class="text-black font-fredoka text-" id="welcome">Welcome back, {{ name }}</h1>
     <Dashboard :community="comid" />
-    <h1 class="text-black font-Roboto text-" id="welcome">Welcome back, {{ name }}</h1>
-    <Dashboard :community="comId" />
   </body>
 </template>
 

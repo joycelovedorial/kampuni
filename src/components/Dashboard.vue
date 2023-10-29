@@ -15,6 +15,12 @@
         <h1 class="mb-2 font-light text-cyanp text-2xl">Today Task</h1>
         <div class="flex-nowrap overflow-y-scroll overflow-x-hidden test h-96 bg-white bg-opacity-25 rounded-lg will-change-scroll">
           <TodayTask />
+          <TodayTask />
+          <TodayTask />
+          <TodayTask />
+          <TodayTask />
+          <TodayTask />
+
         </div>
       </div>
       <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div>
