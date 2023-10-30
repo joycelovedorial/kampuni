@@ -98,6 +98,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
 // import { UserRecord } from 'firebase-admin/lib/auth/user-record'
+import { useTokenStore } from '../store/store.js'
+
 
 // Animations
 export default {
@@ -187,62 +189,50 @@ export default {
 
 
     const signinGoogle = async () => {
-      try {
-        const provider = new GoogleAuthProvider();
+        try {
+          const provider = new GoogleAuthProvider();
+          provider.addScope('https://www.googleapis.com/auth/calendar')
+          const result = await signInWithPopup(auth, provider);
+        
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          store.setToken(token)
+          console.log(token,'USER TOKEN')
+          // The signed-in user info.
+          const user = result.user;
+          store.setUserEmail(user.email)
+          const uid = user.uid;
+          const docRef = doc(db, 'users', uid);
+        
+              try {
+                const docSnap = await getDoc(docRef);
+                const userData = docSnap.data();
 
-        // Request additional scopes to access user profile data
-        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
-        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
 
-        const result = await signInWithPopup(auth, provider);
+                if (!userData?.community) {
+                  router.push({ name: 'joinCommunity' });
+                } else {
+                  router.push({ name: 'Homepage' });
+                }
+              } catch (error) {
+                console.error('Error fetching user data:', error);
+              }
 
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
 
-        // The signed-in user info.
-        const user = result.user;
-        const uid = user.uid;
-        const docRef = doc(db, 'users', uid);
-
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists() && docSnap.data().community !== null) {
-          router.push({ name: "Homepage" });
-        } else {
-          // Check if result.additionalUserInfo exists and has a profile property
-          const additionalUserInfo = result.additionalUserInfo;
-          if (additionalUserInfo.profile) {
-            const googleProfile = additionalUserInfo.profile;
-
-            setDoc(doc(db, "users", uid), {
-              firstname: googleProfile.given_name,
-              lastname: googleProfile.family_name,
-              email: user.email,
-              birthday: null,
-              country: null,
-              bio: null,
-              community: null,
-              points: 0,
-            });
-
-            this.googles = "yars";
-            router.push({ name: 'joinCommunity' });
-          } else {
-            console.error('Google sign-in error: Profile data not available');
+          } catch (error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // Handle the specific error or log the error message
+            console.error('Google sign-in error:', errorCode, errorMessage);
           }
-        }
-      } catch (error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData && error.customData.email ? error.customData.email : null;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        };
 
-        // Handle the specific error or log the error message
-        console.error('Google sign-in error:', errorCode, errorMessage);
-      }
-    };
 
     //after Authenticated
     const handleAuth = async () => {
@@ -250,9 +240,11 @@ export default {
       const uid = user.uid
       const docRef = doc(db, 'users', uid)
 
+
       try {
         const docSnap = await getDoc(docRef)
         const userData = docSnap.data()
+
 
         if (!userData?.community) {
           router.push({ name: 'joinCommunity' })
@@ -263,6 +255,9 @@ export default {
         console.error('Error fetching user data:', error)
       }
     }
+
+
+
 
 
     const togglePanel = () =>{
