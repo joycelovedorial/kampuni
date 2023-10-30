@@ -132,6 +132,7 @@ export default {
               country: country.value,
               bio: bio.value,
               community: null,
+              points: 0,
             });
 
             const uid = cred.user.uid;
