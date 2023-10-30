@@ -1,6 +1,6 @@
 <template>
 
-  <div id="app" class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
+  <div id="app" class="container px-5 py-3 rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
     <div class ='row bg-oranges relative rounded p-3 w-105'>
       <div class='col'>
       <input type="checkbox" @click="taskDone(task.id)" class='larger'>

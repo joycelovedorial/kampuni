@@ -73,19 +73,37 @@ export default {
 #bg-container {
   position: relative;
   background-image: url("@/assets/background_img/clearbackground1.png");
-  background-color:rgb(137, 235, 235);
+  background-color:rgb(250, 240, 230);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 170vh;
+  height: 200vh;
   margin: 0;
   overflow: scroll;
   overflow: hidden; /* Ensure the overlay doesn't extend beyond the container */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 635px) {
   #bg-container {
-    height: 125vh;
+    height: 185vh;
+  }
+}
+
+/* @media (min-width: 998px) {
+  #bg-container {
+    height: 185vh;
+  }
+} */
+
+@media (min-width: 1440px) {
+  #bg-container {
+    height: 140vh;
+  }
+}
+
+@media (min-width: 2550px) {
+  #bg-container {
+    height: 115vh;
   }
 }
 

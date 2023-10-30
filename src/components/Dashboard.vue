@@ -13,9 +13,9 @@
     <div class="row">
       <div class="col-1"></div>
 
-      <div class="col-xl-5 col-lg-5 col-md-5 col-12">
+      <div class="col-xl-5 col-12">
         <h1 class="mb-2 font-black text-cyanp text-3xl">Today Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test h-96 bg-white bg-opacity-25 rounded-lg will-change-scroll" style="height:50vh">
+        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test justify-center h-96 bg-amber-900 bg-opacity-10 rounded-lg will-change-scroll" style="height:50vh">
           <TodayTask />
         </div>
       </div>
@@ -23,9 +23,9 @@
       <!-- <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
        <!--<div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
 
-      <div class="col-xl-5 col-lg-5 col-md-5 col-12 h-96" >
+      <div class="col-xl-5 col-12 h-96" >
       <h1 class="mb-2 font-black text-cyanp text-3xl">Expenses</h1>
-       <div class="bg-white bg-opacity-25 rounded-lg flex justify-center overflow-y-scroll overflow-x-auto" style="height:40vh"><ExpensesList/></div>
+       <div class="containerbg bg-opacity-25 rounded-lg flex justify-center overflow-y-scroll overflow-x-auto" style="height:40vh"><ExpensesList/></div>
 
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
@@ -77,4 +77,8 @@ export default {
   border-radius: 10px;
 }
 
+.containerbg{
+  /* background-color: #d9b99b; */
+  background-color:white
+}
 </style>

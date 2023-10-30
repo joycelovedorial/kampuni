@@ -1,7 +1,9 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-orange-400 border-3 hovering bg-white p-2" id="custom-container" >  <!--v-for{{outing}}-->
+    <div class="cardbg-orange-100 rounded-md border-orange-400 border-3 hovering bg-white p-2" id="custom-container" > 
+         <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg border-orange-400">
+                
                     <div class="row"> 
                         <div class="col-12" id="detail-container">
                             <div class="w-auto self-center justify-content-center align-middle card-title bg-cyans" id="name_container" style="height:fit-content; width:fit-content">
