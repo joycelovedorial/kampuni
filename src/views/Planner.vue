@@ -18,6 +18,7 @@
       </a>
     </nav>
     <div v-if="displayCalendar">
+      <Outings></Outings>
       <Calendar></Calendar>
     </div>
     <div v-if="displayTask" class="flex space-x-2" id="tasklist">
@@ -42,6 +43,7 @@ import { ref } from 'vue';
 export default {
   components: {
     Navbar,
+    Outings,
     Calendar,
     TaskMarket,
     Leaderboard,
