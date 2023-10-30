@@ -36,8 +36,6 @@
       <TaskMarket />
     </div>
 
-    <!-- Just for self comfort -->
-    <iframe src="https://calendar.google.com/calendar/embed?src=80648a128124b84f8e91f2a5dd563e9b8d7f03f8ea9db0d699a269fa1cf37ecf%40group.calendar.google.com&ctz=Asia%2FSingapore" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
   </div> 
 </template>
 

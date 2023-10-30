@@ -125,6 +125,8 @@ import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
+import { useTokenStore } from '../store/store.js'
+
 
 // Animations
 export default {
@@ -144,7 +146,7 @@ export default {
     const birthday = ref("")
     const country = ref("")
     const bio = ref("")
-
+    const store = useTokenStore()
 
     const handleRegister = async () => {
         try {
@@ -213,14 +215,17 @@ export default {
     const signinGoogle = async () => {
         try {
           const provider = new GoogleAuthProvider();
+          provider.addScope('https://www.googleapis.com/auth/calendar')
           const result = await signInWithPopup(auth, provider);
           
           // This gives you a Google Access Token. You can use it to access the Google API.
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
-          
+          store.setToken(token)
+            console.log(token,'USER TOKEN')
           // The signed-in user info.
           const user = result.user;
+          store.setUserEmail(user.email)
           const uid = user.uid;
           const docRef = doc(db, 'users', uid);
           
