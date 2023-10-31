@@ -13,8 +13,6 @@ console.log(store.token,store.useremail)
 
 </script>
 
-<style></style>
+<style>
 
-
-
-
+</style>
