@@ -90,10 +90,10 @@ export default {
                 const bi = editbio.value
             }
             await setDoc(docRef,{
-                firstname:fn,
-                lastname:ln,
-                birthday:bd,
-                bio:bi,
+                firstname: fn,
+                lastname: ln,
+                birthday: bd,
+                bio: bi,
             })
 
 

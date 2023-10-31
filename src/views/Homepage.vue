@@ -36,6 +36,10 @@ export default {
           const userData = docSnap.data();
           comid.value= userData.community;
           name.value = userData.firstname;
+          if(name.value==null){
+            alert("Please update your profile!")
+            router.push({name:"Profile"})
+          }
           console.log(name.value,"name");
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -44,6 +48,7 @@ export default {
         router.push({ name: "Welcome" });
       }
     };
+    
     onMounted(() => {
       fetchCid();
 

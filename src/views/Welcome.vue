@@ -203,7 +203,13 @@ export default {
 
         // Set the user's email after initializing user
         store.setUserEmail(user.email);
+        const googleAdditionalInfo = result.additionalUserInfo;
+        const googleProfile = googleAdditionalInfo
+        console.log(googleAdditionalInfo,"additional info");
+        console.log(googleProfile,"googleProfile");
 
+        const firstname = googleProfile.given_name || null;
+        const lastname = googleProfile.family_name || null;
         const uid = user.uid;
         const docRef = doc(db, 'users', uid);
 
@@ -213,17 +219,15 @@ export default {
             router.push({ name: "Homepage" });
         } else {
             // Check if result.additionalUserInfo exists and has a profile property
-            const googleAdditionalInfo = result.additionalUserInfo;
-            const googleProfile = googleAdditionalInfo && googleAdditionalInfo.profile ? googleAdditionalInfo.profile : null;
-
             setDoc(doc(db, "users", uid), {
-                firstname: googleProfile && googleProfile.given_name ? googleProfile.given_name : null,
-                lastname: googleProfile && googleProfile.family_name ? googleProfile.family_name : null,
+                firstname: firstname,
+                lastname: lastname,
                 email: user.email,
                 birthday: null,
                 country: null,
                 bio: null,
                 community: null,
+                points: 0,
             });
 
             router.push({ name: 'joinCommunity' });
