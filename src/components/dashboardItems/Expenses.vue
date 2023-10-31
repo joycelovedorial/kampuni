@@ -92,6 +92,14 @@ export default {
       console.log(error.message)
     }
   };
+    const getPeople = async () => {
+      try {
+        const citiesRef = collection(db, "cities"); 
+      } catch (error){
+        console.log(error);
+      }
+    }
+
     const fetchData = async () =>{
 
       const user = auth.currentUser
