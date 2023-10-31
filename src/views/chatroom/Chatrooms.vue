@@ -3,7 +3,7 @@
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left  col-3" style="margin-top: 20px;">
-        <input type="text" placeholder="Search for Chats" style="">
+        <input type="text" placeholder="Search for Chats" style="" v-model="searchtag">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
           class="singlelist">
@@ -23,7 +23,7 @@
 
 <script>
 import ChatWindow from '@/components/ChatWindow.vue';
-import { ref,onMounted } from 'vue'
+import { ref,onMounted,computed } from 'vue'
 import { collection, doc, getDocs,getDoc,query,where } from "firebase/firestore"; 
 import Navbar from '@/components/Navbar.vue';
 import { useRouter } from 'vue-router';
@@ -32,6 +32,7 @@ import{ auth,db} from '@/firebase/config';
 export default {
   components: { Navbar, ChatWindow },
   setup() {
+    const searchtag =ref("")
     const chatlist = ref([]);
     const router = useRouter();
     const selectedchat = ref(null);
@@ -80,6 +81,21 @@ export default {
       }
     }
 
+    const filteredChatlist = computed(() => {
+      return chatlist.value.filter(chatroom => {
+        if (searchtag.value === "") {
+          // If searchtag is empty, return all chatrooms
+          return true;
+        } else if (chatroom.name) {
+          // Check if chatroom.name is defined
+          return chatroom.name.toLowerCase().includes(searchtag.value.toLowerCase());
+        } else {
+          return false; // Handle undefined chatroom.name by excluding it
+        }
+      });
+    });
+
+
     const selectChat = (chatroomId,chatName) => {
       selectedchat.value = chatroomId;
       name.value = chatName
@@ -90,7 +106,7 @@ export default {
       fetchData();
     })
 
-    return { chatlist ,selectChat,selectedchat,name }
+    return { chatlist: filteredChatlist ,selectChat,selectedchat,name,searchtag }
   }
 }
 </script>
