@@ -5,7 +5,9 @@
 <script>
 import { ref } from 'vue'
 // import { capitalize } from './helpers'
+
 import {db,auth} from "../../../firebase/config.js"
+import { query,collection,doc,getDoc,updateDoc,setDoc,addDoc,where,onSnapshot} from 'firebase/firestore'
 export default{
   setup(){
     const taskArray =ref([])
@@ -14,8 +16,8 @@ export default{
     const userid = ref("")
     
 
-    const q = query(collection(db,"tasks"),where("userid","==",null))
-        const unsub = onSnapshot(q,(snap)=>{
+    const qtask = query(collection(db,"tasks"),where("userid","==",null))
+        const unsub = onSnapshot(qtask,(snap)=>{
             const results= [];
             snap.forEach((doc)=>{
                 results.push({ ...doc.data(), id: doc.id })
@@ -31,8 +33,6 @@ export default{
       const docSnap = await getDoc(docRef)
       const docData = docSnap.data()
       comid.value = docData.community
-      
-
     }
 
 
