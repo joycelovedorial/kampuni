@@ -139,29 +139,27 @@ export default {
     color: #878787;
     margin-left: 90%;
     display: block;
-    color: #999;
     font-size: 12px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
   .created-at-self{
     color: #878787;
     margin-left: 90%;
     display: block;
-    color: #999;
     font-size: 12px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
   .single-chat-container{
     background-color: #FFBF69;
     border-radius: 10px 10px 0 10px; 
-    padding: 1%;
+    padding: 10px;
     width: 75%;
     margin-left: 25%;
   }
   .single-chat-container-self{
-    background-color: #79f8ff;
-    border-radius: 10px 10px 0 10px; 
-    padding: 1%;
+    background-color: #CBF3F0;
+    border-radius: 10px 10px 10px 0; 
+    padding: 10px;
     width: 75%;
     margin-right: 25%;
   }
@@ -169,19 +167,18 @@ export default {
     margin-left: 25%;
     font-weight: bold;
     margin-right: 6px;
-    color: orange;
+    color: #FF9F1C;
   }
   .name-self{
-    color:#79f8ff;
+    color:#2EC4B6;
     font-weight: bold;
-    
   }
 
   .chat-window {
     background: #a7e5f0;
-    padding: 30px 20px;
+    padding: 10px;
     border-radius: 20px;
-    border: 2px orange solid;
+    border: 2px #FF9F1C solid;
   }
   .single {
     margin: 10px 0;
@@ -191,10 +188,23 @@ export default {
   .messages {
     max-height: 400px;
     overflow: auto;
+    padding-right: 1%;
   }
   .chatTitle{
-    font-size: large;
-    font-weight:bold;
-    color: grey;
+    font-size: 30px;
+    font-weight: 900;
+    color: #2F2F2F;
+    padding: 0 10px 10px 0 ;
+    border-bottom: #FF9F1C solid;
+  }
+  .messages::-webkit-scrollbar{
+    background-color: transparent;
+  }
+  .messages::-webkit-scrollbar-thumb{
+    background-color: #FF9F1C;
+    border-radius: 10px;
+  }
+  @media screen {
+    
   }
 </style>
