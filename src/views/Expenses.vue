@@ -83,7 +83,6 @@ export default {
 
 <style scoped>
 #expenses-page {
-    background-image: url('../assets/background_img/background5.png');
     background-color: #f2f2f2;
     background-size: cover;
     background-repeat: no-repeat;
