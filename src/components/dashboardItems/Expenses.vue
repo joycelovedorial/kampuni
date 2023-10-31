@@ -4,9 +4,10 @@
     <!--START of input form for expenses-->
     <form @submit.prevent="addExpense">
       <div class="row">
-        <div>
-          <label for="name">Name of Person who paid</label>
-          <input class="form-control col-6" type="text" v-model="person_paid" id="name">
+        <!-- Create a function takes in id with thne push object into selectedusers -->
+        <div v-for="a_user in users" :key="a_user.id">
+          <label :for="a_user.id">{{ a_user.firstname }}</label>
+          <input class="form-control col-6" type="checkbox" :id="a_user.id" v-model="selectedUsers" :value="a_user.id">
         </div>
 
         <div>
@@ -54,28 +55,33 @@ import { auth, db} from '@/firebase/config';
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 
 export default {
+  props: ['a_user',],
+
   setup() {
     //this is a Vue.js 3 composition API function 
     //where you define reactive data and functions 
     
     //reactive references with initial values as empty string 
     //which are used for form inputs in the template
-    const person_paid = ref(''); 
     const expense_desc = ref('');
     const cost = ref('');
     const category = ref("")
     const comid = ref("")
     const userid = ref("")
+    var users = ref([])
+
+    const selectedUsers = ref([]);
 
     /*creating an addExpenses asynchronous function 
     asynchronous function is a function that performs a specific task in a non-blocking manner
     it does not block or wait for the result from the previous line of code to execute
     */
-   
+
     const addExpense = async () => {
       try{
+
         const oppar = await addDoc(collection(db, 'expenses'), {
-          name: person_paid.value,
+          name: selectedUsers.value,
           desc: expense_desc.value,
           amount: cost.value,
           category: category.value, 
@@ -90,15 +96,8 @@ export default {
         */
       } catch (error){
       console.log(error.message)
-    }
+    } 
   };
-    const getPeople = async () => {
-      try {
-        const citiesRef = collection(db, "cities"); 
-      } catch (error){
-        console.log(error);
-      }
-    }
 
     const fetchData = async () =>{
 
@@ -108,6 +107,15 @@ export default {
       const docSnap = await getDoc(docRef)
       const docData = docSnap.data()
       comid.value = docData.community
+
+      // To get all users
+      const comSnap = await getDoc(db,"communities", comid.value)
+      const comData = comSnap.data()
+      for (const hommie of comData.homies) {
+        const hommieSnap = await getDoc(db("users",hommie))
+        const hommieData = hommieSnap.data()
+        users.value.push({id:hommie,name:hommieData.firstname})
+      }
     }
 
     onMounted(()=>{
@@ -116,7 +124,7 @@ export default {
 
     
     return {
-      addExpense, person_paid, expense_desc, cost, category
+      addExpense, selectedUsers, expense_desc, cost, category, users
 
     };
   }
