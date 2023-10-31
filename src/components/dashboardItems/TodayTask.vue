@@ -1,18 +1,18 @@
 <template>
 
-<div id="app" class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
-  <div class ='row relative rounded p-3 w-105' :class="{'bg-slate-200' : task.taskstatus , 'bg-cyans' :!task.taskstatus}">
-    <div class='col'>
-    <input id="{{task.taskname}}" type="checkbox" @click="taskDone(task.id)" class='larger'>
-    <label for="{{task.taskname}}" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
-      <h5>{{task.taskname}}</h5>
-    </label>
-      </div>
-  
+<div class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
+  <div class ='row relative rounded p-3 w-105' :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' :!task.taskstatus}">
+    <div :class="['col', { 'checked_style': task.taskstatus }]">
+      <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
+        <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
+          <h5>{{task.taskname}}</h5>
+        </label>
+    </div>
+  =
       
       <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
         <p class="text-center font-bold">{{ task.points }}</p>
-      <p class="text-center rounded px-2" :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' :!task.taskstatus}" >POINTS</p>
+      <p class="text-center rounded px-2" :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' : !task.taskstatus}" >POINTS</p>
       </div>
       
     </div>
@@ -28,6 +28,7 @@
   
   
   export default {
+    
     setup() {
       const user = auth.currentUser;
       const uid = user.uid;
@@ -87,9 +88,10 @@
         isChecked.value = !isChecked.value;
         console.log(isChecked.value)
       };
-  
+
       return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
     }
+    
   };
   
   
@@ -121,12 +123,12 @@ input.larger{
 }
 
 .checked_style{
-  background-color:#575353;
+  background-color:rgb(209 213 219);
   color:white;
 }
 
 .checked_style2{
-  background-color:#575353;
+  background-color:rgb(209 213 219);
   color:white;
 }
 

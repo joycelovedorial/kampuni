@@ -1,9 +1,9 @@
 <template>
-  <div class="container bg-transparent">
+  <div class="container ">
     <div class="row mb-3">
       <div class="col-1"></div>
       <div class="col-10">
-        <h1 class="mb-2 font-black text-cyanp text-3xl">Upcoming Outings</h1>
+        <h1 class="mb-2 font-black text-cyanp text-3xl" >Upcoming Outings</h1>
         <OutingsCarousel />
       </div>
 
