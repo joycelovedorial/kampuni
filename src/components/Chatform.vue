@@ -4,7 +4,6 @@
       placeholder="Type a message and hit enter to send..."
       v-model="message"
       @keypress.enter.prevent="handleSubmit"
-      style="background-color: rgba(255, 191, 105, 0.8); color: white; margin-bottom: 1%;in"
       >
       </textarea>
       <!-- <div class="error">{{ error }}</div> -->
@@ -75,13 +74,16 @@
       textarea {
           width: 100%;
           max-width: 100%;
-          margin-bottom: 6px;
+          margin-bottom: 1%;
           padding: 10px;
           box-sizing: border-box;
           border: 0;
           border-radius: 20px;
           font-family: inherit;
           outline: none;
+          background-color: rgba(255, 191, 105, 0.8);
+          color: black;
+
       }
   
   </style>

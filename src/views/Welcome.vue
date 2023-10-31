@@ -189,49 +189,60 @@ export default {
 
 
     const signinGoogle = async () => {
-        try {
-          const provider = new GoogleAuthProvider();
-          provider.addScope('https://www.googleapis.com/auth/calendar')
-          const result = await signInWithPopup(auth, provider);
-        
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          store.setToken(token)
-          console.log(token,'USER TOKEN')
-          // The signed-in user info.
-          const user = result.user;
-          store.setUserEmail(user.email)
-          const uid = user.uid;
-          const docRef = doc(db, 'users', uid);
-        
-              try {
-                const docSnap = await getDoc(docRef);
-                const userData = docSnap.data();
+      const store = useTokenStore(); 
+      try {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user; // Initialize user here
 
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        store.setToken(token);
+        console.log(token, "USER TOKEN");
 
-                if (!userData?.community) {
-                  router.push({ name: 'joinCommunity' });
-                } else {
-                  router.push({ name: 'Homepage' });
-                }
-              } catch (error) {
-                console.error('Error fetching user data:', error);
-              }
+        // Set the user's email after initializing user
+        store.setUserEmail(user.email);
+        const googleAdditionalInfo = result.additionalUserInfo;
+        const googleProfile = googleAdditionalInfo
+        console.log(googleAdditionalInfo,"additional info");
+        console.log(googleProfile,"googleProfile");
 
+        const firstname = googleProfile.given_name || null;
+        const lastname = googleProfile.family_name || null;
+        const uid = user.uid;
+        const docRef = doc(db, 'users', uid);
 
-          } catch (error) {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // Handle the specific error or log the error message
-            console.error('Google sign-in error:', errorCode, errorMessage);
-          }
-        };
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists() && docSnap.data().community !== null) {
+            router.push({ name: "Homepage" });
+        } else {
+            // Check if result.additionalUserInfo exists and has a profile property
+            setDoc(doc(db, "users", uid), {
+                firstname: firstname,
+                lastname: lastname,
+                email: user.email,
+                birthday: null,
+                country: null,
+                bio: null,
+                community: null,
+                points: 0,
+            });
+
+            router.push({ name: 'joinCommunity' });
+        }
+    } catch (error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData && error.customData.email ? error.customData.email : null;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+
+        // Handle the specific error or log the error message
+        console.error('Google sign-in error:', errorCode, errorMessage);
+    }
+};
 
 
     //after Authenticated

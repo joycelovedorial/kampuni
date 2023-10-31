@@ -2,11 +2,10 @@
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left  col-3" style="margin-top: 20px;">
-        <input type="text" placeholder="Search for Chats" style="border-radius: 75px; margin-bottom: 20px; background-color: #2EC4B6; color:white; size: 3; width: 100%;">
+        <input type="text" placeholder="Search for Chats" style="">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
-          class="font-fredoka singlelist">
-            <div style="width: 50px; height:50px; border-radius: 50%; border-color: #2EC4B6; border-width: 2px;">image</div>
+          class="singlelist">
             <div style="margin-left: 10px;">{{chatroom.name}}</div>
           </li>
         </ul>
@@ -113,9 +112,20 @@ export default {
 .chatlist-container{
   justify-content:flex;
   flex-direction: column;
+  overflow: scroll;
+  height: 60vh;
+  padding-right: 2%;
+}
+.chatlist-container::-webkit-scrollbar{
+  background-color: transparent;
+}
+.chatlist-container::-webkit-scrollbar-thumb{
+  background-color: #2EC4B6;
+  border-radius: 10px;
 }
 #chat-container{
-  margin: 10px 0;
+  margin: 20px 0;
+  height: fit-content;
 }
 .singlelist{
   border: 2px solid #2EC4B6;
@@ -130,5 +140,19 @@ export default {
   border: 2px solid #2EC4B6;
   background-color: rgba(37, 149, 138, 0.5);
   
+}
+.chatroom-right col-9{
+  max-height: 100%;
+}
+.chat-list-left  col-3{
+  overflow: scroll ;
+}
+input[type="text"]{
+  border-radius: 75px;
+  margin-bottom: 20px;
+  background-color: #2EC4B6;
+  color:white;
+  size: 3;
+  width: 100%
 }
 </style>
