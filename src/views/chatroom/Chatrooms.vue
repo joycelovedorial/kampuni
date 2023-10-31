@@ -1,4 +1,5 @@
 <template>
+  <div id="chatrooms">
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left  col-3" style="margin-top: 20px;">
@@ -14,6 +15,7 @@
       <div class="chatroom-right col-9">
         <ChatWindow v-if="selectedchat" :selectedchat="selectedchat" :name="name"/>
       </div>
+    </div>
   </div>
 
 
@@ -154,5 +156,14 @@ input[type="text"]{
   color:white;
   size: 3;
   width: 100%
+}
+#chatrooms {
+  background-image: url("@/assets/background_img/chatroom.PNG");
+  background-color:rgb(250, 240, 230);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  margin: 0;
 }
 </style>

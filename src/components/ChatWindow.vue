@@ -204,7 +204,9 @@ export default {
     background-color: #FF9F1C;
     border-radius: 10px;
   }
-  @media screen {
-    
+  @media (min-width: 635px) {
+    .message{
+      font-size: small;
+    }
   }
 </style>
