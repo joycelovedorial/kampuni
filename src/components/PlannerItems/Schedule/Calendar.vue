@@ -24,10 +24,11 @@ export default {
       const docSnap = await getDoc(docRef);
       const docData = docSnap.data();
       comid.value = docData.community;
+      console.log(comid.value,"fetch");
     };
 
     onMounted(async () => {
-      fetchData(); // Fetch data
+      await fetchData(); // Fetch data
 
       // Watch for changes in userid
           
@@ -41,8 +42,11 @@ export default {
           console.log("tasks fetched", taskArray.value);
         });
 
+        
+        console.log(comid.value,"comid");
         const qouting = query(collection(db, "outings"), where("community", "==", comid.value));
         const unsubout = onSnapshot(qouting, (snap) => {
+          console.log(snap);
           const resultOut = [];
           snap.forEach((doc) => {
             resultOut.push({...doc.data(),id:doc.id})
@@ -78,7 +82,7 @@ export default {
           return filteredOutings;
         });
 
-      return {filteredOutingArray,taskArray};
+      return {filteredOutingArray,taskArray};// Outings that users are in
     }
   }
 
