@@ -15,7 +15,7 @@
 
       <div class="col-xl-5 col-12">
         <h1 class="mb-2 font-black text-cyanp text-3xl">Today Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test justify-center h-96 bg-amber-900 bg-opacity-10 rounded-lg will-change-scroll" style="height:50vh">
+        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test justify-center h-96 bg-neutral-900 bg-opacity-10 rounded-lg will-change-scroll" style="height:50vh">
           <TodayTask />
         </div>
       </div>

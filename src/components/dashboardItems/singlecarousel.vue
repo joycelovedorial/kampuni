@@ -5,14 +5,14 @@
                 <div class="container bg-white rounded-lg border-orange-400">
                 
                     <div class="row"> 
-                        <div class="col-12" id="detail-container">
-                            <div class="w-auto self-center justify-content-center align-middle card-title bg-cyans" id="name_container" style="height:fit-content; width:fit-content">
-                                    
-                                <h5 class="fw-bold pt-2 pb-1 px-3">{{title}}</h5> <!--{{name}}--> 
-                                <p class=" pb-2 pt-1 px-3" >{{ desc }}</p> <!--{{message}}--> 
-                                        
+                        <div class="col-12 " id="detail-container">
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-oranges border-3 bg-white d-flex justify-content-between truncate" id="name_container" style="height:fit-content; width:fit-content">
+                                <div>
+                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate">{{title}}</h5> <!--{{name}}--> 
+                                    <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
+                                </div>
+                                <div class="my-auto mx-2"><img class="h-fit w-12" id='icon' src="../../assets/profiles/amos.jpg"></div> 
                             </div>
-                        <div ><img id='icon' src="../../assets/profiles/josi.png"></div> 
                     </div>
                         
                                 
@@ -185,12 +185,6 @@ export default {
 <style>
 
 
-#detail-container{
-    position:relative;
-    margin-bottom:25px;
-    margin-top:10px;
-}
-
 .hovering:hover {
     animation: changeSize 1.2s infinite alternate; /* Add a smooth transition effect */
 }
@@ -264,24 +258,21 @@ width:fit-content;
   /* margin-left:1rem; */
 
 border-radius:10px;
-margin-top:23px;
 margin-left:10px;
-margin-bottom:15px;
 height:fit-content;
 }
 #icon{
-width:105px;
-height:105px ;
-min-width:35px;
+
+/* min-width:35px;
 position:absolute; 
 top:0; 
-right:0;
+right:0; */
 border-radius:50%;
-margin-bottom:20px;
-margin-left:20px;
+width: full;
+
 /* padding-bottom:40px; */
 
-border: 10px #CBF3F0 solid;
+border: 3px #ee944b solid;
 }
 
 svg{
