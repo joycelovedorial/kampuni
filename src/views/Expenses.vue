@@ -1,11 +1,7 @@
 <template>
     <Navbar/>
-  <div id="expenses-page">
+    <Expenses/>
 
-  <Expense @add-expense="addExpense" />
-
-
-  </div>
 </template>
 
 <script>
