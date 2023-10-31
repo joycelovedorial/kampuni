@@ -1,6 +1,6 @@
 <template>
   <div class="object-right w-auto font-fredoka font-bold">
-    <nav class="bg-bnorm bg-opacity-75 flex justify-between items-center h-18">
+    <nav class="bg-bnorm flex justify-between items-center h-18">
       <div class="relative inline-block text-right mx-3">
         <img class="logo inline ml-3" src="../assets/kampuni_logo.png">
       </div>
