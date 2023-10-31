@@ -37,7 +37,7 @@ export default {
                             usersInvolved: [uid],
                             name:comName.value,
                             //comId is the id of the communities document created above
-                            communityID: comId,
+                            community: comId,
                             //want to add another collection here called "messages"
                         })
                         const chatID = chatRef.id

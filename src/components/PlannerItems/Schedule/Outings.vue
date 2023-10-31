@@ -7,7 +7,7 @@
         <span>{{ out.date }}</span> -->
     <!-- </div> -->
     <div class="w-3/12 flex flex-col items-center">
-        <button class="bg-cyanp text-cwhite font-bold w-11/12 rounded-full py-2 hover:drop-shadow-md hover:opacity-90" @click="$emit('eCreate')">
+        <button class="bg-cyanp text-cwhite font-bold w-11/12 rounded-full py-2 hover:drop-shadow-md hover:opacity-90" @click="$emit('oCreate')">
             <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>

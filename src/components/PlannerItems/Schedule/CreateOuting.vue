@@ -24,11 +24,6 @@
             <input class="form-control" type="datetime-local" id="date" v-model="date">
         </div>
        
-
-        
-
-        <label for="eCost">Estimated Cost</label>
-        <input type="text" id="eCost" v-model="eCost">
         <button @click="createOuting">Create Outing</button>
     </form>
   </div>
@@ -45,15 +40,7 @@ export default {
         const desc = ref("")
         const location = ref("")
         const date = ref("")
-        const eCost = ref("")
-        //outings: autoID
-        //commID:
-        //usersInvolved (might need to be subcollection)
-        //date:
-        //location:
-        //description:
-        //title:
-        //estimatedCost:
+    
 
         const createOuting = async() => {
             const user = auth.currentUser
@@ -70,12 +57,12 @@ export default {
                     location: location.value,
                     description: desc.value,
                     title: title.value,
-                    estimatedCost: eCost.value,
                 });
 
             if (outRef) {
             console.log("Outing created");
             }
+           
             const comSnap = await getDoc(doc(db,"communities",cid))
             const comData = comSnap.data()
             const homies = comData.homies
@@ -94,17 +81,35 @@ export default {
                     })
                 } 
             }
-           
-            
-            //maybe for this might add every single user? then set imIn to false for them first, wah but the u need pull communityDoc then loop thru homies...shag...
-            
+           //create chatroom
+            console.log("create outing outid",outID);
+            const chatRef = await addDoc(collection(db,"chatrooms"),{
+                community: cid,
+                usersInvolved:[uid],
+                name:title.value,
+                outing:outID
+            })
+
+            if (chatRef){
+                console.log("Chatroom created for outing",chatRef.id);
+            }
+            const chatID = chatRef.id
+            const newSubcollectionRef = collection(db, "chatrooms", chatID, "messages");
+            addDoc(newSubcollectionRef,{
+                createdAt: new Date(),
+                title:title.value,
+                message:"Welcome to " + title.value,
+            });
+            location.value=""
+            desc.value = ""
+            title.value=""
         }
             
      
 
 
         return{ createOuting,
-            title,desc,location,date,eCost
+            title,desc,location,date
         }
     }
 }

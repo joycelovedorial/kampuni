@@ -63,7 +63,7 @@
 <script>
 
 import '@/assets/main.css';
-import { doc, addDoc,getDoc,query,collection, setDoc ,onSnapshot,where, updateDoc} from 'firebase/firestore';
+import { doc, addDoc,getDoc,getDocs,query,collection, setDoc ,onSnapshot,where, updateDoc,arrayUnion, arrayRemove} from 'firebase/firestore';
 import { auth, db } from "@/firebase/config";
 import { ref,onMounted,computed } from 'vue';
 // import '../../../public/index.html';
@@ -138,10 +138,11 @@ export default {
           
         });
 
-
+        //join outing
         const has_clicked_green = async () => {
             const user = auth.currentUser
             const uid = user.uid
+            console.log("outID",outID.value);
             if (docid.value) {
               
                 await updateDoc(doc(db, "outings", props.outid, "usersInvolved", docid.value), {
@@ -155,21 +156,41 @@ export default {
                     user: uid
                 })
             }
-        };
+            const q = query(collection(db,"chatrooms"),where("outing","==",outID.value))
+            const snapshot = await getDocs(q)
+            var chatroomid =""
+            snapshot.forEach((doc)=>{
+                chatroomid = doc.id
+            })
+            await updateDoc(doc(db,"chatrooms",chatroomid),{
+                usersInvolved:arrayUnion(uid),
+            })
 
+        };
+        //leave outing
         const has_clicked_red = async () =>{
             const user = auth.currentUser
             const uid = user.uid
+            console.log("outID",outID.value);
             if(docid.value){
                 await updateDoc(doc(db,"outings",outID.value,"usersInvolved",docid.value),{
                     imIn:false
                 })
             } else{
                 await addDoc(collection(db,"outings",outID.value,"usersInvolved"),{
-                    imIn: true,
+                    imIn: false,
                     user: uid
                 })
-            }     
+            }
+            const q = query(collection(db,"chatrooms"),where("outing","==",outID.value))
+            const snapshot = await getDocs(q)
+            var chatroomid =""
+            snapshot.forEach((doc)=>{
+                chatroomid = doc.id
+            })
+            await updateDoc(doc(db,"chatrooms",chatroomid),{
+                usersInvolved:arrayRemove(uid),
+            })     
         }
         onMounted(()=>{
             fetchData()

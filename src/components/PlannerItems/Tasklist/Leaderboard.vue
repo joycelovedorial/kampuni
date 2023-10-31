@@ -33,6 +33,7 @@ export default {
         const userRef = doc(db,"users",user)
         const userSnap = await getDoc(userRef)
         const userData = userSnap.data()
+
         userPoints.value.push({id:userRef.id,name:userData.firstname,points:userData.points})
       }
 

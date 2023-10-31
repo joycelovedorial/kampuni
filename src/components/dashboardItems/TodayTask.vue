@@ -20,22 +20,28 @@
   <script>
   import { ref, onMounted,computed } from 'vue';
   import { auth, db } from "@/firebase/config";
-  import { collection, query, where, getDoc, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
+  import { collection, query, where, getDoc,getDocs, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
   import { formatDistanceToNow } from 'date-fns';
   
   
   export default {
-    
-    setup() {
+    props:{
+      community: String,
+    },
+    setup(props) {
       const user = auth.currentUser;
+      const comid = props.community
       const uid = user.uid;
       const tasks = ref([]);
       const isChecked = ref(false);
+      const outingsArray = ref([])
   
       // Create a date object for today's date at midnight (00:00:00)
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-  
+      const endOfDay = new Date(today); 
+      endOfDay.setHours(23, 59, 59, 999);
+      //task querying
       const q = query(collection(db, 'tasks'), where('userid', '==', uid))
       const unsub = onSnapshot(q,(snap)=>{
           const results= [];
@@ -55,7 +61,47 @@
               return []
             }
         })
-  
+
+      //outings querying
+      const outingsQuery = query(collection(db, "outings"),where("community","==",comid),where("date", ">=", today), where("date", "<=", endOfDay));
+      const usub = onSnapshot(q,(snap)=>{
+        snap.forEach((doc)=>{
+          outingsArray.value.push({...doc.data(),id:doc.id})
+        })
+      })
+      const outingsFormatted = computed(() => {
+        const userOutings = [];
+        
+        for (const outing of outingsArray.value) {
+          const userQuery = query(
+            collection(db, "outings", outing.id, "usersInvolved"),
+            where("user", "==", uid),
+            where("imIm", "==", true)
+          );
+
+          getDocs(userQuery)
+            .then((userSnap) => {
+              if (!userSnap.empty) {
+                // If the user is involved in the outing, add it to userOutings
+                userOutings.push(outing);
+              }
+            })
+            .catch((error) => {
+              // Handle any errors
+            });
+        }
+
+        return userOutings;
+      });
+            
+
+      // const userQuery = query(
+      //   collection(db, "outings", comid, "usersInvolved"),
+      //   where("user", "==", uid),
+      //   where("imIm", "==", true)
+      // );
+
+      //taskMethods
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
         const uid = user.uid;
@@ -78,7 +124,6 @@
         // await updateDoc(doc(db,"users",uid),{
         //   points: total,
         // })
-  
       }
   
       const is_checked = () => {

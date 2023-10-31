@@ -17,9 +17,13 @@
         Tasklist
       </a>
     </nav>
+
     <div v-if="displayCalendar">
-      <Outings></Outings>
+      <Outings @oCreate="displayCreateOuting = !displayCreateOuting"></Outings>
       <Calendar></Calendar>
+      <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
+        <CreateOuting/>
+      </div>
     </div>
     <div v-if="displayTask" class="flex space-x-2" id="tasklist">
       <TaskMarket @eCreate="handleCreateTask"/>
@@ -38,6 +42,7 @@ import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
 import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
 import Leaderboard from '@/components/PlannerItems/Tasklist/Leaderboard.vue';
+import CreateOuting from '@/components/PlannerItems/Schedule/CreateOuting.vue';
 import { ref } from 'vue';
 
 export default {
@@ -47,10 +52,12 @@ export default {
     Calendar,
     TaskMarket,
     Leaderboard,
-    createTask
+    createTask,
+    CreateOuting
   },
   setup(props,context) {
     const displayCreateTask = ref(false)
+    const displayCreateOuting = ref(false)
     const displayOutings = ref(false);
     const displayCalendar = ref(true);
     const displayTask = ref(false);
@@ -58,7 +65,7 @@ export default {
     const handleCreateTask = () => {
       displayCreateTask.value = !displayCreateTask.value;
     };
-      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask }
+      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting }
     }
 }
 </script>

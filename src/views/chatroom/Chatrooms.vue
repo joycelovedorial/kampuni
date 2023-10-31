@@ -53,27 +53,12 @@ export default {
           ...doc.data()
           }));
            // Separate chatrooms into two arrays: with communityID and without
-          const withCommunityID = chatlist.value.filter(room => room.communityID);
-          const withoutCommunityID = chatlist.value.filter(room => !room.communityID);
+          const withouting = chatlist.value.filter(room => room.outing);
+          const withoutouting = chatlist.value.filter(room => !room.outing);
 
-          for (const room of withoutCommunityID) {
-              const otherUserId = room.usersInvolved.find(userId => userId !== uid);
-              // Fetch the other user's first name from the users collection
-              const userDoc = await getDoc(doc(db, 'users', otherUserId));
-              if (userDoc.exists()) {
-                room.name = userDoc.data().firstname;
-                
-              }
-            }
+          withouting.sort((a, b) => a.outing.localeCompare(b.outing));
 
-          // withoutCommunityID.forEach(room => {
-          //     console.log(room);
-          //   });
-          // Sort chatrooms with communityID based on communityID
-          withCommunityID.sort((a, b) => a.communityID.localeCompare(b.communityID));
-
-          // Combine the two arrays with communityID chatrooms first
-          chatlist.value = [...withCommunityID, ...withoutCommunityID];
+          chatlist.value = [...withoutouting, ...withouting];
           const tempArr = [];
           for (const room of chatlist.value){
             tempArr.push(room)

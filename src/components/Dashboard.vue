@@ -4,7 +4,7 @@
       <div class="col-1"></div>
       <div class="col-10">
         <h1 class="mb-2 font-black text-cyanp text-3xl" >Upcoming Outings</h1>
-        <OutingsCarousel />
+        <OutingsCarousel :community="comid"/>
       </div>
 
       <div class="col-1 "></div>
@@ -16,7 +16,7 @@
       <div class="col-xl-5 col-12">
         <h1 class="mb-2 font-black text-cyanp text-3xl">Today Task</h1>
         <div class="flex-nowrap overflow-y-scroll overflow-x-auto test justify-center h-96 bg-neutral-900 bg-opacity-10 rounded-lg will-change-scroll" style="height:50vh">
-          <TodayTask />
+          <TodayTask v-if="comid" :community="comid"/>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
 
       <div class="col-xl-5 col-12 h-96" >
       <h1 class="mb-2 font-black text-cyanp text-3xl">Expenses</h1>
-       <div class="containerbg bg-opacity-25 rounded-lg flex justify-center overflow-y-scroll overflow-x-auto" style="height:40vh"><ExpensesList/></div>
+       <div class="containerbg bg-opacity-25 rounded-lg flex justify-center overflow-y-scroll overflow-x-auto" style="height:40vh"><ExpensesList :community="comid"/></div>
 
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1"></div>
@@ -38,18 +38,30 @@ import TodayTask from "./dashboardItems/TodayTask.vue";
 import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getDoc,doc } from "firebase/firestore";
 
 export default {
   components: { TodayTask, ExpensesList, OutingsCarousel },
   props: {
   },
   setup(props) {
+    const comid=ref("")
 
-    // Use comId as needed
-
-    // Rest of your component logic here
-    return { };
+    const fetchData = async() =>{
+     
+      const user = auth.currentUser
+      const uid = user.uid
+      const docSnap = await getDoc(doc(db,"users",uid))
+      comid.value = docSnap.data().community
+ 
+    }
+    onMounted(() => {
+      fetchData();
+    });
+      
+    
+    return { comid };
   },
 };
 </script>
