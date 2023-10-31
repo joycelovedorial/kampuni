@@ -8,13 +8,10 @@
           <h5>{{task.taskname}}</h5>
         </label>
     </div>
-  
-      
       <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
         <p class="text-center font-bold">{{ task.points }}</p>
       <p class="text-center rounded px-2" :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' :!task.taskstatus}" >POINTS</p>
       </div>
-      
     </div>
   </div>
   
