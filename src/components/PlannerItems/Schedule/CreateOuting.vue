@@ -24,7 +24,7 @@
             <input class="form-control" type="datetime-local" id="date" v-model="date">
         </div>
        
-        <button @click="createOuting">Create Outing</button>
+        <button>Create Outing</button>
     </form>
   </div>
 </template>

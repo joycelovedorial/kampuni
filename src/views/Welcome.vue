@@ -4,7 +4,7 @@
     <img src="@/assets/kampuni_logo.png" id="logo">
     <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container ">
-        <form @submit.prevent class="overflow-x-scroll">
+        <form @submit.prevent="handleRegister" class="overflow-x-scroll">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
@@ -123,6 +123,7 @@ export default {
 
 
     const handleRegister = async () => {
+      
         try {
             const cred = await createUserWithEmailAndPassword(auth, email.value, password.value);
             setDoc(doc(db, "users", cred.user.uid), {
@@ -135,7 +136,7 @@ export default {
               community: null,
               points: 0,
             });
-
+            console.log("registered");
             const uid = cred.user.uid;
             const docRef = doc(db, 'users', uid);
 

@@ -29,7 +29,7 @@
       <TaskMarket @eCreate="handleCreateTask"/>
       <Leaderboard />
       <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateTask">
-        <createTask/>
+        <createTask @closeCreateTask="displayCreateTask=false"/>
       </div>
     </div>
   </div> 

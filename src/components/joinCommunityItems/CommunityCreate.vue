@@ -13,7 +13,7 @@
 <script>
 import { db,auth } from "@/firebase/config"
 import { ref, onMounted } from 'vue'
-import { doc, addDoc, collection } from "firebase/firestore";
+import { doc, addDoc, collection,updateDoc } from "firebase/firestore";
 import { useRouter } from "vue-router";
 export default {
     setup () {
@@ -33,6 +33,10 @@ export default {
                             password: password.value,
                         });
                         const comId = comRef.id;
+                        const docRef = doc(db,"users",uid)
+                        await updateDoc(docRef, {
+                            community:comId
+                        })
                         const chatRef = await addDoc(collection(db,"chatrooms"),{
                             usersInvolved: [uid],
                             name:comName.value,
@@ -52,6 +56,8 @@ export default {
                     } catch (error) {
                         console.error("Error creating community:", error);
                     }
+                    
+                    
             }else{
                 alert("Password Mismatch or Empty!","Try again","error")
             }    

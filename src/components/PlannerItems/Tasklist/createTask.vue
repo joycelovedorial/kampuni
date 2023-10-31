@@ -37,7 +37,7 @@
             <h1 class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl">
                 New Task
             </h1>
-            <form @submit.prevent>
+            <form @submit.prevent="createTask">
                 <div class="d-block py-2">
                     <label class="block text-sm font-medium text-gray-900" for="taskname">Task Name</label>
                     <div class="relative mt-2 rounded-md shadow-sm">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center pt-4">
-                    <button class="h-10 px-3 text-white font-bold text-sm rounded-sm bg-cyanp hover: hover:drop-shadow-md hover:shadow-oranges" @click="createTask">Create!</button>
+                    <button class="h-10 px-3 text-white font-bold text-sm rounded-sm bg-cyanp hover: hover:drop-shadow-md hover:shadow-oranges" >Create!</button>
                 </div>
             </form>
         </div>
@@ -81,7 +81,7 @@ import { ref } from 'vue';
 import { collection, addDoc, Timestamp, getDoc, doc } from "firebase/firestore"; 
 import { auth,db } from '@/firebase/config';
 export default {
-    setup(){    
+    setup(props,context){    
         const taskname = ref("")
         const description = ref("")
         const countdown = ref("")
@@ -121,6 +121,11 @@ export default {
                 } else {
                     console.error("Invalid date format in Allocate By");
                 }
+            taskname.value=""
+            description.value=""
+            countdown.value=""
+            dateline.value=""    
+            context.emit("closeCreateTask")
             };
 
 

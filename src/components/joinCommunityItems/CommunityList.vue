@@ -70,7 +70,7 @@ export default {
 
             const communityData = communityDoc.data();
             const homies = communityData.homies.filter((memberUid) => memberUid !== uid);
-            const chatQuery = query(collection(db,'chatrooms'),where('communityID',"==",comId))
+            const chatQuery = query(collection(db,'chatrooms'),where('community',"==",comId))
             const chatSnapshot = await getDocs(chatQuery);
 
             if (!chatSnapshot.empty){

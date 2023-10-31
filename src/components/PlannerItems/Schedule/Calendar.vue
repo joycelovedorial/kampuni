@@ -78,7 +78,7 @@ export default {
             }
           }
         }
-          console.log(filteredOutings);
+          console.log("filtered outings",filteredOutings);
           return filteredOutings;
         });
 
