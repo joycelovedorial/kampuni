@@ -141,6 +141,7 @@ export default {
     display: block;
     font-size: 12px;
     margin-bottom: 2px;
+    
   }
   .created-at-self{
     color: #878787;
@@ -150,14 +151,14 @@ export default {
     margin-bottom: 2px;
   }
   .single-chat-container{
-    background-color: #FFBF69;
+    background-color: #9A899C;
     border-radius: 10px 10px 0 10px; 
     padding: 10px;
     width: 75%;
     margin-left: 25%;
   }
   .single-chat-container-self{
-    background-color: #CBF3F0;
+    background-color: #9A899C;
     border-radius: 10px 10px 10px 0; 
     padding: 10px;
     width: 75%;
@@ -167,10 +168,10 @@ export default {
     margin-left: 25%;
     font-weight: bold;
     margin-right: 6px;
-    color: #FF9F1C;
+    color: #9A899C;
   }
   .name-self{
-    color:#2EC4B6;
+    color:#9A899C;
     font-weight: bold;
   }
 
@@ -178,7 +179,7 @@ export default {
     background: #a7e5f0;
     padding: 10px;
     border-radius: 20px;
-    border: 2px #FF9F1C solid;
+    border: 2px #9A899C solid;
   }
   .single {
     margin: 10px 0;
@@ -195,13 +196,13 @@ export default {
     font-weight: 900;
     color: #2F2F2F;
     padding: 0 10px 10px 0 ;
-    border-bottom: #FF9F1C solid;
+    border-bottom: #9A899C solid;
   }
   .messages::-webkit-scrollbar{
     background-color: transparent;
   }
   .messages::-webkit-scrollbar-thumb{
-    background-color: #FF9F1C;
+    background-color: #9A899C;
     border-radius: 10px;
   }
   @media (min-width: 635px) {

@@ -122,7 +122,7 @@ export default {
   background-color: transparent;
 }
 .chatlist-container::-webkit-scrollbar-thumb{
-  background-color: #2EC4B6;
+  background-color: #9A899C;
   border-radius: 10px;
 }
 #chat-container{
@@ -130,17 +130,17 @@ export default {
   height: fit-content;
 }
 .singlelist{
-  border: 2px solid #2EC4B6;
+  border: 2px solid #9A899C;
   padding: 5px; 
   border-radius: 10px; 
   margin-bottom: 10px; 
   font-weight: bold;
-  background-color: rgba(46, 196, 182, 0.5);
+  background-color: #9A899C;
   display: flex;
 }
 .singlelist:hover{
-  border: 2px solid #2EC4B6;
-  background-color: rgba(37, 149, 138, 0.5);
+  border: 2px solid #9A899C;
+  background-color: rgba(#9A899C, 0.5);
   
 }
 .chatroom-right col-9{
@@ -152,18 +152,9 @@ export default {
 input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
-  background-color: #2EC4B6;
+  background-color: #9A899C;
   color:white;
   size: 3;
   width: 100%
-}
-#chatrooms {
-  background-image: url("@/assets/background_img/chatroom.PNG");
-  background-color:rgb(250, 240, 230);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100vh;
-  margin: 0;
 }
 </style>

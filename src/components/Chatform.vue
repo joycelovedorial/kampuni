@@ -81,7 +81,7 @@
           border-radius: 20px;
           font-family: inherit;
           outline: none;
-          background-color: rgba(255, 191, 105, 0.8);
+          background-color: #9A899C;
           color: black;
 
       }
