@@ -1,16 +1,15 @@
 <template>
-  <div class="object-right w-auto">
-    <nav class="bg-cyans bg-opacity-75 flex justify-between items-center h-18">
+  <div class="object-right w-auto font-fredoka font-bold">
+    <nav class="bg-bnorm flex justify-between items-center h-18">
       <div class="relative inline-block text-right mx-3">
         <img class="logo inline ml-3" src="../assets/kampuni_logo.png">
       </div>
       <div class="flex space-x-4 mr-10">
-        <div class="button text-cyanp font-bold text-sm rounded-md w-30 place-content-center flex items-center hover:drop-shadow-md"
+        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
-            'bg-cyans': $route.name !== 'Homepage',  // Apply 'bg-cyans' when not active
-            'text-cyanp': $route.name !== 'Homepage', // Apply 'text-white' when not active
-            'bg-oranges': $route.name === 'Homepage',   // Apply 'bg-white' when active
-            'text-white': $route.name === 'Homepage', // Apply 'text-oranges' when active
+            'drop-shadow-lg': $route.name !== 'Homepage',  // Apply 'bg-cyans' when not active
+            'shadow-inner': $route.name === 'Homepage',   // Apply 'bg-white' when active
+            'drop-shadow-none': $route.name === 'Homepage',   // Apply 'bg-white' when active
           }"
           :disabled="$route.name === 'Homepage'" 
         >
@@ -22,12 +21,11 @@
           </router-link>
         </div>
         
-        <div class="button text-cyanp font-bold text-sm rounded-md w-30 place-content-center flex items-center hover:drop-shadow-md"
+        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
-            'bg-cyans': $route.name !== 'Chatrooms',  // Apply 'bg-cyans' when not active
-            'text-cyanp': $route.name !== 'Chatrooms', // Apply 'text-white' when not active
-            'bg-oranges': $route.name === 'Chatrooms',   // Apply 'bg-white' when active
-            'text-white': $route.name === 'Chatrooms', // Apply 'text-oranges' when active
+            'drop-shadow-lg': $route.name !== 'Chatrooms',  // Apply 'bg-cyans' when not active
+            'shadow-inner': $route.name === 'Chatrooms',   // Apply 'bg-white' when active
+            'drop-shadow-none': $route.name === 'Chatrooms', // Apply 'text-oranges' when active
           }"
           :disabled="$route.name === 'Chatrooms'" 
         >
@@ -40,12 +38,12 @@
             </span>
           </router-link>
         </div>
-        <div class="button text-cyanp font-bold text-sm rounded-md w-30 place-content-center flex items-center hover:drop-shadow-md"
+        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
-            'bg-cyans': $route.name !== 'Planner',  // Apply 'bg-cyans' when not active
-            'text-cyanp': $route.name !== 'Planner', // Apply 'text-white' when not active
-            'bg-oranges': $route.name === 'Planner',   // Apply 'bg-white' when active
-            'text-white': $route.name === 'Planner', // Apply 'text-oranges' when active
+            'drop-shadow-lg': $route.name !== 'Planner',  // Apply 'bg-cyans' when not active
+            // 'text-cyanp': $route.name !== 'Planner', // Apply 'text-white' when not active
+            'shadow-inner': $route.name === 'Planner',   // Apply 'bg-white' when active
+            'drop-shadow-none': $route.name === 'Planner', // Apply 'text-oranges' when active
           }"
           :disabled="$route.name === 'Planner'" 
         >
@@ -58,12 +56,12 @@
             </span>
           </router-link>
         </div>
-        <div class="button text-cyanp font-bold text-sm rounded-md w-30 place-content-center flex items-center hover:drop-shadow-md"
+        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
-            'bg-cyans': $route.name !== 'Expenses',  // Apply 'bg-cyans' when not active
-            'text-cyanp': $route.name !== 'Expenses', // Apply 'text-white' when not active
-            'bg-oranges': $route.name === 'Expenses',   // Apply 'bg-white' when active
-            'text-white': $route.name === 'Expenses', // Apply 'text-oranges' when active
+            'drop-shadow-lg': $route.name !== 'Expenses',  // Apply 'bg-cyans' when not active
+            // 'text-cyanp': $route.name !== 'Expenses', // Apply 'text-white' when not active
+            'shadow-inner': $route.name === 'Expenses',   // Apply 'bg-white' when active
+            'drop-shadow-none': $route.name === 'Expenses', // Apply 'text-oranges' when active
           }"
           :disabled="$route.name === 'Expenses'" 
         >
@@ -78,7 +76,7 @@
         </div>
       </div>
       <div class="relative inline-block mr-3 w-36">
-        <img class="inline cursor-pointer h-12 w-12 rounded-full border-3 border-black" src="../assets/profiles/anyu.jpg" alt="" @click="toggleDropdown">
+        <img class="inline cursor-pointer h-12 w-12 rounded-full border-3 border-bpop" src="../assets/profiles/anyu.jpg" alt="" @click="toggleDropdown">
         <div :class="{ 'hidden': !dropdownVisible }" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
           <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <router-link to="../Profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">View Profile</router-link>
