@@ -4,7 +4,7 @@
     <form @submit.prevent="addExpense">
       <div class="row">
         <div>People involved</div>
-       
+      
         <div v-for="user in users" :key="user.id">
           <label :for="user.id">{{ user.name }}</label>
           <input 
@@ -112,7 +112,7 @@ export default {
         }
         for (const user in selectedUsers.value){
           const docRef2 = await addDoc(collection(db, 'transactions'), {
-            amount: (parseInt(cost.value) / selectedUsers.value.length),
+            amount: Math.floor(parseInt(cost.value) / selectedUsers.value.length),
             expense: docRef.id,
             message: message.value,
             outing: category.value,
