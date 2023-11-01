@@ -4,33 +4,58 @@
     <div class="flex">
       <div class="w-25 flex-col">
         who owe who money
-        <div class="h-75 bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
-          you need to pay
-          <div class="flex w-100 space-x-1">
-            <div class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm">
-              <div class="w-25 image text-center my-auto">
-                <img class="rounded-full border-bpop border-2 h-8 w-8 inline-block" src="../assets/profiles/amos.jpg" alt="amos">
-                <p class="text-xs font-black">amos</p>
+        <div class="h-auto bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
+          
+            <div v-for="(payment, index) in toPay" :key="index" class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
+              <div class="image text-center my-auto ml-2">
+                <img class="rounded-full border-bpop border-2 h-8 w-8 inline-block" :src="payment.img" :alt="payment.name">
+                <p class="text-xs font-black">{{ payment.name }}</p>
               </div>
-              <div class="w-75 details p-2">
-                <p>$20.00</p>
+              <div class="w-75 details py-2 pr-2">
+                <p>${{ payment.amt.toFixed(2) }}</p>
                 <div class="flex space-x-2">
-                  <span class="category">general</span>
-                  <span class="title">toilet paper</span>
+                  <span class="category">{{ payment.category }}</span>
+                  <span class="title">{{ payment.title }}</span>
                 </div>
-                <button class="inline-block w-100 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2 whitespace-nowrap overflow-hidden">
-                  <span :class="textAnimationClass">{{ buttonText }}</span>
+                <button v-if="payment.needToPay" class="inline-block w-100 bg-r rounded-md p-1 text-xs font-black border-black border-2 whitespace-nowrap overflow-hidden">
+                  <div class="w-36 h-4">
+                    <span v-if="payment.bumped" :class="textAnimationClass">{{ payment.msg }}</span>
+                    <span v-if="!payment.bumped">pay</span>
+                  </div>
+                </button>
+                <button v-if="!payment.needToPay" class="inline-block w-100 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2 whitespace-nowrap overflow-hidden">
+                  <div class="w-36 h-4">
+                    <span v-if="payment.bumped">{{ payment.msg }}</span>
+                    <span v-if="!payment.bumped" @click="createBump">bump!</span>
+                  </div>
                 </button>
               </div>
-              <!-- <img class="rounded-full border-bpop border-2 inline-block h-fit w-8" src="../assets/profiles/anyu.jpg" alt="anyu"> -->
             </div>
-            <!-- <button class="w-25 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2">
-              pay 💰
-            </button> -->
-          </div>
         </div>
-        <div class="h-75 bg-white/50 rounded-md m-3 backdrop-blur-sm">
-          they need to pay
+        <div class="h-auto bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
+          others owe you
+            <div v-for="(payment, index) in toPay" :key="index" class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
+              <div class="w-25 image text-center my-auto">
+                <img class="rounded-full border-bpop border-2 h-8 w-8 inline-block" :src="payment.img" :alt="payment.name">
+                <p class="text-xs font-black">{{ payment.name }}</p>
+              </div>
+              <div class="w-75 details p-2">
+                <p>${{ payment.amt.toFixed(2) }}</p>
+                <div class="flex space-x-2">
+                  <span class="category">{{ payment.category }}</span>
+                  <span class="title">{{ payment.title }}</span>
+                </div>
+                <button class="inline-block w-100 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2 whitespace-nowrap overflow-hidden">
+                  <div class="w-36 h-4">
+                    <span v-if="payment.bumped" :class="textAnimationClass" class="inline-block">{{ buttonText }}</span>
+                    <span v-if="!payment.bumped" class="inline-block">pay</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+        </div>
+        <!-- <div class="h-75 bg-white/50 rounded-md m-3 backdrop-blur-sm">
+          others owe you
           <div class="test-2">
             <div class="expenses bg-white drop-shadow-md m-3 rounded-full flex justify-between align-middle w-max">
               <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/anyu.jpg" alt="amos">
@@ -46,12 +71,12 @@
               <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/sandra.jpg" alt="anyu">
             </div>
           </div>
-        </div>
-      </div>
+        </div> -->
       <div class="w-70">
         amount of spending for the month?
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -65,6 +90,76 @@ export default {
       textInput: '',   // Store the user's text input
       buttonText: 'pay',
       isAnimationActive: false, // Initially set to false
+      images:{ 
+        'snekha': '/img/snekha.e4e5897a.jpg',
+        'joyce': '/img/joyce.1cd32ed3.jpg',
+        'anyu': '/img/anyu.48a8657b.jpg',
+        'eman': '/img/eman.6066cb5b.jpg',
+        'amos': '/img/amos.f8c26b30.jpg',
+        'sandra': '/img/sandra.0210e71e.jpg',
+      },
+      toPay: [
+        {
+          needToPay: true,
+          name: 'amos', 
+          img: '/img/amos.f8c26b30.jpg', 
+          category: 'general', 
+          title: 'toilet paper', 
+          amt: 10,
+          bumped: true,
+          msg: 'you better pay me or i will steal your money !!!!!'
+        },
+        {
+          needToPay: true,
+          name: 'sandra',
+          img: '/img/sandra.0210e71e.jpg',
+          category: 'cycling @ ecp',
+          title: 'bike rental',
+          amt: 16,
+          bumped: false,
+          msg: ''
+        },
+        {
+          needToPay: false,
+          name: 'joyce',
+          img: '/img/joyce.1cd32ed3.jpg',
+          category: 'general',
+          title: 'milk',
+          amt: 2.55,
+          bumped: false,
+          msg: ''
+        },
+        {
+          needToPay: false,
+          name: 'eman',
+          img: '/img/eman.6066cb5b.jpg',
+          category: 'grab',
+          title: 'bike rental',
+          amt: 16,
+          bumped: true,
+          msg: 'bump again in 24 hours!',
+        }
+      ],
+      toReceive: [
+        {
+          name: 'amos', 
+          img: '/img/amos.f8c26b30.jpg', 
+          category: 'general', 
+          title: 'toilet paper', 
+          amt: 10,
+          bumped: true,
+          msg: 'you better pay me or i will steal your money !!!!!'
+        },
+        {
+          name: 'sandra',
+          img: '/img/sandra.0210e71e.jpg',
+          category: 'cycling @ ecp',
+          title: 'bike rental',
+          amt: 16,
+          bumped: false,
+          msg: ''
+        }
+      ],
     };
   },
   computed: {
@@ -111,9 +206,18 @@ export default {
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 
+  /* .expenses {
+    width: full;
+    background-color: #FFFDF0;
+    border-radius: 6px;
+    border: black solid 2px;
+    margin: 10px 0; */
+
+    /*  bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm */
+  /* } */
 
   .text-animation {
-    animation: marquee 12s linear infinite;
+    animation: marquee 14s linear infinite;
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
@@ -121,10 +225,10 @@ export default {
 
   @keyframes marquee {
     0% {
-      transform: translateX(50%);
+      transform: translateX(100%);
     }
     100% {
-      transform: translateX(-300%);
+      transform: translateX(-1000%);
     }
   }
 
