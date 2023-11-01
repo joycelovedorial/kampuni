@@ -42,7 +42,7 @@ export default {
 
  
     const peopleOweYou = ref([])
-    const youOwePeoeple = ref([])
+    const youOwePeople = ref([])
 
     //fetching of stuff
     const user = auth.currentUser
@@ -63,7 +63,7 @@ export default {
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
       })
-      youOwePeoeple.value=result
+      youOwePeople.value=result
     })
 
 
@@ -71,9 +71,7 @@ export default {
       return isAnimationActive.value ? 'text-animation' : '';
     });
     // Use onMounted to trigger the toggleText method every 3 seconds
-    onMounted(() => {
-      setInterval(toggleText, 3000);
-    });
+   
 
     return {
       showInput,
@@ -83,9 +81,6 @@ export default {
       textAnimationClass,
       peopleOweYou, 
       youOwePeople,
-      createBump, 
-      sendMessage,
-      toggleText,
     };
   },
 };
