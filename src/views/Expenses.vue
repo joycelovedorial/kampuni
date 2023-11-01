@@ -75,126 +75,70 @@
       <div class="w-70">
         amount of spending for the month?
       </div>
-    </div>
-  </div>
+      <div></div>
+      <div v-if="displayCreate">
+        <createExpenses/>
+      </div>
+      
+      </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import createExpenses from '@/components/expensesItems/createExpense.vue';
+import { ref, computed } from 'vue';
+
 export default {
-  components:{Navbar},
-  data() {
-    return {
-      showInput: false, // Initially, the input field is hidden
-      textInput: '',   // Store the user's text input
-      buttonText: 'pay',
-      isAnimationActive: false, // Initially set to false
-      images:{ 
-        'snekha': '/img/snekha.e4e5897a.jpg',
-        'joyce': '/img/joyce.1cd32ed3.jpg',
-        'anyu': '/img/anyu.48a8657b.jpg',
-        'eman': '/img/eman.6066cb5b.jpg',
-        'amos': '/img/amos.f8c26b30.jpg',
-        'sandra': '/img/sandra.0210e71e.jpg',
-      },
-      toPay: [
-        {
-          needToPay: true,
-          name: 'amos', 
-          img: '/img/amos.f8c26b30.jpg', 
-          category: 'general', 
-          title: 'toilet paper', 
-          amt: 10,
-          bumped: true,
-          msg: 'you better pay me or i will steal your money !!!!!'
-        },
-        {
-          needToPay: true,
-          name: 'sandra',
-          img: '/img/sandra.0210e71e.jpg',
-          category: 'cycling @ ecp',
-          title: 'bike rental',
-          amt: 16,
-          bumped: false,
-          msg: ''
-        },
-        {
-          needToPay: false,
-          name: 'joyce',
-          img: '/img/joyce.1cd32ed3.jpg',
-          category: 'general',
-          title: 'milk',
-          amt: 2.55,
-          bumped: false,
-          msg: ''
-        },
-        {
-          needToPay: false,
-          name: 'eman',
-          img: '/img/eman.6066cb5b.jpg',
-          category: 'grab',
-          title: 'bike rental',
-          amt: 16,
-          bumped: true,
-          msg: 'bump again in 24 hours!',
-        }
-      ],
-      toReceive: [
-        {
-          name: 'amos', 
-          img: '/img/amos.f8c26b30.jpg', 
-          category: 'general', 
-          title: 'toilet paper', 
-          amt: 10,
-          bumped: true,
-          msg: 'you better pay me or i will steal your money !!!!!'
-        },
-        {
-          name: 'sandra',
-          img: '/img/sandra.0210e71e.jpg',
-          category: 'cycling @ ecp',
-          title: 'bike rental',
-          amt: 16,
-          bumped: false,
-          msg: ''
-        }
-      ],
+  components: { Navbar, createExpenses },
+  setup() {
+    const showInput = ref(false);
+    const textInput = ref('');
+    const buttonText = ref('pay');
+    const isAnimationActive = ref(false);
+    const displayCreate=ref(false)
+
+    const textAnimationClass = computed(() => {
+      return isAnimationActive.value ? 'text-animation' : '';
+    });
+
+    const toggleText = () => {
+      if (buttonText.value === 'you better pay me! or I will steal your money!!!') {
+        buttonText.value = 'pay';
+        isAnimationActive.value = false; // Remove animation class
+      } else {
+        buttonText.value = 'you better pay me! or I will steal your money!!!';
+        isAnimationActive.value = true; // Add animation class
+      }
     };
-  },
-  computed: {
-    textAnimationClass() {
-      return this.isAnimationActive ? 'text-animation' : '';
-    },
-  },
-  mounted() {
-    setInterval(this.toggleText, 3000); // Toggle text every 3 seconds
-  },
-  methods: {
-    // for the bump
-    createBump() {
+
+    const createBump = () => {
       // Toggle the value of showInput to show the input field and "send" button
-      this.showInput = true;
-    },
-    sendMessage() {
+      showInput.value = true;
+    };
+
+    const sendMessage = () => {
       // Handle sending the message, you can implement this function as needed
 
       // After sending the message, reset showInput to false to show "bump" button again
-      this.showInput = false;
-    },
-    // for the i owe others
-    toggleText() {
-      if (this.buttonText === 'you better pay me! or I will steal your money!!!') {
-        this.buttonText = 'pay';
-        this.isAnimationActive = false; // Remove animation class
-      } else {
-        this.buttonText = 'you better pay me! or I will steal your money!!!';
-        this.isAnimationActive = true; // Add animation class
-      }
-    },
-  },
+      showInput.value = false;
+    };
 
-}
+    // Call toggleText every 3 seconds
+    setInterval(toggleText, 3000);
+
+    return {
+      showInput,
+      textInput,
+      buttonText,
+      isAnimationActive,
+      textAnimationClass,
+      createBump,
+      sendMessage,
+      displayCreate,
+    };
+  },
+};
 </script>
 
 <style scoped>
