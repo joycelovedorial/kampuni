@@ -4,6 +4,8 @@
 
 <script>
 import { ref } from 'vue'
+import { collection, addDoc, Timestamp, getDoc, doc,query,where, onSnapshot } from "firebase/firestore"; 
+
 // import { capitalize } from './helpers'
 import {db,auth} from "../../../firebase/config.js"
 export default{

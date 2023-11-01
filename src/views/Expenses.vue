@@ -2,35 +2,35 @@
   <div id="expenses-page" class="bg-g">
     <Navbar/>
     <div class="flex">
-      <div class="w-30 flex-col">
+      <div class="w-25 flex-col">
         who owe who money
-        <div class="h-75 bg-bnorm rounded-md m-3 backdrop-blur-sm">
-          i need to pay other ppl
-          <div class="test-1 flex justify-start">
-            <img class="rounded-full border-bpop mx-3 border-2 inline-block h-fit w-12" src="../assets/profiles/amos.jpg" alt="amos">
-            <div class="expenses bg-white p-3 rounded-md h-12 flex justify-around align-middle">
-              <p class="inline-block align-middle self-center">amos owes you 200 dollars</p>
-            </div>
-            <button v-if="!showInput" class="block justify-self-center mx-auto bg-bpop w-fit p-1 rounded-md shadow-md hover:shadow-none hover:bg-bpop hover:animate-spin" @click="createBump">{{ textInput ? textInput : 'bump!' }}</button>
-          </div>
-          <div class="test-2">
-            <div class="expenses bg-white drop-shadow-md m-3 rounded-full flex justify-between align-middle w-max">
-              <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/amos.jpg" alt="amos">
-              <div class="flex flex-col m-2">
-                <p class="block align-middle self-center">amos owes you $200.00</p>
-                <button v-if="!showInput" class="block justify-self-center mx-auto bg-bpop w-fit p-1 rounded-md shadow-md hover:shadow-none hover:bg-oranges hover:animate-spin" @click="createBump">{{ textInput ? textInput : 'bump!' }}</button>
-                
-                <div v-if="showInput" class="space-x-2">
-                  <input class="rounded-md border-0 pl-2 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300" type="text" v-model="textInput" placeholder="Enter your message">
-                  <button class="bg-bpop w-fit p-1 rounded-md shadow-md hover:shadow-none hover:bg-oranges" @click="sendMessage">send</button>
-                </div>
+        <div class="h-75 bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
+          you need to pay
+          <div class="flex w-100 space-x-1">
+            <div class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm">
+              <div class="w-25 image text-center my-auto">
+                <img class="rounded-full border-bpop border-2 h-8 w-8 inline-block" src="../assets/profiles/amos.jpg" alt="amos">
+                <p class="text-xs font-black">amos</p>
               </div>
-              <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/anyu.jpg" alt="anyu">
+              <div class="w-75 details p-2">
+                <p>$20.00</p>
+                <div class="flex space-x-2">
+                  <span class="category">general</span>
+                  <span class="title">toilet paper</span>
+                </div>
+                <button class="inline-block w-100 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2 whitespace-nowrap overflow-hidden">
+                  <span :class="textAnimationClass">{{ buttonText }}</span>
+                </button>
+              </div>
+              <!-- <img class="rounded-full border-bpop border-2 inline-block h-fit w-8" src="../assets/profiles/anyu.jpg" alt="anyu"> -->
             </div>
+            <!-- <button class="w-25 bg-bnorm rounded-md p-1 text-xs font-black border-black border-2">
+              pay 💰
+            </button> -->
           </div>
         </div>
         <div class="h-75 bg-white/50 rounded-md m-3 backdrop-blur-sm">
-          other ppl need to pay me
+          they need to pay
           <div class="test-2">
             <div class="expenses bg-white drop-shadow-md m-3 rounded-full flex justify-between align-middle w-max">
               <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/anyu.jpg" alt="amos">
@@ -63,9 +63,20 @@ export default {
     return {
       showInput: false, // Initially, the input field is hidden
       textInput: '',   // Store the user's text input
+      buttonText: 'pay',
+      isAnimationActive: false, // Initially set to false
     };
   },
+  computed: {
+    textAnimationClass() {
+      return this.isAnimationActive ? 'text-animation' : '';
+    },
+  },
+  mounted() {
+    setInterval(this.toggleText, 3000); // Toggle text every 3 seconds
+  },
   methods: {
+    // for the bump
     createBump() {
       // Toggle the value of showInput to show the input field and "send" button
       this.showInput = true;
@@ -76,17 +87,63 @@ export default {
       // After sending the message, reset showInput to false to show "bump" button again
       this.showInput = false;
     },
+    // for the i owe others
+    toggleText() {
+      if (this.buttonText === 'you better pay me! or I will steal your money!!!') {
+        this.buttonText = 'pay';
+        this.isAnimationActive = false; // Remove animation class
+      } else {
+        this.buttonText = 'you better pay me! or I will steal your money!!!';
+        this.isAnimationActive = true; // Add animation class
+      }
+    },
   },
 
 }
 </script>
 
 <style scoped>
-#expenses-page {
+  #expenses-page {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     height: 100vh; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
+  }
+
+
+  .text-animation {
+    animation: marquee 12s linear infinite;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(50%);
+    }
+    100% {
+      transform: translateX(-300%);
+    }
+  }
+
+  .category {
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #F4EDCA;
+    padding: 0 5px;
+    margin: 2px 0;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+  .title {
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #F4EDCA;
+    padding: 0 5px;
+    margin: 2px 0;
+    border-radius: 4px;
+    vertical-align: middle;
   }
 </style>

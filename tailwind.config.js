@@ -24,7 +24,7 @@ module.exports = {
         b: '#86B8B1',
         p: '#B492B8',
         bpop: '#F4EDCA',
-        bnorm: '#FFFBE6',
+        bnorm: '#FFFDF0',
         cyanp: '#2EC4B6',
         cyans: '#CBF3F0',
         orangep: '#FF9F1C',
