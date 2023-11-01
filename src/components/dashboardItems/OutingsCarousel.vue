@@ -47,9 +47,9 @@ export default {
           // Now that you have comid, you can perform the query here
           const q = query(
             collection(db, 'outings'),
-            where('community', '==', comid.value),
-            where('date', '>=', startOfToday),
-            where('date', '<=', endOfWeek)
+            where('community', '==', comid.value)
+            // where('date', '>=', startOfToday),
+            // where('date', '<=', endOfWeek)
           );
 
           const unsub = onSnapshot(q, (snap) => {
