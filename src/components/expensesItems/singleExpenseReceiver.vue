@@ -26,6 +26,7 @@ export default {
     const timenow = new Date();
     const bumptime = ref('');
     const displayTooEarly = ref(false);
+    const desc = ref("")
 
     const docRef = doc(db, "transactions", props.transacid);
 
@@ -35,7 +36,7 @@ export default {
         const tnameid = data.payer;
         amount.value = data.amount;
         bumptime.value = data.bump; // Assuming "bump" field contains a timestamp
-
+        desc.value=data.desc
         
         getDoc(doc(db,"users",tnameid))
             .then((tnamesnap)=>{
@@ -62,7 +63,8 @@ export default {
       tname,
       amount,
       bump,
-      displayTooEarly
+      displayTooEarly,
+      desc
     };
   }
 }

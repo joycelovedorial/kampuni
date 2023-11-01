@@ -28,12 +28,15 @@ export default {
         const amount = ref("")
         const category=ref("")
         const docRef = doc(db,"transactions",props.transacid)
+        const desc = ref("")
 
         getDoc(docRef)
             .then((docSnap)=>{
                 const data = docSnap.data()
                 const tnameid =  data.receiver
                 amount.value = data.amount
+                desc.value=data.desc
+
                 if(data.category!==null){
                     category.value=data.category
                 }else{
@@ -53,7 +56,7 @@ export default {
             })
         }
         return{
-            message,tname,amount,category,paid
+            message,tname,amount,category,paid,desc
         }
     }
 }
