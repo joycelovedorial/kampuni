@@ -1,6 +1,8 @@
 <template>
   
-  <div>yourpic</div>
+  <div>
+    <img :src="`${tname}/path`" alt="">
+  </div>
     <span> {{ tname }} owes you ${{ amount }}</span>
     <div v-if="displayTooEarly">
         <p>"Its too early for a bump"</p>

@@ -29,7 +29,9 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue';
-import { collection, query } from 'firebase/firestore';
+
+import { auth, db} from '@/firebase/config';
+import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, updateDoc } from "firebase/firestore";
 
 export default {
   setup() {
