@@ -5,7 +5,6 @@
       <div class="w-25 flex-col">
         who owe who money
         <div class="h-auto bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
-          
             <div v-for="(payment, index) in toPay" :key="index" class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
               <div class="image text-center my-auto ml-2">
                 <img class="rounded-full border-bpop border-2 h-8 w-8 inline-block" :src="payment.img" :alt="payment.name">
@@ -54,7 +53,7 @@
               </div>
             </div>
         </div>
-        <!-- <div class="h-75 bg-white/50 rounded-md m-3 backdrop-blur-sm">
+        <div class="h-75 bg-white/50 rounded-md m-3 backdrop-blur-sm">
           others owe you
           <div class="test-2">
             <div class="expenses bg-white drop-shadow-md m-3 rounded-full flex justify-between align-middle w-max">
@@ -71,28 +70,17 @@
               <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/sandra.jpg" alt="anyu">
             </div>
           </div>
-<<<<<<< HEAD
         </div>
           </div>
           <div class="w-70">
-            amount of spending for the month??
+            amount of spending for the month?
           </div>
           <div><button @click="displayCreate=!displayCreate">Create Expense</button></div>
           <div v-if="displayCreate">
             <createExpenses/>
           </div>
-=======
-        </div> -->
-      <div class="w-70">
-        amount of spending for the month?
-      </div>
-      <div></div>
-      <div v-if="displayCreate">
-        <createExpenses/>
-      </div>
->>>>>>> 4bf1d55b4d5f905b777617b8bf542ecd361fdbb3
       
-      </div>
+    </div>
   </div>
 </template>
 
@@ -125,18 +113,13 @@ export default {
     };
 
     const createBump = () => {
-      // Toggle the value of showInput to show the input field and "send" button
       showInput.value = true;
     };
 
     const sendMessage = () => {
-      // Handle sending the message, you can implement this function as needed
-
-      // After sending the message, reset showInput to false to show "bump" button again
       showInput.value = false;
     };
 
-    // Call toggleText every 3 seconds
     setInterval(toggleText, 3000);
 
     return {
@@ -181,10 +164,10 @@ export default {
 
   @keyframes marquee {
     0% {
-      transform: translateX(100%);
+      transform: translateX(50%);
     }
     100% {
-      transform: translateX(-1000%);
+      transform: translateX(-300%);
     }
   }
 
