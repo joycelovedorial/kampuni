@@ -1,37 +1,43 @@
 <template>
-  <div class="chat-window" style="background-color: white;">
-    <!-- <div v-if="error">{{ error }}</div> -->
-    <div class="chatTitle">{{name}}</div>
-    <div id="leftside">
-      <div v-if="documents" class="messages" ref="messages">
-          <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
-            <div v-if="thisName==doc.name">
-              <span class="name">{{ doc.name }}</span>
-              <div class="single-chat-container" >
-                <span class="message">{{ doc.message }}</span>
-                <span class="created-at">{{ doc.createdAt }} ago</span>
+  <div class="row">
+    <div class="col-9">
+    <div class="chat-window" style="background-color: white;">
+      <!-- <div v-if="error">{{ error }}</div> -->
+      <div class="chatTitle">{{name}}</div>
+      <div id="leftside">
+        <div v-if="documents" class="messages" ref="messages">
+            <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
+              <div v-if="thisName==doc.name">
+                <span class="name">{{ doc.name }}</span>
+                <div class="single-chat-container" >
+                  <span class="message">{{ doc.message }}</span>
+                  <span class="created-at">{{ doc.createdAt }} ago</span>
+                </div>
+              </div>
+              <div v-else class="self">
+                <span class="name-self">{{ doc.name }}</span>
+                <div class="single-chat-container-self" >
+                  <span class="message-self">{{ doc.message }}</span>
+                  <span class="created-at-self">{{ doc.createdAt }} ago</span>
+                </div>
               </div>
             </div>
-            <div v-else class="self">
-              <span class="name-self">{{ doc.name }}</span>
-              <div class="single-chat-container-self" >
-                <span class="message-self">{{ doc.message }}</span>
-                <span class="created-at-self">{{ doc.createdAt }} ago</span>
-              </div>
-            </div>
-          </div>
+        </div>
       </div>
-  </div>
-  </div>
-  <div class="chatform">
-        <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
-  </div>
-  <div id="rightside" v-if="outid">
-    <div class="container" v-for="exp in expensesArray" :key="exp.id">
-    
-      {{ exp.desc }}
-      {{ exp.amount }}
     </div>
+    <div class="chatform">
+          <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
+    </div>
+    </div>
+    
+    <div id="rightside" v-if="outid" class="col-3">
+      <div class="container" v-for="exp in expensesArray" :key="exp.id">
+      
+        {{ exp.desc }}
+        {{ exp.amount }}
+      </div>
+    </div>
+    
   </div>
 </template>
 
