@@ -22,7 +22,7 @@ module.exports = {
         y: '#F2D694',
         g: '#99B898',
         b: '#86B8B1',
-        p: '#9A899C',
+        p: '#B492B8',
         bpop: '#F4EDCA',
         bnorm: '#FFFBE6',
         cyanp: '#2EC4B6',

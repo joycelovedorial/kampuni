@@ -1,14 +1,14 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-orange-400 border-3 hovering bg-white p-2" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-5 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
-                <div class="container bg-white rounded-lg border-orange-400">
+                <div class="container bg-white rounded-lg ">
                 
                     <div class="row"> 
                         <div class="col-12 " id="detail-container">
-                            <div class="w-auto self-center justify-content-center align-middle card-title border-oranges border-3 bg-white d-flex justify-content-between truncate" id="name_container" style="height:fit-content; width:fit-content">
-                                <div>
-                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate">{{title}}</h5> <!--{{name}}--> 
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-3 d-flex justify-content-between truncate" :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" id="name_container" style="height:fit-content; width:fit-content">
+                                <div class="">
+                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                 </div>
                                 <div class="my-auto mx-2"><img class="h-fit w-12" id='icon' src="../../assets/profiles/amos.jpg"></div> 
@@ -40,7 +40,7 @@
                     </div>
                     <div class="row grid-col-2">
                         <div class="col-6">
-                            <button class="w-100 bg-orange-300 option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
+                            <button class="w-100 bg-white option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
                                 <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
                                 </svg>
@@ -50,7 +50,7 @@
                         <!-- <div class="col-xl-0 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
         
                         <div class="col-6">
-                            <button class="w-100 bg-orange-300 option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
+                            <button class="w-100 bg-white option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
                             <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
                             I'm out</button>
@@ -63,7 +63,7 @@
 <script>
 
 import '@/assets/main.css';
-import { doc, addDoc,getDoc,query,collection, setDoc ,onSnapshot,where, updateDoc} from 'firebase/firestore';
+import { doc, addDoc,getDoc,getDocs,query,collection, setDoc ,onSnapshot,where, updateDoc,arrayUnion, arrayRemove} from 'firebase/firestore';
 import { auth, db } from "@/firebase/config";
 import { ref,onMounted,computed } from 'vue';
 // import '../../../public/index.html';
@@ -138,10 +138,11 @@ export default {
           
         });
 
-
+        //join outing
         const has_clicked_green = async () => {
             const user = auth.currentUser
             const uid = user.uid
+            console.log("outID",outID.value);
             if (docid.value) {
               
                 await updateDoc(doc(db, "outings", props.outid, "usersInvolved", docid.value), {
@@ -155,21 +156,41 @@ export default {
                     user: uid
                 })
             }
-        };
+            const q = query(collection(db,"chatrooms"),where("outing","==",outID.value))
+            const snapshot = await getDocs(q)
+            var chatroomid =""
+            snapshot.forEach((doc)=>{
+                chatroomid = doc.id
+            })
+            await updateDoc(doc(db,"chatrooms",chatroomid),{
+                usersInvolved:arrayUnion(uid),
+            })
 
+        };
+        //leave outing
         const has_clicked_red = async () =>{
             const user = auth.currentUser
             const uid = user.uid
+            console.log("outID",outID.value);
             if(docid.value){
                 await updateDoc(doc(db,"outings",outID.value,"usersInvolved",docid.value),{
                     imIn:false
                 })
             } else{
                 await addDoc(collection(db,"outings",outID.value,"usersInvolved"),{
-                    imIn: true,
+                    imIn: false,
                     user: uid
                 })
-            }     
+            }
+            const q = query(collection(db,"chatrooms"),where("outing","==",outID.value))
+            const snapshot = await getDocs(q)
+            var chatroomid =""
+            snapshot.forEach((doc)=>{
+                chatroomid = doc.id
+            })
+            await updateDoc(doc(db,"chatrooms",chatroomid),{
+                usersInvolved:arrayRemove(uid),
+            })     
         }
         onMounted(()=>{
             fetchData()
@@ -199,7 +220,7 @@ export default {
 }
 
 .clicked_style_green{
-    background-color: #03b003 !important;
+    background-color: #99B898 !important;
     transform: scale(1.05);
     color: rgb(255, 255, 255) !important;
     font-size: 30px;
@@ -207,7 +228,7 @@ export default {
     
 }
 .clicked_style_red{
-    background-color: #dd4d4d!important;
+    background-color: #FF847C!important;
     transform: scale(1.05);
     color: rgb(255, 255, 255) !important;
     /* border:rgb(255, 255, 255)  solid 1px; */
@@ -215,17 +236,17 @@ export default {
 }
 
 .hovered_green{
-    background-color: #FF9F1C!important;
+    background-color: #99B898!important;
     transform: scale(1.05);
     transition: all .15s ease-in-out;
-    color: rgb(4, 84, 4) !important;
+    color: white !important;
 }
 
 .hovered_red{
-    background-color: #FF9F1C!important;
+    background-color: #FF847C!important;
     transform: scale(1.05);
     transition: all .15s ease-in-out;
-    color: rgb(173, 7, 7) !important;;
+    color: white !important;;
 }
 
 .custom-container{
@@ -233,6 +254,7 @@ padding-bottom:0px;
 transition: transform 1s ease-in-out;
 display: inline;
 background-color: white;
+margin-bottom:5px;
 
 }
 
@@ -251,9 +273,15 @@ padding-bottom:10px;
 margin-bottom:10px;
 height:fit-content;
 width:fit-content;
+border:black 3px solid;
 /* margin-top:20px; */
-
 }
+
+#detail_container{
+margin-top:5px;
+}
+
+
 #name_container{
   /* margin-left:1rem; */
 
@@ -262,17 +290,9 @@ margin-left:10px;
 height:fit-content;
 }
 #icon{
-
-/* min-width:35px;
-position:absolute; 
-top:0; 
-right:0; */
 border-radius:50%;
 width: full;
-
-/* padding-bottom:40px; */
-
-border: 3px #ee944b solid;
+/* border: 3px #ee944b solid; */
 }
 
 svg{
@@ -280,7 +300,7 @@ margin-bottom:3px;
 margin-right:3px;
 }
 
-
+/* 
 @media (max-width:768px){
     #custom-container{
         font-size:14px;
@@ -291,7 +311,7 @@ margin-right:3px;
     #custom-container{
         font-size:10px;
     }
-}
+} */
 
 /* 
 @media (max-width:768px){
@@ -320,7 +340,7 @@ margin-right:3px;
     border-radius:100%;
     } */
 
-@media (max-width:576px){
+/* @media (max-width:576px){
     .option_box{
         font-size:16px;
     }
@@ -336,7 +356,7 @@ margin-right:3px;
     .option_box{
         font-size:16px !important;
     }
-}
+} */
 
 
 </style>

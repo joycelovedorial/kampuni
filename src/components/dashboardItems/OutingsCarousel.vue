@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" >
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-5">
   
     <div class="flex flex-nowrap content-center "  >
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
@@ -84,22 +84,28 @@ export default {
 
 .outer_container {
   width: auto;
-  height: 300px;
+  height: 345px;
 
 }
 
 :root {
   --primary: #2ec4b6;
-  --secondary: #f4a261;
+  --secondary: #999999;
 }
 
 .outer_container::-webkit-scrollbar {
-  border-radius:10px;
-  /* width:1px; */
+  width: 12px;
+  border-radius:16px;
+  /* padding:30px; */
+  
 } 
+.outer_container::-webkit-scrollbar-thumb:hover {
+  background-color:rgb(47, 47, 47)
+}
 
 .outer_container::-webkit-scrollbar-track {
   background: transparent;
+  margin-left:5px;
 }
 
 .outer_container::-webkit-scrollbar-thumb {
@@ -110,13 +116,13 @@ export default {
 
 @media (min-height: 480px) {
   .outer_container {
-    height: 365px;
+    height: 345px;
   }
 }
 
 @media (min-height: 600px) {
   .outer_container {
-    height: 365px;
+    height: 345px;
   }
 }
 

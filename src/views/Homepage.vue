@@ -4,7 +4,7 @@
 
     <body id="bg-container">
       <!-- <div class='overflow-y-auto'> -->
-      <h1 class="text-black font-fredoka index1" id="welcome">Welcome back, {{ name }}</h1>
+      <h1 class="text-black font-fredoka index1 p-4" id="welcome">Welcome back, {{ name }}</h1>
       <Dashboard :community="comid" class="index2"/>
       <!-- </div> -->
     </body>
@@ -77,12 +77,13 @@ export default {
 
 #bg-container {
   position: relative;
-  background-image: url("@/assets/background_img/background3.png");
-  background-color:rgb(255, 255, 255);
+  /* background-image: url("@/assets/background_img/background3.png"); */
+  background-color:#FFC96B; 
+  /* FFC96B F2D694*/
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 200vh;
+  height: 180vh;
   margin: 0;
   overflow: scroll;
   overflow: hidden; /* Ensure the overlay doesn't extend beyond the container */
@@ -90,7 +91,7 @@ export default {
 
 @media (min-width: 635px) {
   #bg-container {
-    height: 185vh;
+    height: 170vh;
   }
 }
 
@@ -102,7 +103,7 @@ export default {
 
 @media (min-width: 1440px) {
   #bg-container {
-    height: 140vh;
+    height: 105vh;
   }
 }
 

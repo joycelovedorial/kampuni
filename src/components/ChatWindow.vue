@@ -48,6 +48,7 @@ export default {
       const error = ref(null)
       const name = ref(props.name)
       const thisName=ref("")
+      const outid= ref("")
       
       const fetchName = async () => {
         const user = auth.currentUser
