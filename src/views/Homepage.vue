@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #welcome {
   margin: 0 auto;
   text-align: center;
@@ -77,7 +77,7 @@ export default {
 #bg-container {
   position: relative;
   /* background-image: url("@/assets/background_img/background3.png"); */
-  background-color:#F4EDCA; 
+  background-color:#FFC96B; 
   /* FFC96B F2D694*/
   background-size: cover;
   background-repeat: no-repeat;
