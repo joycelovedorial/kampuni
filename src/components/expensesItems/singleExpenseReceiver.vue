@@ -1,9 +1,21 @@
 <template>
-  
+   <div>
+        <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
+        {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+        <div class="bg-bnorm w-full p-2 rounded-lg">
+            <div>
+                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+                    <span>{{ message }}</span>
+                </div>
+                <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
+                <br>
+                <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
+            </div>
+        </div>
+    </div>
   <div>
     <img :src="'/profiles/' + imgstr" alt="">
   </div>
-    <span> {{ tname }} owes you ${{ amount }}</span>
     <div v-if="displayTooEarly">
         <p>"Its too early for a bump"</p>
     </div>
