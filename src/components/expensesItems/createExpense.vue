@@ -78,6 +78,7 @@ export default {
     const selectedUsers = ref([])
     const whopaid = ref("")
     const outingslist = ref([])
+    const message = ref("")
 
 
     const addToList = async () => {
@@ -108,6 +109,21 @@ export default {
         });
         if (docRef) {
           console.log('doc added');
+        }
+        for (const user in selectedUsers.value){
+          const docRef2 = await addDoc(collection(db, 'transactions'), {
+            amount: (parseInt(cost.value) / selectedUsers.value.length),
+            expense: docRef.id,
+            message: message.value,
+            outing: category.value,
+            paid: false,
+            payer: user,
+            receiver: userid.value,
+            timestamp: Date(), 
+          });
+        }
+        if (docRef2) {
+          console.log('doc2 added');
         }
       } catch (error) {
         console.log(error.message);
