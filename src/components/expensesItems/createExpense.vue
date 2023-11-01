@@ -1,24 +1,28 @@
 <template>
   <div class="create-expenses container-fluid">
 
-    <!--START of input form for expenses-->
     <form @submit.prevent="addExpense">
       <div class="row">
         <div>People involved</div>
-        <!-- Create a function takes in id with thne push object into selectedusers -->
-        <div v-for="a_user in users" :key="a_user.id">
-          <label :for="a_user.id">{{ a_user.name }}</label>
-          <input class="form-control col-6" type="checkbox" :id="a_user.id" v-model="selectedUsers" :value="a_user.id" v-on:change="addToList">
+       
+        <div v-for="user in users" :key="user.id">
+          <label :for="user.id">{{ user.name }}</label>
+          <input 
+          class="form-control col-6" 
+          type="checkbox" 
+          :id="user.id" 
+          v-model="selectedUsers" 
+          :value="user.id"
+          />
         </div>
       </div>
 
-      <br>
 
       <div class="row">
         <div>Person who paid</div>
-        <div v-for="a_user in users" :key="a_user.id">
-          <label :for="a_user.id">{{ a_user.name }}</label>
-          <input type="radio" :id="a_user.id" v-model="whopaid" :value="a_user.id" v-on:change="laoban">
+        <div v-for="user in users" :key="user.id">
+          <label :for="user.id">{{ user.name }}</label>
+          <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
         </div>
       </div>
 
@@ -36,25 +40,16 @@
         <div>
           <label for="expense_category">Category of Expense</label>
           <select v-model="category">
-            <option>Outing Expense</option>
-            <option selected>Non Outing Expense </option>
+            <option :value=null>Non-Outing</option>
+            <option v-for="out in outingslist" :key="out.id">{{out.title}}</option>
+
           </select>
         </div>
 
-        <!--END of input form for expenses-->
-
-        <!--START of button to add more expenses-->
         <div>
-          <button @click="addExpense" type="submit">Add Expense</button>
+          <button>Add Expense</button>
         </div>
-        <!--END of button to add more expenses-->
 
-
-        <!--START of button to calculate who owes who money-->
-        <div>
-          <button @click="calculate" type="submit">Calculate</button>
-        </div>
-        <!--END of button to calculate who owes who money-->
       </div>
       
     </form>
@@ -65,17 +60,15 @@
 
 import { ref,onMounted } from 'vue';
 import { auth, db} from '@/firebase/config';
-import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, query, where, getDocs } from "firebase/firestore";
 
 export default {
-  props: ['a_user',],
+  props: {
+    outingid: String,
+  },
 
-  setup() {
-    //this is a Vue.js 3 composition API function 
-    //where you define reactive data and functions 
-    
-    //reactive references with initial values as empty string 
-    //which are used for form inputs in the template
+  setup(props) {
+
     const expense_desc = ref('')
     const cost = ref('')
     const category = ref("")
@@ -84,15 +77,13 @@ export default {
     const users = ref([])
     const selectedUsers = ref([])
     const whopaid = ref("")
+    const outingslist = ref([])
 
-    /*creating an addExpenses asynchronous function 
-    asynchronous function is a function that performs a specific task in a non-blocking manner
-    it does not block or wait for the result from the previous line of code to execute
-    */
 
     const addToList = async () => {
       try {
         selectedUsers.value += a_user.id
+        console.log(selectedUsers.value,"payees");
       } catch (error) {
         console.log(error.message)
       }
@@ -107,28 +98,21 @@ export default {
     };
 
     const addExpense = async () => {
-      try{
-
-        const oppar = await addDoc(collection(db, 'expenses'), {
+      try {
+        const docRef = await addDoc(collection(db, 'expenses'), {
           amount: cost.value,
           desc: expense_desc.value,
-          outing: category.value, 
+          outing: category.value,
           usersInvolved: selectedUsers.value,
           whopaid: whopaid.value,
-          
         });
-        if (oppar){
-          console.log("doc added")
+        if (docRef) {
+          console.log('doc added');
         }
-        /*code is resetting the values of the form inputs to empty strings
-        it helps to clear the form inputs for the next entry providing a better user experience
-        after the addExpense function is executed successfully and sent to the database 
-        it will reset the name, amount, and category values to empty
-        */
-      } catch (error){
-      console.log(error.message)
-    } 
-  };
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
     const fetchData = async () =>{
 
@@ -148,6 +132,12 @@ export default {
         const name = my_user.firstname
         users.value.push({id:hommie, name:name})
       }
+
+      const q = query(collection(db,"outings"),where("community","==",comid.value))
+      const outingsSnap = await getDocs(q)
+      outingsSnap.forEach((doc)=>{
+        outingslist.value.push({...doc.data(),id:doc.id})
+      })
     }
 
     onMounted(()=>{
@@ -156,7 +146,7 @@ export default {
 
     
     return {
-      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid
+      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist
 
     };
   }
