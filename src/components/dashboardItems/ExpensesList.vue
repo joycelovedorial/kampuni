@@ -79,9 +79,9 @@ export default {
       buttonText,
       isAnimationActive,
       textAnimationClass,
-      peopleOweYou, // Add the relevant arrays here
+      peopleOweYou, 
       youOwePeople,
-      createBump, // Assuming these methods are used elsewhere
+      createBump, 
       sendMessage,
       toggleText,
     };
