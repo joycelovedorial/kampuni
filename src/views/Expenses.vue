@@ -2,7 +2,7 @@
   <div id="expenses-page" class="bg-g">
     <Navbar/>
     <div class="flex">
-      <div class="w-25 flex-col">
+      <!-- <div class="w-25 flex-col">
         who owe who money
         <div class="h-auto bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
             <div v-for="(payment, index) in toPay" :key="index" class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
@@ -70,8 +70,14 @@
               <img class="align-middle self-center rounded-full m-3 border-oranges border-2 inline-block h-fit w-12" src="../assets/profiles/sandra.jpg" alt="anyu">
             </div>
           </div>
-        </div>
-          </div>
+        </div> 
+           </div> -->
+           <div id="whoyouowe" v-for="peep in youOwePeoeple" :key="peep.id">
+              <singleExpensePayer :transacid="peep.id"/>
+           </div>
+           <div id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id">
+              <singleExpenseReceiver :transacid="peepo.id"/>
+           </div>
           <div class="w-70">
             amount of spending for the month?
           </div>
@@ -85,19 +91,50 @@
 </template>
 
 <script>
+import singleExpensePayer from '@/components/expensesItems/singleExpensePayer.vue';
+import singleExpenseReceiver from '@/components/expensesItems/singleExpenseReceiver.vue';
 import Navbar from '@/components/Navbar.vue';
 import createExpenses from '@/components/expensesItems/createExpense.vue';
 import { ref, computed } from 'vue';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import {auth,db} from '@/firebase/config'
 
 export default {
-  components: { Navbar, createExpenses },
+  components: { Navbar, createExpenses,singleExpensePayer,singleExpenseReceiver },
   setup() {
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
     const isAnimationActive = ref(false);
-    const displayCreate=ref(false)
 
+
+    const displayCreate=ref(false)
+    const peopleOweYou = ref([])
+    const youOwePeoeple = ref([])
+
+    //fetching of stuff
+    const user = auth.currentUser
+    const uid = user.uid
+    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
+    const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
+      const result = []
+      oweYouSnap.forEach((doc)=>{
+        result.push({...doc.data(),id:doc.id})
+      })
+      peopleOweYou.value=result
+    })
+
+
+    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
+    const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
+      const result = []
+      youOweSnap.forEach((doc)=>{
+        result.push({...doc.data(),id:doc.id})
+      })
+      youOwePeoeple.value=result
+    })
+
+    //anyu functions
     const textAnimationClass = computed(() => {
       return isAnimationActive.value ? 'text-animation' : '';
     });
@@ -130,7 +167,10 @@ export default {
       textAnimationClass,
       createBump,
       sendMessage,
+
       displayCreate,
+      youOwePeoeple,
+      peopleOweYou,
     };
   },
 };
