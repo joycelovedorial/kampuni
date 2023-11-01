@@ -4,7 +4,7 @@
 
     <body id="bg-container">
       <!-- <div class='overflow-y-auto'> -->
-      <h1 class="text-black font-fredoka index1" id="welcome">Welcome back, {{ name }}</h1>
+      <h1 class="text-black font-fredoka index1 p-4" id="welcome">Welcome back, {{ name }}</h1>
       <Dashboard :community="comid" class="index2"/>
       <!-- </div> -->
     </body>
@@ -78,7 +78,7 @@ export default {
 #bg-container {
   position: relative;
   /* background-image: url("@/assets/background_img/background3.png"); */
-  background-color:#F2D694;
+  background-color:#FFC96B;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

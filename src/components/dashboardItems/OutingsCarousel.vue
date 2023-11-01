@@ -84,22 +84,29 @@ export default {
 
 .outer_container {
   width: auto;
-  height: 320px;
+  height: 340px;
 
 }
 
 :root {
   --primary: #2ec4b6;
-  --secondary: #f4a261;
+  --secondary: #999999;
 }
 
 .outer_container::-webkit-scrollbar {
-  border-radius:10px;
-  /* width:1px; */
+  border-radius:16px;
+  height:7px;
+  /* padding:30px; */
+  
 } 
+.outer_container::-webkit-scrollbar-thumb:hover {
+  background-color:rgb(208, 208, 208)
+}
 
 .outer_container::-webkit-scrollbar-track {
   background: transparent;
+  margin-left:5px;
+  margin-right:5px;
 }
 
 .outer_container::-webkit-scrollbar-thumb {
@@ -110,13 +117,13 @@ export default {
 
 @media (min-height: 480px) {
   .outer_container {
-    height: 330px;
+    height: 340px;
   }
 }
 
 @media (min-height: 600px) {
   .outer_container {
-    height: 330px;
+    height: 340px;
   }
 }
 

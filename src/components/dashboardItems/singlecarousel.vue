@@ -1,14 +1,14 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-orange-400 border-3 hovering bg-white p-2" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved}" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-5 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg ">
                 
                     <div class="row"> 
                         <div class="col-12 " id="detail-container">
-                            <div class="w-auto self-center justify-content-center align-middle card-title border-3 bg-white d-flex justify-content-between truncate" id="name_container" style="height:fit-content; width:fit-content">
-                                <div>
-                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate">{{title}}</h5> <!--{{name}}--> 
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-3 d-flex justify-content-between truncate" :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" id="name_container" style="height:fit-content; width:fit-content">
+                                <div class="">
+                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                 </div>
                                 <div class="my-auto mx-2"><img class="h-fit w-12" id='icon' src="../../assets/profiles/amos.jpg"></div> 
@@ -254,6 +254,7 @@ padding-bottom:0px;
 transition: transform 1s ease-in-out;
 display: inline;
 background-color: white;
+margin-bottom:5px;
 
 }
 
@@ -272,10 +273,15 @@ padding-bottom:10px;
 margin-bottom:10px;
 height:fit-content;
 width:fit-content;
-border:black 1px solid;
+border:black 3px solid;
 /* margin-top:20px; */
-
 }
+
+#detail_container{
+margin-top:5px;
+}
+
+
 #name_container{
   /* margin-left:1rem; */
 
@@ -284,17 +290,9 @@ margin-left:10px;
 height:fit-content;
 }
 #icon{
-
-/* min-width:35px;
-position:absolute; 
-top:0; 
-right:0; */
 border-radius:50%;
 width: full;
-
-/* padding-bottom:40px; */
-
-border: 3px #ee944b solid;
+/* border: 3px #ee944b solid; */
 }
 
 svg{

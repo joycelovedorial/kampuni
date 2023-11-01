@@ -1,7 +1,7 @@
 <template>
 
-<div class="container px-3 py-3 p rounded-m bg-transparent border-black border-solid" v-for="task in tasksFormatted" :key="task.id"> 
-  <div class ='row relative rounded p-3 w-105' :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' :!task.taskstatus}">
+<div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="task in tasksFormatted" :key="task.id"> 
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus}">
     <div :class="['col', { 'checked_style': task.taskstatus }]">
       <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
         <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
@@ -9,8 +9,8 @@
         </label>
     </div>
       <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
-        <p class="text-center font-bold">{{ task.points }}</p>
-      <p class="text-center rounded px-2" :class="{'bg-gray-300' : task.taskstatus , 'bg-cyans' :!task.taskstatus}" >POINTS</p>
+        <p class="text-center font-bold" :class=" {'text-white' : task.taskstatus , 'text-black' :!task.taskstatus}" >{{ task.points }}</p>
+      <p class="text-center rounded px-2" :class="{'bg-gray-500 text-white' : task.taskstatus , 'bg-b' :!task.taskstatus}" >POINTS</p>
       </div>
     </div>
   </div>
@@ -165,12 +165,12 @@ input.larger{
 }
 
 .checked_style{
-  background-color:rgb(209 213 219);
+  background-color:rgb(107 114 128);
   color:white;
 }
 
 .checked_style2{
-  background-color:rgb(209 213 219);
+  background-color:rgb(107 114 128);
   color:white;
 }
 
