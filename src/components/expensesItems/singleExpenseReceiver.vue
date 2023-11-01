@@ -32,9 +32,15 @@ export default {
     getDoc(docRef)
       .then((docSnap) => {
         const data = docSnap.data();
-        tname.value = data.payer;
+        const tnameid = data.payer;
         amount.value = data.amount;
         bumptime.value = data.bump; // Assuming "bump" field contains a timestamp
+
+
+        getDoc(doc(db,"users",tnameid))
+            .then((tnamesnap)=>{
+                tname.value=tnamesnap.name
+            })
       });
 
     const bump = async () => {

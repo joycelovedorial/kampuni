@@ -41,7 +41,7 @@
           <label for="expense_category">Category of Expense</label>
           <select v-model="category">
             <option :value=null>Non-Outing</option>
-            <option v-for="out in outingslist" :key="out.id">{{out.title}}</option>
+            <option v-for="out in outingslist" :key="out.id" :value="out.id">{{out.title}}</option>
 
           </select>
         </div>
@@ -60,7 +60,7 @@
 
 import { ref,onMounted } from 'vue';
 import { auth, db} from '@/firebase/config';
-import { addDoc, collection, getDoc, doc, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp } from "firebase/firestore";
 
 export default {
   props: {
@@ -78,7 +78,7 @@ export default {
     const selectedUsers = ref([])
     const whopaid = ref("")
     const outingslist = ref([])
-    const message = ref("")
+
 
 
     const addToList = async () => {
@@ -100,6 +100,7 @@ export default {
 
     const addExpense = async () => {
       try {
+        console.log("seleceduser",selectedUsers.value);
         const docRef = await addDoc(collection(db, 'expenses'), {
           amount: cost.value,
           desc: expense_desc.value,
@@ -108,23 +109,25 @@ export default {
           whopaid: whopaid.value,
         });
         if (docRef) {
-          console.log('doc added');
+          console.log('expenses added');
         }
-        for (const user in selectedUsers.value){
-          const docRef2 = await addDoc(collection(db, 'transactions'), {
-            amount: (parseInt(cost.value) / selectedUsers.value.length),
+        for (const user of selectedUsers.value){
+          console.log("user in for loop",user);
+            const docRef2 = await addDoc(collection(db, 'transactions'), {
+            amount: (parseInt(cost.value) / (selectedUsers.value.length+1)),
             expense: docRef.id,
-            message: message.value,
+            message: "",
             outing: category.value,
             paid: false,
             payer: user,
-            receiver: userid.value,
-            timestamp: Date(), 
+            receiver: whopaid.value,
+            bump: Timestamp.now() 
           });
-        }
-        if (docRef2) {
+          if (docRef2) {
           console.log('doc2 added');
         }
+        }
+        
       } catch (error) {
         console.log(error.message);
       }
