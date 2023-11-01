@@ -4,12 +4,25 @@
     <!--START of input form for expenses-->
     <form @submit.prevent="addExpense">
       <div class="row">
+        <div>People involved</div>
         <!-- Create a function takes in id with thne push object into selectedusers -->
         <div v-for="a_user in users" :key="a_user.id">
-          <label :for="a_user.id">{{ a_user.firstname }}</label>
-          <input class="form-control col-6" type="checkbox" :id="a_user.id" v-model="selectedUsers" :value="a_user.id">
+          <label :for="a_user.id">{{ a_user.name }}</label>
+          <input class="form-control col-6" type="checkbox" :id="a_user.id" v-model="selectedUsers" :value="a_user.id" v-on:change="addToList">
         </div>
+      </div>
 
+      <br>
+
+      <div class="row">
+        <div>Person who paid</div>
+        <div v-for="a_user in users" :key="a_user.id">
+          <label :for="a_user.id">{{ a_user.name }}</label>
+          <input type="radio" :id="a_user.id" v-model="whopaid" :value="a_user.id" v-on:change="laoban">
+        </div>
+      </div>
+
+      <div class="row">
         <div>
           <label for="expense_name">Name of Expense</label>
           <input class="form-control col-6" type="text" v-model="expense_desc" id="expense_name">
@@ -29,7 +42,6 @@
         </div>
 
         <!--END of input form for expenses-->
-        {{ expense_desc }}
 
         <!--START of button to add more expenses-->
         <div>
@@ -44,6 +56,7 @@
         </div>
         <!--END of button to calculate who owes who money-->
       </div>
+      
     </form>
   </div>
 </template>
@@ -63,28 +76,46 @@ export default {
     
     //reactive references with initial values as empty string 
     //which are used for form inputs in the template
-    const expense_desc = ref('');
-    const cost = ref('');
+    const expense_desc = ref('')
+    const cost = ref('')
     const category = ref("")
     const comid = ref("")
     const userid = ref("")
-    var users = ref([])
-
-    const selectedUsers = ref([]);
+    const users = ref([])
+    const selectedUsers = ref([])
+    const whopaid = ref("")
 
     /*creating an addExpenses asynchronous function 
     asynchronous function is a function that performs a specific task in a non-blocking manner
     it does not block or wait for the result from the previous line of code to execute
     */
 
+    const addToList = async () => {
+      try {
+        selectedUsers.value += a_user.id
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+
+    const laoban = async () => {
+      try {
+        whopaid.value += a_user.id
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+
     const addExpense = async () => {
       try{
 
         const oppar = await addDoc(collection(db, 'expenses'), {
-          name: selectedUsers.value,
-          desc: expense_desc.value,
           amount: cost.value,
-          category: category.value, 
+          desc: expense_desc.value,
+          outing: category.value, 
+          usersInvolved: selectedUsers.value,
+          whopaid: whopaid.value,
+          
         });
         if (oppar){
           console.log("doc added")
@@ -109,12 +140,13 @@ export default {
       comid.value = docData.community
 
       // To get all users
-      const comSnap = await getDoc(db,"communities", comid.value)
+      const comSnap = await getDoc(doc(db,"communities", comid.value))
       const comData = comSnap.data()
       for (const hommie of comData.homies) {
-        const hommieSnap = await getDoc(db("users", hommie))
-        const hommieData = hommieSnap.data()
-        users.value.push({id:hommie, name:hommieData.firstname})
+        const curr_user = await getDoc(doc(db,"users", hommie))
+        const my_user = curr_user.data()
+        const name = my_user.firstname
+        users.value.push({id:hommie, name:name})
       }
     }
 
@@ -124,7 +156,7 @@ export default {
 
     
     return {
-      addExpense, selectedUsers, expense_desc, cost, category, users
+      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid
 
     };
   }
