@@ -1,9 +1,11 @@
 <template>
   
   <div>
-    tnamepic
+    <img :src="'../../assets/profiles/' + tname + '.jpg'" alt="Profile Image">
+    <img src="../../assets/profiles/eman.jpg" alt="Profile Image">
     <span>You owe {{ tname }}</span>
-    <div>${{amount}}</div>
+    <div>${{ amount }}</div>
+    <div>{{ desc }}</div>
     <div>{{ category }}</div>
     <div>{{ message }}</div>
   </div>
@@ -29,6 +31,7 @@ export default {
         const category=ref("")
         const docRef = doc(db,"transactions",props.transacid)
         const desc = ref("")
+        const img = `../../assets/profiles/${tname}.jpg`
 
         getDoc(docRef)
             .then((docSnap)=>{
@@ -56,7 +59,7 @@ export default {
             })
         }
         return{
-            message,tname,amount,category,paid,desc
+            message,tname,amount,category,paid,desc, img
         }
     }
 }
