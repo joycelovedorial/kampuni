@@ -8,14 +8,14 @@
             <span class="name">{{ doc.name }}</span>
             <div class="single-chat-container" >
               <span class="message">{{ doc.message }}</span>
-              <span class="created-at">{{ doc.createdAt }}</span>
+              <span class="created-at">{{ doc.createdAt }} ago</span>
             </div>
           </div>
           <div v-else class="self">
             <span class="name-self">{{ doc.name }}</span>
             <div class="single-chat-container-self" >
               <span class="message-self">{{ doc.message }}</span>
-              <span class="created-at-self">{{ doc.createdAt }}</span>
+              <span class="created-at-self">{{ doc.createdAt }} ago</span>
             </div>
           </div>
         </div>
