@@ -3,7 +3,7 @@
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left  col-3" style="margin-top: 20px;">
-        <input type="text" placeholder="Search for Chats" style="" v-model="searchtag">
+        <input type="text" placeholder="Search for Chats" class="search" v-model="searchtag">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
           class="singlelist">
@@ -154,7 +154,7 @@ input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
   background-color: #FFFDF0;
-  color:white;
+  color:rgb(27, 6, 23);
   size: 3;
   width: 100%
 }
