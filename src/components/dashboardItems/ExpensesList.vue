@@ -28,51 +28,62 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-import createExpenses from '@/components/expensesItems/createExpense.vue';
+import { ref, computed, onMounted } from 'vue';
+
+import { auth, db} from '@/firebase/config';
+import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, updateDoc,onSnapshot} from "firebase/firestore";
+
 export default {
-  components:{Navbar},
-  data() {
+  setup() {
+    const showInput = ref(false);
+    const textInput = ref('');
+    const buttonText = ref('pay');
+    const isAnimationActive = ref(false);
+
+ 
+    const peopleOweYou = ref([])
+    const youOwePeople = ref([])
+
+    //fetching of stuff
+    const user = auth.currentUser
+    const uid = user.uid
+    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
+    const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
+      const result = []
+      oweYouSnap.forEach((doc)=>{
+        result.push({...doc.data(),id:doc.id})
+      })
+      peopleOweYou.value=result
+    })
+
+
+    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
+    const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
+      const result = []
+      youOweSnap.forEach((doc)=>{
+        result.push({...doc.data(),id:doc.id})
+      })
+      youOwePeople.value=result
+    })
+
+
+    const textAnimationClass = computed(() => {
+      return isAnimationActive.value ? 'text-animation' : '';
+    });
+    // Use onMounted to trigger the toggleText method every 3 seconds
+   
+
     return {
-      showInput: false, // Initially, the input field is hidden
-      textInput: '',   // Store the user's text input
-      buttonText: 'pay',
-      isAnimationActive: false, // Initially set to false
+      showInput,
+      textInput,
+      buttonText,
+      isAnimationActive,
+      textAnimationClass,
+      peopleOweYou, 
+      youOwePeople,
     };
   },
-  computed: {
-    textAnimationClass() {
-      return this.isAnimationActive ? 'text-animation' : '';
-    },
-  },
-  mounted() {
-    setInterval(this.toggleText, 3000); // Toggle text every 3 seconds
-  },
-  methods: {
-    // for the bump
-    createBump() {
-      // Toggle the value of showInput to show the input field and "send" button
-      this.showInput = true;
-    },
-    sendMessage() {
-      // Handle sending the message, you can implement this function as needed
-
-      // After sending the message, reset showInput to false to show "bump" button again
-      this.showInput = false;
-    },
-    // for the i owe others
-    toggleText() {
-      if (this.buttonText === 'you better pay me! or I will steal your money!!!') {
-        this.buttonText = 'pay';
-        this.isAnimationActive = false; // Remove animation class
-      } else {
-        this.buttonText = 'you better pay me! or I will steal your money!!!';
-        this.isAnimationActive = true; // Add animation class
-      }
-    },
-  },
-
-}
+};
 </script>
 
 

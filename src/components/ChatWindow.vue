@@ -31,8 +31,11 @@
     </div>
     
     <div id="rightside" v-if="outid" class="col-3">
+      <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+      <div v-if="displayCreateExpense">
+        <createExpense :outingid="outid"/>
+      </div>
       <div class="container" v-for="exp in expensesArray" :key="exp.id">
-      
         {{ exp.desc }}
         {{ exp.amount }}
       </div>
@@ -43,12 +46,13 @@
 
 <script>
 import Chatform from '@/components/Chatform.vue';
+import createExpense from './expensesItems/createExpense.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onMounted, onUpdated,ref,watch} from 'vue'
 import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
-    components:{Chatform},
+    components:{Chatform,createExpense},
     props: {
     selectedchat: String, 
     name: String,
@@ -64,6 +68,7 @@ export default {
       const thisName=ref("")
       const outid= ref("")
       const expensesArray = ref([])
+      const displayCreateExpense = ref(false)
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -185,7 +190,7 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray}
+      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,}
       
     }
 

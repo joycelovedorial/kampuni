@@ -72,7 +72,7 @@
           </div>
         </div> 
            </div> -->
-           <div id="whoyouowe" v-for="peep in youOwePeoeple" :key="peep.id">
+           <div id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id">
               <singleExpensePayer :transacid="peep.id"/>
            </div>
            <div id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id">
@@ -110,7 +110,7 @@ export default {
 
     const displayCreate=ref(false)
     const peopleOweYou = ref([])
-    const youOwePeoeple = ref([])
+    const youOwePeople = ref([])
 
     //fetching of stuff
     const user = auth.currentUser
@@ -131,7 +131,7 @@ export default {
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
       })
-      youOwePeoeple.value=result
+      youOwePeople.value=result
     })
 
     //anyu functions
@@ -169,7 +169,7 @@ export default {
       sendMessage,
 
       displayCreate,
-      youOwePeoeple,
+      youOwePeople,
       peopleOweYou,
     };
   },
