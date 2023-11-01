@@ -51,7 +51,12 @@
       <div class="w-70">
         amount of spending for the month?
       </div>
-    </div>
+      <div></div>
+      <div v-if="displayCreate">
+        <createExpenses/>
+      </div>
+      
+      </div>
   </div>
 </template>
 
@@ -67,6 +72,7 @@ export default {
     const textInput = ref('');
     const buttonText = ref('pay');
     const isAnimationActive = ref(false);
+    const displayCreate=ref(false)
 
     const textAnimationClass = computed(() => {
       return isAnimationActive.value ? 'text-animation' : '';
@@ -105,6 +111,7 @@ export default {
       textAnimationClass,
       createBump,
       sendMessage,
+      displayCreate,
     };
   },
 };
