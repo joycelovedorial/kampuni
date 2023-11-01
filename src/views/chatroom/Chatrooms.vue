@@ -138,6 +138,7 @@ export default {
   font-weight: bold;
   background-color: #FFFDF0;
   display: flex;
+  box-shadow: 10px 10px #5b355f;
 }
 .singlelist:hover{
   border: 2px solid #FFFDF0;

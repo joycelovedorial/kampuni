@@ -2,7 +2,7 @@
   
   <div>
     tnamepic
-    <span>{{ tname }}</span>
+    <span>You owe {{ tname }}</span>
     <div>${{amount}}</div>
     <div>{{ category }}</div>
     <div>{{ message }}</div>
@@ -32,7 +32,7 @@ export default {
         getDoc(docRef)
             .then((docSnap)=>{
                 const data = docSnap.data()
-                tname.value =  data.receiver
+                const tnameid =  data.receiver
                 amount.value = data.amount
                 if(data.category!==null){
                     category.value=data.category
@@ -40,6 +40,12 @@ export default {
                     category.value="General"
                 }
                 message.value=data.message
+
+                getDoc(doc(db,'users',tnameid))
+                    .then((dSnap)=>{
+                        const data = dSnap.data()
+                        tname.value=data.firstname
+                    })
             })
         const paid = async () => {
             await updateDoc(doc(db,"transactions",props.transacid),{

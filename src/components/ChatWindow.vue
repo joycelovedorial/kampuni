@@ -2,27 +2,36 @@
   <div class="chat-window" style="background-color: white;">
     <!-- <div v-if="error">{{ error }}</div> -->
     <div class="chatTitle">{{name}}</div>
-    <div v-if="documents" class="messages" ref="messages">
-        <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
-          <div v-if="thisName==doc.name">
-            <span class="name">{{ doc.name }}</span>
-            <div class="single-chat-container" >
-              <span class="message">{{ doc.message }}</span>
-              <span class="created-at">{{ doc.createdAt }} ago</span>
+    <div id="leftside">
+      <div v-if="documents" class="messages" ref="messages">
+          <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
+            <div v-if="thisName==doc.name">
+              <span class="name">{{ doc.name }}</span>
+              <div class="single-chat-container" >
+                <span class="message">{{ doc.message }}</span>
+                <span class="created-at">{{ doc.createdAt }} ago</span>
+              </div>
+            </div>
+            <div v-else class="self">
+              <span class="name-self">{{ doc.name }}</span>
+              <div class="single-chat-container-self" >
+                <span class="message-self">{{ doc.message }}</span>
+                <span class="created-at-self">{{ doc.createdAt }} ago</span>
+              </div>
             </div>
           </div>
-          <div v-else class="self">
-            <span class="name-self">{{ doc.name }}</span>
-            <div class="single-chat-container-self" >
-              <span class="message-self">{{ doc.message }}</span>
-              <span class="created-at-self">{{ doc.createdAt }} ago</span>
-            </div>
-          </div>
-        </div>
-    </div>
+      </div>
+  </div>
   </div>
   <div class="chatform">
         <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
+  </div>
+  <div id="rightside" v-if="outid">
+    <div class="container" v-for="exp in expensesArray" :key="exp.id">
+    
+      {{ exp.desc }}
+      {{ exp.amount }}
+    </div>
   </div>
 </template>
 
@@ -30,7 +39,7 @@
 import Chatform from '@/components/Chatform.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onMounted, onUpdated,ref,watch} from 'vue'
-import { collection, query,orderBy, onSnapshot,doc,getDoc} from "firebase/firestore";
+import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform},
@@ -42,13 +51,13 @@ export default {
         // Query a reference to a subcollection
       console.log("Chatwindow setup");
       const selectedchat= ref(props.selectedchat)
-      // console.log("this should be comId ", typeof(props.selectedchat),props.selectedchat);
       const messages = ref(null)
       const documents= ref([])
       const error = ref(null)
       const name = ref(props.name)
       const thisName=ref("")
       const outid= ref("")
+      const expensesArray = ref([])
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -61,7 +70,26 @@ export default {
       fetchName();
 
       console.log("setup",props.name);
-      
+      getDoc(doc(db,"chatrooms",props.selectedchat))
+        .then((docSnap)=>{
+          const data = docSnap.data()
+          if (data.outing){
+            outid.value=data.outing
+            const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
+            expensesArray.value = []
+            const qExSnap = getDocs(qExpenses).then((querySnap)=>{
+              querySnap.forEach((doc)=>{
+                expensesArray.value.push({...doc.data(),id:doc.id})
+                console.log("expenses arrya",expensesArray.value);
+
+              })
+            })
+          }else{
+            outid.value=null
+            expensesArray.value=[]
+            console.log("no outing");
+          }
+        })
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
         console.log("unsub", props.selectedchat);
@@ -77,7 +105,7 @@ export default {
         error.value ='could not fetch the data'
       })
   
-
+      
       const formattedDocuments = computed(()=>{
           if (documents.value){
               return documents.value.map(doc => {
@@ -93,13 +121,36 @@ export default {
 
       watch(() => props.selectedchat, (newChatRoom, oldChatRoom) => {
         console.log("chatwindow watch");
+        
         if (oldChatRoom) {
           // Unsubscribe from the previous listener (if it exists)
           unsubscribe();
+  
         }
 
         if (newChatRoom) {
           // Create a new query for the new chat room and start a new listener
+          getDoc(doc(db,"chatrooms",newChatRoom))
+            .then((docSnap)=>{
+              const data = docSnap.data()
+              if(data.outing){
+                outid.value=data.outing
+                const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
+                expensesArray.value = []
+                const qExSnap = getDocs(qExpenses).then((querySnap)=>{
+                  querySnap.forEach((doc)=>{
+                    expensesArray.value.push({...doc.data(),id:doc.id})
+                    console.log("expenses arrya",expensesArray.value);
+                  })
+                })
+              }else{
+                outid.value=null
+                expensesArray.value=[]
+                console.log("no outng");
+              }
+            
+            })
+         
           const q = query(collection(db, "chatrooms", newChatRoom, "messages"), orderBy("createdAt"));
           unsubscribe = onSnapshot(q, (snapshot) => {
             // Handle updates for the new chat room
@@ -128,7 +179,7 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName}
+      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray}
       
     }
 
