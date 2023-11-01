@@ -152,14 +152,14 @@ export default {
     margin-bottom: 2px;
   }
   .single-chat-container{
-    background-color: #9A899C;
+    background-color: #B492B8;
     border-radius: 10px 10px 0 10px; 
     padding: 10px;
     width: 75%;
     margin-left: 25%;
   }
   .single-chat-container-self{
-    background-color: #9A899C;
+    background-color: #B492B8;
     border-radius: 10px 10px 10px 0; 
     padding: 10px;
     width: 75%;
@@ -169,10 +169,10 @@ export default {
     margin-left: 25%;
     font-weight: bold;
     margin-right: 6px;
-    color: #9A899C;
+    color: #B492B8;
   }
   .name-self{
-    color:#9A899C;
+    color:#B492B8;
     font-weight: bold;
   }
 
@@ -180,7 +180,7 @@ export default {
     background: #a7e5f0;
     padding: 10px;
     border-radius: 20px;
-    border: 2px #9A899C solid;
+    border: 2px #B492B8 solid;
   }
   .single {
     margin: 10px 0;
@@ -197,13 +197,13 @@ export default {
     font-weight: 900;
     color: #2F2F2F;
     padding: 0 10px 10px 0 ;
-    border-bottom: #9A899C solid;
+    border-bottom: #B492B8 solid;
   }
   .messages::-webkit-scrollbar{
     background-color: transparent;
   }
   .messages::-webkit-scrollbar-thumb{
-    background-color: #9A899C;
+    background-color: #B492B8;
     border-radius: 10px;
   }
   @media (min-width: 635px) {

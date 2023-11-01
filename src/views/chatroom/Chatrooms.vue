@@ -123,7 +123,7 @@ export default {
   background-color: transparent;
 }
 .chatlist-container::-webkit-scrollbar-thumb{
-  background-color: #9A899C;
+  background-color: #FFFDF0;
   border-radius: 10px;
 }
 #chat-container{
@@ -131,17 +131,17 @@ export default {
   height: fit-content;
 }
 .singlelist{
-  border: 2px solid #9A899C;
+  border: 2px solid ;
   padding: 5px; 
   border-radius: 10px; 
   margin-bottom: 10px; 
   font-weight: bold;
-  background-color: #9A899C;
+  background-color: #FFFDF0;
   display: flex;
 }
 .singlelist:hover{
-  border: 2px solid #9A899C;
-  background-color: rgba(#9A899C, 0.5);
+  border: 2px solid #FFFDF0;
+  background-color: rgba(#FFFDF0, 0.5);
   
 }
 .chatroom-right col-9{
@@ -153,9 +153,13 @@ export default {
 input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
-  background-color: #9A899C;
+  background-color: #FFFDF0;
   color:white;
   size: 3;
   width: 100%
+}
+#chatrooms {
+  background-color: #B492B8;
+  height: 100vh;
 }
 </style>
