@@ -34,7 +34,7 @@
 
         <div>
           <label for="expense_cost">Cost of Expense</label>
-          <input class="form-control col-6" type="number" v-model="cost" id="expense_cost">
+          <input class="form-control col-6" type="text" v-model="cost" id="expense_cost">
         </div>
 
         <div>

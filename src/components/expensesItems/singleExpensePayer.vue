@@ -1,16 +1,20 @@
 <template>
   
-  <div>
-    tnamepic
-    <span>You owe {{ tname }}</span>
-    <div>${{amount}}</div>
-    <div>{{ category }}</div>
-    <div>{{ message }}</div>
+  <div class="w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
+    <div>
+        <p><b class="text-g font-black">you</b> owe <b> {{ tname }}</b></p>
+        <div>${{ amount }}</div>
+        <div>{{ desc }}</div>
+        <div>{{ category }}</div>
+        <div>{{ message }}</div>
+    </div>
+    <div>
+        <button @click="paid">pay</button>
+    </div>
   </div>
 
 
   <div>
-    <button @click="paid">paid</button>
   </div>
 </template>
 
@@ -29,7 +33,7 @@ export default {
         const category=ref("")
         const docRef = doc(db,"transactions",props.transacid)
         const desc = ref("")
-
+        
         getDoc(docRef)
             .then((docSnap)=>{
                 const data = docSnap.data()
