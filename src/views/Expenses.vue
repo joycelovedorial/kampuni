@@ -57,6 +57,7 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import createExpenses from '@/components/expensesItems/createExpense.vue';
 export default {
   components:{Navbar},
   data() {
