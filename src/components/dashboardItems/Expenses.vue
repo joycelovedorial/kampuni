@@ -112,9 +112,9 @@ export default {
       const comSnap = await getDoc(db,"communities", comid.value)
       const comData = comSnap.data()
       for (const hommie of comData.homies) {
-        const hommieSnap = await getDoc(db("users",hommie))
+        const hommieSnap = await getDoc(db("users", hommie))
         const hommieData = hommieSnap.data()
-        users.value.push({id:hommie,name:hommieData.firstname})
+        users.value.push({id:hommie, name:hommieData.firstname})
       }
     }
 
