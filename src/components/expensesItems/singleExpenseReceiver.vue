@@ -1,7 +1,7 @@
 <template>
   
   <div>
-    <img :src="`${tname}/path`" alt="">
+    <img :src="'/profiles/' + imgstr" alt="">
   </div>
     <span> {{ tname }} owes you ${{ amount }}</span>
     <div v-if="displayTooEarly">
@@ -29,6 +29,7 @@ export default {
     const bumptime = ref('');
     const displayTooEarly = ref(false);
     const desc = ref("")
+    const imgstr = ref("")
 
     const docRef = doc(db, "transactions", props.transacid);
 
@@ -44,6 +45,8 @@ export default {
             .then((tnamesnap)=>{
                 const data = tnamesnap.data()
                 tname.value=data.firstname
+                console.log(tname.value);
+                imgstr.value = data.firstname + ".jpg"
             })
       });
 
@@ -66,7 +69,8 @@ export default {
       amount,
       bump,
       displayTooEarly,
-      desc
+      desc,
+      imgstr
     };
   }
 }

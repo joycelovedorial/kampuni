@@ -6,6 +6,12 @@ import Chatrooms from '../views/chatroom/Chatrooms.vue'
 import joinCommunity from '../views/joinCommunity.vue'
 import Profile from '../views/Profile.vue'
 import Expenses from '@/views/Expenses.vue'
+import amos from '@/assets/profiles/amos.jpg'
+import eman from '@/assets/profiles/eman.jpg'
+import anyu from '@/assets/profiles/anyu.jpg'
+import joyce from '@/assets/profiles/joyce.jpg'
+import snekha from '@/assets/profiles/snekha.jpg'
+import sandra from '@/assets/profiles/sandra.jpg'
 
 
 // import { projectAuth } from '../firebase/config'
@@ -65,8 +71,42 @@ const routes = [
     path:'/Expenses',
     name: 'Expenses',
     component: Expenses
+  },
+  {
+    path:'/profiles/amos.jpg',
+    name:"amospic",
+    component: amos
   }
-
+  ,
+  {
+    path:'/profiles/eman.jpg',
+    name:"emanpic",
+    component: eman
+  }
+  ,
+  {
+    path:'/profiles/sandra.jpg',
+    name:"sandrapic",
+    component: sandra
+  }
+  ,
+  {
+    path:'/profiles/anyu.jpg',
+    name:"anyupic",
+    component: anyu
+  }
+  ,
+  {
+    path:'/profiles/jocye.jpg',
+    name:"jocyepic",
+    component: joyce
+  }
+  ,
+  {
+    path:'/profiles/snekha.jpg',
+    name:"snekhapic",
+    component: snekha
+  }
   
 ]
 
