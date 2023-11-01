@@ -78,11 +78,12 @@ export default {
 #bg-container {
   position: relative;
   /* background-image: url("@/assets/background_img/background3.png"); */
-  background-color:#FFC96B;
+  background-color:#FFC96B; 
+  /* FFC96B F2D694*/
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 200vh;
+  height: 180vh;
   margin: 0;
   overflow: scroll;
   overflow: hidden; /* Ensure the overlay doesn't extend beyond the container */
@@ -90,7 +91,7 @@ export default {
 
 @media (min-width: 635px) {
   #bg-container {
-    height: 185vh;
+    height: 170vh;
   }
 }
 
@@ -102,7 +103,7 @@ export default {
 
 @media (min-width: 1440px) {
   #bg-container {
-    height: 140vh;
+    height: 105vh;
   }
 }
 

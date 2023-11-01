@@ -19,12 +19,12 @@ module.exports = {
     extend: {
       colors: {
         r: '#FF847C',
-        y: '#FFC96B',
+        y: '#F2D694',
         g: '#99B898',
         b: '#86B8B1',
         p: '#B492B8',
         bpop: '#F4EDCA',
-        bnorm: '#FFFDF0',
+        bnorm: '#FFFBE6',
         cyanp: '#2EC4B6',
         cyans: '#CBF3F0',
         orangep: '#FF9F1C',

@@ -47,9 +47,9 @@ export default {
           // Now that you have comid, you can perform the query here
           const q = query(
             collection(db, 'outings'),
-            where('community', '==', comid.value)
-            // where('date', '>=', startOfToday),
-            // where('date', '<=', endOfWeek)
+            where('community', '==', comid.value),
+            where('date', '>=', startOfToday),
+            where('date', '<=', endOfWeek)
           );
 
           const unsub = onSnapshot(q, (snap) => {
@@ -84,7 +84,7 @@ export default {
 
 .outer_container {
   width: auto;
-  height: 340px;
+  height: 345px;
 
 }
 
@@ -94,19 +94,18 @@ export default {
 }
 
 .outer_container::-webkit-scrollbar {
+  width: 12px;
   border-radius:16px;
-  height:7px;
   /* padding:30px; */
   
 } 
 .outer_container::-webkit-scrollbar-thumb:hover {
-  background-color:rgb(208, 208, 208)
+  background-color:rgb(47, 47, 47)
 }
 
 .outer_container::-webkit-scrollbar-track {
   background: transparent;
   margin-left:5px;
-  margin-right:5px;
 }
 
 .outer_container::-webkit-scrollbar-thumb {
@@ -117,13 +116,13 @@ export default {
 
 @media (min-height: 480px) {
   .outer_container {
-    height: 340px;
+    height: 345px;
   }
 }
 
 @media (min-height: 600px) {
   .outer_container {
-    height: 340px;
+    height: 345px;
   }
 }
 

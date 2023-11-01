@@ -300,7 +300,7 @@ margin-bottom:3px;
 margin-right:3px;
 }
 
-
+/* 
 @media (max-width:768px){
     #custom-container{
         font-size:14px;
@@ -311,7 +311,7 @@ margin-right:3px;
     #custom-container{
         font-size:10px;
     }
-}
+} */
 
 /* 
 @media (max-width:768px){
@@ -340,7 +340,7 @@ margin-right:3px;
     border-radius:100%;
     } */
 
-@media (max-width:576px){
+/* @media (max-width:576px){
     .option_box{
         font-size:16px;
     }
@@ -356,7 +356,7 @@ margin-right:3px;
     .option_box{
         font-size:16px !important;
     }
-}
+} */
 
 
 </style>
