@@ -72,12 +72,12 @@
           </div>
         </div> 
            </div> -->
-           <div class="">
-              <singleExpensePayer id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id" :transacid="peep.id"/>
+           <div id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id">
+              <singleExpensePayer :transacid="peep.id"/>
            </div>
-           <!-- <div >
-              <singleExpenseReceiver id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id" :transacid="peepo.id"/>
-           </div> -->
+           <div id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id">
+              <singleExpenseReceiver :transacid="peepo.id"/>
+           </div>
           <div class="w-70">
             amount of spending for the month?
           </div>

@@ -1,20 +1,18 @@
 <template>
   
-  <div class="w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
-    <div>
-        <p><b class="text-g font-black">you</b> owe <b> {{ tname }}</b></p>
-        <div>${{ amount }}</div>
-        <div>{{ desc }}</div>
-        <div>{{ category }}</div>
-        <div>{{ message }}</div>
-    </div>
-    <div>
-        <button @click="paid">pay</button>
-    </div>
+  <div>
+    <img :src="'../../assets/profiles/' + tname + '.jpg'" alt="Profile Image">
+    <img src="../../assets/profiles/eman.jpg" alt="Profile Image">
+    <span>You owe {{ tname }}</span>
+    <div>${{ amount }}</div>
+    <div>{{ desc }}</div>
+    <div>{{ category }}</div>
+    <div>{{ message }}</div>
   </div>
 
 
   <div>
+    <button @click="paid">paid</button>
   </div>
 </template>
 
@@ -33,7 +31,8 @@ export default {
         const category=ref("")
         const docRef = doc(db,"transactions",props.transacid)
         const desc = ref("")
-        
+        const img = `../../assets/profiles/${tname}.jpg`
+
         getDoc(docRef)
             .then((docSnap)=>{
                 const data = docSnap.data()
@@ -60,7 +59,7 @@ export default {
             })
         }
         return{
-            message,tname,amount,category,paid,desc
+            message,tname,amount,category,paid,desc, img
         }
     }
 }
