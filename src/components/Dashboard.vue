@@ -1,13 +1,10 @@
 <template>
   <div class="container ">
     <div class="row mb-3">
-      <div class="col-1"></div>
-      <div class="col-10">
+      <div class="col-12">
         <h1 class="mb-2 font-black text-cyanp text-3xl" >Upcoming Outings</h1>
         <OutingsCarousel :community="comid"/>
       </div>
-
-      <div class="col-1 "></div>
     </div>
 
     <div class="row">
