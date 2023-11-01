@@ -4,6 +4,7 @@ import router from './router'
 import "tailwindcss/tailwind.css"
 import { createPinia } from 'pinia'
 import { auth } from '@/firebase/config'
+
 const pinia = createPinia();
 
 let app

@@ -4,7 +4,7 @@
     <img src="@/assets/kampuni_logo.png" id="logo">
     <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container ">
-        <form @submit.prevent class="overflow-x-scroll">
+        <form @submit.prevent="handleRegister" class="overflow-x-scroll">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
@@ -97,8 +97,7 @@ import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
-// import { UserRecord } from 'firebase-admin/lib/auth/user-record'
-import { useTokenStore } from '../store/store.js'
+
 
 
 // Animations
@@ -124,6 +123,7 @@ export default {
 
 
     const handleRegister = async () => {
+      
         try {
             const cred = await createUserWithEmailAndPassword(auth, email.value, password.value);
             setDoc(doc(db, "users", cred.user.uid), {
@@ -136,7 +136,7 @@ export default {
               community: null,
               points: 0,
             });
-
+            console.log("registered");
             const uid = cred.user.uid;
             const docRef = doc(db, 'users', uid);
 
@@ -189,7 +189,6 @@ export default {
 
 
     const signinGoogle = async () => {
-      const store = useTokenStore(); 
       try {
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
@@ -198,18 +197,12 @@ export default {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        store.setToken(token);
-        console.log(token, "USER TOKEN");
+        
 
         // Set the user's email after initializing user
-        store.setUserEmail(user.email);
-        const googleAdditionalInfo = result.additionalUserInfo;
-        const googleProfile = googleAdditionalInfo
-        console.log(googleAdditionalInfo,"additional info");
-        console.log(googleProfile,"googleProfile");
+       
 
-        const firstname = googleProfile.given_name || null;
-        const lastname = googleProfile.family_name || null;
+       
         const uid = user.uid;
         const docRef = doc(db, 'users', uid);
 
@@ -220,8 +213,8 @@ export default {
         } else {
             // Check if result.additionalUserInfo exists and has a profile property
             setDoc(doc(db, "users", uid), {
-                firstname: firstname,
-                lastname: lastname,
+                firstname: null,
+                lastname: null,
                 email: user.email,
                 birthday: null,
                 country: null,

@@ -70,7 +70,7 @@ export default {
 
             const communityData = communityDoc.data();
             const homies = communityData.homies.filter((memberUid) => memberUid !== uid);
-            const chatQuery = query(collection(db,'chatrooms'),where('communityID',"==",comId))
+            const chatQuery = query(collection(db,'chatrooms'),where('community',"==",comId))
             const chatSnapshot = await getDocs(chatQuery);
 
             if (!chatSnapshot.empty){
@@ -86,21 +86,7 @@ export default {
             }else{
                 console.error("Chatroom does not exist")
             }
-            //need to create private cahtroom\\
-            for (const otherUid of homies){
-                const messagesRef = await addDoc(collection(db,"chatrooms"),{
-                    usersInvolved:[uid,otherUid]
-                })
-                const messagesId = messagesRef.id
-                const messagesDoc = doc(db,'chatrooms',messagesId)
-                const messageCollectionRef = collection(messagesDoc,'messages')
-                addDoc(messageCollectionRef,{
-                    createdAt: new Date(),
-                    name: "Admin",
-                    message:"Private Chat Created"
-                })
-
-            }
+        
             router.push({name:"Homepage", params: {community:comId}})  
         }else {
         // Password is incorrect

@@ -26,7 +26,7 @@
         </div>
     </div>
     <div v-else>
-        <ProfileEdit/>
+        <ProfileEdit @updated="fetchData();toEdit=true"/>
     </div>
    
     <button @click="toEdit=!toEdit">Edit</button>
@@ -70,6 +70,7 @@ export default {
                     lastname.value = userData.lastname;  // Use .value
                     birthday.value = userData.birthday;  // Use .value
                     country.value = userData.country;  // Use .value
+                    console.log("bio",bio.value);
                     bio.value = userData.bio;  // Use .value
                     email.value = userData.email;  // Use .value
                     community.value = commData.communityName;  // Use .value
@@ -85,7 +86,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return {firstname, lastname, birthday, country, bio, email, community,toEdit}
+            return {firstname, lastname, birthday, country, bio, email, community,toEdit,fetchData}
     }
 }
 </script>

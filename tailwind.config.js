@@ -19,7 +19,7 @@ module.exports = {
     extend: {
       colors: {
         r: '#FF847C',
-        y: '#F2D694',
+        y: '#FFC96B',
         g: '#99B898',
         b: '#86B8B1',
         p: '#B492B8',

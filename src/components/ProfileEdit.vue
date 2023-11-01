@@ -1,6 +1,6 @@
 <template>
     <div class="profileEdit">
-    <form>
+    <form @submit.prevent="updateEdit">
     <div class="editForm">
       <label for="firstname">First Name</label>
       <input type="text" id="firstname" v-model="editfirstname" :placeholder="firstname">
@@ -21,12 +21,13 @@
   </template>
 <script>
 import Navbar from '@/components/Navbar.vue';
-import { doc,getDoc,setDoc } from 'firebase/firestore';
+import { doc,getDoc,setDoc,updateDoc } from 'firebase/firestore';
 import { auth,db } from "@/firebase/config"
 import { ref, onMounted} from 'vue';
+import { useRouter } from 'vue-router';
 export default {
     components: { Navbar },
-    setup() {
+    setup(props,context) {
         const firstname = ref('')
         const lastname = ref('')
         const country = ref('')
@@ -41,6 +42,8 @@ export default {
         const editbio = ref("")
         const editcommunity = ref('')
         const toEdit = ref(true)
+        const router = useRouter()
+
         const fetchData = async () => {
             const user = auth.currentUser;
 
@@ -73,31 +76,46 @@ export default {
         fetchData()
 
         const updateEdit = async () => {
+            console.log("inupdate");
             const user = auth.currentUser;
+            if (!user) {
+                console.error("User is not authenticated.");
+                return;
+            }
+
             const uid = user.uid;
             const docRef = doc(db, "users", uid);
 
-            if(editfirstname.value!=""){
-                const fn = editfirstname.value
-            }
-            if(editlastname.value!=""){
-                const ln = editlastname.value
-            }
-            if(editbirthday.value!=""){
-                const bd = editbirthday.value
-            }
-            if(editbio.value!=""){
-                const bi = editbio.value
-            }
-            await setDoc(docRef,{
-                firstname: fn,
-                lastname: ln,
-                birthday: bd,
-                bio: bi,
-            })
+            // Create an object to store the updated data
+            const updatedData = {};
 
-
-        }
+            // Check each field and add it to the updatedData object only if it's not empty
+            if (editfirstname.value !== "") {
+                updatedData.firstname = editfirstname.value;
+            }
+            if (editlastname.value !== "") {
+                updatedData.lastname = editlastname.value;
+            }
+            if (editbirthday.value !== "") {
+                updatedData.birthday = editbirthday.value;
+            }
+            if (editbio.value !== "") {
+                updatedData.bio = editbio.value;
+            }
+            console.log(updatedData,"updated data");
+            try {
+                if (Object.keys(updatedData).length > 0) {
+                    // Update the user's profile only if there is data to update
+                    await updateDoc(docRef, updatedData);
+                    console.log("User profile updated successfully.");
+                } else {
+                    console.log("No data to update.");
+                }
+            } catch (error) {
+                console.error("Error updating user profile:", error);
+            }
+            context.emit("updated")
+        };
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });

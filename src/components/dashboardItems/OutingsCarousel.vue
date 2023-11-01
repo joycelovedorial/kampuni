@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded bg-white bg-opacity-25" >
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-5">
   
     <div class="flex flex-nowrap content-center "  >
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
@@ -47,9 +47,9 @@ export default {
           // Now that you have comid, you can perform the query here
           const q = query(
             collection(db, 'outings'),
-            where('community', '==', comid.value),
-            where('date', '>=', startOfToday),
-            where('date', '<=', endOfWeek)
+            where('community', '==', comid.value)
+            // where('date', '>=', startOfToday),
+            // where('date', '<=', endOfWeek)
           );
 
           const unsub = onSnapshot(q, (snap) => {
@@ -84,22 +84,29 @@ export default {
 
 .outer_container {
   width: auto;
-  height: 300px;
+  height: 340px;
 
 }
 
 :root {
   --primary: #2ec4b6;
-  --secondary: #f4a261;
+  --secondary: #999999;
 }
 
 .outer_container::-webkit-scrollbar {
-  border-radius:10px;
-  /* width:1px; */
+  border-radius:16px;
+  height:7px;
+  /* padding:30px; */
+  
 } 
+.outer_container::-webkit-scrollbar-thumb:hover {
+  background-color:rgb(208, 208, 208)
+}
 
 .outer_container::-webkit-scrollbar-track {
   background: transparent;
+  margin-left:5px;
+  margin-right:5px;
 }
 
 .outer_container::-webkit-scrollbar-thumb {
@@ -110,13 +117,13 @@ export default {
 
 @media (min-height: 480px) {
   .outer_container {
-    height: 365px;
+    height: 340px;
   }
 }
 
 @media (min-height: 600px) {
   .outer_container {
-    height: 365px;
+    height: 340px;
   }
 }
 
