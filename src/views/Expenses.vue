@@ -1,16 +1,16 @@
 <template>
     <Navbar/>
-    <Expenses/>
+    <createExpenses/>
 
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
-import Expenses from '@/components/dashboardItems/Expenses.vue';
+import createExpenses from '@/components/expensesItems/createExpense.vue';
 export default {
 components:{
   Navbar,
-  Expenses
+  createExpenses
 },
 setup(){
   return{}
