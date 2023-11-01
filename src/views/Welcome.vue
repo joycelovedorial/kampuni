@@ -607,7 +607,9 @@ input {
 }
 
 .overlay {
-  background-image: url("@/assets/background_img/newnew.jpg");
+  /* background-image: url("@/assets/background_img/newnew.jpg");
+   */
+  background-color:#FF847C;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -628,12 +630,14 @@ input {
   left: 0;
   right: 0;
   top: 0;
+  border:5px solid black;
+  border-radius:25px;
   bottom: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to top,
     rgba(46, 94, 109, 0.4) 40%,
     rgba(46, 94, 109, 0)
-  );
+  ); */
 }
 
 .outermost-container.right-panel-active .overlay {
@@ -649,7 +653,6 @@ input {
   padding: 0 40px;
   text-align: center;
   top: 0;
-  
   height: 100%;
   width: 50%;
   transform: translateX(0);

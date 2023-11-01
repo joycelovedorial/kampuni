@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .chatlist-container{
   justify-content:flex;
   flex-direction: column;

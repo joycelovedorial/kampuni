@@ -135,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .created-at{
     color: #878787;
     margin-left: 90%;
