@@ -47,14 +47,14 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-70">
-        amount of spending for the month?
-      </div>
-      <div></div>
-      <div v-if="displayCreate">
-        <createExpenses/>
-      </div>
+          </div>
+          <div class="w-70">
+            amount of spending for the month??
+          </div>
+          <div><button @click="displayCreate=!displayCreate">Create Expense</button></div>
+          <div v-if="displayCreate">
+            <createExpenses/>
+          </div>
       
       </div>
   </div>
