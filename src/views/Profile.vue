@@ -91,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .profile {
   display: flex;
   flex-direction: column; 

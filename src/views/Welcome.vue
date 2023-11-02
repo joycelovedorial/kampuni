@@ -4,7 +4,7 @@
     <img src="@/assets/kampuni_logo.png" id="logo">
     <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container ">
-        <form @submit.prevent="handleRegister" class="overflow-x-scroll">
+        <form @submit.prevent="handleRegister" class="overflow-y-auto register-form rounded-r-3xl ">
           <h1 class="text-orangep text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
@@ -30,7 +30,7 @@
         </form>
       </div>
         <div v-if="registered" class="form-container login-container">
-          <form @submit.prevent="handleLogin" class="form-lg">
+          <form @submit.prevent="handleLogin" class="form-lg rounded-l-3xl">
             <h1 class="text-orangep text-3xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
@@ -58,10 +58,10 @@
             </h1>
             <p>If you have an account, login here and have fun</p>
             <button class="ghost flex" id="login" @click="togglePanel" > 
-              <svg class='w-7 h-5 pr-2 pt-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
-              </svg>
               Login
+              <svg class="w-7 h-5 pl-2 pt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+                </svg>
             </button>
           </div>
 
@@ -74,10 +74,10 @@
               If you do not have an account yet, click here to join us
             </p>
             <button class="ghost flex" id="register" @click="togglePanel" >
+              <svg class='w-7 h-5 pr-2 pt-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+              </svg>
                 Register
-                <svg class="w-7 h-5 pl-2 pt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
-                </svg>
             </button>
           </div>
         </div>
@@ -275,6 +275,13 @@ export default {
 </script>
 
 <style scoped>
+.register-form{
+  border-radius:0px, 55px, 55px, 0px
+}
+.register-form::-webkit-scrollbar {
+  display:none
+}
+
 #logo {
   margin-bottom: 5px auto;
   margin-top:60px;
@@ -295,6 +302,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .loginform input {
@@ -555,6 +563,8 @@ input {
   left: 0;
   width: 50%;
   z-index: 2;
+  border:5px solid black;
+  border-radius:30px 0px 0px 30px;
 }
 
 .container.right-panel-active .login-container {
@@ -574,6 +584,8 @@ input {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
+  border:5px black solid;
+  border-radius:0px 25px 25px 0px;
   animation: show 0.6s;
 }
 

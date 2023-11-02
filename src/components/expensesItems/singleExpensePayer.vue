@@ -1,21 +1,19 @@
 <template>
-  
-  <div class="w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm my-2">
     <div>
-        <p><b class="text-g font-black">you</b> owe <b> {{ tname }}</b></p>
-        <div>${{ amount }}</div>
-        <div>{{ desc }}</div>
-        <div>{{ category }}</div>
-        <div>{{ message }}</div>
+        <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
+        you owe {{ tname }} $ {{ Number(amount).toFixed(2) }}
+        <div class="bg-bnorm w-full p-2 rounded-lg">
+            <div>
+                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+                    <span>{{ message }}</span>
+                </div>
+                <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
+                <br>
+                <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <button @click="paid">pay</button>
-    </div>
-  </div>
-
-
-  <div>
-  </div>
+    
 </template>
 
 <script>
@@ -33,7 +31,8 @@ export default {
         const category=ref("")
         const docRef = doc(db,"transactions",props.transacid)
         const desc = ref("")
-        
+        const imgstr = ref("")
+
         getDoc(docRef)
             .then((docSnap)=>{
                 const data = docSnap.data()
@@ -41,17 +40,27 @@ export default {
                 amount.value = data.amount
                 desc.value=data.desc
 
-                if(data.category!==null){
+                if(data.category){
                     category.value=data.category
                 }else{
                     category.value="General"
                 }
-                message.value=data.message
+                if(data.desc){
+                    desc.value=data.desc
+                }else{
+                    desc.value="NA"
+                }
+                if(data.message){
+                    message.value=data.message
+                }else{
+                    message.value="lucky they havent chase you yet 👀"
+                }
 
                 getDoc(doc(db,'users',tnameid))
                     .then((dSnap)=>{
                         const data = dSnap.data()
                         tname.value=data.firstname
+                        imgstr.value = data.firstname + ".jpg"
                     })
             })
         const paid = async () => {
@@ -60,7 +69,13 @@ export default {
             })
         }
         return{
-            message,tname,amount,category,paid,desc
+            message,
+            tname,
+            amount,
+            category,
+            paid,
+            desc,
+            imgstr
         }
     }
 }

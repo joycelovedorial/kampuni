@@ -143,6 +143,7 @@
   <style>
 .hovering1{
   transition: transform 2s ease-in-out;
+
 }
 .hovering1:hover {
     animation: strinkSize 1.2s infinite alternate; /* Add a smooth transition effect */

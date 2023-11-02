@@ -1,31 +1,7 @@
 <template>
-  <div class="create-expenses container-fluid">
+  <div class="create-expenses mx-auto">
 
     <form @submit.prevent="addExpense">
-      <div class="row">
-        <div>People involved</div>
-       
-        <div v-for="user in users" :key="user.id">
-          <label :for="user.id">{{ user.name }}</label>
-          <input 
-          class="form-control col-6" 
-          type="checkbox" 
-          :id="user.id" 
-          v-model="selectedUsers" 
-          :value="user.id"
-          />
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div>Person who paid</div>
-        <div v-for="user in users" :key="user.id">
-          <label :for="user.id">{{ user.name }}</label>
-          <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
-        </div>
-      </div>
-
       <div class="row">
         <div>
           <label for="expense_name">Name of Expense</label>
@@ -46,10 +22,34 @@
           </select>
         </div>
 
-        <div>
-          <button>Add Expense</button>
+        
+      </div>
+      <div class="flex">
+        <div class="row">
+          <div>People involved</div>
+          <div v-for="user in users" :key="user.id">
+            <label :for="user.id">{{ user.name }}</label>
+            <input 
+            class="form-control col-6" 
+            type="checkbox" 
+            :id="user.id" 
+            v-model="selectedUsers" 
+            :value="user.id"
+            />
+          </div>
         </div>
-
+        
+        <div class="row">
+          <div>Person who paid</div>
+          <div v-for="user in users" :key="user.id">
+            <label :for="user.id">{{ user.name }}</label>
+            <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-g text-center text-white font-extrabold p-3">
+        <button>Add Expense</button>
       </div>
       
     </form>

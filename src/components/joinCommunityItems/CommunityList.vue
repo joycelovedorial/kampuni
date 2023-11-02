@@ -1,18 +1,31 @@
 <template>
-    <div class="container">
-        <div v-if="communityArray.length > 0">
-            <div v-for="com in communityArray" :key="com.id">
-                <span> {{ com.communityName }} </span>
-                <button @click="joinCom(com.id)">Join</button>
-            </div>
-            <div v-if="error">
-                <p class="text-red-500">{{ error }}</p>
-            </div>
+    <!-- <div class="container">
+        <div class="row">
+                <div class="custom-container col-12 text-center border-5 border-solid border-black bg-y"> -->
+                
+                    <div v-if="communityArray.length > 0">
+                        <div v-for="com in communityArray" :key="com.id">
+                            <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
+
+                                <div class="col-md-9 col-12 flex">
+                                    <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
+                                </div>
+                                <div class="col-md-3 col-12 flex">
+                                    <button class="grow text-2xl button_styling" @click="joinCom(com.id)">Join</button>
+                                </div>
+                            </div>
+                        </div>
+                    <div v-if="error">
+                        <p class="text-red-500">{{ error }}</p>
+                    </div>
+                </div>
+                <div v-else>
+                    <p>No communities available.</p>
+                </div>
+                
+                <!-- </div>
         </div>
-        <div v-else>
-            <p>No communities available.</p>
-        </div>
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -105,6 +118,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.component-container{
+    background-color:white;
+    border-radius:25px;
+    margin:10px;
+    padding:5px;
+    border:black 3px solid;
+}
 
+.button_styling{
+    border:3px solid;
+    border-color:#FFC96B;
+    border-radius:10px;
+    transition: color 0.3s, background-color 0.3s , transform 0.3s;
+}
+
+.button_styling:hover{
+    border:3px solid;
+    border-color:#FFC96B;
+    border-radius:10px;
+    background-color:#FFC96B;
+    color:white;
+    transform: scale(1.05);
+}
+
+.comm_name{
+    padding:10px;
+
+}
 </style>
