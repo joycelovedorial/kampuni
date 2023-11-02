@@ -58,10 +58,10 @@
             </h1>
             <p>If you have an account, login here and have fun</p>
             <button class="ghost flex" id="login" @click="togglePanel" > 
-              <svg class='w-7 h-5 pr-2 pt-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
-              </svg>
               Login
+              <svg class="w-7 h-5 pl-2 pt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+                </svg>
             </button>
           </div>
 
@@ -74,10 +74,10 @@
               If you do not have an account yet, click here to join us
             </p>
             <button class="ghost flex" id="register" @click="togglePanel" >
+              <svg class='w-7 h-5 pr-2 pt-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+              </svg>
                 Register
-                <svg class="w-7 h-5 pl-2 pt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
-                </svg>
             </button>
           </div>
         </div>
