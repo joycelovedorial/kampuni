@@ -94,14 +94,6 @@
         return userOutings;
       });
             
-
-      // const userQuery = query(
-      //   collection(db, "outings", comid, "usersInvolved"),
-      //   where("user", "==", uid),
-      //   where("imIm", "==", true)
-      // );
-
-      //taskMethods
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
         const uid = user.uid;
