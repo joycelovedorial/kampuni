@@ -2,19 +2,31 @@
   <div id="expenses-page" class="bg-g">
     <Navbar/>
     <div class="body-div w-10/12 mx-auto">
+      <button @click="compiled=!compiled">Compile</button>
+      <div v-if="compiled">
+        <compiledExpense/>
+      </div>
+
+
       <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-4 space-y-3">
         <div class="create-task-bar w-8/12 mx-auto">
-          <button @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
+          <button v-if="!displayCreate" @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             Create Expense
           </button>
+          <button v-else @click="displayCreate=!displayCreate" class="w-full bg-r border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Discard Expense
+          </button>
         </div>
         <div class="create-task-bar" v-if="displayCreate">
           <createExpenses/>
         </div>
-        <div class="flex mx-auto justify-content-around space-x-3" v-if="!displayCreate">
+        <div class="flex mx-auto justify-content-around space-x-3" v-else>
           <!-- <div class="w-25 flex-col">
             who owe who money
             <div class="h-auto bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
@@ -134,19 +146,21 @@
 import singleExpensePayer from '@/components/expensesItems/singleExpensePayer.vue';
 import singleExpenseReceiver from '@/components/expensesItems/singleExpenseReceiver.vue';
 import Navbar from '@/components/Navbar.vue';
+import compiledExpense from '@/components/expensesItems/compiledExpense.vue';
 import createExpenses from '@/components/expensesItems/createExpense.vue';
 import { ref, computed } from 'vue';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import {auth,db} from '@/firebase/config'
 
+
 export default {
-  components: { Navbar, createExpenses,singleExpensePayer,singleExpenseReceiver },
+  components: { Navbar, createExpenses,singleExpensePayer,singleExpenseReceiver,compiledExpense},
   setup() {
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
     const isAnimationActive = ref(false);
-
+    const compiled=ref(false)
 
     const displayCreate=ref(false)
     const peopleOweYou = ref([])
@@ -207,7 +221,7 @@ export default {
       textAnimationClass,
       createBump,
       sendMessage,
-
+      compiled,
       displayCreate,
       youOwePeople,
       peopleOweYou,
