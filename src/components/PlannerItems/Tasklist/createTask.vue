@@ -37,6 +37,7 @@
             <h1 class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl">
                 New Task
             </h1>
+            <span><button @click="emitCt">X</button></span>
             <form @submit.prevent="createTask">
                 <div class="d-block py-2">
                     <label class="block text-sm font-medium text-gray-900" for="taskname">Task Name</label>
@@ -127,10 +128,13 @@ export default {
             dateline.value=""    
             context.emit("closeCreateTask")
             };
+        const emitCt = () =>{
+            context.emit("closeCreateTask")
+        }
 
 
         return { createTask,
-            taskname, description, countdown, dateline, 
+            taskname, description, countdown, dateline, emitCt
         }
     }
 }

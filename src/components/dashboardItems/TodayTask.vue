@@ -94,14 +94,6 @@
         return userOutings;
       });
             
-
-      // const userQuery = query(
-      //   collection(db, "outings", comid, "usersInvolved"),
-      //   where("user", "==", uid),
-      //   where("imIm", "==", true)
-      // );
-
-      //taskMethods
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
         const uid = user.uid;
@@ -110,20 +102,27 @@
         const docSnap = await getDoc(doc(db,"tasks",taskid))
         const docData = docSnap.data()
         const status = docData.taskstatus
-        console.log(status)
+    
         await updateDoc(doc(db,"tasks",taskid),{
           taskstatus:!status,
         })
         
         const userData = userSnap.data()
-        if(userData.points){
-          const val = userData.points
+        const val = userData.points
+        console.log(status,"status");
+        if(!status){
           const total = val + docData.points
+        await updateDoc(doc(db,"users",uid),{
+          points:total,
+        })
+        }else{
+          const total = val - docData.points
+        await updateDoc(doc(db,"users",uid),{
+          points:total,
+        })
+     
         }
-        //point update might do at the end of day instead
-        // await updateDoc(doc(db,"users",uid),{
-        //   points: total,
-        // })
+        
       }
   
       const is_checked = () => {
@@ -144,6 +143,7 @@
   <style>
 .hovering1{
   transition: transform 2s ease-in-out;
+
 }
 .hovering1:hover {
     animation: strinkSize 1.2s infinite alternate; /* Add a smooth transition effect */

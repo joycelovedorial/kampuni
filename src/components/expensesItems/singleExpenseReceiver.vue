@@ -1,7 +1,21 @@
 <template>
-  
-  <div>yourpic</div>
-    <span> {{ tname }} owes you ${{ amount }}</span>
+   <div>
+        <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
+        {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+        <div class="bg-bnorm w-full p-2 rounded-lg">
+            <div>
+                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+                    <span>{{ message }}</span>
+                </div>
+                <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
+                <br>
+                <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
+            </div>
+        </div>
+    </div>
+  <div>
+    <img :src="'/profiles/' + imgstr" alt="">
+  </div>
     <div v-if="displayTooEarly">
         <p>"Its too early for a bump"</p>
     </div>
@@ -26,6 +40,8 @@ export default {
     const timenow = new Date();
     const bumptime = ref('');
     const displayTooEarly = ref(false);
+    const desc = ref("")
+    const imgstr = ref("")
 
     const docRef = doc(db, "transactions", props.transacid);
 
@@ -35,11 +51,14 @@ export default {
         const tnameid = data.payer;
         amount.value = data.amount;
         bumptime.value = data.bump; // Assuming "bump" field contains a timestamp
-
-
+        desc.value=data.desc
+        
         getDoc(doc(db,"users",tnameid))
             .then((tnamesnap)=>{
-                tname.value=tnamesnap.name
+                const data = tnamesnap.data()
+                tname.value=data.firstname
+                console.log(tname.value);
+                imgstr.value = data.firstname + ".jpg"
             })
       });
 
@@ -61,7 +80,9 @@ export default {
       tname,
       amount,
       bump,
-      displayTooEarly
+      displayTooEarly,
+      desc,
+      imgstr
     };
   }
 }

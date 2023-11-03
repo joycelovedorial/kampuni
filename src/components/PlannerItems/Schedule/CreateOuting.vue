@@ -1,5 +1,6 @@
 <template>
   <div class="create-outing container-fluid">
+    <span><button @click="emitCo">X</button></span>
     <form class="form-control" @submit.prevent="createOuting">
         Create Outing
         <div class="row">
@@ -35,7 +36,7 @@ import { ref } from 'vue'
 import { collection, addDoc, Timestamp, getDoc, doc } from "firebase/firestore"; 
 
 export default {
-    setup(){
+    setup(props,context){
         const title = ref("")
         const desc = ref("")
         const location = ref("")
@@ -105,11 +106,13 @@ export default {
             title.value=""
         }
             
-     
+        const emitCo = () =>{
+            context.emit("closeCreateOuting")
+        }
 
 
         return{ createOuting,
-            title,desc,location,date
+            title,desc,location,date,emitCo
         }
     }
 }

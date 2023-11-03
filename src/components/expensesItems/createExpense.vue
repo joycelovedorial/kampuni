@@ -1,5 +1,5 @@
 <template>
-  <div class="create-expenses container-fluid">
+  <div class="create-expenses mx-auto">
 
     <form @submit.prevent="addExpense">
       <div class="row">
@@ -34,22 +34,46 @@
 
         <div>
           <label for="expense_cost">Cost of Expense</label>
-          <input class="form-control col-6" type="number" v-model="cost" id="expense_cost">
+          <input class="form-control col-6" type="text" v-model="cost" id="expense_cost">
         </div>
 
         <div>
           <label for="expense_category">Category of Expense</label>
           <select v-model="category">
             <option :value=null>Non-Outing</option>
-            <option v-for="out in outingslist" :key="out.id" :value="out.id">{{out.title}}</option>
+            <option v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
 
           </select>
         </div>
 
-        <div>
-          <button>Add Expense</button>
+        
+      </div>
+      <div class="flex">
+        <div class="row">
+          <div>People involved</div>
+          <div v-for="user in users" :key="user.id">
+            <label :for="user.id">{{ user.name }}</label>
+            <input 
+            class="form-control col-6" 
+            type="checkbox" 
+            :id="user.id" 
+            v-model="selectedUsers" 
+            :value="user.id"
+            />
+          </div>
         </div>
-
+        
+        <div class="row">
+          <div>Person who paid</div>
+          <div v-for="user in users" :key="user.id">
+            <label :for="user.id">{{ user.name }}</label>
+            <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-g text-center text-white font-extrabold p-3">
+        <button>Add Expense</button>
       </div>
       
     </form>
@@ -58,7 +82,7 @@
 
 <script>
 
-import { ref,onMounted } from 'vue';
+import { ref,onMounted,watch } from 'vue';
 import { auth, db} from '@/firebase/config';
 import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp } from "firebase/firestore";
 
@@ -68,7 +92,7 @@ export default {
   },
 
   setup(props) {
-
+    console.log(props.outingid,"prop is passed in createExpense");
     const expense_desc = ref('')
     const cost = ref('')
     const category = ref("")
@@ -78,6 +102,7 @@ export default {
     const selectedUsers = ref([])
     const whopaid = ref("")
     const outingslist = ref([])
+    const outid=ref(props.outingid)
 
 
 
@@ -158,14 +183,30 @@ export default {
         outingslist.value.push({...doc.data(),id:doc.id})
       })
     }
+    watch(() => props.outingid, (newOutingId) => {
+      outid.value = newOutingId;
 
-    onMounted(()=>{
-      fetchData()
-    })
+      // Find the matching out.title for the newOutingId
+      const matchingOuting = outingslist.value.find((out) => out.id === newOutingId);
+      if (matchingOuting) {
+        category.value = matchingOuting.title;
+      } else {
+        category.value = ''; // Set to empty if no matching outing found
+      }
+    });
+
+    onMounted(() => {
+      fetchData();
+      // Set the initial category based on the outingid prop
+      const matchingOuting = outingslist.value.find((out) => out.id === props.outingid);
+      if (matchingOuting) {
+        category.value = matchingOuting.title;
+      }
+    });
 
     
     return {
-      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist
+      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid
 
     };
   }
