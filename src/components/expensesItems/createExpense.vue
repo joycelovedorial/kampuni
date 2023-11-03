@@ -1,5 +1,5 @@
 <template>
-  <div class="create-expenses mx-auto">
+  <div class="create-expenses mx-auto bg-bpop w-8/12 rounded-lg p-3">
 
     <form @submit.prevent="addExpense">
       <!-- <div class="row">
@@ -8,7 +8,7 @@
         <div v-for="user in users" :key="user.id">
           <label :for="user.id">{{ user.name }}</label>
           <input 
-          class="form-control col-6" 
+          class="col-6" 
           type="checkbox" 
           :id="user.id" 
           v-model="selectedUsers" 
@@ -25,40 +25,48 @@
           <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
         </div>
       </div> -->
-      <div clas="flex flex-col">
-        <div class="w-1/2 inline-block">
-          <label for="expense_name">name of expense</label>
-          <input class="form-control rounded-md border-0 pl-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name">
-
-          <label for="expense_cost">cost of expense</label>
-          <input class="form-control rounded-md border-0 pl-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name">
-        
-          <label for="expense_category">Category of Expense</label>
-              <select v-model="category">
-                <option :value=null>Non-Outing</option>
-                <option v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
-              </select>
-        </div>
-        <div class="w-1/2 inline-block">
-          <div>People involved</div>
-          <div v-for="user in users" :key="user.id">
-            <label :for="user.id">{{ user.name }}</label>
-            <input 
-            class="form-control col-6" 
-            type="checkbox" 
-            :id="user.id" 
-            v-model="selectedUsers" 
-            :value="user.id"
-            />
+      <div class="font-fredoka font-bold">Spending detail</div>
+      <div class="space-x-3 flex justify-stretch">
+        <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name" placeholder="name of expense" required>
+        <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="text" v-model="expense_cost" id="expense_name" placeholder="cost of expense" required>
+        <select v-model="category" class="bg-bnorm focus:bg-y rounded-lg border-0 pl-2 ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" required>
+          <option class="bg-bnorm hover:bg-bpop" selected disabled value="">select category</option>
+          <option class="bg-bnorm hover:bg-bpop" :value=null>Non-Outing</option>
+          <option class="bg-bnorm hover:bg-bpop" v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
+        </select>
+      </div>
+      <div>
+        <!-- <label for="expense_category">Category of Expense</label> -->
+      </div>
+      <div class="flex justify-around space-x-3 mt-3">
+        <div class="w-6/12 inline-block">
+          <div class="font-fredoka font-bold">People involved</div>
+          <div class="bg-bnorm rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:18vh;">
+            <div v-for="user in users" :key="user.id">
+              <input 
+              class="m-2 ring-0 placeholder:black checked:text-p focus:text-p  focus:ring-black " 
+              type="checkbox" 
+              :id="user.id" 
+              v-model="selectedUsers" 
+              :value="user.id" 
+              required
+              />
+              <label :for="user.id" class="text-sm">{{ user.name.toLowerCase() }}</label>
+            </div>
           </div>
-          <div>Person who paid</div>
-          <div v-for="user in users" :key="user.id">
-            <label :for="user.id">{{ user.name }}</label>
-            <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
+        </div>
+        
+        <div class="w-6/12 inline-block ">
+          <div class="font-fredoka font-bold">Person who paid</div>
+          <div class="bg-bnorm rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:18vh;">
+            <div v-for="user in users" :key="user.id">
+              <input class="m-2  checked:text-p focus:text-p  focus:ring-black " type="radio" :id="user.id" v-model="whopaid" :value="user.id" required>
+              <label :for="user.id" class="text-sm">{{ user.name.toLowerCase() }}</label>
+            </div>
           </div>
         </div>
       </div>
-      <div class="bg-g text-center text-white font-extrabold p-3">
+      <div class="mt-3 bg-y text-center text-black font-extrabold p-3 rounded-full border-3 border-black">
         <button>Add Expense</button>
       </div>
       
@@ -203,4 +211,32 @@ export default {
 
 <style>
 /* Add any necessary styles here */
+
+.test::-webkit-scrollbar {
+  width: 12px;
+  border-radius:16px;
+  /* margin-left: 5px; */
+  /* height:5px; */
+}
+
+.test::-webkit-scrollbar-track {
+  background: transparent;
+  width:10px;
+  height:5px;
+  margin-top:5px;
+  margin-right:10px;
+  margin-bottom:5px;
+}
+
+.test::-webkit-scrollbar-thumb:hover {
+  background-color:rgb(47, 47, 47)
+}
+
+.test::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 10px;
+  width:5px;
+  height:5px;
+}
+
 </style>

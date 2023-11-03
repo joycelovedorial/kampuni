@@ -1,16 +1,23 @@
 <template>
-    <div>
-        <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
-        you owe {{ tname }} $ {{ Number(amount).toFixed(2) }}
-        <div class="bg-bnorm w-full p-2 rounded-lg">
-            <div>
+    <div class="mt-2 bg-bpop rounded-lg p-2 border-2 border-black">
+        <div class="font-bold font-jakarta text-sm flex justify-between">
+            <div class="flex space-x-2 align-middle">
+                <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="'/profiles/' + imgstr" alt="">
+                <div class="inline-block my-auto">
+                    you owe {{ tname }} $ {{ Number(amount).toFixed(2) }}
+                    <div class="block">
+                        <span class="bg-bpop rounded-md text-xs font-bold px-1">{{ category }}: {{ desc }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block my-auto">
+                <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
+            </div>
+        </div>
+        <div class="w-full my-2 rounded-lg">
                 <div class="message-bar bg-y rounded-md px-1 shadow-inner">
                     <span>{{ message }}</span>
                 </div>
-                <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
-                <br>
-                <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
-            </div>
         </div>
     </div>
     

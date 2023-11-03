@@ -8,7 +8,7 @@
       </div>
 
 
-      <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-4 space-y-3">
+      <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3">
         <div class="create-task-bar w-8/12 mx-auto">
           <button v-if="!displayCreate" @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline">
@@ -97,7 +97,7 @@
               </div>
             </div> 
                </div> -->
-              <div class="bg-bpop w-full rounded-lg p-3 overflow-scroll h-84">
+              <div class="w-full rounded-lg p-3 h-84 test overflow-y-scroll overflow-x-auto">
                 <div v-if="youOwePeople.length == 0">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
@@ -116,7 +116,7 @@
                   <singleExpensePayer id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id" :transacid="peep.id"/>
                 </div>
               </div>
-              <div class="bg-bpop w-full rounded-lg p-3 overflow-scroll h-84">
+              <div class="w-full rounded-lg p-3 h-84 test overflow-y-scroll overflow-x-auto">
                 <div v-if="peopleOweYou.length == 0">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
