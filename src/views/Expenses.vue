@@ -169,7 +169,7 @@ export default {
     //fetching of stuff
     const user = auth.currentUser
     const uid = user.uid
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
+    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
     const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
       const result = []
       oweYouSnap.forEach((doc)=>{
@@ -179,7 +179,7 @@ export default {
     })
 
 
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
+    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
     const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
       const result = []
       youOweSnap.forEach((doc)=>{
