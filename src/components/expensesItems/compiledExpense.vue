@@ -19,7 +19,7 @@ export default {
     const user = auth.currentUser;
     const uid = user.uid;
 
-    const query1 = query(collection(db, 'transactions'), where('payer', '==', uid));
+    const query1 = query(collection(db, 'transactions'), where('payer', '==', uid),where("paid","==",false));
     const unsub1 = onSnapshot(query1, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         const data = doc.data();
