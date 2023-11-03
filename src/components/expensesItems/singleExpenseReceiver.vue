@@ -12,13 +12,58 @@
       </div>
     </div>
   </div> -->
+  <div class="mt-2 bg-bpop rounded-lg p-2 border-2 border-black">
+        <div class="font-bold font-jakarta text-sm flex justify-between">
+            <div class="flex space-x-2 align-middle">
+                <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="'/profiles/' + imgstr" alt="">
+                <div class="inline-block my-auto">
+                    {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+                    <div class="block">
+                        <span class="bg-bpop rounded-md text-xs font-bold px-1">{{ category }}: {{ desc }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block my-auto">
+              <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="displayInputState">
+                bump
+              </button>
+            </div>
+          </div>
+          <div class="w-full my-2 rounde-lg">
+            <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+              <span v-if="displayInput">
+                <input type="text" v-model="message">
+              </span>
+              <span v-else>
+                <span>{{ message }}</span>
+              </span>
+            </div>
+          </div>
+            <!-- <div class="w-full my-2 rounded-lg">
+                <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="displayInput">bump</button>
+                <div v-if="!displayInput" class="message-bar bg-y rounded-md px-1 shadow-inner">
+                    <span>{{ message }}</span>
+                </div>
+                <div v-else class="message-bar bg-y rounded-md px-1 shadow-inner">
+                  <input type="text" v-model="message">
+                </div>
+            </div> -->
+            <!-- <div class="block my-auto">
+                <button v-if="!displayInput" class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="displayInput">bump</button>
+                
+            </div>
+        </div>
+        <div class="w-full my-2 rounded-lg">
+                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+                </div>
+        </div> -->
+    </div>
   <div>
-    <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
-    {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+    <!-- <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt=""> -->
     <!-- <img :src="'/profiles/' + imgstr" alt=""> -->
     <div class="bg-bnrom w-full bg-y rounded-md px-1 shadow-inner">
       <span v-if="bumped">{{  message }}</span>
-      <span v-else>feel free to bump!</span>
+      <!-- <span v-else>feel free to bump!</span> -->
     </div>
     <div v-if="displayTooEarly">
         <p>"Its too early for a bump"</p>
@@ -46,10 +91,16 @@ export default {
     const bumptime = ref('');
     const displayTooEarly = ref(false);
     const desc = ref("");
+    const category=ref("");
     const imgstr = ref("");
     const bumped = ref(false);
+    const displayInput = ref(false);
 
     const docRef = doc(db, "transactions", props.transacid);
+
+    const displayInputState = () => {
+      displayInput.value = !displayinput.value;
+    }
 
     getDoc(docRef)
       .then((docSnap) => {
@@ -58,6 +109,22 @@ export default {
         amount.value = data.amount;
         bumptime.value = data.bump; // Assuming "bump" field contains a timestamp
         desc.value=data.desc
+
+        if(data.category){
+            category.value=data.category
+        }else{
+            category.value="General"
+        }
+        if(data.desc){
+            desc.value=data.desc
+        }else{
+            desc.value="NA"
+        }
+        if(data.message){
+            message.value=data.message
+        }else{
+            message.value="bump them!"
+        }
         
         getDoc(doc(db,"users",tnameid))
             .then((tnamesnap)=>{
@@ -78,7 +145,7 @@ export default {
           bump: Timestamp.now(),
         });
       } else {
-        displayTooEarly.value = true;
+        // displayTooEarly.value = true;
       }
     };
 
@@ -86,11 +153,13 @@ export default {
       message,
       tname,
       amount,
+      displayInput,
       // createBump,
       // sendMessage,
       bump,
       displayTooEarly,
       desc,
+      category,
       imgstr
     };
   }

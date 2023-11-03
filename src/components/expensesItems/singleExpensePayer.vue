@@ -6,7 +6,7 @@
                 <div class="inline-block my-auto">
                     you owe {{ tname }} $ {{ Number(amount).toFixed(2) }}
                     <div class="block">
-                        <span class="bg-bpop rounded-md text-xs font-bold px-1">{{ category }}: {{ desc }}</span>
+                        <span class="bg-b rounded-md text-xs px-1">{{ category }}: {{ desc }}</span>
                     </div>
                 </div>
             </div>
