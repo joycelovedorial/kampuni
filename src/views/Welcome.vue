@@ -91,13 +91,13 @@
 <script>
 import LoginForm from '@/components/LoginForm.vue'
 import SignupForm from '@/components/SignupForm.vue'
-import { ref } from 'vue'
+import { ref as vueref} from 'vue'
 import { auth, db, storage} from '@/firebase/config'
 import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,createUserWithEmailAndPassword} from 'firebase/auth';
-
+import { ref, getDownloadURL } from "firebase/storage";
 
 
 // Animations
@@ -106,23 +106,23 @@ export default {
   components: { LoginForm, SignupForm },
   
   setup () {
-    const registered = ref(true)
+    const registered = vueref(true)
     const router = useRouter()
-    const isRightPanelActive = ref(false);
+    const isRightPanelActive = vueref(false);
     //handleRegister
-    const Rerror = ref(null)
-    const firstName = ref("")
-    const lastName = ref("")
-    const email = ref("")
-    const password = ref("")
-    const birthday = ref("")
-    const country = ref("")
-    const bio = ref("")
-    const pfp = ref("")
+    const Rerror = vueref(null)
+    const firstName = vueref("")
+    const lastName = vueref("")
+    const email = vueref("")
+    const password = vueref("")
+    const birthday = vueref("")
+    const country = vueref("")
+    const bio = vueref("")
+    const pfp = vueref("")
     //hm
-    const googles = ref("")
-    const imageRef = storage.ref('profilepic.png')
-    imageRef.getDownloadURL()
+    const googles = vueref("")
+    const imageRef = ref(storage,'profilepic.jpg')
+    getDownloadURL(imageRef)
       .then((url)=>{
         pfp.value=url
       })
@@ -162,15 +162,18 @@ export default {
                 } catch (error) {
                   console.error('Error fetching user data:', error);
                 }
+              
+                  router.push({ name: 'joinCommunity' });
+               
         } catch (error) {
           Rerror.value=error.message;
         }
       };
     //handlelogin
-    const loginEmail = ref("")
-    const loginPassword = ref("")
-    const error = ref(null)
-    const errorMessage = ref("")
+    const loginEmail = vueref("")
+    const loginPassword = vueref("")
+    const error = vueref(null)
+    const errorMessage = vueref("")
 
     const handleLogin = async () => {
 
@@ -273,14 +276,10 @@ export default {
         console.error('Error fetching user data:', error)
       }
     }
-
-
-
-
-
     const togglePanel = () =>{
       isRightPanelActive.value = !isRightPanelActive.value
     }
+    
     return { registered, handleAuth,isRightPanelActive,togglePanel,loginEmail, loginPassword, handleLogin,signinGoogle, errorMessage,error,
       handleRegister,firstName,lastName,country,birthday,bio, email, password, Rerror, googles
     }
