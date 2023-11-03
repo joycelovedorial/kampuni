@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-2 bg-bpop rounded-lg p-2 border-2 border-black">
+    <div v-if="!paid" class="mt-2 bg-bpop rounded-lg p-2 border-2 border-black">
         <div class="font-bold font-jakarta text-sm flex justify-between">
             <div class="flex space-x-2 align-middle">
                 <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="'/profiles/' + imgstr" alt="">
