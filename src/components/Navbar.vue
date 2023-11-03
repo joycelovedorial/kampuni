@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="relative inline-block mr-3 w-36">
-        <img class="inline cursor-pointer h-12 w-12 rounded-full border-3 border-black" src="../assets/profiles/anyu.jpg" alt="" @click="toggleDropdown">
+        <img class="inline cursor-pointer h-12 w-12 rounded-full border-3 border-black" :src="imageURL" alt="" @click="toggleDropdown">
         <div :class="{ 'hidden': !dropdownVisible }" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
           <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <router-link to="../Profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">View Profile</router-link>
@@ -96,13 +96,30 @@
 <script>
 import '@/assets/main.css';
 import { ref } from 'vue';
-import { auth } from '@/firebase/config';
+import { auth,storage,db } from '@/firebase/config';
 import { useRouter } from 'vue-router'; // Import the useRouter function
+import { doc, getDoc } from 'firebase/firestore';
+import {  getDownloadURL } from "firebase/storage";
+
 
 export default {
     setup() {
         const router = useRouter(); // Initialize the router
         const dropdownVisible = ref(false);
+        const imageURL = ref("")
+
+        const user = auth.currentUser
+        const uid = user.uid
+        getDoc(doc(db,'users',uid))
+          .then((snap)=>{
+            const data = snap.data()
+
+            if (data.photoURL){
+              imageURL.value=data.photoURL
+            }
+
+
+          })
 
         const handleLogout = async () => {
             try {
@@ -114,11 +131,13 @@ export default {
                 console.error('Error signing out:', error);
             }
         };
+        
+
         const toggleDropdown = () => {
           dropdownVisible.value = !dropdownVisible.value
         }
 
-        return { handleLogout, dropdownVisible, toggleDropdown };
+        return { handleLogout, dropdownVisible, toggleDropdown,imageURL };
     }
 };
 </script>

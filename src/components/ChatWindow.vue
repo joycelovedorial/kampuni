@@ -8,6 +8,7 @@
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
               <div v-if="thisName==doc.name">
+                <img :src="doc.photoURL">
                 <span class="name">{{ doc.name }}</span>
                 <div class="single-chat-container" >
                   <span class="message">{{ doc.message }}</span>
@@ -15,6 +16,7 @@
                 </div>
               </div>
               <div v-else class="self">
+                <img :src="doc.photoURL">
                 <span class="name-self">{{ doc.name }}</span>
                 <div class="single-chat-container-self" >
                   <span class="message-self">{{ doc.message }}</span>
