@@ -136,6 +136,7 @@ export default {
             message:message.value,
             bump:true
         })
+        message.value=""
     }
 
     return {
