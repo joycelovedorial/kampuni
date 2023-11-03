@@ -30,6 +30,7 @@ import { addDoc, collection, getDoc, doc, query, where, getDocs, updateDoc } fro
 export default {
     props:{
         transacid:String,
+        key: String,
     },
     setup(props){
         const message=ref('')
@@ -39,6 +40,7 @@ export default {
         const docRef = doc(db,"transactions",props.transacid)
         const desc = ref("")
         const imgstr = ref("")
+        const bump = ref(null)
 
         getDoc(docRef)
             .then((docSnap)=>{
@@ -46,22 +48,24 @@ export default {
                 const tnameid =  data.receiver
                 amount.value = data.amount
                 desc.value=data.desc
+                // bump.value = data.bump
 
-                if(data.category){
-                    category.value=data.category
+                if(data.outing!==null){
+                    getDoc(doc(db,'outings',data.outing))
+                    .then((snap)=>{
+                        const data = snap.data()
+                        category.value=data.title
+                    })
                 }else{
                     category.value="General"
                 }
-                if(data.desc){
-                    desc.value=data.desc
-                }else{
-                    desc.value="NA"
-                }
-                if(data.message){
-                    message.value=data.message
-                }else{
-                    message.value="lucky they havent chase you yet 👀"
-                }
+                
+
+                getDoc(doc(db,"expenses",data.expense))
+                    .then((snaps)=>{
+                        const data = snaps.data()
+                        desc.value = data.desc
+                    })
 
                 getDoc(doc(db,'users',tnameid))
                     .then((dSnap)=>{

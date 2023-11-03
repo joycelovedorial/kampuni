@@ -140,7 +140,7 @@ export default {
             paid: false,
             payer: user,
             receiver: whopaid.value,
-            bump: Timestamp.now() 
+            bump: false
           });
           if (docRef2) {
           console.log('doc2 added');

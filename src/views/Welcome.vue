@@ -92,7 +92,7 @@
 import LoginForm from '@/components/LoginForm.vue'
 import SignupForm from '@/components/SignupForm.vue'
 import { ref } from 'vue'
-import { auth, db } from '@/firebase/config'
+import { auth, db, storage} from '@/firebase/config'
 import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc, setDoc, collection } from "firebase/firestore"; 
@@ -118,9 +118,14 @@ export default {
     const birthday = ref("")
     const country = ref("")
     const bio = ref("")
+    const pfp = ref("")
     //hm
     const googles = ref("")
-
+    const imageRef = storage.ref('profilepic.png')
+    imageRef.getDownloadURL()
+      .then((url)=>{
+        pfp.value=url
+      })
 
     const handleRegister = async () => {
       
@@ -135,9 +140,14 @@ export default {
               bio: bio.value,
               community: null,
               points: 0,
+              photoURL:pfp.value,
             });
             console.log("registered");
             const uid = cred.user.uid;
+           
+            await cred.user.updateProfile({
+              photoURL:pfp.value,
+            })
             const docRef = doc(db, 'users', uid);
 
                 try {
@@ -221,7 +231,11 @@ export default {
                 bio: null,
                 community: null,
                 points: 0,
+                photoURL:pfp.value,
             });
+            await cred.user.updateProfile({
+              photoURL:pfp.value,
+            })
 
             router.push({ name: 'joinCommunity' });
         }

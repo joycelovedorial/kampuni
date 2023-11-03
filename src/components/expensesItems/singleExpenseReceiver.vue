@@ -23,13 +23,9 @@
                     </div>
                 </div>
             </div>
-            <div class="block my-auto">
-              <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="displayInputState">
-                bump
-              </button>
-            </div>
           </div>
-          <div class="w-full my-2 rounde-lg">
+          <!-- <div class="w-full my-2 rounde-lg">
+            
             <div class="message-bar bg-y rounded-md px-1 shadow-inner">
               <span v-if="displayInput">
                 <input type="text" v-model="message">
@@ -38,7 +34,7 @@
                 <span>{{ message }}</span>
               </span>
             </div>
-          </div>
+          </div> -->
             <!-- <div class="w-full my-2 rounded-lg">
                 <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="displayInput">bump</button>
                 <div v-if="!displayInput" class="message-bar bg-y rounded-md px-1 shadow-inner">
@@ -62,14 +58,15 @@
     <!-- <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt=""> -->
     <!-- <img :src="'/profiles/' + imgstr" alt=""> -->
     <div class="bg-bnrom w-full bg-y rounded-md px-1 shadow-inner">
-      <span v-if="bumped">{{  message }}</span>
+        <div v-if="displayBump">
+            <button @click="displayBump=false">bump</button>
+        </div>
+        <div v-else>
+            <input type="text" v-model="message" @keyup.enter="handleBump">
+            <button @click="handleBump">Send</button>
+        </div>
       <!-- <span v-else>feel free to bump!</span> -->
     </div>
-    <div v-if="displayTooEarly">
-        <p>"Its too early for a bump"</p>
-    </div>
-    <button @click="bump">bump</button>
-    <input type="text" v-model="message">
   </div>
 
   <!-- <div>the other guys pic</div> -->
@@ -82,25 +79,21 @@ import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, upda
 export default {
   props: {
     transacid: String,
+    key: String,
   },
   setup(props) {
     const message = ref('');
     const tname = ref('');
     const amount = ref('');
-    const timenow = new Date();
     const bumptime = ref('');
     const displayTooEarly = ref(false);
     const desc = ref("");
     const category=ref("");
     const imgstr = ref("");
-    const bumped = ref(false);
-    const displayInput = ref(false);
-
+    // const displayInput = ref(false);
+    const displayBump=ref(true)
     const docRef = doc(db, "transactions", props.transacid);
-
-    const displayInputState = () => {
-      displayInput.value = !displayinput.value;
-    }
+    
 
     getDoc(docRef)
       .then((docSnap) => {
@@ -110,57 +103,52 @@ export default {
         bumptime.value = data.bump; // Assuming "bump" field contains a timestamp
         desc.value=data.desc
 
-        if(data.category){
-            category.value=data.category
-        }else{
-            category.value="General"
-        }
-        if(data.desc){
-            desc.value=data.desc
-        }else{
-            desc.value="NA"
-        }
-        if(data.message){
-            message.value=data.message
-        }else{
-            message.value="bump them!"
-        }
-        
         getDoc(doc(db,"users",tnameid))
             .then((tnamesnap)=>{
                 const data = tnamesnap.data()
                 tname.value=data.firstname
-                console.log(tname.value);
                 imgstr.value = data.firstname + ".jpg"
+            })
+
+        if(data.outing!==null){
+                getDoc(doc(db,'outings',data.outing))
+                .then((snap)=>{
+                    const data = snap.data()
+                    category.value=data.title
+                })
+            }else{
+                category.value="General"
+            }
+
+        getDoc(doc(db,"expenses",data.expense))
+            .then((snaps)=>{
+                const data = snaps.data()
+                desc.value = data.desc
             })
       });
 
-    const bump = async () => {
-      bumped.value = true;
-      const timeDifference = timenow - bumptime.value.toDate(); // Calculate time difference in milliseconds
-
-      if (timeDifference >= 24 * 60 * 60 * 1000) { // 24 hours in milliseconds
-        await updateDoc(doc(db, 'transactions', props.transacid), {
-          message: message.value,
-          bump: Timestamp.now(),
-        });
-      } else {
-        // displayTooEarly.value = true;
-      }
+    const bump = () => {
+        displayBump.value = false
     };
+
+    const handleBump = async () =>{
+        await updateDoc(doc(db,"transactions",props.transacid),{
+            message:message.value,
+            bump:true
+        })
+    }
 
     return {
       message,
       tname,
       amount,
-      displayInput,
-      // createBump,
-      // sendMessage,
+      displayBump,
       bump,
       displayTooEarly,
       desc,
       category,
-      imgstr
+      imgstr,
+      handleBump
     };
   }
 }
