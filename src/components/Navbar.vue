@@ -20,13 +20,15 @@
             <span class="ml-1">Home</span>
           </router-link>
         </div>
+        <!--  -->
         
         <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
             'drop-shadow-lg': $route.name !== 'Chatrooms',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Chatrooms',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Chatrooms', // Apply 'text-oranges' when active
-          }"
+            'bg-[#C295C7]': $route.name === 'Chatrooms',
+          }" 
           :disabled="$route.name === 'Chatrooms'" 
         >
           <router-link to="../Chatrooms" class="p-2 place-content-center flex items-center">
@@ -44,6 +46,7 @@
             // 'text-cyanp': $route.name !== 'Planner', // Apply 'text-white' when not active
             'shadow-inner': $route.name === 'Planner',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Planner', // Apply 'text-oranges' when active
+            'bg-[#86B8B1]': $route.name === 'Planner',
           }"
           :disabled="$route.name === 'Planner'" 
         >
@@ -62,6 +65,7 @@
             // 'text-cyanp': $route.name !== 'Expenses', // Apply 'text-white' when not active
             'shadow-inner': $route.name === 'Expenses',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Expenses', // Apply 'text-oranges' when active
+            'bg-[#99B898]': $route.name === 'Expenses',
           }"
           :disabled="$route.name === 'Expenses'" 
         >
