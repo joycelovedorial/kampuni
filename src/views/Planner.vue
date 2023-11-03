@@ -22,7 +22,7 @@
       <Outings @oCreate="displayCreateOuting = !displayCreateOuting"></Outings>
       <Calendar></Calendar>
       <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
-        <CreateOuting/>
+        <CreateOuting @emitCo="handleCreateOuting"/>
       </div>
     </div>
     <div v-if="displayTask" class="flex space-x-2" id="tasklist">
@@ -65,6 +65,10 @@ export default {
     const handleCreateTask = () => {
       displayCreateTask.value = !displayCreateTask.value;
     };
+
+    const handleCreateOuting = () =>{
+      displayCreateOuting.value=!displayCreateOuting.value
+    }
       return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting }
     }
 }
