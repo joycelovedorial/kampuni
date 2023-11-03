@@ -1,28 +1,33 @@
 <template>
-   <div>
-        <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
-        {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
-        <div class="bg-bnorm w-full p-2 rounded-lg">
-            <div>
-                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
-                    <span>{{ message }}</span>
-                </div>
-                <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
-                <br>
-                <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="paid">pay</button>
-            </div>
+   <!-- <div>
+     <div class="bg-bnorm w-full p-2 rounded-lg">
+       {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+       <div>
+         <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+           <span>{{ message }}</span>
         </div>
+        <span class="bg-bpop rounded-md px-1 text-xs font-bold">{{ category }}: {{ desc }}</span>
+        <br>
+        <button class="bg-g text-white rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="bump">bump</button>
+      </div>
     </div>
+  </div> -->
   <div>
-    <img :src="'/profiles/' + imgstr" alt="">
-  </div>
+    <img class="inline rounded-full h-6 w-6 border-black mx-2" :src="'/profiles/' + imgstr" alt="">
+    {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
+    <!-- <img :src="'/profiles/' + imgstr" alt=""> -->
+    <div class="bg-bnrom w-full bg-y rounded-md px-1 shadow-inner">
+      <span v-if="bumped">{{  message }}</span>
+      <span v-else>feel free to bump!</span>
+    </div>
     <div v-if="displayTooEarly">
         <p>"Its too early for a bump"</p>
     </div>
     <button @click="bump">bump</button>
     <input type="text" v-model="message">
+  </div>
 
-  <div>the other guys pic</div>
+  <!-- <div>the other guys pic</div> -->
 </template>
 
 <script>
@@ -40,8 +45,9 @@ export default {
     const timenow = new Date();
     const bumptime = ref('');
     const displayTooEarly = ref(false);
-    const desc = ref("")
-    const imgstr = ref("")
+    const desc = ref("");
+    const imgstr = ref("");
+    const bumped = ref(false);
 
     const docRef = doc(db, "transactions", props.transacid);
 
@@ -63,6 +69,7 @@ export default {
       });
 
     const bump = async () => {
+      bumped.value = true;
       const timeDifference = timenow - bumptime.value.toDate(); // Calculate time difference in milliseconds
 
       if (timeDifference >= 24 * 60 * 60 * 1000) { // 24 hours in milliseconds
@@ -79,6 +86,8 @@ export default {
       message,
       tname,
       amount,
+      // createBump,
+      // sendMessage,
       bump,
       displayTooEarly,
       desc,

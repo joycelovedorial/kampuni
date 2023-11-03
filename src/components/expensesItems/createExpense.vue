@@ -2,7 +2,7 @@
   <div class="create-expenses mx-auto">
 
     <form @submit.prevent="addExpense">
-      <div class="row">
+      <!-- <div class="row">
         <div>People involved</div>
       
         <div v-for="user in users" :key="user.id">
@@ -24,32 +24,22 @@
           <label :for="user.id">{{ user.name }}</label>
           <input type="radio" :id="user.id" v-model="whopaid" :value="user.id">
         </div>
-      </div>
+      </div> -->
+      <div clas="flex flex-col">
+        <div class="w-1/2 inline-block">
+          <label for="expense_name">name of expense</label>
+          <input class="form-control rounded-md border-0 pl-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name">
 
-      <div class="row">
-        <div>
-          <label for="expense_name">Name of Expense</label>
-          <input class="form-control col-6" type="text" v-model="expense_desc" id="expense_name">
-        </div>
-
-        <div>
-          <label for="expense_cost">Cost of Expense</label>
-          <input class="form-control col-6" type="text" v-model="cost" id="expense_cost">
-        </div>
-
-        <div>
-          <label for="expense_category">Category of Expense</label>
-          <select v-model="category">
-            <option :value=null>Non-Outing</option>
-            <option v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
-
-          </select>
-        </div>
-
+          <label for="expense_cost">cost of expense</label>
+          <input class="form-control rounded-md border-0 pl-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name">
         
-      </div>
-      <div class="flex">
-        <div class="row">
+          <label for="expense_category">Category of Expense</label>
+              <select v-model="category">
+                <option :value=null>Non-Outing</option>
+                <option v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
+              </select>
+        </div>
+        <div class="w-1/2 inline-block">
           <div>People involved</div>
           <div v-for="user in users" :key="user.id">
             <label :for="user.id">{{ user.name }}</label>
@@ -61,9 +51,6 @@
             :value="user.id"
             />
           </div>
-        </div>
-        
-        <div class="row">
           <div>Person who paid</div>
           <div v-for="user in users" :key="user.id">
             <label :for="user.id">{{ user.name }}</label>
@@ -71,7 +58,6 @@
           </div>
         </div>
       </div>
-      
       <div class="bg-g text-center text-white font-extrabold p-3">
         <button>Add Expense</button>
       </div>
