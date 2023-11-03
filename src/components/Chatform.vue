@@ -25,6 +25,7 @@
           const displayName = ref('')
           const message = ref('')
           const selectedChat = ref('')
+          const photourl = ref('')
           
           const fetchData=async()=>{
             const docRef = doc(db, "users", uid);
@@ -32,6 +33,9 @@
             const docData = docSnap.data()
             displayName.value = docData.firstname
             console.log(displayName.value);
+            if(docData.photoURL){
+              photourl.value=docData.photoURL
+            }
           }
 
           const handleSubmit = async () => {
@@ -43,6 +47,7 @@
                     name: displayName.value,
                     message: message.value,
                     createdAt: serverTimestamp(),
+                    photoURL:photourl.value,
                     });
                 console.log("doc added ",docRef.id)
                 message.value = '';

@@ -2,6 +2,9 @@
     <div class="profileEdit">
     <form @submit.prevent="updateEdit">
     <div class="editForm">
+    <div><span>Change Profile Pic</span>
+      <input type="file" accept="image/*" @change="handleFileUpload" />
+    </div>
       <label for="firstname">First Name</label>
       <input type="text" id="firstname" v-model="editfirstname" :placeholder="firstname">
       <label for="lastname">Last Name</label>
@@ -25,6 +28,8 @@ import { doc,getDoc,setDoc,updateDoc } from 'firebase/firestore';
 import { auth,db } from "@/firebase/config"
 import { ref, onMounted} from 'vue';
 import { useRouter } from 'vue-router';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 export default {
     components: { Navbar },
     setup(props,context) {
@@ -43,7 +48,41 @@ export default {
         const editcommunity = ref('')
         const toEdit = ref(true)
         const router = useRouter()
+        const profilePictureURL = ref('');
 
+        const handleFileUpload = async (event) => {
+            const file = event.target.files[0];
+
+            if (file) {
+                try {
+                const storage = getStorage();
+                const storagePath = `profile_pictures/${userId}/${file.name}`;
+
+                const fileRef = storageRef(storage, storagePath);
+
+                try {
+                    const snapshot = await uploadBytes(fileRef, file);
+                    const downloadURL = await getDownloadURL(fileRef);
+
+                    // Update the profilePictureURL with the download URL
+                    profilePictureURL.value = downloadURL;
+                    const user=auth.currentUser
+                    const uid=user.uid
+                    await updateDoc(doc(db,"users",uid),{
+                        photoURL: downloadURL
+                    })
+    
+
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                }
+                } catch (error) {
+                console.error('Error initializing Firebase Storage:', error);
+                }
+            }
+            };
+
+        
         const fetchData = async () => {
             const user = auth.currentUser;
 
@@ -119,8 +158,9 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return {updateEdit,firstname, lastname, birthday, country, bio, community,toEdit,
-                    editfirstname,editlastname,editcountry,editbirthday,editbio,editcommunity,
+            return {updateEdit,firstname, lastname, birthday, country, bio, community,toEdit, handleFileUpload,
+                    editfirstname,editlastname,editcountry,editbirthday,editbio,editcommunity, profilePictureURL,
+     
           }
     }
 }

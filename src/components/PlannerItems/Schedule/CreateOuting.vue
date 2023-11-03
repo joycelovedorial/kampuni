@@ -41,13 +41,16 @@ export default {
         const desc = ref("")
         const location = ref("")
         const date = ref("")
-    
+        const photourl = ref("")
 
         const createOuting = async() => {
             const user = auth.currentUser
             const uid = user.uid
             const docSnap = await getDoc(doc(db,"users",uid))
             const docData = docSnap.data()
+            if (docData.photoURL){
+                photourl.value=docData.photoURL
+            }
             const cid = docData.community
 
             const dateOut = new Date(date.value)
@@ -58,6 +61,7 @@ export default {
                     location: location.value,
                     description: desc.value,
                     title: title.value,
+                    photoURL:photourl.value
                 });
 
             if (outRef) {
