@@ -25,6 +25,7 @@
     "pinia": "^2.1.7",
     "primevue": "^3.35.0",
     "vue": "^3.2.13",
+    "vue-chartjs": "^5.2.0",
     "vue-firebase": "^1.0.8",
     "vue-gapi": "^2.1.2",
     "vue-router": "^4.0.3",
