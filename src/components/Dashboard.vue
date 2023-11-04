@@ -24,13 +24,7 @@
       <h1 class="mb-2 font-bold text-black text-3xl">Expenses</h1>
        <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" 
             style="height:50vh">
-            <div v-for="yop in youOwePeople" :key="yop.id">
-              <ExpensesList :transobject="yop"/>
-            </div>
-
-            <div v-for="poy in peopleOweYou" :key="poy.id">
-              <ExpensesList :transobject="poy"/>
-            </div>
+            <ExpenseList/>
         </div>
       </div>
       <!-- <div class="col-lg-1 col-md-1 col-sm-1"></div> -->
@@ -53,12 +47,6 @@ export default {
   },
   setup(props) {
     const comid=ref("")
-    const peopleOweYou = ref([])
-    const youOwePeople = ref([])
-
-
-  
-
     //fetching of stuff
     const user = auth.currentUser
     const uid = user.uid
@@ -66,44 +54,9 @@ export default {
       .then((docSnap)=>{
         comid.value = docSnap.data().community
       })
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
-    const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
-      const result = []
-      oweYouSnap.forEach((adoc)=>{
-        const data = adoc.data()
-        getDoc(doc(db,"users",data.payer))
-          .then((snap)=>{
-            const snapdata = snap.data()
-            const photourl = snapdata.photoURL
-          result.push({...adoc.data(),id:adoc.id,photoURL:photourl})
-
-          })
-      })
-      peopleOweYou.value=result
-      console.log(peopleOweYou.value,"dashboard poy");
-      
-    })
-    
-
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
-    const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
-      const result = []
-      youOweSnap.forEach((adoc)=>{
-        const data = adoc.data()
-        getDoc(doc(db,"users",data.receiver))
-          .then((snap)=>{
-            const snapdata = snap.data()
-            const photourl = snapdata.photoURL
-            result.push({...adoc.data(),id:adoc.id,photoURL:photourl})
-          })
-      })
-      youOwePeople.value=result
-      console.log(youOwePeople.value,'dashboard yop');
-    })
-    
       
     
-    return { comid,peopleOweYou,youOwePeople};
+    return { comid };
   },
 };
 </script>
