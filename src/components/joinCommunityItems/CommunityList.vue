@@ -6,10 +6,14 @@
                     <div v-if="communityArray.length > 0">
                         <div v-for="com in communityArray" :key="com.id">
                             <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
-
                                 <div class="col-md-9 col-12 flex">
                                     <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
-                                        <ul></ul>
+                                    <span>{{ com.names }}</span>
+                                    <ul >
+                                        <li v-for="(name,idx) in com.names" :key="idx">
+                                            {{ name }}
+                                        </li>
+                                    </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12 flex">
@@ -35,29 +39,33 @@ import { ref, onMounted } from 'vue'
 import { db,auth } from "@/firebase/config"
 import { collection, doc, getDocs, getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
 import { useRouter } from 'vue-router';
+import { coolGray } from 'tailwindcss/colors';
 export default {
     setup(){
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
-     const homie_list = ref([])
-     const names = ref([])
+     const nameArray = ref([]) 
      
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
-            names.value = [];
-            querySnapshot.forEach((doc) => {
-                communityArray.value.push({...doc.data(),id:doc.id}); 
+            nameArray.value = [];
+            querySnapshot.forEach((sdoc) => {
                 // console.log(communityArray)// Access the ref using .value
-                /*
-                homie_list.value = doc.data().homies;
-                for (homie_id of homie_list){
-                    homie = getDoc(doc(db, "users", homie_id));
-                    homie_name = homie.name;
-                    names.value.push(homie_name);
-                }
-                */
+                const data = sdoc.data()
+                const homie_list= data.homies
+                const nameArray = []
+                for (const homie_id of homie_list){
+                    getDoc(doc(db, "users", homie_id))
+                        .then((snap)=>{
+                            const sdata = snap.data()
+                            const name = sdata.firstname
+                            nameArray.push(name)
+                        })
+                    }
+                    communityArray.value.push({...sdoc.data(),id:sdoc.id,names:nameArray}); 
+                    console.log(communityArray.value,"com")
 
             });
 
@@ -128,7 +136,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return { communityArray, joinCom, error, names }
+            return { communityArray, joinCom, error }
     } 
 }
 </script>
