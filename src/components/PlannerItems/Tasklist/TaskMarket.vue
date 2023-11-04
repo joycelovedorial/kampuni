@@ -45,7 +45,6 @@ export default {
         const tasks = ref([])
         
     
-
         const q = query(collection(db,"tasks"),where("userid","==",null))
         const unsub = onSnapshot(q,(snap)=>{
             const results= [];
