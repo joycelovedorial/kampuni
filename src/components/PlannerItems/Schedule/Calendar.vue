@@ -3,26 +3,26 @@
     <div class="left">
       <div class="calendar">
         <div class="month">
-          <i class="fas fa-angle-left prev"></i>
-          <div class="date">November 2023</div>
-          <i class="fas fa-angle-right next"></i>
+          <button @click="prevMonth">Prev</button>
+          <div class="date">{{ currentMonth }} {{ currentYear }}</div>
+          <button @click="nextMonth">Next</button>
         </div>
+
         <div class="weekdays">
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
-          <div>Sun</div>
+          <div v-for="(day,idx) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="idx">{{ day }}</div>
         </div>
+
+
 
         <div class="days">
-    
+          <div v-for="(day,idx) in days" :key="idx" :class="{ 'today': day === today }">{{ day }}</div>
         </div>
 
-  
+        
+      </div>
 
+  
+<!--
         <div class="days">
           <div class="day prev-date">30</div>
           <div class="day prev-date">31</div>
@@ -59,17 +59,13 @@
           <div class="day next-date">1</div>
           <div class="day next-date">2</div>
           <div class="day next-date">3</div>
+           </div>
+-->
 
 
-        </div>
-
-
-      </div>
-
-    </div>
-
+</div>
     <div class="right">
-      <div v-for="(outing, index) in filteredOutingArray" :key="index">
+      <div>
       <!-- Display the properties of the outing here -->
       <table>
   <thead>
@@ -79,34 +75,49 @@
       <th>Description</th>
       <th>Location</th>
     </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(outing, index) in filteredOutingArray" :key="index">
+    <tr  v-for="outing in outingArray" :key="outing.id">
       <td>{{ outing.title }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
     </tr>
+  </thead>
+  <tbody>
+    
+    
   </tbody>
-</table>
+  </table>
       <!-- Add more properties as needed -->
     </div>
       
 
-
-
-    </div>
+  </div>
 
   </div>
+
+
 
 </template>
 
 <script>
-import { onMounted,onBeforeMount, ref,watch,computed } from 'vue'
+import { onMounted, onBeforeMount, ref, watch, computed } from "vue";
 // import { capitalize } from './helpers'
 
-import {db,auth} from "../../../firebase/config.js"
-import { query,collection,doc,getDoc,getDocs,updateDoc,setDoc,addDoc,where,onSnapshot,Timestamp,collectionGroup} from 'firebase/firestore'
+import { db, auth } from "../../../firebase/config.js";
+import {
+  query,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  setDoc,
+  addDoc,
+  where,
+  onSnapshot,
+  Timestamp,
+  collectionGroup,
+} from "firebase/firestore";
 export default {
   setup() {
     const taskArray = ref([]);
@@ -114,6 +125,26 @@ export default {
     const comid = ref("");
     const userid = ref("");
     const today = new Date();
+    
+    //for the calendar
+    const date = ref(new Date());
+    const currentMonth = computed(() => date.value.getMonth() + 1);
+    const currentYear = computed(() => date.value.getFullYear());
+    const today_calendar = new Date().getDate();
+
+    const days = computed(() => {
+      const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
+      return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    });
+
+    const nextMonth = () => {
+      date.value.setMonth(date.value.getMonth() + 1);
+    };
+
+    const prevMonth = () => {
+      date.value.setMonth(date.value.getMonth() - 1);
+    };
+
 
     const fetchData = async () => {
       console.log("fetching");
@@ -123,90 +154,114 @@ export default {
       const docSnap = await getDoc(docRef);
       const docData = docSnap.data();
       comid.value = docData.community;
-      console.log(comid.value,"fetch");
+      console.log(comid.value, "fetch");
     };
 
     onMounted(async () => {
       await fetchData(); // Fetch data
 
       // Watch for changes in userid
-          
-        const qtask = query(collection(db, "tasks"), where("userid", "==",userid.value));
-        const unsub = onSnapshot(qtask, (snap) => {
-          const results = [];
-          snap.forEach((doc) => {
-            results.push({ ...doc.data(), id: doc.id });
-          });
-          taskArray.value = results;
-          console.log("tasks fetched", taskArray.value);
-        });
 
-        
-        console.log(comid.value,"comid");
-        const qouting = query(collection(db, "outings"), where("community", "==", comid.value));
-        const unsubout = onSnapshot(qouting, (snap) => {
-          console.log(snap);
-          const resultOut = [];
-          snap.forEach((doc) => {
-            resultOut.push({...doc.data(),id:doc.id})
-          });
-          outingArray.value = resultOut;
-          console.log("outings fetched", outingArray.value);
+      const qtask = query(
+        collection(db, "tasks"),
+        where("userid", "==", userid.value)
+      );
+      const unsub = onSnapshot(qtask, (snap) => {
+        const results = [];
+        snap.forEach((doc) => {
+          results.push({ ...doc.data(), id: doc.id });
         });
-        
+        taskArray.value = results;
+        console.log("tasks fetched", taskArray.value);
       });
 
-      const filteredOutingArray = computed(async () => {
-        const filteredOutings = [];
+      console.log(comid.value, "comid")
 
-        for (const outing of outingArray.value) {
-          // Check if there is a subcollection "usersInvolved"
-          const usersInvolvedCollection = collection(db, "outings", outing.id, "usersInvolved");
+      const qouting = query(
+        collection(db, "outings"),
+        where("community", "==", comid.value)
+      );
+      const unsubout = onSnapshot(qouting, (snap) => {
+        console.log(snap);
+        const resultOut = [];
+        snap.forEach((doc) => {
+          resultOut.push({ ...doc.data(), id: doc.id });
+        });
+        outingArray.value = resultOut;
+        console.log("outings fetched", outingArray.value);
+      });
+    });
 
-          // Query the subcollection to get the documents
-          const userInvolvedDocs = await getDocs(usersInvolvedCollection);
+    const filteredOutingArray = computed(async () => {
+      const filteredOutings = [];
 
-          // Check if any user document in usersInvolved has imIn set to true
-          if (userInvolvedDocs) {
-            for (const userDoc of userInvolvedDocs.docs) {
-              const userInvolvedData = userDoc.data();
-              if (userInvolvedData.user === userid.value && userInvolvedData.imIn === true) {
-                filteredOutings.push(outing); // The user is involved in the outing
-                break; // Break the loop once a matching user is found
-              }
+      for (const outing of outingArray.value) {
+        // Check if there is a subcollection "usersInvolved"
+        const usersInvolvedCollection = collection(
+          db,
+          "outings",
+          outing.id,
+          "usersInvolved"
+        );
+
+        // Query the subcollection to get the documents
+        const userInvolvedDocs = await getDocs(usersInvolvedCollection);
+
+        // Check if any user document in usersInvolved has imIn set to true
+        if (userInvolvedDocs) {
+          for (const userDoc of userInvolvedDocs.docs) {
+            const userInvolvedData = userDoc.data();
+            if (
+              userInvolvedData.user === userid.value &&
+              userInvolvedData.imIn === true
+            ) {
+              filteredOutings.push(outing); // The user is involved in the outing
+              break; // Break the loop once a matching user is found
             }
           }
         }
-          console.log("filtered outings",filteredOutings);
-          return filteredOutings;
-        });
+      }
+      console.log("filtered outings", filteredOutings);
+      return filteredOutings;
+    });
 
-      return {filteredOutingArray,taskArray};// Outings that users are in
-    }
-  }
+    return { 
+      filteredOutingArray,
+      taskArray,
+      currentMonth,
+      currentYear,
+      days,
+      today,
+      nextMonth,
+      prevMonth,
+      userid,
+      comid,
+      outingArray,
 
+    }; // Outings that users are in
+  },
+};
 </script>
 
 <style scoped>
-
-:root{
+:root {
   --primary-clr: #b38add;
 }
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-template{
+template {
   min-height: 20vh;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e2e1dc; 
+  background-color: #e2e1dc;
 }
 
-.container{
+.container {
   position: relative;
   width: auto;
   min-height: auto;
@@ -216,29 +271,28 @@ template{
   display: flex;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
-
 }
 
-.left{
+.left {
   width: 60%;
   padding: 15px;
 }
 
-.calendar{
+.calendar {
   position: relative;
   width: 100%;
   height: 100%;
-  display:flex;
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  color: #86B8B1;
+  color: #86b8b1;
   border-radius: 5px;
   background-color: #fff;
 }
 
 .calendar⸬before,
-.calendar⸬after{
+.calendar⸬after {
   content: "";
   position: absolute;
   top: 50%;
@@ -250,10 +304,10 @@ template{
   transform: translateY(-50%);
 }
 
-.calendar⸬before{
+.calendar⸬before {
   height: 94%;
   left: calc(100% + 12px);
-  background-color: rgb(153,153,153)
+  background-color: rgb(153, 153, 153);
 }
 
 .calendar .month {
@@ -275,7 +329,7 @@ template{
 
 .calendar .month .prev:hover,
 .calendar .month .next:hover {
-  color: #86B8B1;
+  color: #86b8b1;
 }
 
 .calendar .weekdays {
@@ -298,7 +352,7 @@ template{
   justify-content: center;
 }
 
-.calendar .days{
+.calendar .days {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -308,34 +362,31 @@ template{
   margin-bottom: 20px;
 }
 
-.calendar .days .day{
+.calendar .days .day {
   width: 14.28%;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color:#86B8B1;
-  border: 1px solid #86B8B1;
+  color: #86b8b1;
+  border: 1px solid #86b8b1;
 }
 
 .calendar .day:not(.prev-date, .next-date):hover {
   color: white;
-  background-color: #86B8B1;
+  background-color: #86b8b1;
 }
 
-
-.calendar .days .prev-date
-.calendar.days.prev-date{
-  color: #86B8B1;
+.calendar .days .prev-date .calendar.days.prev-date {
+  color: #86b8b1;
 }
 
-
-.calendar .days .active{
+.calendar .days .active {
   position: relative;
   font-size: 1rem;
   color: #fff;
-  background-color: #86B8B1;
+  background-color: #86b8b1;
 }
 
 .calendar .days .active⸬before {
@@ -345,7 +396,7 @@ template{
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: 0 0 10px 2px var(#86B8B1)
+  box-shadow: 0 0 10px 2px var(#86b8b1);
 }
 
 .calendar .days .active⸬after {
@@ -357,8 +408,6 @@ template{
   height: 6px;
   border-radius: 30px;
   transform: translateX(-50%);
-  background-color: var(#86B8B1)
+  background-color: var(#86b8b1);
 }
-
-
 </style>
