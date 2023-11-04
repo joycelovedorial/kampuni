@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-5">
+  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-2">
   
     <div class="flex flex-nowrap content-center "  >
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
