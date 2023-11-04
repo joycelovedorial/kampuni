@@ -32,7 +32,7 @@ export default {
       });
     });
 
-    const query2 = query(collection(db, 'transactions'), where('receiver', '==', uid));
+    const query2 = query(collection(db, 'transactions'), where('receiver', '==', uid),where("paid","==",false));
     const unsub2 = onSnapshot(query2, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         const data = doc.data();

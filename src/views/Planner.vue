@@ -18,21 +18,32 @@
       </a>
     </nav>
 
-    <div v-if="displayCalendar">
-      <Outings @oCreate="displayCreateOuting = !displayCreateOuting"></Outings>
-      <Calendar></Calendar>
-      <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
-        <CreateOuting @emitCo="handleCreateOuting"/>
+
+      <div v-if="displayCalendar">
+        <button @click="displayCreateOuting = !displayCreateOuting">Create Outing</button>
+        <Outings/>
+        <Calendar/>
+        <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
+          <CreateOuting @emitCo="handleCreateOuting"/>
+        </div>
       </div>
-    </div>
-    <div v-if="displayTask" class="flex space-x-2" id="tasklist">
-      <TaskMarket @eCreate="handleCreateTask"/>
-      <Leaderboard />
-      <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateTask">
-        <createTask @closeCreateTask="displayCreateTask=false"/>
+
+      <div v-if="displayTask" class="container" id="tasklist">
+        <div class="row">
+        <div class="col-3">
+          <TaskMarket @eCreate="handleCreateTask"/>
+        </div>
+
+        <div class="col-9">
+          <Leaderboard />
+        </div>
       </div>
-    </div>
-  </div> 
+        <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateTask">
+          <createTask @closeCreateTask="displayCreateTask=false"/>
+        </div>
+      </div>
+    </div> 
+
 </template>
 
 <script>
