@@ -5,12 +5,8 @@
       <!-- <div v-if="error">{{ error }}</div> -->
       <div class="chatTitle">
         {{name}}
-        <div class="click-expenses" @click="displayExpenses=!displayExpenses">
-          Expenses ▶
-        </div>
-        <div>
-          <button @click="deleteChatroom">Delete Chatroom</button>
-          <div v-if="errorMessage">{{ errorMessage }}</div>
+        <div class="click-expenses" @click="toggleContent">
+          {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
       <div id="leftside">
@@ -84,7 +80,10 @@ export default {
       const outid= ref("")
       const expensesArray = ref([])
       const displayCreateExpense = ref(false)
-      const displayExpenses = ref(false)
+      const isContentAVisible = ref(true)
+      const toggleContent = () => {
+        isContentAVisible.value = !isContentAVisible.value;
+      };
       const errorMessage = ref('')
       
       const fetchName = async () => {
@@ -238,9 +237,7 @@ export default {
       })
 
       return {errorMessage,deleteChatroom,documents,formattedDocuments,selectedchat,
-        messages,name,thisName,outid,expensesArray,displayCreateExpense,displayExpenses}
-      
-      
+        messages,name,thisName,outid,expensesArray,displayCreateExpense,isContentAVisible,toggleContent,}
     }
 
 }
