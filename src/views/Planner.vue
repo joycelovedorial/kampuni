@@ -3,15 +3,15 @@
   <div id="calendar-page">
     <nav class="flex items-center justify-center h-16">
       <a
-        class="button font-fredoka text-sm text-black rounded-l-md border-1 border-orangep p-2"
-        :class="{ 'bg-oranges': !displayCalendar, 'bg-white': displayCalendar }"
+        class="button font-fredoka text-sm text-black rounded-l-md border-1 border-black p-2"
+        :class="{ 'bg-white': !displayCalendar, 'bg-y': displayCalendar }"
         @click="displayTask = false; displayCalendar = true; displayOutings = false"
       >
         Calendar
       </a>
       <a
-        class="button font-fredoka text-sm text-black rounded-r-md border-1 border-orangep p-2"
-        :class="{ 'bg-oranges': !displayTask, 'bg-white': displayTask }"
+        class="button font-fredoka text-sm text-black rounded-r-md border-1 border-black p-2"
+        :class="{ 'bg-white': !displayTask, 'bg-y': displayTask }"
         @click="displayTask = true; displayCalendar = false; displayOutings = false"
       >
         Tasklist
@@ -28,13 +28,14 @@
         </div>
       </div>
 
-      <div v-if="displayTask" class="container" id="tasklist">
+      <div v-if="displayTask" class="container " id="tasklist">
         <div class="row">
-        <div class="col-3">
+        <div class="col-12">
           <TaskMarket @eCreate="handleCreateTask"/>
         </div>
-
-        <div class="col-9">
+        </div>
+        <div class="row">
+        <div class="col-12">
           <Leaderboard />
         </div>
       </div>
@@ -94,7 +95,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 88vh; /* 100% of viewport height */
+    height: 100vh; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 </style>

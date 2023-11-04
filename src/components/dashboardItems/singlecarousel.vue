@@ -89,7 +89,7 @@ export default {
         const outID = ref(props.outid)
         const user = auth.currentUser
         const uid = user.uid
-        const photourl=ref("")
+        const photourl = ref("")
 
         const formatDate = (timestamp) => {
             const dateObj = new Date(timestamp.toMillis());
@@ -105,6 +105,7 @@ export default {
                 
                 const outSnap = await getDoc(outRef)
                 const outData = outSnap.data()
+                
           
                 title.value = outData.title
                 desc.value = outData.description
@@ -113,7 +114,7 @@ export default {
                 const { date: formattedDate, time: formattedTime } = formatDate(outData.date);
                 date.value = formattedDate;
                 time.value = formattedTime;
-                photourl.value =outData.photoURL
+                photourl.value = outData.photoURL;
                 //probably need to use snap shot here... shag...
             }catch{
 

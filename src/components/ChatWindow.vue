@@ -9,13 +9,20 @@
           {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
-      <div id="leftside">
+      <div>
+        <button @click="deleteChatroom">Delete Button</button>
+        <div v-if="errorMessage"><span>{{ errorMessage }}</span></div>
+      </div>
+      <div id="leftside" v-if="isContentAVisible">
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
               <div v-if="thisName==doc.name">
-                <img :src="doc.photoURL">
-                <span class="name">{{ doc.name }}</span>
+      
+                <span class="name"><img :src="doc.photoURL">
+                  {{ doc.name }}
+                </span>
                 <div class="single-chat-container" >
+                 
                   <span class="message">{{ doc.message }}</span>
                   <div class="datetime-thing">
                     <span class="created-at">{{ doc.createdAt }} ago</span>
@@ -23,8 +30,10 @@
                 </div>
               </div>
               <div v-else class="self">
-                <img :src="doc.photoURL">
-                <span class="name-self">{{ doc.name }}</span>
+                <span class="name-self">
+                    <img :src="doc.photoURL">
+                           {{ doc.name }}
+                </span>
                 <div class="single-chat-container-self" >
                   <span class="message-self">{{ doc.message }}</span>
                   <div class="datetime-thing">
@@ -34,24 +43,29 @@
               </div>
             </div>
         </div>
-      </div>
-    </div>
-    <div class="chatform">
+        <div class="chatform">
           <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
-    </div>
-    </div>
-    <div v-if="displayExpenses">
-      <div id="rightside" v-if="outid" class="col-3">
-        <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
-        <div v-if="displayCreateExpense">
-          <createExpense :outingid="outid"/>
-        </div>
-        <div class="container" v-for="exp in expensesArray" :key="exp.id">
-          {{ exp.desc }}
-          {{ exp.amount }}
         </div>
       </div>
+      
+      <div v-else>
+
+        <div id="rightside" v-if="outid" class="col-3">
+          <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+          <div v-if="displayCreateExpense">
+            <createExpense :outingid="outid"/>
+          </div>
+          <div class="container" v-for="exp in expensesArray" :key="exp.id">
+            {{ exp.desc }}
+            {{ exp.amount }}
+          </div>
+        </div>
+    
+      </div>
     </div>
+    
+    </div>
+   
   </div>
 </template>
 
@@ -60,7 +74,7 @@ import Chatform from '@/components/Chatform.vue';
 import createExpense from './expensesItems/createExpense.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onMounted, onUpdated,ref,watch} from 'vue'
-import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs} from "firebase/firestore";
+import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs, deleteDoc} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform,createExpense},
@@ -89,7 +103,7 @@ export default {
       const fetchName = async () => {
         const user = auth.currentUser
         const uid = user.uid
-        const docRef =doc(db,"users",uid)
+        const docRef = doc(db,"users",uid)
         const docSnap = await getDoc(docRef)
         const docData = docSnap.data()
         thisName.value = docData.firstname
@@ -97,26 +111,7 @@ export default {
       fetchName();
 
       console.log("setup",props.name);
-      getDoc(doc(db,"chatrooms",props.selectedchat))
-        .then((docSnap)=>{
-          const data = docSnap.data()
-          if (data.outing){
-            outid.value=data.outing
-            const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
-            expensesArray.value = []
-            const qExSnap = getDocs(qExpenses).then((querySnap)=>{
-              querySnap.forEach((doc)=>{
-                expensesArray.value.push({...doc.data(),id:doc.id})
-                console.log("expenses arrya",expensesArray.value);
 
-              })
-            })
-          }else{
-            outid.value=null
-            expensesArray.value=[]
-            console.log("no outing");
-          }
-        })
       
 
         const deleteChatroom = async () => {
@@ -136,8 +131,8 @@ export default {
               oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
               if (outingDate <= oneWeekAgo) {
-                // If the outing date is more than 1 week old, you can proceed with deletion
-                // Delete the chatroom here
+                await deleteDoc(outRef)
+                await deleteDoc(chatRef)
               } else {
                 // If the outing date is less than 1 week old, show an error message
                 errorMessage.value = 'Too early to delete';
@@ -187,30 +182,30 @@ export default {
 
         if (newChatRoom) {
           // Create a new query for the new chat room and start a new listener
-          getDoc(doc(db,"chatrooms",newChatRoom))
-            .then((docSnap)=>{
-              const data = docSnap.data()
-              if(data.outing){
-                outid.value=data.outing
-                const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
-                expensesArray.value = []
-                const qExSnap = getDocs(qExpenses).then((querySnap)=>{
-                  querySnap.forEach((doc)=>{
-                    expensesArray.value.push({...doc.data(),id:doc.id})
-                    console.log("expenses arrya",expensesArray.value);
+
+            getDoc(doc(db,"chatrooms",props.selectedchat))
+              .then((docSnap)=>{
+                const data = docSnap.data()
+                if (data.outing){
+                  outid.value=data.outing
+                  const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
+                  expensesArray.value = []
+                  const qExSnap = getDocs(qExpenses).then((querySnap)=>{
+                    querySnap.forEach((doc)=>{
+                      expensesArray.value.push({...doc.data(),id:doc.id})
+                      console.log("expenses arrya",expensesArray.value);
+                    })
                   })
-                })
-              }else{
-                outid.value=null
-                expensesArray.value=[]
-                console.log("no outng");
-              }
-            
-            })
+                }else{
+                  outid.value=null
+                  expensesArray.value=[]
+                  console.log("no outing");
+                }
+              })
+
          
           const q = query(collection(db, "chatrooms", newChatRoom, "messages"), orderBy("createdAt"));
           unsubscribe = onSnapshot(q, (snapshot) => {
-            // Handle updates for the new chat room
             let results = [];
             snapshot.docs.forEach((doc) => {
               doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
@@ -279,13 +274,21 @@ export default {
     margin-right: 6px;
     color: #B492B8;
   }
+  .name img{
+    margin-right: 6px;
+    display:inline-block;
+
+  }
   .name-self{
     color:#B492B8;
     font-weight: bold;
   }
 
+  .name-self img{
+    display:inline-block;
+  }
   .chat-window {
-    background: #FFFDF0;
+    background: #fffbe4;
     padding: 10px;
     border-radius: 20px;
     border: 2px #000000 solid;
