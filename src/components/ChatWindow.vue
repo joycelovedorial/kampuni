@@ -94,7 +94,7 @@ export default {
       const fetchName = async () => {
         const user = auth.currentUser
         const uid = user.uid
-        const docRef =doc(db,"users",uid)
+        const docRef = doc(db,"users",uid)
         const docSnap = await getDoc(docRef)
         const docData = docSnap.data()
         thisName.value = docData.firstname
@@ -271,7 +271,7 @@ export default {
   }
 
   .chat-window {
-    background: #FFFDF0;
+    background: #fffbe4;
     padding: 10px;
     border-radius: 20px;
     border: 2px #000000 solid;
