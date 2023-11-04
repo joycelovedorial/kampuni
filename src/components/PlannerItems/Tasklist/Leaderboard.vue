@@ -1,5 +1,7 @@
 <template>
-  <h1>Leaderboard</h1>
+  <div>
+    <h1 class='text-center text-xl'>TOP 3</h1>
+  </div>
   <!-- <div v-for="homie in userPoints" :key="homie.id">
       {{ homie.name }} - Points: {{ homie.points }}
     </div> -->
@@ -20,17 +22,7 @@ export default {
     const comid = ref("");
     const labels = ref([]);
     const pointData = ref([]);
-    const plugin = {
-      id: "customCanvasBackgroundColor",
-      beforeDraw: (chart, args, options) => {
-        const { ctx } = chart;
-        ctx.save();
-        ctx.globalCompositeOperation = "destination-over";
-        ctx.fillStyle = options.color || "#86B8B1";
-        ctx.fillRect(0, 0, chart.width, chart.height);
-        ctx.restore();
-      },
-    };
+
 
     const fetchData = async () => {
       console.log("leaderboard fetch");
@@ -75,6 +67,7 @@ export default {
       //   });
       // }
       const ctx = document.getElementById("myChart");
+      Chart.defaults.font.size = 20;
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -93,18 +86,17 @@ export default {
             y: {
               beginAtZero: true,
               stepSize: 10,
-              ticks:{
-                fonts:{
-                  size:26
-                }
-              } // Add the stepSize option here
             },
           },
         },
-        plugins: {
-          customCanvasBackgroundColor: {
-            color: "white",
-          },
+          plugins: {
+            legend:{
+              labels:{
+                font:{
+                  size:65,
+              }
+            }
+          }
         },
       });
     };
