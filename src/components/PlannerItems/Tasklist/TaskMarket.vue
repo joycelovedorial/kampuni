@@ -80,37 +80,41 @@ import {
 import { formatDistanceToNow } from "date-fns";
 
 export default {
-  components: {},
-  setup() {
-    const tasks = ref([]);
-
-    const q = query(collection(db, "tasks"), where("userid", "==", null));
-    const unsub = onSnapshot(q, (snap) => {
-      const results = [];
-      snap.forEach((doc) => {
-        results.push({ ...doc.data(), id: doc.id });
-      });
-      tasks.value = results;
-    });
-
-    const claimTask = async (taskId) => {
-      const user = auth.currentUser;
-      const uid = user.uid;
-      const taskRef = doc(db, "tasks", taskId);
-      await updateDoc(taskRef, {
-        userid: uid,
-      });
-    };
-    const tasksFormatted = computed(() => {
-      if (tasks.value) {
-        return tasks.value.map((doc) => {
-          let time = formatDistanceToNow(doc.countdown.toDate());
-          return { ...doc, countdown: time };
-        });
-      } else {
-        return [];
-      }
-    });
+    components: {
+    },
+    setup() {
+        const tasks = ref([])
+        
+    
+        const q = query(collection(db,"tasks"),where("userid","==",null))
+        const unsub = onSnapshot(q,(snap)=>{
+            const results= [];
+            snap.forEach((doc)=>{
+                results.push({ ...doc.data(), id: doc.id })
+            })
+            tasks.value=results
+        })
+    
+        const claimTask = async (taskId) => {
+            const user = auth.currentUser
+            const uid = user.uid
+            const taskRef = doc(db,"tasks",taskId)
+            await updateDoc(taskRef,{
+                userid:uid
+            });
+        }
+        const tasksFormatted = computed(()=>{
+          if (tasks.value){
+              return tasks.value.map(doc => {
+                  let time = formatDistanceToNow(doc.countdown.toDate())
+                  return { ...doc, countdown: time}
+              })
+          }else{
+            return []
+          }
+      })
+        
+        
 
     return {
       tasks,

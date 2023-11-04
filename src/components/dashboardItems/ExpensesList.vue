@@ -34,12 +34,16 @@ import { auth, db} from '@/firebase/config';
 import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, updateDoc,onSnapshot} from "firebase/firestore";
 
 export default {
-  setup() {
+  props:{
+    transobject: Object,
+
+  },
+  setup(props) {
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
     const isAnimationActive = ref(false);
-
+    console.log(props.transobject,"tobject");
  
     const peopleOweYou = ref([])
     const youOwePeople = ref([])

@@ -5,8 +5,8 @@
       <!-- <div v-if="error">{{ error }}</div> -->
       <div class="chatTitle">
         {{name}}
-        <div class="click-expenses" @click="displayExpenses=!displayExpenses">
-          Expenses ▶
+        <div class="click-expenses" @click="toggleContent">
+          {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
       <div id="leftside">
@@ -60,7 +60,7 @@ import Chatform from '@/components/Chatform.vue';
 import createExpense from './expensesItems/createExpense.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onMounted, onUpdated,ref,watch} from 'vue'
-import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs} from "firebase/firestore";
+import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs, deleteDoc} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform,createExpense},
@@ -80,7 +80,11 @@ export default {
       const outid= ref("")
       const expensesArray = ref([])
       const displayCreateExpense = ref(false)
-      const displayExpenses = ref(false)
+      const isContentAVisible = ref(true)
+      const toggleContent = () => {
+        isContentAVisible.value = !isContentAVisible.value;
+      };
+      const errorMessage = ref('')
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -113,6 +117,37 @@ export default {
             console.log("no outing");
           }
         })
+      
+
+        const deleteChatroom = async () => {
+          const chatRef = doc(db, 'chatrooms', selectedchat.value);
+          const chatSnap = await getDoc(chatRef);
+          const chatData = chatSnap.data();
+
+          if (chatData.outing !== null) {
+            const outid = chatData.outing;
+            const outRef = doc(db, 'outings', outid);
+            const outSnap = await getDoc(outRef);
+            const outingData = outSnap.data();
+
+            if (outingData) {
+              const outingDate = new Date(outingData.date.toMillis());
+              const oneWeekAgo = new Date();
+              oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+              if (outingDate <= oneWeekAgo) {
+                await deleteDoc(outRef)
+                await deleteDoc(chatRef)
+              } else {
+                // If the outing date is less than 1 week old, show an error message
+                errorMessage.value = 'Too early to delete';
+              }
+            } else {
+              errorMessage.value = 'Outing data not found';
+            }
+          }
+        };
+      
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
         console.log("unsub", props.selectedchat);
@@ -201,9 +236,8 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,displayExpenses}
-      
-      
+      return {errorMessage,deleteChatroom,documents,formattedDocuments,selectedchat,
+        messages,name,thisName,outid,expensesArray,displayCreateExpense,isContentAVisible,toggleContent,}
     }
 
 }

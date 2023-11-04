@@ -168,7 +168,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .profile {
   display: flex;
   flex-direction: column; 
@@ -180,5 +180,14 @@ export default {
 .editForm{
     display: flex;
     flex-direction: column;
+}
+label{
+    font-weight: bold;
+    margin: 10px 5px 0 10px;
+}
+input{ 
+    margin-left: 10px;
+    width: 500px;
+    background-color: #FFFDF0;
 }
 </style>

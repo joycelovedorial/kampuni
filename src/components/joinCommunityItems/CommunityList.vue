@@ -4,17 +4,39 @@
                 <div class="custom-container col-12 text-center border-5 border-solid border-black bg-y"> -->
                 
                     <div v-if="communityArray.length > 0">
-                        <div v-for="com in communityArray" :key="com.id">
-                            <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
-
+                        <div v-for="com in communityArray" :key="com.id" class="bg-white m-3 rounded-lg p-2 border-black border-2">
+                            <div class="flex justify-between">
+                                <p class="font-fredoka text-left text-lg font-semibold">
+                                    {{ com.communityName }}
+                                </p>
+                                <button class="text-sm bg-y px-2 rounded-lg button_styling border-black font-medium hover:text-black" @click="joinCom(com.id)">
+                                    Join
+                                </button>
+                                <!-- <button class="grow text-sm button_styling w-full" @click="joinCom(com.id)">Join</button> -->
+                            </div>
+                            <div v-if="com.names" class="text-left">
+                                <p v-for="(name,idx) in com.names" :key="idx">
+                                    {{ name }}
+                                </p>
+                            </div>
+                            <!-- <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
                                 <div class="col-md-9 col-12 flex">
-                                    <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
-                                        <ul></ul>
+                                    <div class=""> 
+                                        <p class="flex flex-wrap text-3xl font-semibold comm_name">{{ com.communityName }} </p>
+                                        
+
+                                        <ul class="flex flex-wrap" v-if="com.names">
+                                            <li class="flex flex-wrap text-m hoomans" v-for="(name,idx) in com.names" :key="idx">
+                                                {{name}}
+                                            </li>
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="col-md-3 col-12 flex">
+                                    
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-md-3 col-12 flex">
                                     <button class="grow text-2xl button_styling" @click="joinCom(com.id)">Join</button>
-                                </div>
+                                </div> -->
                             </div>
     
                     <div v-if="error">
@@ -35,29 +57,33 @@ import { ref, onMounted } from 'vue'
 import { db,auth } from "@/firebase/config"
 import { collection, doc, getDocs, getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
 import { useRouter } from 'vue-router';
+import { coolGray } from 'tailwindcss/colors';
 export default {
     setup(){
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
-     const homie_list = ref([])
-     const names = ref([])
-     
+     const nameArray =ref([])
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
-            names.value = [];
-            querySnapshot.forEach((doc) => {
-                communityArray.value.push({...doc.data(),id:doc.id}); 
+            nameArray.value = [];
+            querySnapshot.forEach((sdoc) => {
                 // console.log(communityArray)// Access the ref using .value
-                /*
-                homie_list.value = doc.data().homies;
-                for (homie_id of homie_list){
-                    homie = getDoc(doc(db, "users", homie_id));
-                    homie_name = homie.name;
-                    names.value.push(homie_name);
-                }
-                */
+                const data = sdoc.data()
+                const homie_list= data.homies
+                nameArray.value= []
+
+                for (const homie_id of homie_list){
+                    getDoc(doc(db, "users", homie_id))
+                        .then((snap)=>{
+                            const sdata = snap.data()
+                            const name = sdata.firstname
+                            nameArray.value.push(name)
+                        })
+                    }
+                    communityArray.value.push({...sdoc.data(),id:sdoc.id,names:nameArray.value}); 
+                    console.log(communityArray.value,"com")
 
             });
 
@@ -128,7 +154,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return { communityArray, joinCom, error, names }
+            return { communityArray, joinCom, error }
     } 
 }
 </script>
@@ -140,21 +166,23 @@ export default {
     margin:10px;
     padding:5px;
     border:black 3px solid;
+    display: flex;
+
 }
 
 .button_styling{
     border:3px solid;
-    border-color:#FFC96B;
+    /* border-color:#FFC96B; */
     border-radius:10px;
     transition: color 0.3s, background-color 0.3s , transform 0.3s;
 }
 
 .button_styling:hover{
     border:3px solid;
-    border-color:#FFC96B;
+    /* border-color:#FFC96B; */
     border-radius:10px;
-    background-color:#FFC96B;
-    color:white;
+    /* background-color:#FFC96B; */
+    /* color:white; */
     transform: scale(1.05);
 }
 
@@ -162,4 +190,11 @@ export default {
     padding:10px;
 
 }
+
+.hoomans{
+    list-style-type: circle;
+    display:block;
+}
+
+
 </style>

@@ -1,8 +1,8 @@
 <template>
   <body id='body_container' class="bg-b">
-    <div class="container custom-container">
+    <!-- <div class="container custom-container"> -->
       <div class="row">
-        <h1 class="col-12 text-center text-4xl font-extra-bold p-5">Join a community!</h1>
+        <h1 class="col-12 text-center text-4xl font-extra-bold p-5">Join a community! 🫶🏼 </h1>
       </div>
       <div class="row">
         <div class="col-3"></div>
@@ -34,7 +34,7 @@
       <div v-if="createCom">
         <CommunityCreate />
       </div>
-    </div>
+    <!-- </div> -->
 </body>
 </template>
 
@@ -115,7 +115,7 @@ h1{
 }
 
 #body_container{
-  height:120vh;
+  height:180vh;
 }
 
 .custom-container{
