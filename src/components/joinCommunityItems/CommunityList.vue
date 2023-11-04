@@ -6,10 +6,10 @@
                     <div v-if="communityArray.length > 0">
                         <div v-for="com in communityArray" :key="com.id" class="bg-white m-3 rounded-lg p-2 border-black border-2">
                             <div class="flex justify-between">
-                                <p class="font-fredoka text-left">
+                                <p class="font-fredoka text-left text-lg font-semibold">
                                     {{ com.communityName }}
                                 </p>
-                                <button class="text-sm bg-y px-2 rounded-lg button_styling border-black font-medium hover:text-black">
+                                <button class="text-sm bg-y px-2 rounded-lg button_styling border-black font-medium hover:text-black" @click="joinCom(com.id)">
                                     Join
                                 </button>
                                 <!-- <button class="grow text-sm button_styling w-full" @click="joinCom(com.id)">Join</button> -->
