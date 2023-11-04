@@ -29,7 +29,7 @@
       <div class="font-fredoka font-bold">Spending detail</div>
       <div class="space-x-3 flex justify-stretch">
         <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name" placeholder="name of expense" required>
-        <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="number" v-model="cost" id="expense_name" placeholder="cost of expense" required>
+        <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="number" step="0.01" v-model="cost" id="expense_name" placeholder="cost of expense" required>
         <select v-model="category" class="bg-bnorm focus:bg-y rounded-lg border-0 pl-2 ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" required>
           <option class="bg-bnorm hover:bg-bpop" selected disabled value="">select category</option>
           <option class="bg-bnorm hover:bg-bpop" :value=null>Non-Outing</option>
@@ -41,7 +41,15 @@
       </div>
       <div class="flex justify-around space-x-3 mt-3">
         <div class="w-6/12 inline-block">
-          <div class="font-fredoka font-bold">People involved</div>
+          <div class="">
+            <div class="flex space-x-3">
+              <p class="font-fredoka font-bold">People involved</p>
+              <svg @mouseover="displayHelp=true" @mouseleave="displayHelp=false" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hover:cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+            </div>
+            <p v-if="displayHelp">tick for yourself if you're involved too!</p>
+          </div>
           <div class="bg-bnorm rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:18vh;">
             <div v-for="user in users" :key="user.id">
               <input 
@@ -57,7 +65,7 @@
           </div>
         </div>
         
-        <div class="w-6/12 inline-block ">
+        <div class="w-6/12 inline-block">
           <div class="font-fredoka font-bold">Person who paid</div>
           <div class="bg-bnorm rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:18vh;">
             <div v-for="user in users" :key="user.id">
@@ -67,9 +75,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-3 bg-y text-center text-black font-extrabold p-3 rounded-full border-3 border-black">
-        <button>Add Expense</button>
-      </div>
+      <button class="w-100 mt-3 bg-g text-center text-black font-bold p-3 font-fredoka rounded-full border-3 border-black">
+        Add Expense
+      </button>
       
     </form>
   </div>
@@ -86,7 +94,7 @@ export default {
     outingid: String,
   },
 
-  setup(props) {
+  setup(props,context) {
     console.log(props.outingid,"prop is passed in createExpense");
     const expense_desc = ref('')
     const cost = ref('')
@@ -98,6 +106,7 @@ export default {
     const whopaid = ref("")
     const outingslist = ref([])
     const outid=ref(props.outingid)
+    const displayHelp = ref(false)
 
 
 
@@ -132,9 +141,10 @@ export default {
           console.log('expenses added');
         }
         for (const user of selectedUsers.value){
+          if (user !== whopaid.value) {
           console.log("user in for loop",user);
             const docRef2 = await addDoc(collection(db, 'transactions'), {
-            amount: (parseInt(cost.value) / (selectedUsers.value.length+1)),
+            amount: (parseFloat(cost.value) / (selectedUsers.value.length)),
             expense: docRef.id,
             message: "",
             outing: category.value,
@@ -145,9 +155,9 @@ export default {
           });
           if (docRef2) {
           console.log('doc2 added');
+        }}
         }
-        }
-        
+        context.emit("closeExpense")
       } catch (error) {
         console.log(error.message);
       }
@@ -201,7 +211,7 @@ export default {
 
     
     return {
-      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid
+      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid, displayHelp
 
     };
   }

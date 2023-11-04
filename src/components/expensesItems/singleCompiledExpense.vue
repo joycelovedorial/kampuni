@@ -1,22 +1,49 @@
 <template>
-  <div v-if="neutral">
-    <p>No moneys owed between you and {{ homiename }}!</p>
-  </div>
-  <div v-else>
-    <div v-if="owe">
-        <p>You owe {{ homiename }} {{ displayamount }}</p>
+    <div class="flex space-x-2 w-10/12 mx-auto">
+        <div class="image block w-1/12 m-auto">
+            <img class="inline-block rounded-full h-12 w-12 border-2 border-black my-auto" :src="imgstr" alt="">
+        </div>
+        <div class="block w-11/12">
+            <div v-if="neutral" class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
+                <p>No moneys owed between you and {{ homiename }}!</p>
+            </div>
+            <div v-else>
+                <div v-if="owe" class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
+                    <p>You owe {{ homiename }} ${{ Number(displayamount).toFixed(2) }}</p>
+                    <span v-for="count in Math.floor(`${displayamount}`/10)" >
+                        <span>
+                            <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="money" alt="">
+                        </span>
+                    </span>
+                    <!-- <p>You owe {{ homiename }} {{ displayamount }}</p> -->
+                </div>
+                <div v-else class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
+                    <div class="flex justify-between">
+                        <p>{{ homiename }} owes you ${{ Number(displayamount).toFixed(2) }}</p>
+                        <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md">
+                            pay
+                        </button>
+                    </div>
+                    <div>
+                        <span v-for="count in Math.floor(`${displayamount}`/10)" >
+                            <span>
+                                <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="coin" alt="">
+                            </span>
+                        </span>
+                    </div>
+                    <!-- <p>{{ homiename }} owes you {{ displayamount }}</p> -->
+                </div>
+            </div>
+        </div>
     </div>
-    <div v-else>
-        <p>{{ homiename }} owes you {{ displayamount }}</p>
-    </div>
-  </div>
 </template>
 
 <script>
 
 import { ref } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
-import { auth, db } from '@/firebase/config'
+import { auth, storage, db } from '@/firebase/config'
+import {  ref as fref, getDownloadURL } from "firebase/storage";
 export default {
     props:{
         homieid: String,
@@ -30,6 +57,18 @@ export default {
         const owe = ref(true)
         const displayamount = ref('')
         const neutral = ref(false)
+        const imgstr = ref("")
+        const money = ref("")
+        const coin = ref("")
+
+        getDownloadURL(fref(storage,'money.gif'))
+            .then((url)=> {
+                money.value = url
+            })
+        getDownloadURL(fref(storage,'coin.gif'))
+            .then((url)=> {
+                coin.value = url
+            })
 
         if(amount.value>0){
             owe.value = true
@@ -44,6 +83,7 @@ export default {
             const docSnap  = await getDoc(doc(db,"users",homieid.value))
             const docData = docSnap.data()
             homiename.value = docData.firstname
+            imgstr.value=docData.photoURL
             //photoURL can pull here as well
         }
         fetchData()
@@ -53,7 +93,7 @@ export default {
         }
 
         return {
-            homiename,displayamount,owe,neutral,onPay
+            homiename,displayamount,owe,neutral,onPay, imgstr, money, coin
         }
     }
 }

@@ -23,6 +23,7 @@ export default {
     const unsub1 = onSnapshot(query1, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         const data = doc.data();
+        console.log(data)
         const index = compiled.value.findIndex(item => item.id === data.receiver);
         if (index !== -1) {
           compiled.value[index].compiledamount += data.amount;
@@ -36,6 +37,7 @@ export default {
     const unsub2 = onSnapshot(query2, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         const data = doc.data();
+        console.log(data)
         const index = compiled.value.findIndex(item => item.id === data.payer);
         if (index !== -1) {
           compiled.value[index].compiledamount -= data.amount;
