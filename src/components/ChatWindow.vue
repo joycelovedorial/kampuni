@@ -124,6 +124,7 @@ export default {
         const chatRef = doc(db,"chatrooms",selectedchat.value)
         const chatSnap = await getDoc(chatRef)
         const chatData = chatSnap.data()
+        //check outing is 1 week old at least
         if (chatData.outing!==null){
           const outid = chatData.outing
           const outRef = doc(db,"outings",outid)
