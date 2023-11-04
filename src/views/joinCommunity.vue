@@ -109,7 +109,7 @@ export default {
 h1{
   margin: 0 auto;
   text-align: center;
-  font-size: 64px;
+  font-size: 48px;
   /* color: #2ec4b6; */
   color:black;
 }
