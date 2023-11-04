@@ -12,7 +12,7 @@
 
       <div class="col-xl-6 col-12 ">
         <h1 class="mb-2 font-bold text-black text-3xl ">Today's Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test border-black border-solid border-5 bg-white rounded-xl will-change-scroll" style="height:50vh">
+        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test border-black border-solid border-2 bg-white rounded-xl will-change-scroll" style="height:50vh">
           <TodayTask v-if="comid" :community="comid"/>
         </div>
       </div>
@@ -22,7 +22,7 @@
 
       <div class="col-xl-6 col-12 " >
       <h1 class="mb-2 font-bold text-black text-3xl">Expenses</h1>
-       <div class="containerbg rounded-lg border-black border-solid test border-5 overflow-y-scroll overflow-x-auto" style="height:50vh">
+       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:50vh">
         <ExpensesList :community="comid"/>
         <ExpensesList :community="comid"/>
         <ExpensesList :community="comid"/>

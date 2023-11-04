@@ -1,10 +1,10 @@
 <template>
 
 
-        <div class="h-45 bg-bpop rounded-md m-3 border-black border-3 p-3 drop-shadow-lg">
+        <div class="h-45 bg-bpop rounded-md m-3 border-black border-2 p-3 drop-shadow-lg">
           You Owe...
           <div class="flex w-100 space-x-1">
-            <div class="expenses w-full bg-bnorm rounded-md border-black border-3 flex space-x-2 justify-around text-sm">
+            <div class="expenses w-full bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm">
               <div class="w-25 image text-center my-auto">
                 <img class="rounded-full border-bpop border-3 h-8 w-8 inline-block" src="../../assets/profiles/amos.jpg" alt="amos">
                 <p class="text-xs font-black">amos</p>
