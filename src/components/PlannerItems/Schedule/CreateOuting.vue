@@ -1,12 +1,12 @@
 <template>
   <div class="create-outing container-fluid">
     <span><button @click="emitCo">X</button></span>
-    <form class="form-control" @submit.prevent="createOuting">
+    <form class="form-control font-bold leading-loose text-center text-cyanp font-fredoka text-x" @submit.prevent="createOuting">
         Create Outing
         <div class="row">
             <div>
                 <label for="title">Title</label>
-                <input class="form-control col-6" type="text" v-model="title" id="title">
+                <input class="form-control col-6 " type="text" v-model="title" id="title">
             </div>
             
             <div>
