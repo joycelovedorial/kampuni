@@ -117,6 +117,19 @@ export default {
             console.log("no outing");
           }
         })
+      
+
+      const deleteChatroom = async () =>{
+        const chatRef = doc(db,"chatrooms",selectedchat.value)
+        const chatSnap = await getDoc(chatRef)
+        const chatData = chatSnap.data()
+        //check outing is 1 week old at least
+        if (chatData.outing!==null){
+          const outid = chatData.outing
+          const outRef = doc(db,"outings",outid)
+        }
+      }
+      
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
         console.log("unsub", props.selectedchat);

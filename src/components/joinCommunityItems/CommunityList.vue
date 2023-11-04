@@ -8,10 +8,9 @@
                             <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
                                 <div class="col-md-9 col-12 flex">
                                     <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
-                                    <span>{{ com.names }}</span>
-                                    <ul >
-                                        <li v-for="(name,idx) in com.names" :key="idx">
-                                            {{ name }}
+                                    <ul v-if="com.names">
+                                        <li v-for="(namae,idx) in com.names" :key="idx">
+                                            {{ namae }}test
                                         </li>
                                     </ul>
                                     </div>
@@ -45,8 +44,7 @@ export default {
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
-     const nameArray = ref([]) 
-     
+     const nameArray =ref([])
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
@@ -55,16 +53,17 @@ export default {
                 // console.log(communityArray)// Access the ref using .value
                 const data = sdoc.data()
                 const homie_list= data.homies
-                const nameArray = []
+                nameArray.value= []
+
                 for (const homie_id of homie_list){
                     getDoc(doc(db, "users", homie_id))
                         .then((snap)=>{
                             const sdata = snap.data()
                             const name = sdata.firstname
-                            nameArray.push(name)
+                            nameArray.value.push(name)
                         })
                     }
-                    communityArray.value.push({...sdoc.data(),id:sdoc.id,names:nameArray}); 
+                    communityArray.value.push({...sdoc.data(),id:sdoc.id,names:nameArray.value}); 
                     console.log(communityArray.value,"com")
 
             });
