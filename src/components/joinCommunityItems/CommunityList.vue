@@ -9,12 +9,14 @@
 
                                 <div class="col-md-9 col-12 flex">
                                     <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
+                                        <ul></ul>
+                                    </div>
                                 </div>
                                 <div class="col-md-3 col-12 flex">
                                     <button class="grow text-2xl button_styling" @click="joinCom(com.id)">Join</button>
                                 </div>
                             </div>
-                        </div>
+    
                     <div v-if="error">
                         <p class="text-red-500">{{ error }}</p>
                     </div>
@@ -31,20 +33,34 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { db,auth } from "@/firebase/config"
-import { collection, doc, getDocs,getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
+import { collection, doc, getDocs, getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
 import { useRouter } from 'vue-router';
 export default {
     setup(){
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
+     const homie_list = ref([])
+     const names = ref([])
+     
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
+            names.value = [];
             querySnapshot.forEach((doc) => {
                 communityArray.value.push({...doc.data(),id:doc.id}); 
                 // console.log(communityArray)// Access the ref using .value
+                /*
+                homie_list.value = doc.data().homies;
+                for (homie_id of homie_list){
+                    homie = getDoc(doc(db, "users", homie_id));
+                    homie_name = homie.name;
+                    names.value.push(homie_name);
+                }
+                */
+
             });
+
         };
      
     const joinCom = async (comId) => {
@@ -112,7 +128,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return { communityArray, joinCom, error }
+            return { communityArray, joinCom, error, names }
     } 
 }
 </script>
