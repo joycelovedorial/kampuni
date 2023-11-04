@@ -14,10 +14,8 @@
             <input class="form-control mb-1" type="date" id="birthday" v-model="birthday">
             <input class="form-control mb-1" type="text" placeholder="country" id="country" v-model="country">
             <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
-        </div>
-            <input class="form-control mb-1" type="password" id="password" placeholder="Password" />
-        <div class="flex">
           <button type="submit" value="submit" class="flex-initial w-64" @click="handleRegister">Register
+
           </button>
 
         </div>
