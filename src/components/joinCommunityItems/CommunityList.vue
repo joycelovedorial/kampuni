@@ -57,7 +57,6 @@ import { ref, onMounted } from 'vue'
 import { db,auth } from "@/firebase/config"
 import { collection, doc, getDocs, getDoc, updateDoc,arrayUnion,query,addDoc,where } from "firebase/firestore"; 
 import { useRouter } from 'vue-router';
-import { coolGray } from 'tailwindcss/colors';
 export default {
     setup(){
      const communityArray = ref([])
