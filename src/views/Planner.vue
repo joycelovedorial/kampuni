@@ -20,8 +20,9 @@
 
 
       <div v-if="displayCalendar">
-        <Outings @oCreate="displayCreateOuting = !displayCreateOuting"></Outings>
-        <Calendar></Calendar>
+        <button @click="displayCreateOuting = !displayCreateOuting">Create Outing</button>
+        <Outings/>
+        <Calendar/>
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
           <CreateOuting @emitCo="handleCreateOuting"/>
         </div>
