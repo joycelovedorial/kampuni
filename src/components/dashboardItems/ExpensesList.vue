@@ -50,20 +50,35 @@ export default {
     const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
     const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
       const result = []
-      oweYouSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
+      oweYouSnap.forEach((adoc)=>{
+        const data = adoc.data()
+        getDoc(doc(db,"users",data.payer))
+          .then((snap)=>{
+            const snapdata = snap.data()
+            const photourl = snapdata.photoURL
+          result.push({...adoc.data(),id:adoc.id,photoURL:photourl})
+
+          })
       })
       peopleOweYou.value=result
+      console.log(peopleOweYou.value,"expenseslist poy");
     })
 
 
     const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
     const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
       const result = []
-      youOweSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
+      youOweSnap.forEach((adoc)=>{
+        const data = adoc.data()
+        getDoc(doc(db,"users",data.receiver))
+          .then((snap)=>{
+            const snapdata = snap.data()
+            const photourl = snapdata.photoURL
+            result.push({...adoc.data(),id:adoc.id,photoURL:photourl})
+          })
       })
       youOwePeople.value=result
+      console.log(youOwePeople.value,"expenseslist yop");
     })
 
 
