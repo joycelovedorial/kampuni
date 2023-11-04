@@ -26,7 +26,7 @@
 <script>
 import { ref,onMounted } from 'vue';
 import { auth, db} from '@/firebase/config';
-import { addDoc, collection, getDoc, doc, query, where, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, query, where, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 export default {
     props:{
         transacid: String,
@@ -76,9 +76,7 @@ export default {
                     })
             })
         const paid = async () => {
-            await updateDoc(doc(db,"transactions",props.transacid),{
-                paid:true
-            })
+            await deleteDoc(doc(db,"transactions",props.transacid))
         }
         return{
             message,

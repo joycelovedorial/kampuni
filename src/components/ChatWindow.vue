@@ -8,6 +8,10 @@
         <div class="click-expenses" @click="displayExpenses=!displayExpenses">
           Expenses ▶
         </div>
+        <div>
+          <button @click="deleteChatroom">Delete Chatroom</button>
+          <div v-if="errorMessage">{{ errorMessage }}</div>
+        </div>
       </div>
       <div id="leftside">
         <div v-if="documents" class="messages" ref="messages">
@@ -81,6 +85,7 @@ export default {
       const expensesArray = ref([])
       const displayCreateExpense = ref(false)
       const displayExpenses = ref(false)
+      const errorMessage = ref('')
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -113,6 +118,18 @@ export default {
             console.log("no outing");
           }
         })
+      
+
+      const deleteChatroom = async () =>{
+        const chatRef = doc(db,"chatrooms",selectedchat.value)
+        const chatSnap = await getDoc(chatRef)
+        const chatData = chatSnap.data()
+        if (chatData.outing!==null){
+          const outid = chatData.outing
+          const outRef = doc(db,"outings",outid)
+        }
+      }
+      
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
         console.log("unsub", props.selectedchat);
@@ -201,7 +218,8 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,displayExpenses}
+      return {errorMessage,deleteChatroom,documents,formattedDocuments,selectedchat,
+        messages,name,thisName,outid,expensesArray,displayCreateExpense,displayExpenses}
       
       
     }
