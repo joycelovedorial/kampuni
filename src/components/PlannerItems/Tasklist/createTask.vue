@@ -40,7 +40,7 @@
             <span><button @click="emitCt">X</button></span>
             <form @submit.prevent="createTask">
                 <div class="d-block py-2">
-                    <label class="block text-sm font-medium text-gray-900" for="taskname">Task Name</label>
+                    <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="taskname">Task Name</label>
                     <div class="relative mt-2 rounded-md shadow-sm">
                         <!-- <input type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="0.00"> -->
                         <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="text" id="taskname" required v-model="taskname">
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="d-block py-2">
-                    <label class="block text-sm font-medium text-gray-900" for="desc">Description</label>
+                    <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="desc">Description</label>
                     <div class="relative mt-2 rounded-md shadow-sm">
                         <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="text" id="desc" required v-model="description">
                     </div>
@@ -56,14 +56,14 @@
 
                 <div class="flex gap-4">
                     <div class="d-block py-2 w-6/12">
-                        <label class="block text-sm font-medium text-gray-900" for="dateline">Deadline</label>
+                        <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="dateline">Deadline</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="dateline" required v-model="dateline">
                         </div>
                     </div>
 
                     <div class="d-block py-2 w-6/12">
-                        <label class="block text-sm font-medium text-gray-900" for="countdown">Automatically assigned in</label>
+                        <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="countdown">Automatically assigned in</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="countdown" required v-model="countdown">
                         </div>

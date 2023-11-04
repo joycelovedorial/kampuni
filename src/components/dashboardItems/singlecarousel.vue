@@ -1,12 +1,12 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-5 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg ">
                 
                     <div class="row"> 
                         <div class="col-12 " id="detail-container">
-                            <div class="w-auto self-center justify-content-center align-middle card-title border-3 d-flex justify-content-between truncate" :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" id="name_container" style="height:fit-content; width:fit-content">
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-2 d-flex justify-content-between truncate" :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" id="name_container" style="height:fit-content; width:fit-content">
                                 <div class="">
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
@@ -275,7 +275,7 @@ padding-bottom:10px;
 margin-bottom:10px;
 height:fit-content;
 width:fit-content;
-border:black 3px solid;
+border:black 2px solid;
 /* margin-top:20px; */
 }
 
