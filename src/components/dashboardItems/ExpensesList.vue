@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import ExpListItem from './ExpListItem.vue'
+import { auth, db } from '@/firebase/config'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 export default {
   components:{
     ExpListItem
@@ -26,32 +29,16 @@ export default {
 
     //fetching of stuff
     const user = auth.currentUser
-    const uid = user.uid
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
-    const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
-      const result = []
-      oweYouSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
+      const uid = user.uid
+      const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
+      const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
+        const result = []
+        oweYouSnap.forEach((doc)=>{
+          result.push({...doc.data(),id:doc.id})
+        })
+        peopleOweYou.value=result
+        console.log(peopleOweYou.value,"poy");
       })
-      peopleOweYou.value=result
-    })
-
-
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
-    const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
-      const result = []
-      youOweSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
-      })
-      youOwePeople.value=result
-    })
-
-
-    const textAnimationClass = computed(() => {
-      return isAnimationActive.value ? 'text-animation' : '';
-    });
-    // Use onMounted to trigger the toggleText method every 3 seconds
-   
 
 
     const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
@@ -60,8 +47,6 @@ export default {
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
         const data = doc.data()
-        
-        payeecount.value += 1
        
       })
       youOwePeople.value=result

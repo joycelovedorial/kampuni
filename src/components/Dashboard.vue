@@ -22,9 +22,8 @@
 
       <div class="col-xl-6 col-12 " >
       <h1 class="mb-2 font-bold text-black text-3xl">Expenses</h1>
-       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" 
-            style="height:50vh">
-            <ExpenseList/>
+       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:50vh">
+          <ExpensesList/>
         </div>
       </div>
       <!-- <div class="col-lg-1 col-md-1 col-sm-1"></div> -->

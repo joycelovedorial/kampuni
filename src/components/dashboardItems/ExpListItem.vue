@@ -43,7 +43,7 @@ const buttonText = ref('pay');
 const isAnimationActive = ref(false);
 console.log("explsot loadded");
 
-console.log(props.transobject,"tobject");
+console.log(props.transacid,"tobject");
 
 console.log("hi");
 const textAnimationClass = computed(() => {
@@ -58,8 +58,6 @@ return {
   buttonText,
   isAnimationActive,
   textAnimationClass,
-  peopleOweYou, 
-  youOwePeople,
 };
 },
 };
