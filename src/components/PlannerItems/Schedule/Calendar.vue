@@ -75,18 +75,19 @@
       <th>Description</th>
       <th>Location</th>
     </tr>
-    <tr  v-for="outing in outingArray" :key="outing.id">
+  </thead>
+  <tbody v-if="outingArray.length>0">
+    <tr v-for="outing in outingArray" :key="outing.id">
       <td>{{ outing.title }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
     </tr>
-  </thead>
-  <tbody>
-    
-    
   </tbody>
   </table>
+ 
+    
+
       <!-- Add more properties as needed -->
     </div>
       
@@ -125,6 +126,7 @@ export default {
     const comid = ref("");
     const userid = ref("");
     const today = new Date();
+    const filteredOutingArray=ref([])
     
     //for the calendar
     const date = ref(new Date());
@@ -181,49 +183,26 @@ export default {
         collection(db, "outings"),
         where("community", "==", comid.value)
       );
-      const unsubout = onSnapshot(qouting, (snap) => {
-        console.log(snap);
-        const resultOut = [];
-        snap.forEach((doc) => {
-          resultOut.push({ ...doc.data(), id: doc.id });
-        });
-        outingArray.value = resultOut;
-        console.log("outings fetched", outingArray.value);
-      });
-    });
+      const qoutingSnap = await getDocs(qouting)
+      qoutingSnap.forEach( async(doc)=>{
+        const uiq = query(collection(db,"outings",doc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
+        const uisnap = await getDocs(uiq)
+        if(uisnap.size>0){
+          const convertedData = {
+          ...doc.data(),
+          date: doc.data().date.toDate()}
 
-    const filteredOutingArray = computed(async () => {
-      const filteredOutings = [];
-
-      for (const outing of outingArray.value) {
-        // Check if there is a subcollection "usersInvolved"
-        const usersInvolvedCollection = collection(
-          db,
-          "outings",
-          outing.id,
-          "usersInvolved"
-        );
-
-        // Query the subcollection to get the documents
-        const userInvolvedDocs = await getDocs(usersInvolvedCollection);
-
-        // Check if any user document in usersInvolved has imIn set to true
-        if (userInvolvedDocs) {
-          for (const userDoc of userInvolvedDocs.docs) {
-            const userInvolvedData = userDoc.data();
-            if (
-              userInvolvedData.user === userid.value &&
-              userInvolvedData.imIn === true
-            ) {
-              filteredOutings.push(outing); // The user is involved in the outing
-              break; // Break the loop once a matching user is found
-            }
-          }
+          outingArray.value.push({...convertedData,id:doc.id})
         }
-      }
-      console.log("filtered outings", filteredOutings);
-      return filteredOutings;
-    });
+      })
+      console.log(outingArray.value,"outingarray");
+    })
+   
+
+
+      
+    
+  
 
     return { 
       filteredOutingArray,
@@ -267,7 +246,7 @@ template {
   min-height: auto;
   margin: 0 auto;
   padding: 5px;
-  color: #fff;
+  color: black;
   display: flex;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
@@ -374,7 +353,7 @@ template {
 }
 
 .calendar .day:not(.prev-date, .next-date):hover {
-  color: white;
+  color: black;
   background-color: #86b8b1;
 }
 
@@ -385,7 +364,7 @@ template {
 .calendar .days .active {
   position: relative;
   font-size: 1rem;
-  color: #fff;
+  color: red;
   background-color: #86b8b1;
 }
 
