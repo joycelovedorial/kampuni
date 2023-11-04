@@ -31,6 +31,7 @@
     setup(props) {
       const user = auth.currentUser;
       const comid = props.community
+
       const uid = user.uid;
       const tasks = ref([]);
       const isChecked = ref(false);

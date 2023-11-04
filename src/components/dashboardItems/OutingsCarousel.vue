@@ -42,7 +42,7 @@ export default {
           const docSnap = await getDoc(docRef);
           const userData = docSnap.data();
           comid.value = userData.community;
-          console.log('in fetch', comid.value);
+          // console.log('in fetch', comid.value);
 
           // Now that you have comid, you can perform the query here
           const q = query(
@@ -58,10 +58,10 @@ export default {
               results.push({ ...doc.data(), id: doc.id });
             });
             outingArray.value = results;
-            console.log(outingArray.value);
+            // console.log(outingArray.value);
           });
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          // console.error('Error fetching user data:', error);
         }
       } else {
         router.push({ name: 'Welcome' });

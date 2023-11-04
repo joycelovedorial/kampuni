@@ -22,15 +22,10 @@
 
       <div class="col-xl-6 col-12 " >
       <h1 class="mb-2 font-bold text-black text-3xl">Expenses</h1>
-       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:50vh">
-        <ExpensesList :community="comid"/>
-        <ExpensesList :community="comid"/>
-        <ExpensesList :community="comid"/>
-        <ExpensesList :community="comid"/>
-        <ExpensesList :community="comid"/>
-
-      </div>
-
+       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" 
+            style="height:50vh">
+            <ExpenseList/>
+        </div>
       </div>
       <!-- <div class="col-lg-1 col-md-1 col-sm-1"></div> -->
     </div>
@@ -43,7 +38,8 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { getDoc,doc } from "firebase/firestore";
+import { collection, onSnapshot, query, where,getDoc, doc} from 'firebase/firestore';
+
 
 export default {
   components: { TodayTask, ExpensesList, OutingsCarousel },
@@ -51,18 +47,13 @@ export default {
   },
   setup(props) {
     const comid=ref("")
-
-    const fetchData = async() =>{
-     
-      const user = auth.currentUser
-      const uid = user.uid
-      const docSnap = await getDoc(doc(db,"users",uid))
-      comid.value = docSnap.data().community
- 
-    }
-    onMounted(() => {
-      fetchData();
-    });
+    //fetching of stuff
+    const user = auth.currentUser
+    const uid = user.uid
+    getDoc(doc(db,"users",uid))
+      .then((docSnap)=>{
+        comid.value = docSnap.data().community
+      })
       
     
     return { comid };
