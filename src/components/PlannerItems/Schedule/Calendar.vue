@@ -126,7 +126,6 @@ export default {
     const comid = ref("");
     const userid = ref("");
     const today = new Date();
-    const filteredOutingArray=ref([])
     
     //for the calendar
     const date = ref(new Date());
@@ -205,7 +204,6 @@ export default {
   
 
     return { 
-      filteredOutingArray,
       taskArray,
       currentMonth,
       currentYear,
