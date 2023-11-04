@@ -89,7 +89,7 @@ export default {
       const fetchName = async () => {
         const user = auth.currentUser
         const uid = user.uid
-        const docRef =doc(db,"users",uid)
+        const docRef = doc(db,"users",uid)
         const docSnap = await getDoc(docRef)
         const docData = docSnap.data()
         thisName.value = docData.firstname
@@ -101,7 +101,8 @@ export default {
         .then((docSnap)=>{
           const data = docSnap.data()
           if (data.outing){
-            outid.value=data.outing
+            outid.value= data.outing
+            console.log(outid.value, `outing id`)
             const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
             expensesArray.value = []
             const qExSnap = getDocs(qExpenses).then((querySnap)=>{
@@ -285,7 +286,7 @@ export default {
   }
 
   .chat-window {
-    background: #FFFDF0;
+    background: #fffbe4;
     padding: 10px;
     border-radius: 20px;
     border: 2px #000000 solid;
