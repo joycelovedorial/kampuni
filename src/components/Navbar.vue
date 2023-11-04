@@ -2,7 +2,7 @@
   <div class="object-right w-auto font-fredoka font-bold">
     <nav class="bg-bnorm flex justify-between items-center h-18">
       <div class="relative inline-block text-right mx-3">
-        <img class="logo inline ml-3" src="../assets/kampuni_logo.png">
+        <img class="logo inline ml-3" src="../assets/logo.png">
       </div>
       <div class="flex space-x-4 mr-10">
         <div class="button bg-bpop text-sm rounded-lg w-30 place-content-center flex items-center shadow-bpop"
@@ -40,13 +40,12 @@
             </span>
           </router-link>
         </div>
-        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
+        <div class="button  text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
           :class="{
             'drop-shadow-lg': $route.name !== 'Planner',  // Apply 'bg-cyans' when not active
-            // 'text-cyanp': $route.name !== 'Planner', // Apply 'text-white' when not active
             'shadow-inner': $route.name === 'Planner',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Planner', // Apply 'text-oranges' when active
-            'bg-[#86B8B1]': $route.name === 'Planner',
+            'bg-b': $route.name === 'Planner',
           }"
           :disabled="$route.name === 'Planner'" 
         >
