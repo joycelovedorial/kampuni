@@ -51,8 +51,10 @@ export default {
         const profilePictureURL = ref('');
 
         const handleFileUpload = async (event) => {
+            console.log("file upload");
             const file = event.target.files[0];
-
+            const user = auth.currentUser
+            const userId = user.uid
             if (file) {
                 try {
                 const storage = getStorage();
