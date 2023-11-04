@@ -17,10 +17,17 @@ export default {
   components:{
     ExpListItem
   },
-  setup(){
+  setup(props) {
+    const showInput = ref(false);
+    const textInput = ref('');
+    const buttonText = ref('pay');
+    const isAnimationActive = ref(false);
+    console.log(props.transobject,"tobject");
+ 
     const peopleOweYou = ref([])
     const youOwePeople = ref([])
-    console.log("expenses list loaded");
+
+    //fetching of stuff
     const user = auth.currentUser
       const uid = user.uid
       const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
