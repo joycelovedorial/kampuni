@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import ExpListItem from './ExpListItem.vue'
+import { auth, db } from '@/firebase/config'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 export default {
   components:{
     ExpListItem
@@ -23,12 +26,8 @@ export default {
       const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
       const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
         const result = []
-        const count = 0
         oweYouSnap.forEach((doc)=>{
           result.push({...doc.data(),id:doc.id})
-          const data = doc.data()
-        
-          receivercount.value += 1
         })
         peopleOweYou.value=result
         console.log(peopleOweYou.value,"poy");
@@ -41,8 +40,6 @@ export default {
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
         const data = doc.data()
-        
-        payeecount.value += 1
        
       })
       youOwePeople.value=result

@@ -9,7 +9,7 @@
           {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
-      <div id="leftside">
+      <div id="leftside" v-if="isContentAVisible">
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
               <div v-if="thisName==doc.name">
@@ -34,24 +34,29 @@
               </div>
             </div>
         </div>
-      </div>
-    </div>
-    <div class="chatform">
+        <div class="chatform">
           <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
-    </div>
-    </div>
-    <div v-if="displayExpenses">
-      <div id="rightside" v-if="outid" class="col-3">
-        <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
-        <div v-if="displayCreateExpense">
-          <createExpense :outingid="outid"/>
-        </div>
-        <div class="container" v-for="exp in expensesArray" :key="exp.id">
-          {{ exp.desc }}
-          {{ exp.amount }}
         </div>
       </div>
+      
+      <div v-else>
+
+        <div id="rightside" v-if="outid" class="col-3">
+          <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+          <div v-if="displayCreateExpense">
+            <createExpense :outingid="outid"/>
+          </div>
+          <div class="container" v-for="exp in expensesArray" :key="exp.id">
+            {{ exp.desc }}
+            {{ exp.amount }}
+          </div>
+        </div>
+    
+      </div>
     </div>
+    
+    </div>
+   
   </div>
 </template>
 
@@ -97,26 +102,7 @@ export default {
       fetchName();
 
       console.log("setup",props.name);
-      getDoc(doc(db,"chatrooms",props.selectedchat))
-        .then((docSnap)=>{
-          const data = docSnap.data()
-          if (data.outing){
-            outid.value=data.outing
-            const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
-            expensesArray.value = []
-            const qExSnap = getDocs(qExpenses).then((querySnap)=>{
-              querySnap.forEach((doc)=>{
-                expensesArray.value.push({...doc.data(),id:doc.id})
-                console.log("expenses arrya",expensesArray.value);
 
-              })
-            })
-          }else{
-            outid.value=null
-            expensesArray.value=[]
-            console.log("no outing");
-          }
-        })
       
 
         const deleteChatroom = async () => {
@@ -187,30 +173,30 @@ export default {
 
         if (newChatRoom) {
           // Create a new query for the new chat room and start a new listener
-          getDoc(doc(db,"chatrooms",newChatRoom))
-            .then((docSnap)=>{
-              const data = docSnap.data()
-              if(data.outing){
-                outid.value=data.outing
-                const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
-                expensesArray.value = []
-                const qExSnap = getDocs(qExpenses).then((querySnap)=>{
-                  querySnap.forEach((doc)=>{
-                    expensesArray.value.push({...doc.data(),id:doc.id})
-                    console.log("expenses arrya",expensesArray.value);
+
+            getDoc(doc(db,"chatrooms",props.selectedchat))
+              .then((docSnap)=>{
+                const data = docSnap.data()
+                if (data.outing){
+                  outid.value=data.outing
+                  const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
+                  expensesArray.value = []
+                  const qExSnap = getDocs(qExpenses).then((querySnap)=>{
+                    querySnap.forEach((doc)=>{
+                      expensesArray.value.push({...doc.data(),id:doc.id})
+                      console.log("expenses arrya",expensesArray.value);
+                    })
                   })
-                })
-              }else{
-                outid.value=null
-                expensesArray.value=[]
-                console.log("no outng");
-              }
-            
-            })
+                }else{
+                  outid.value=null
+                  expensesArray.value=[]
+                  console.log("no outing");
+                }
+              })
+
          
           const q = query(collection(db, "chatrooms", newChatRoom, "messages"), orderBy("createdAt"));
           unsubscribe = onSnapshot(q, (snapshot) => {
-            // Handle updates for the new chat room
             let results = [];
             snapshot.docs.forEach((doc) => {
               doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
