@@ -30,7 +30,7 @@
           <createExpenses/>
         </div>
         <div class="flex mx-auto justify-content-around space-x-3" v-else>
-          <div v-if="payeecount === 0" class="mx-auto w-full rounded-lg p-3 h-84 flex">
+          <div v-if="!payeecount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
             <div class="mx-auto text-center my-auto">
               <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
@@ -51,11 +51,13 @@
                 </p>
               </div>
               <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                <singleExpensePayer id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id" :transacid="peep.id"/>
+                <div v-for="peep in youOwePeople" :key="peep.id">
+                  <singleExpensePayer :transacid="peep.id" />
+                </div>
               </div>
             </div>
           </div>
-            <div v-if="receivercount === 0" class="mx-auto w-full rounded-lg p-3 h-84 flex">
+            <div v-if="!receivercount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
               <div class="mx-auto text-center my-auto">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
@@ -76,7 +78,9 @@
                   </p>
                 </div>
                 <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                  <singleExpenseReceiver id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id" :transacid="peepo.id"/>
+                  <div v-for="peepo in peopleOweYou" :key="peepo.id">
+                    <singleExpenseReceiver id="whooweyou" :transacid="peepo.id" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -115,37 +119,35 @@ export default {
     //fetching of stuff
     const user = auth.currentUser
     const uid = user.uid
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
+    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
     const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
       const result = []
       const count = 0
       oweYouSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
         const data = doc.data()
-        console.log(data.paid)
-        if (!data.paid){
-          payeecount.value++
-        }
-        
+      
+        receivercount.value += 1
       })
       peopleOweYou.value=result
-      console.log(payeecount.value,`string`)
-
+      console.log(peopleOweYou.value,"poy");
     })
 
 
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
+    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
     const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
       const result = []
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
         const data = doc.data()
-        if (!data.paid){
-          receivercount.value++
-          console.log(receivercount.value)
-        }
+        
+        payeecount.value += 1
+       
       })
       youOwePeople.value=result
+      console.log(youOwePeople.value,"yop");
+
+
     })
 
     //anyu functions

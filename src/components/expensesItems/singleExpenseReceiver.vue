@@ -108,9 +108,9 @@ import { parseISO } from 'date-fns';
 export default {
   props: {
     transacid: String,
-    key: String,
   },
   setup(props) {
+    console.log(props.transacid,"poy");
     const message = ref('');
     const tname = ref('');
     const amount = ref('');
@@ -141,7 +141,7 @@ export default {
                 imgstr.value = data.photoURL
             })
 
-        if(data.outing!==null){
+            if(data.outing!==null){
                 getDoc(doc(db,'outings',data.outing))
                 .then((snap)=>{
                     const data = snap.data()
