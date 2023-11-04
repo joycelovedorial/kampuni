@@ -119,16 +119,34 @@ export default {
         })
       
 
-      const deleteChatroom = async () =>{
-        const chatRef = doc(db,"chatrooms",selectedchat.value)
-        const chatSnap = await getDoc(chatRef)
-        const chatData = chatSnap.data()
-        //check outing is 1 week old at least
-        if (chatData.outing!==null){
-          const outid = chatData.outing
-          const outRef = doc(db,"outings",outid)
-        }
-      }
+        const deleteChatroom = async () => {
+          const chatRef = doc(db, 'chatrooms', selectedchat.value);
+          const chatSnap = await getDoc(chatRef);
+          const chatData = chatSnap.data();
+
+          if (chatData.outing !== null) {
+            const outid = chatData.outing;
+            const outRef = doc(db, 'outings', outid);
+            const outSnap = await getDoc(outRef);
+            const outingData = outSnap.data();
+
+            if (outingData) {
+              const outingDate = new Date(outingData.date.toMillis());
+              const oneWeekAgo = new Date();
+              oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+              if (outingDate <= oneWeekAgo) {
+                // If the outing date is more than 1 week old, you can proceed with deletion
+                // Delete the chatroom here
+              } else {
+                // If the outing date is less than 1 week old, show an error message
+                errorMessage.value = 'Too early to delete';
+              }
+            } else {
+              errorMessage.value = 'Outing data not found';
+            }
+          }
+        };
       
       const q = query(collection(db,"chatrooms",props.selectedchat,"messages"),orderBy("createdAt"))
       let unsubscribe = onSnapshot(q,(snapshot)=> {
