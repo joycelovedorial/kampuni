@@ -6,12 +6,14 @@
                     <div v-if="communityArray.length > 0">
                         <div v-for="com in communityArray" :key="com.id">
                             <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
-
                                 <div class="col-md-9 col-12 flex">
                                     <span class="text-3xl font-semibold comm_name"> {{ com.communityName }} </span>
-                                        <ul v-for="name of names" :key="name">
-                                            <li>{{ name }}</li>
-                                        </ul>
+                                    <span>{{ com.names }}</span>
+                                    <ul >
+                                        <li v-for="(name,idx) in com.names" :key="idx">
+                                            {{ name }}
+                                        </li>
+                                    </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12 flex">
@@ -43,13 +45,12 @@ export default {
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
-     const names = ref([])
-     vonst 
+     const nameArray = ref([]) 
      
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
-            names.value = [];
+            nameArray.value = [];
             querySnapshot.forEach((sdoc) => {
                 // console.log(communityArray)// Access the ref using .value
                 const data = sdoc.data()
@@ -135,7 +136,7 @@ export default {
         onMounted(() => {
             fetchData(); // Fetch data after the component is mounted
         });
-            return { communityArray, joinCom, error, names }
+            return { communityArray, joinCom, error }
     } 
 }
 </script>
