@@ -75,7 +75,9 @@
       <th>Description</th>
       <th>Location</th>
     </tr>
-    <tr  v-for="outing in filteredOutingArray" :key="outing.id">
+    </thead>
+    <tbody>
+    <tr  v-for="outing in outingArray" :key="outing.id">
       <td>{{ outing.title }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
