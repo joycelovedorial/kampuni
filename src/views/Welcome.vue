@@ -1,11 +1,11 @@
 <template>
 <html>    
   <body class="flex">
-    <img src="@/assets/kampuni_logo.png" id="logo">
+    <img src="@/assets/logo.png" id="logo">
     <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container ">
         <form @submit.prevent="handleRegister" class="overflow-y-auto register-form rounded-r-3xl ">
-          <h1 class="text-orangep text-3xl font-medium">Register here</h1>
+          <h1 class="text-black text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
             <input class="form-control mb-1" type="text" required placeholder="Last Name" v-model ="lastName">
@@ -29,7 +29,7 @@
       </div>
         <div v-if="registered" class="form-container login-container">
           <form @submit.prevent="handleLogin" class="form-lg rounded-l-3xl">
-            <h1 class="text-orangep text-3xl font-medium">Login here</h1>
+            <h1 class="text-black text-4xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
             
@@ -269,7 +269,7 @@ export default {
 
 <style scoped>
 .register-form{
-  border-radius:0px, 55px, 55px, 0px
+  border-radius:0px, 0px, 0px, 0px
 }
 .register-form::-webkit-scrollbar {
   display:none
@@ -277,7 +277,7 @@ export default {
 
 #logo {
   margin-bottom: 5px auto;
-  margin-top:60px;
+  margin-top:100px;
   /* padding-top:20px; */
   padding-bottom:10px;
   
@@ -419,8 +419,8 @@ button:focus {
 
 button.ghost {
   background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid #fff;
-  color: #fff;
+  border: 2px solid #000000;
+  color: #000000;
 }
 
 #login i {
@@ -577,7 +577,7 @@ input {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
-  border:5px rgb(255, 255, 255) solid;
+  /* border:5px rgb(0, 0, 0) solid; */
   border-radius:0px 25px 25px 0px;
   animation: show 0.6s;
 }
@@ -618,7 +618,7 @@ input {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
-  color: #fff;
+  color: #000000;
   position: relative;
   left: -100%;
   height: 100%;

@@ -5,7 +5,6 @@
   <div v-for="peepo in peopleOweYou" :key="peepo.id">
     <ExpListItem :transacid="peepo" />
   </div>
-  <div><p>Expense List</p></div>
 </template>
 
 <script>

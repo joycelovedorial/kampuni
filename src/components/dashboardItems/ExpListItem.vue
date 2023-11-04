@@ -8,7 +8,7 @@
             <p class="text-xs font-black">{{ name }}</p>
           </div>
           <div class="w-75 details p-2">
-            <p class="font-bold">{{ amount }}</p>
+            <p class="font-bold">${{ amount }}</p>
             <div class="flex space-x-2">
               <span class="category">{{outing}}</span>
               <span class="title">{{category}}</span>
