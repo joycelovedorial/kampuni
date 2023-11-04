@@ -143,9 +143,8 @@ export default {
             console.log("registered");
             const uid = cred.user.uid;
            
-            await cred.user.updateProfile({
-              photoURL:pfp.value,
-            })
+            
+
             const docRef = doc(db, 'users', uid);
 
                 try {
@@ -161,7 +160,7 @@ export default {
                   console.error('Error fetching user data:', error);
                 }
               
-                  router.push({ name: 'joinCommunity' });
+            router.push({ name: 'joinCommunity' });
                
         } catch (error) {
           Rerror.value=error.message;
