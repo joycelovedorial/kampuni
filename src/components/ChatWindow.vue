@@ -60,7 +60,7 @@ import Chatform from '@/components/Chatform.vue';
 import createExpense from './expensesItems/createExpense.vue';
 import { formatDistanceToNow } from 'date-fns'
 import { computed, onMounted, onUpdated,ref,watch} from 'vue'
-import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs} from "firebase/firestore";
+import { collection, query,orderBy, onSnapshot,doc,getDoc,where,getDocs, deleteDoc} from "firebase/firestore";
 import {db,auth} from '@/firebase/config'
 export default {
     components:{Chatform,createExpense},
@@ -136,8 +136,8 @@ export default {
               oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
               if (outingDate <= oneWeekAgo) {
-                // If the outing date is more than 1 week old, you can proceed with deletion
-                // Delete the chatroom here
+                await deleteDoc(outRef)
+                await deleteDoc(chatRef)
               } else {
                 // If the outing date is less than 1 week old, show an error message
                 errorMessage.value = 'Too early to delete';
