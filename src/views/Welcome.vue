@@ -311,7 +311,7 @@ export default {
 }
 
 body {
-  background: url(@/assets/background_img/keith.gif)
+  background: url(@/assets/background_img/socute.jpeg)
     top center / cover no-repeat;
   /* display: flex; */
   justify-content: center;
@@ -392,8 +392,8 @@ a:hover {
 button {
   position: relative;
   border-radius: 20px;
-  border: 1px solid #86b8b1;
-  background-color: #86b8b1;
+  border: 1px solid rgb(91, 103, 125);
+  background-color: rgb(91, 103, 125);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -614,7 +614,7 @@ input {
 .overlay {
   /* background-image: url("@/assets/background_img/newnew.jpg");
    */
-  background-image: url("@/assets/background_img/blurred.jpg");
+  background-image: url("@/assets/background_img/socuteblur.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
