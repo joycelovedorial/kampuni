@@ -9,13 +9,20 @@
           {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
+      <div>
+        <button @click="deleteChatroom">Delete Button</button>
+        <div v-if="errorMessage"><span>{{ errorMessage }}</span></div>
+      </div>
       <div id="leftside" v-if="isContentAVisible">
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
               <div v-if="thisName==doc.name">
-                <img :src="doc.photoURL">
-                <span class="name">{{ doc.name }}</span>
+      
+                <span class="name"><img :src="doc.photoURL">
+                  {{ doc.name }}
+                </span>
                 <div class="single-chat-container" >
+                 
                   <span class="message">{{ doc.message }}</span>
                   <div class="datetime-thing">
                     <span class="created-at">{{ doc.createdAt }} ago</span>
@@ -23,8 +30,10 @@
                 </div>
               </div>
               <div v-else class="self">
-                <img :src="doc.photoURL">
-                <span class="name-self">{{ doc.name }}</span>
+                <span class="name-self">
+                    <img :src="doc.photoURL">
+                           {{ doc.name }}
+                </span>
                 <div class="single-chat-container-self" >
                   <span class="message-self">{{ doc.message }}</span>
                   <div class="datetime-thing">
@@ -265,11 +274,19 @@ export default {
     margin-right: 6px;
     color: #B492B8;
   }
+  .name img{
+    margin-right: 6px;
+    display:inline-block;
+
+  }
   .name-self{
     color:#B492B8;
     font-weight: bold;
   }
 
+  .name-self img{
+    display:inline-block;
+  }
   .chat-window {
     background: #fffbe4;
     padding: 10px;
