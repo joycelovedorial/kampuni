@@ -79,8 +79,7 @@ export default {
     position: relative
   }
   #calendar-page {
-    background-image: url('../assets/background_img/background4.png');
-    background-color: #f2f2f2;
+    background-color: #86B8B1;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

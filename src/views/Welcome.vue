@@ -14,10 +14,8 @@
             <input class="form-control mb-1" type="date" id="birthday" v-model="birthday">
             <input class="form-control mb-1" type="text" placeholder="country" id="country" v-model="country">
             <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
-        </div>
-            <input class="form-control mb-1" type="password" id="password" placeholder="Password" />
-        <div class="flex">
           <button type="submit" value="submit" class="flex-initial w-64" @click="handleRegister">Register
+
           </button>
 
         </div>
@@ -331,7 +329,7 @@ export default {
 }
 
 body {
-  background: url(@/assets/background_img/newnew.jpg)
+  background: url(@/assets/background_img/keith.gif)
     top center / cover no-repeat;
   /* display: flex; */
   justify-content: center;
@@ -412,8 +410,8 @@ a:hover {
 button {
   position: relative;
   border-radius: 20px;
-  border: 1px solid #4bb6b7;
-  background-color: #4bb6b7;
+  border: 1px solid #86b8b1;
+  background-color: #86b8b1;
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -576,7 +574,7 @@ input {
   left: 0;
   width: 50%;
   z-index: 2;
-  border:5px solid black;
+  border:5px solid rgb(255, 255, 255);
   border-radius:30px 0px 0px 30px;
 }
 
@@ -597,7 +595,7 @@ input {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
-  border:5px black solid;
+  border:5px rgb(255, 255, 255) solid;
   border-radius:0px 25px 25px 0px;
   animation: show 0.6s;
 }
@@ -634,7 +632,7 @@ input {
 .overlay {
   /* background-image: url("@/assets/background_img/newnew.jpg");
    */
-  background-color:#FF847C;
+  background-image: url("@/assets/background_img/blurred.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -655,7 +653,6 @@ input {
   left: 0;
   right: 0;
   top: 0;
-  border:5px solid black;
   border-radius:25px;
   bottom: 0;
   /* background: linear-gradient(
