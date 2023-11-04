@@ -79,10 +79,9 @@
       textarea {
           width: 100%;
           max-width: 100%;
-          margin-bottom: 1%;
           padding: 10px;
           box-sizing: border-box;
-          border: 0;
+          border: #B492B8 solid;
           border-radius: 20px;
           font-family: inherit;
           outline: none;

@@ -1,35 +1,38 @@
 <template>
-    <div>
-        <Navbar/>
+    <div id="profilepage">
+        <div>
+            <Navbar/>
+        </div>
+        <div class="container">
+            <div v-if="toEdit" class="profile">
+                <div class="text" id="firstname">
+                    Name: {{firstname}}
+                </div>
+                <div class="text" id="lastname">
+                    Surname: {{lastname}}
+                </div>
+                <div class="text" id="profileEmail">
+                    Email: {{email}}
+                </div>
+                <div class="text" id="country">
+                    Country: {{country}}
+                </div>
+                <div class="text" id="birthday">
+                    Birthday: {{birthday}}
+                </div>
+                <div class="text" id="bio"> 
+                    Bio: {{bio}}
+                </div>
+                <div class="text" id="community">
+                    Community: {{community}}
+                </div>
+            </div>
+            <div v-else>
+                <ProfileEdit @updated="fetchData();toEdit=true"/>
+            </div>
+        </div>
+        <button @click="toEdit=!toEdit">Edit</button>
     </div>
-    <div v-if="toEdit" class="profile">
-        <div class="text" id="firstname">
-            Name: {{firstname}}
-        </div>
-        <div class="text" id="lastname">
-            Surname: {{lastname}}
-        </div>
-        <div class="text" id="profileEmail">
-            Email: {{email}}
-        </div>
-        <div class="text" id="country">
-            Country: {{country}}
-        </div>
-        <div class="text" id="birthday">
-            Birthday: {{birthday}}
-        </div>
-        <div class="text" id="bio"> 
-            Bio: {{bio}}
-        </div>
-        <div class="text" id="community">
-            Community: {{community}}
-        </div>
-    </div>
-    <div v-else>
-        <ProfileEdit @updated="fetchData();toEdit=true"/>
-    </div>
-   
-    <button @click="toEdit=!toEdit">Edit</button>
 
         
 </template>
@@ -99,5 +102,11 @@ export default {
 }
 .text{
     padding: 40px;
+}
+#profilepage{
+    background-color: #F2D694;
+}
+.container{
+    
 }
 </style>
