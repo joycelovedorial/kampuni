@@ -331,13 +331,5 @@ template{
   background-color: var(#86B8B1)
 }
 
-.calendar .event:hover
-
-
-
-
-
-
-
 
 </style>
