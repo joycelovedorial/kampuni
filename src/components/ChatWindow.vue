@@ -1,9 +1,14 @@
 <template>
-  <div class="row">
+  <div class="row" style=" display: flex;">
     <div class="col-9">
-    <div class="chat-window" style="background-color: white;">
+    <div class="chat-window">
       <!-- <div v-if="error">{{ error }}</div> -->
-      <div class="chatTitle">{{name}}</div>
+      <div class="chatTitle">
+        {{name}}
+        <div class="click-expenses" @click="displayExpenses=!displayExpenses">
+          Expenses ▶
+        </div>
+      </div>
       <div id="leftside">
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
@@ -12,7 +17,9 @@
                 <span class="name">{{ doc.name }}</span>
                 <div class="single-chat-container" >
                   <span class="message">{{ doc.message }}</span>
-                  <span class="created-at">{{ doc.createdAt }} ago</span>
+                  <div class="datetime-thing">
+                    <span class="created-at">{{ doc.createdAt }} ago</span>
+                  </div>
                 </div>
               </div>
               <div v-else class="self">
@@ -20,7 +27,9 @@
                 <span class="name-self">{{ doc.name }}</span>
                 <div class="single-chat-container-self" >
                   <span class="message-self">{{ doc.message }}</span>
-                  <span class="created-at-self">{{ doc.createdAt }} ago</span>
+                  <div class="datetime-thing">
+                    <span class="created-at-self">{{ doc.createdAt }} ago</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,18 +40,18 @@
           <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
     </div>
     </div>
-    
-    <div id="rightside" v-if="outid" class="col-3">
-      <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
-      <div v-if="displayCreateExpense">
-        <createExpense :outingid="outid"/>
-      </div>
-      <div class="container" v-for="exp in expensesArray" :key="exp.id">
-        {{ exp.desc }}
-        {{ exp.amount }}
+    <div v-if="displayExpenses">
+      <div id="rightside" v-if="outid" class="col-3">
+        <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+        <div v-if="displayCreateExpense">
+          <createExpense :outingid="outid"/>
+        </div>
+        <div class="container" v-for="exp in expensesArray" :key="exp.id">
+          {{ exp.desc }}
+          {{ exp.amount }}
+        </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -71,6 +80,7 @@ export default {
       const outid= ref("")
       const expensesArray = ref([])
       const displayCreateExpense = ref(false)
+      const displayExpenses = ref(false)
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -117,7 +127,6 @@ export default {
         documents.value=null
         error.value ='could not fetch the data'
       })
-  
       
       const formattedDocuments = computed(()=>{
           if (documents.value){
@@ -192,7 +201,8 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,}
+      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,displayExpenses}
+      
       
     }
 
@@ -201,22 +211,21 @@ export default {
 
 <style scoped>
   .created-at{
-    color: #878787;
-    margin-left: 90%;
+    color: rgb(74, 51, 74);
     display: block;
     font-size: 12px;
     margin-bottom: 2px;
     
   }
   .created-at-self{
-    color: #878787;
-    margin-left: 90%;
+    color: rgb(74, 51, 74);
     display: block;
     font-size: 12px;
     margin-bottom: 2px;
   }
   .single-chat-container{
-    background-color: #B492B8;
+    background-color: #FFFDF0;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px 10px 0 10px; 
     padding: 10px;
     width: 75%;
@@ -224,6 +233,7 @@ export default {
   }
   .single-chat-container-self{
     background-color: #B492B8;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px 10px 10px 0; 
     padding: 10px;
     width: 75%;
@@ -241,10 +251,10 @@ export default {
   }
 
   .chat-window {
-    background: #a7e5f0;
+    background: #FFFDF0;
     padding: 10px;
     border-radius: 20px;
-    border: 2px #B492B8 solid;
+    border: 2px #000000 solid;
   }
   .single {
     margin: 10px 0;
@@ -270,9 +280,14 @@ export default {
     background-color: #B492B8;
     border-radius: 10px;
   }
-  @media (min-width: 635px) {
-    .message{
-      font-size: small;
-    }
+  .datetime-thing{
+    text-align: right;
+  }
+  .click-expenses{
+    text-align: right;
+    font-weight: normal;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
   }
 </style>

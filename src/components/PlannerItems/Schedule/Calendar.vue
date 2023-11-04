@@ -185,7 +185,7 @@ template{
   padding: 5px;
   color: #fff;
   display: flex;
-  border-radius: 10px;
+  border-radius: 30px;
   background-color: rgb(255, 255, 255);
 
 }
