@@ -168,7 +168,7 @@ export default {
             bump:true
         }), 
         displayBump.value = true
-        message.value=""
+        // message.value=""
     }
 
     return {
