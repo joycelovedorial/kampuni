@@ -142,9 +142,10 @@ export default {
             });
             console.log("registered");
             const uid = cred.user.uid;
-           
-            
-
+          
+            await cred.user.updateProfile({
+              photoURL:pfp.value,
+            })
             const docRef = doc(db, 'users', uid);
 
                 try {
@@ -153,7 +154,8 @@ export default {
 
                   if (!userData?.community) {
                     router.push({ name: 'joinCommunity' });
-                  } else {
+                  } 
+                  else {
                     router.push({ name: 'Homepage' });
                   }
                 } catch (error) {

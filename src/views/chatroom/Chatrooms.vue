@@ -2,7 +2,7 @@
   <div id="chatrooms">
   <Navbar/>
     <div class="row" id="chat-container">
-      <div class="chat-list-left  col-3" style="margin-top: 20px;">
+      <div class="chat-list-left col-3">
         <input type="text" placeholder="Search for Chats" class="search" v-model="searchtag">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
@@ -126,6 +126,7 @@ export default {
   background-color: #FFFDF0;
   border-radius: 10px;
 }
+
 #chat-container{
   margin: 20px 0;
   height: fit-content;
@@ -147,14 +148,16 @@ export default {
 .chatroom-right col-9{
   max-height: 100%;
 }
-.chat-list-left  col-3{
+.chat-list-left col-3{
   overflow: scroll ;
+  margin-top: 20px;
+  border: 2px #FFFDF0 solid;
 }
 input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
   background-color: #FFFDF0;
-  color:rgb(27, 6, 23);
+  color:#FFFDF0;
   size: 3;
   width: 100%
 }
