@@ -277,8 +277,10 @@ export default {
 
 #logo {
   margin-bottom: 5px auto;
-  margin-top:100px;
+  margin-top:120px;
   /* padding-top:20px; */
+  height:auto;
+  width:auto;
   padding-bottom:10px;
   
 
