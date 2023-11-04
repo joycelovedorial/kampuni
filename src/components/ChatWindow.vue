@@ -1,6 +1,6 @@
 <template>
-  <div class="row" style=" display: flex; align-items: center; justify-content: space-between;">
-    <div class="col-12">
+  <div class="row" style=" display: flex;">
+    <div class="col-9">
     <div class="chat-window">
       <!-- <div v-if="error">{{ error }}</div> -->
       <div class="chatTitle">
@@ -9,54 +9,48 @@
           {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
       </div>
-      <div class="content" >
-        <div v-if="isContentAVisible">
-          <div id="leftside">
-            <div v-if="documents" class="messages" ref="messages">
-                <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
-                  <div v-if="thisName==doc.name">
-                    <img :src="doc.photoURL">
-                    <span class="name">{{ doc.name }}</span>
-                    <div class="single-chat-container" >
-                      <span class="message">{{ doc.message }}</span>
-                      <div class="datetime-thing">
-                        <span class="created-at">{{ doc.createdAt }} ago</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else class="self">
-                    <img :src="doc.photoURL">
-                    <span class="name-self">{{ doc.name }}</span>
-                    <div class="single-chat-container-self" >
-                      <span class="message-self">{{ doc.message }}</span>
-                      <div class="datetime-thing">
-                        <span class="created-at-self">{{ doc.createdAt }} ago</span>
-                      </div>
-                    </div>
+      <div id="leftside">
+        <div v-if="documents" class="messages" ref="messages">
+            <div v-for="doc in formattedDocuments" :key="doc.id" class="single" style="border: none;">
+              <div v-if="thisName==doc.name">
+                <img :src="doc.photoURL">
+                <span class="name">{{ doc.name }}</span>
+                <div class="single-chat-container" >
+                  <span class="message">{{ doc.message }}</span>
+                  <div class="datetime-thing">
+                    <span class="created-at">{{ doc.createdAt }} ago</span>
                   </div>
                 </div>
-            </div>
-          </div>
-          <div class="chatform">
-            <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
-          </div>
-        </div>
-        <div v-else>
-          <div class="expenses">
-            <div id="rightside" v-if="outid" class="col-12">
-              <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
-              <div v-if="displayCreateExpense">
-                <createExpense :outingid="outid"/>
               </div>
-              <div class="container" v-for="exp in expensesArray" :key="exp.id">
-                {{ exp.desc }}
-                {{ exp.amount }}
+              <div v-else class="self">
+                <img :src="doc.photoURL">
+                <span class="name-self">{{ doc.name }}</span>
+                <div class="single-chat-container-self" >
+                  <span class="message-self">{{ doc.message }}</span>
+                  <div class="datetime-thing">
+                    <span class="created-at-self">{{ doc.createdAt }} ago</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
+    <div class="chatform">
+          <Chatform v-if="selectedchat" :selectedchat="selectedchat" />   
+    </div>
+    </div>
+    <div v-if="displayExpenses">
+      <div id="rightside" v-if="outid" class="col-3">
+        <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+        <div v-if="displayCreateExpense">
+          <createExpense :outingid="outid"/>
+        </div>
+        <div class="container" v-for="exp in expensesArray" :key="exp.id">
+          {{ exp.desc }}
+          {{ exp.amount }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +84,7 @@ export default {
       const toggleContent = () => {
         isContentAVisible.value = !isContentAVisible.value;
       };
+      const errorMessage = ref('')
       
       const fetchName = async () => {
         const user = auth.currentUser
@@ -210,8 +205,10 @@ export default {
         }
       })
 
-      return {documents,formattedDocuments,selectedchat,messages,name,thisName,outid,expensesArray,displayCreateExpense,isContentAVisible,toggleContent,}
+      return {errorMessage,deleteChatroom,documents,formattedDocuments,selectedchat,
+        messages,name,thisName,outid,expensesArray,displayCreateExpense,isContentAVisible,toggleContent,}
     }
+
 }
 </script>
 
@@ -296,10 +293,4 @@ export default {
     cursor: pointer;
     user-select: none;
   }
-  .expenses{
-    width: 200px;
-    height: 200px;
-    transition: transform 0.3s;
-  }
-
 </style>
