@@ -1,12 +1,13 @@
 <template>
-  <div id="expenses-page" class="bg-g bg-full">
-    <Navbar/>
+  <Navbar/>
+  <body id="expenses-page" class="bg-g bg-full">
     <div class="body-div w-10/12 mx-auto">
       <button @click="compiled=!compiled">
         Compile
       </button>
+      <compiledExpense/>
       <div v-if="compiled">
-        <compiledExpense/>
+        
       </div>
 
 
@@ -29,57 +30,64 @@
           <createExpenses/>
         </div>
         <div class="flex mx-auto justify-content-around space-x-3" v-else>
+          <div v-if="!payeecount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
+            <div class="mx-auto text-center my-auto">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+              </svg>
+              <h1>
+                cleared!
+              </h1>
+              <p>
+                you do not owe anyone anything~
+              </p>
+            </div>
+          </div>
+          <div v-else>
+            <div class="w-full rounded-lg p-3 h-84 test overflow-y-hidden">
+              <div>
+                <p class="text-xl font-fredoka font-extrabold text-center pb-2">
+                  to pay
+                </p>
+              </div>
+              <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
+                <div v-for="peep in youOwePeople" :key="peep.id">
+                  <singleExpensePayer :transacid="peep.id" />
+                </div>
+              </div>
+            </div>
+          </div>
+            <div v-if="!receivercount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
+              <div class="mx-auto text-center my-auto">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+                <h1>
+                  cleared!
+                </h1>
+                <p>
+                  you wont be receiving extra money anywhere~
+                </p>
+              </div>
+            </div>
+            <div v-else>
               <div class="w-full rounded-lg p-3 h-84 test overflow-y-hidden">
-                <div v-if="youOwePeople.length == 0">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                  </svg>
-                  <h1>
-                    cleared!
-                  </h1>
-                  <p>
-                    you do not owe anyone anyting~
+                <div>
+                  <p class="text-xl font-fredoka font-extrabold text-center pb-2">
+                    to receive
                   </p>
                 </div>
-                <div v-else>
-                  <div>
-                    <p class="text-xl font-fredoka font-extrabold text-center pb-2">
-                      to pay
-                    </p>
-                  </div>
-                  <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                    <singleExpensePayer id="whoyouowe" v-for="peep in youOwePeople" :key="peep.id" :transacid="peep.id"/>
+                <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
+                  <div v-for="peepo in peopleOweYou" :key="peepo.id">
+                    <singleExpenseReceiver id="whooweyou" :transacid="peepo.id" />
                   </div>
                 </div>
               </div>
-              <div class="w-full rounded-lg p-3 h-84 test overflow-y-hidden">
-                <div v-if="peopleOweYou.length == 0">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                  </svg>
-                  <h1>
-                    cleared!
-                  </h1>
-                  <p>
-                    you wont be receiving extra money anywhere~
-                  </p>
-                </div>
-                <div v-else>
-                  <div>
-                    <p class="text-xl font-fredoka font-extrabold text-center pb-2">
-                      to receive
-                    </p>
-                  </div>
-                  <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                    <singleExpenseReceiver id="whooweyou" v-for="peepo in peopleOweYou" :key="peepo.id" :transacid="peepo.id"/>
-                  </div>
-                </div>
-              </div>
-          
-        </div>
+            </div>
+          </div>
       </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -100,7 +108,9 @@ export default {
     const textInput = ref('');
     const buttonText = ref('pay');
     const isAnimationActive = ref(false);
-    const compiled=ref(false)
+    const compiled=ref(false);
+    const payeecount = ref(0);
+    const receivercount = ref(0);
 
     const displayCreate=ref(false)
     const peopleOweYou = ref([])
@@ -109,23 +119,35 @@ export default {
     //fetching of stuff
     const user = auth.currentUser
     const uid = user.uid
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid))
+    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
     const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
       const result = []
+      const count = 0
       oweYouSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
+        const data = doc.data()
+      
+        receivercount.value += 1
       })
       peopleOweYou.value=result
+      console.log(peopleOweYou.value,"poy");
     })
 
 
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid))
+    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
     const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
       const result = []
       youOweSnap.forEach((doc)=>{
         result.push({...doc.data(),id:doc.id})
+        const data = doc.data()
+        
+        payeecount.value += 1
+       
       })
       youOwePeople.value=result
+      console.log(youOwePeople.value,"yop");
+
+
     })
 
     //anyu functions
@@ -165,6 +187,8 @@ export default {
       displayCreate,
       youOwePeople,
       peopleOweYou,
+      payeecount,
+      receivercount
     };
   },
 };
@@ -172,11 +196,15 @@ export default {
 
 <style scoped>
   #expenses-page {
-    /* background-size: cover; */
-    /* background-repeat: no-repeat;
-    background-attachment: fixed; */
-    height: 100vh; /* 100% of viewport height */
-    margin: 0; /* Remove default margin to cover the entire viewport */
+    position: relative;   
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    overflow: scroll;
+    overflow: hidden;
+    background-attachment: fixed;
   }
 
   /* .expenses {

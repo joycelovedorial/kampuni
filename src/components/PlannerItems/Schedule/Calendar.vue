@@ -68,6 +68,35 @@
 
     </div>
 
+    <div class="right">
+      <div v-for="(outing, index) in filteredOutingArray" :key="index">
+      <!-- Display the properties of the outing here -->
+      <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="(outing, index) in filteredOutingArray" :key="index">
+      <td>{{ outing.title }}</td>
+      <td>{{ outing.date }}</td>
+      <td>{{ outing.description }}</td>
+      <td>{{ outing.location }}</td>
+    </tr>
+  </tbody>
+</table>
+      <!-- Add more properties as needed -->
+    </div>
+      
+
+
+
+    </div>
+
   </div>
 
 </template>

@@ -2,14 +2,15 @@
   <div class="object-right w-auto font-fredoka font-bold">
     <nav class="bg-bnorm flex justify-between items-center h-18">
       <div class="relative inline-block text-right mx-3">
-        <img class="logo inline ml-3" src="../assets/kampuni_logo.png">
+        <img class="logo inline ml-3" src="../assets/logo.png">
       </div>
       <div class="flex space-x-4 mr-10">
-        <div class="button bg-bpop text-sm rounded-lg w-30 place-content-center flex items-center shadow-bpop"
+        <div class="button text-sm rounded-lg w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Homepage',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Homepage',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Homepage',   // Apply 'bg-white' when active
+            'bg-y': $route.name === 'Homepage',
           }"
           :disabled="$route.name === 'Homepage'" 
         >
@@ -22,12 +23,12 @@
         </div>
         <!--  -->
         
-        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
+        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Chatrooms',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Chatrooms',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Chatrooms', // Apply 'text-oranges' when active
-            'bg-[#C295C7]': $route.name === 'Chatrooms',
+            'bg-p': $route.name === 'Chatrooms',
           }" 
           :disabled="$route.name === 'Chatrooms'" 
         >
@@ -40,13 +41,12 @@
             </span>
           </router-link>
         </div>
-        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
+        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Planner',  // Apply 'bg-cyans' when not active
-            // 'text-cyanp': $route.name !== 'Planner', // Apply 'text-white' when not active
             'shadow-inner': $route.name === 'Planner',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Planner', // Apply 'text-oranges' when active
-            'bg-[#86B8B1]': $route.name === 'Planner',
+            'bg-b': $route.name === 'Planner',
           }"
           :disabled="$route.name === 'Planner'" 
         >
@@ -59,13 +59,13 @@
             </span>
           </router-link>
         </div>
-        <div class="button bg-bpop text-sm rounded-md w-30 place-content-center flex items-center shadow-bpop"
+        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Expenses',  // Apply 'bg-cyans' when not active
             // 'text-cyanp': $route.name !== 'Expenses', // Apply 'text-white' when not active
             'shadow-inner': $route.name === 'Expenses',   // Apply 'bg-white' when active
             'drop-shadow-none': $route.name === 'Expenses', // Apply 'text-oranges' when active
-            'bg-[#99B898]': $route.name === 'Expenses',
+            'bg-g': $route.name === 'Expenses',
           }"
           :disabled="$route.name === 'Expenses'" 
         >

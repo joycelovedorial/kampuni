@@ -142,26 +142,8 @@ export default {
             });
             console.log("registered");
             const uid = cred.user.uid;
-           
-            await cred.user.updateProfile({
-              photoURL:pfp.value,
-            })
-            const docRef = doc(db, 'users', uid);
-
-                try {
-                  const docSnap = await getDoc(docRef);
-                  const userData = docSnap.data();
-
-                  if (!userData?.community) {
-                    router.push({ name: 'joinCommunity' });
-                  } else {
-                    router.push({ name: 'Homepage' });
-                  }
-                } catch (error) {
-                  console.error('Error fetching user data:', error);
-                }
               
-                  router.push({ name: 'joinCommunity' });
+            router.push({ name: 'joinCommunity' });
                
         } catch (error) {
           Rerror.value=error.message;

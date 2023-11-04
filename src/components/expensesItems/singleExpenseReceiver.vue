@@ -15,7 +15,7 @@
   <div v-if="!paid" class="mt-2 bg-bpop rounded-lg p-2 border-2 border-black">
         <div class="font-bold font-jakarta text-sm flex justify-between">
             <div class="flex space-x-2 align-middle">
-                <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="'/profiles/' + imgstr" alt="">
+                <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="imgstr" alt="">
                 <div class="inline-block my-auto">
                     {{ tname }} owes you ${{ Number(amount).toFixed(2) }}
                     <div class="block">
@@ -108,9 +108,9 @@ import { parseISO } from 'date-fns';
 export default {
   props: {
     transacid: String,
-    key: String,
   },
   setup(props) {
+    console.log(props.transacid,"poy");
     const message = ref('');
     const tname = ref('');
     const amount = ref('');
@@ -138,10 +138,10 @@ export default {
             .then((tnamesnap)=>{
                 const data = tnamesnap.data()
                 tname.value=data.firstname
-                imgstr.value = data.firstname + ".jpg"
+                imgstr.value = data.photoURL
             })
 
-        if(data.outing!==null){
+            if(data.outing!==null){
                 getDoc(doc(db,'outings',data.outing))
                 .then((snap)=>{
                     const data = snap.data()
@@ -168,7 +168,7 @@ export default {
             bump:true
         }), 
         displayBump.value = true
-        message.value=""
+        // message.value=""
     }
 
     return {

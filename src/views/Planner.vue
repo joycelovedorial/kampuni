@@ -79,7 +79,7 @@ export default {
     const handleCreateOuting = () =>{
       displayCreateOuting.value=!displayCreateOuting.value
     }
-      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting }
+      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting,handleCreateOuting}
     }
 }
 </script>
