@@ -111,7 +111,7 @@ export default {
         }
             
         const emitCo = () =>{
-            context.emit("closeCreateOuting")
+            context.emit("emitCo")
         }
 
 
