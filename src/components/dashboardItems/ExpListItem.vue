@@ -59,9 +59,6 @@ setup(props) {
     const user = auth.currentUser
     const uid = user.uid
 
-
-
-
     if(props.transacid){
       
       if(props.transacid.outing){
@@ -70,63 +67,62 @@ setup(props) {
             const data=snap.data()
             outing.value=data.title
         })
-    }else{
-        outing.value="General"
-    }
-   
-    getDoc(doc(db,"expenses",props.transacid.expense))
-        .then((snap)=>{
-            const data=snap.data()
-            category.value=data.desc
-        })
-
-    if(uid==props.transacid.payer){
-        getDoc(doc(db,"users",props.transacid.receiver))
+          }else{
+              outing.value="General"
+          }
+        
+        getDoc(doc(db,"expenses",props.transacid.expense))
             .then((snap)=>{
                 const data=snap.data()
-                name.value=data.firstname
-                imgurl.value=data.photoURL
-                console.log(name.value);
-
+                category.value=data.desc
             })
 
+      if(uid==props.transacid.payer){
+          getDoc(doc(db,"users",props.transacid.receiver))
+              .then((snap)=>{
+                  const data=snap.data()
+                  name.value=data.firstname
+                  imgurl.value=data.photoURL
+                  console.log(name.value);
+              })
+
         youowetext.value="You owe " + name.value
-    }else if(uid==props.transacid.receiver){
-        getDoc(doc(db,"users",props.transacid.payer))
-            .then((snap)=>{
-                    const data=snap.data()
-                    name.value=data.firstname
-                    imgurl.value=data.photoURL  
-                    console.log(name.value);
-                })
+      }else if(uid==props.transacid.receiver){
+          getDoc(doc(db,"users",props.transacid.payer))
+              .then((snap)=>{
+                      const data=snap.data()
+                      name.value=data.firstname
+                      imgurl.value=data.photoURL  
+                      console.log(name.value);
+                  })
 
         youowetext.value = name.value + "Owes you"
-    }
+      }
     }
 
     console.log("hi");
     const textAnimationClass = computed(() => {
-    return isAnimationActive.value ? 'text-animation' : '';
+      return isAnimationActive.value ? 'text-animation' : '';
     });
 // Use onMounted to trigger the toggleText method every 3 seconds
-}
 
 
-return {
-  showInput,
-  textInput,
-  buttonText,
-  isAnimationActive,
-  textAnimationClass,
-  amount,
-  youowetext,
-  imgurl,
-  name,
-  category,
-  outing,
+
+  return {
+    showInput,
+    textInput,
+    buttonText,
+    isAnimationActive,
+    textAnimationClass,
+    amount,
+    youowetext,
+    imgurl,
+    name,
+    category,
+    outing,
+    }
   }
-    };
-  }
+  
 };
 </script>
 

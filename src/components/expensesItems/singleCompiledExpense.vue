@@ -15,7 +15,7 @@
                             pay
                         </button>
                     </div>
-                    <span v-for="count in Math.floor(`${displayamount}`/10)" >
+                    <span v-for="(count,i) in Math.floor(`${displayamount}`/10)" :key="i" >
                         <span>
                             <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="money" alt="">
                         </span>
@@ -26,7 +26,7 @@
                     
                     <p>{{ homiename }} owes you ${{ Number(displayamount).toFixed(2) }}</p>
                     <div>
-                        <span v-for="count in Math.floor(`${displayamount}`/10)" >
+                        <span v-for="(count,i) in Math.floor(`${displayamount}`/10)" :key="i" >
                             <span>
                                 <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="coin" alt="">
                             </span>

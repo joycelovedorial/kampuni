@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc, getDocs} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc} from 'firebase/firestore';
 
 
 export default {
@@ -54,12 +54,50 @@ export default {
         comid.value = docSnap.data().community
       })
     const q = query(collection(db,"expenses"))
-    getDocs(q)
-      .then((snap)=>{
-        snap.forEach(async(doc)=>{
-          const transacq = query(collection(db,"transactions"))
-        })
+    
+
+
+
+
+
+
+
+    onMounted(async()=>{
+      //clearing expenses
+      const expensesnap = await getDocs(q)
+      expensesnap.forEach(async(doc)=>{
+          const transacq = query(collection(db,"transactions"),where("expense","==",doc.id))
+          const querySnap = await getDocs(transacq)
+          const fullypaid = ref(true)
+          querySnap.forEach(async(snapDoc)=>{
+            const data = snapDoc.data()
+            if(data.paid==false){
+              fullypaid.value=false
+            }else if(querySnap.size==0){
+              await deleteDoc(doc.ref)
+            }
+          })
+          if (fullypaid.value==true){
+            await deleteDoc(doc.ref)
+          }
+        
       })
+
+      //point allocation
+      const now = new Date()
+      now.setHours(0,0,0,0)
+      const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",now))
+      const tasksnap = await getDocs(taskquery)
+      tasksnap.forEach(async(tdoc)=>{
+        await deleteDoc(tdoc.ref)
+      })
+
+
+
+
+
+    })
+    
     
     return { comid };
   },
