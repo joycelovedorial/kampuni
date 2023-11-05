@@ -60,7 +60,7 @@
               :value="user.id" 
               
               />
-              <label :for="user.id" class="text-sm">{{ user.name.toLowerCase() }}</label>
+              <label :for="user.id" class="text-sm">{{ user.name }}</label>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
           <div class="bg-bnorm rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:18vh;">
             <div v-for="user in users" :key="user.id">
               <input class="m-2  checked:text-p focus:text-p  focus:ring-black " type="radio" :id="user.id" v-model="whopaid" :value="user.id" required>
-              <label :for="user.id" class="text-sm">{{ user.name.toLowerCase() }}</label>
+              <label :for="user.id" class="text-sm">{{ user.name }}</label>
             </div>
           </div>
         </div>

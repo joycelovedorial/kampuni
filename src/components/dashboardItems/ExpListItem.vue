@@ -37,7 +37,10 @@ props:{
 transacid: Object,
 
 },
+
+
 setup(props) {
+  
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
@@ -52,11 +55,25 @@ setup(props) {
     console.log(props.transacid,"tobject");
     amount.value = props.transacid.amount
 
-    //fill in values for the shit
-
+    
     const user = auth.currentUser
     const uid = user.uid
     if(props.transacid.outing){
+        getDoc(doc(db,"outings",props.transacid.outing))
+        .then((snap)=>{
+            const data=snap.data()
+            outing.value=data.title
+        })
+    }else{
+        outing.value="General"
+    }
+  
+    // props.transacid.expense
+    // props.transacid.receiver
+    
+    if(props.transacid){
+      
+      if(props.transacid.outing){
         getDoc(doc(db,"outings",props.transacid.outing))
         .then((snap)=>{
             const data=snap.data()
@@ -94,9 +111,7 @@ setup(props) {
 
         youowetext.value = name.value + "Owes you"
     }
-
-
-
+    }
 
     console.log("hi");
     const textAnimationClass = computed(() => {

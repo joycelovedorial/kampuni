@@ -163,6 +163,6 @@ input[type="text"]{
 }
 #chatrooms {
   background-color: #B492B8;
-  height: 100vh;
+  height: 140vh;
 }
 </style>
