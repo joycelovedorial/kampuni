@@ -45,31 +45,7 @@
   <div class="container">
     <div class="left">
       
-      <div>
-      <!-- Display the properties of the outing here -->
-      <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Location</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }}{{ outing.creatorname }}</td>
-      <td>{{ outing.date }}</td>
-      <td>{{ outing.description }}</td>
-      <td>{{ outing.location }}</td>
-    </tr>
-  </tbody>
-  </table>
- 
-    
-
-      <!-- Add more properties as needed -->
-    </div>
+      
   </div>
 
   
