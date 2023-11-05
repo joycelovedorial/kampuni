@@ -9,7 +9,12 @@
             </div>
             <div v-else>
                 <div v-if="owe" class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
-                    <p>You owe {{ homiename }} ${{ Number(displayamount).toFixed(2) }}</p>
+                    <div class="flex justify-between">
+                        <p>You owe {{ homiename }} ${{ Number(displayamount).toFixed(2) }}</p>
+                        <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md">
+                            pay
+                        </button>
+                    </div>
                     <span v-for="count in Math.floor(`${displayamount}`/10)" >
                         <span>
                             <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="money" alt="">
@@ -18,12 +23,8 @@
                     <!-- <p>You owe {{ homiename }} {{ displayamount }}</p> -->
                 </div>
                 <div v-else class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
-                    <div class="flex justify-between">
-                        <p>{{ homiename }} owes you ${{ Number(displayamount).toFixed(2) }}</p>
-                        <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md">
-                            pay
-                        </button>
-                    </div>
+                    
+                    <p>{{ homiename }} owes you ${{ Number(displayamount).toFixed(2) }}</p>
                     <div>
                         <span v-for="count in Math.floor(`${displayamount}`/10)" >
                             <span>
