@@ -2,7 +2,8 @@
   <div class="object-right w-auto font-fredoka font-bold">
     <nav class="bg-bnorm flex justify-between items-center h-18">
       <div class="relative inline-block text-right mx-3">
-        <img class="logo inline ml-3" src="../assets/logo.png">
+        <img class="logo inline ml-3" :src="logo" alt="">
+        <!-- <img class="logo inline ml-3" src="../assets/logo.png"> -->
       </div>
       <div class="flex space-x-4 mr-10">
         <div class="button text-sm rounded-lg w-30 place-content-center flex items-center"
@@ -100,6 +101,7 @@ import { auth,storage,db } from '@/firebase/config';
 import { useRouter } from 'vue-router'; // Import the useRouter function
 import { doc, getDoc } from 'firebase/firestore';
 import {  getDownloadURL } from "firebase/storage";
+import {  ref as fref } from "firebase/storage";
 
 
 export default {
@@ -107,6 +109,7 @@ export default {
         const router = useRouter(); // Initialize the router
         const dropdownVisible = ref(false);
         const imageURL = ref("")
+        const logo = ref("")
 
         const user = auth.currentUser
         const uid = user.uid
@@ -120,6 +123,11 @@ export default {
 
 
           })
+        
+          getDownloadURL(fref(storage,'logo.png'))
+            .then((url)=> {
+              logo.value = url
+            })
 
         const handleLogout = async () => {
             try {
@@ -137,7 +145,7 @@ export default {
           dropdownVisible.value = !dropdownVisible.value
         }
 
-        return { handleLogout, dropdownVisible, toggleDropdown,imageURL };
+        return { handleLogout, dropdownVisible, toggleDropdown,imageURL,logo};
     }
 };
 </script>
