@@ -23,6 +23,15 @@
     <p>Time:{{ outing.date }}</p>
   </div>
 </div>
+
+<!-- events -->
+<div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="event in eventsArray" :key="event.id">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2'>
+    <h5>{{event.title}}</h5>
+    <p>Location:{{ event.location }}</p>
+    <p>Time:{{ event.date }}</p>
+  </div>
+</div>
   
   </template>
   
@@ -45,6 +54,7 @@
       const tasks = ref([]);
       const isChecked = ref(false);
       const outingsArray = ref([])
+      const eventsArray = ref([])
   
       // Create a date object for today's date at midnight (00:00:00)
       const today = new Date();
@@ -71,10 +81,18 @@
               return []
             }
         })
+      const eventQuery = query(collection(db,"events"),where("userid","==",uid))
+      const esub = onSnapshot(eventQuery,(esnap)=>{
+        esnap.forEach((edoc)=>{
+          const eventTime = edoc.date instanceof Date ? edoc.date.toLocaleTimeString() : "";
 
+          eventsArray.value.push({...edoc.data(),id:edoc.id,date:eventTime})
+        })
+      })
+   
       //outings querying
       const outingsQuery = query(collection(db, "outings"),where("community","==",comid),where("date", ">=", today), where("date", "<=", endOfDay));
-      const usub = onSnapshot(q,(snap)=>{
+      const usub = onSnapshot(outingsQuery,(snap)=>{
         snap.forEach((doc)=>{
           outingsArray.value.push({...doc.data(),id:doc.id})
         })
@@ -142,7 +160,7 @@
         console.log(isChecked.value)
       };
 
-      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,outingsFormatted };
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,outingsFormatted,eventsArray };
     }
     
   };

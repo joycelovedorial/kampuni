@@ -21,14 +21,14 @@
           </p>
         </div>
       </div>
-      <div class="bg-bnorm grid grid-cols-7 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)">
+      <div class="bg-bnorm grid grid-cols-7 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)" :key="weekIndex">
         <div class="" v-for="dayIndex in 7" :key="dayIndex">
           <div v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
             <p class="text-sm text-left pr-2 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
             <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)">
-              <div v-for="task in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
+              <div v-for="(task,taskIndex) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="taskIndex" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1" >
                 <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
                 <span class="bg-bpop/20 rounded-sm block">
                   {{ task.title }} <!-- Display task title or relevant task property -->
