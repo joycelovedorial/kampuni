@@ -236,7 +236,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 180vh;
+    height: max-content;
     margin: 0;
     overflow: scroll;
     overflow: hidden;
