@@ -26,6 +26,9 @@
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
           <CreateOuting @emitCo="handleCreateOuting"/>
         </div>
+        <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateEvent">
+          <CreateEvent @emitCe="handleCreateEvent"/>
+        </div>
       </div>
 
       <div v-if="displayTask" class="container " id="tasklist">
@@ -55,6 +58,7 @@ import Outings from '@/components/PlannerItems/Schedule/Outings.vue';
 import TaskMarket from '@/components/PlannerItems/Tasklist/TaskMarket.vue';
 import Leaderboard from '@/components/PlannerItems/Tasklist/Leaderboard.vue';
 import CreateOuting from '@/components/PlannerItems/Schedule/CreateOuting.vue';
+import CreateEvent from '@/components/PlannerItems/Schedule/CreateEvent.vue';
 import { ref } from 'vue';
 
 export default {
@@ -65,7 +69,8 @@ export default {
     TaskMarket,
     Leaderboard,
     createTask,
-    CreateOuting
+    CreateOuting,
+    CreateEvent
   },
   setup(props,context) {
     const displayCreateTask = ref(false)
@@ -73,15 +78,20 @@ export default {
     const displayOutings = ref(false);
     const displayCalendar = ref(true);
     const displayTask = ref(false);
-
+    const displayCreateEvent = ref(false);
     const handleCreateTask = () => {
       displayCreateTask.value = !displayCreateTask.value;
     };
 
     const handleCreateOuting = () =>{
       displayCreateOuting.value=!displayCreateOuting.value
+      displayCreateEvent.value=false
     }
-      return { displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting,handleCreateOuting}
+    const handleCreateEvent = () =>{
+      displayCreateEvent.value=!displayCreateEvent.value
+      displayCreateOuting.value=false
+    }
+      return {handleCreateEvent,  displayCreateEvent,displayOutings, displayCalendar, displayTask, displayCreateTask, handleCreateTask,displayCreateOuting,handleCreateOuting}
     }
 }
 </script>
