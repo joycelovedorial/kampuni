@@ -76,6 +76,8 @@ import {
   updateDoc,
   where,
   doc,
+  Timestamp,
+  getDoc,
 } from "firebase/firestore";
 import { formatDistanceToNow } from "date-fns";
 
@@ -85,8 +87,39 @@ export default {
     setup() {
         const tasks = ref([])
         
-    
-        const q = query(collection(db,"tasks"),where("userid","==",null))
+        const today = new Date();
+        const todayTimestamp = Timestamp.fromDate(today);
+        const minpoints = ref(0)
+        const minid=ref("")
+
+        const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">",todayTimestamp))
+        const assub = onSnapshot(assign,async(snap)=>{
+          snap.forEach(async(docu)=>{
+            const user = auth.currentUser
+              const uid = user.uid
+              const usnap = await getDoc(doc(db,'users',uid))
+              const comid= usnap.data().community
+              minpoints.value = usnap.data().minpoints
+              minid.value = uid
+              const comsnap = await getDoc(doc(db,'communities',comid))
+              const comdata = comsnap.data()
+              comdata.homies.forEach(async(homi)=>{
+                console.log(homi,"should be homi id");
+                const hsnap = await getDoc(doc(db,'users',homi))
+                if (hsnap.data().points<minpoints.value){
+                  minpoints.value = hsnap.data()
+                  minid.value=homi
+                }
+              })
+            
+              await updateDoc(docu.ref,{
+                userid:minid.value,
+              })
+          })
+      })
+
+      
+        const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<",todayTimestamp))
         const unsub = onSnapshot(q,(snap)=>{
             const results= [];
             snap.forEach((doc)=>{

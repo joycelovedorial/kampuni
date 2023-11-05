@@ -138,6 +138,7 @@ export default {
     const eventsArray=ref([])
     const comid = ref("");
     const userid = ref("");
+    const toLoopOutings = ref([])
     // prev code
     // const today = new Date();
     

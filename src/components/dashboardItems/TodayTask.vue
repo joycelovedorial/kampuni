@@ -38,7 +38,7 @@
   <script>
   import { ref, onMounted,computed } from 'vue';
   import { auth, db } from "@/firebase/config";
-  import { collection, query, where, getDoc,getDocs, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
+  import { collection, query, where, getDoc,getDocs, onSnapshot, setDoc, doc, updateDoc, Timestamp} from "firebase/firestore";
   import { formatDistanceToNow } from 'date-fns';
   
   
@@ -146,6 +146,7 @@
     
         await updateDoc(doc(db,"tasks",taskid),{
           taskstatus:!status,
+          dateline:Timestamp.now()
         })
         
         const userData = userSnap.data()
