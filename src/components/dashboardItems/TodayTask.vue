@@ -1,7 +1,7 @@
 <template>
 
 <div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="task in tasksFormatted" :key="task.id"> 
-  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus}">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus,'bg-r':task.overdue}">
     <div :class="['col', { 'checked_style': task.taskstatus }]">
       <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
         <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
@@ -14,6 +14,15 @@
       </div>
     </div>
   </div>
+
+  <!-- outings -->
+<div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="outing in outingsFormatted" :key="outing.id">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2'>
+    <h5>{{outing.title}}</h5>
+    <p>Location:{{ outing.location }}</p>
+    <p>Time:{{ outing.date }}</p>
+  </div>
+</div>
   
   </template>
   
@@ -84,7 +93,9 @@
             .then((userSnap) => {
               if (!userSnap.empty) {
                 // If the user is involved in the outing, add it to userOutings
-                userOutings.push(outing);
+
+                const outingTime = outing.date instanceof Date ? outing.date.toLocaleTimeString() : "";
+                userOutings.push({ ...outing, date: outingTime });
               }
             })
             .catch((error) => {
@@ -131,7 +142,7 @@
         console.log(isChecked.value)
       };
 
-      return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,outingsFormatted };
     }
     
   };

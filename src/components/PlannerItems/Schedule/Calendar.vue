@@ -78,7 +78,7 @@
     </thead>
     <tbody>
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }}</td>
+      <td>{{ outing.title }}{{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
@@ -183,25 +183,29 @@ export default {
         where("community", "==", comid.value)
       );
       const qoutingSnap = await getDocs(qouting)
-      qoutingSnap.forEach( async(doc)=>{
-        const odata= doc.data()
-        let creatorname = null; 
-
+      qoutingSnap.forEach( async(adoc)=>{
+        const odata= adoc.data()
+        console.log(adoc.data());
+        let creatorname = "mystery"; 
+        console.log(odata.creator,'ocrawete');
         if(odata.creator){
-          const usnap = await getDoc(db,"users",odata.creator)
-          creatorname = usnap.data().firstname
+          const usnap = await getDoc(doc(db,"users",odata.creator))
+          const udata=usnap.data()
+         
+
+          creatorname = udata.firstname
         }else{
           creatorname = "It's a Mystery"
         }
-        const uiq = query(collection(db,"outings",doc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
+        const uiq = query(collection(db,"outings",adoc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
         const uisnap = await getDocs(uiq)
         if(uisnap.size>0){
           const convertedData = {
-          ...doc.data(),
-          date: doc.data().date.toDate(),
+          ...adoc.data(),
+          date: adoc.data().date.toDate(),
           creatorname: creatorname,}
           
-          outingArray.value.push({...convertedData,id:doc.id})
+          outingArray.value.push({...convertedData,id:adoc.id})
         }
       })
       console.log(outingArray.value,"outingarray");

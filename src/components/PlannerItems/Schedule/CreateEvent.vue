@@ -47,9 +47,7 @@
               const uid = user.uid
               const docSnap = await getDoc(doc(db,"users",uid))
               const docData = docSnap.data()
-              if (docData.photoURL){
-                  photourl.value=docData.photoURL
-              }
+         
               const cid = docData.community
   
               const dateOut = new Date(date.value)
