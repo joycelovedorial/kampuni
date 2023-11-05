@@ -7,6 +7,7 @@
       <th>Date</th>
       <th>Description</th>
       <th>Location</th>
+      <th>Going!</th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,9 @@
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
+      <td>
+        <span v-for="(sname,i) in outing.involved" :key="i">{{sname}}</span>
+      </td>
     </tr>
   </tbody>
   </table>
@@ -123,11 +127,25 @@ export default {
         };
         const formattedDate = dateObj.toLocaleString(undefined, options);
 
+        let involved = []
+        const usersSnap = await getDocs(collection(db,"outings",adoc.id,"usersInvolved"))
+        usersSnap.forEach(async(udoc)=>{
+          const udata = udoc.data()
+          if(udata.imIn){
+            const dsnap = await getDoc(doc(db,"users",udata.user))
+            const ddata= dsnap.data()
+            involved.push(ddata.firstname)
+          }
+        })
+
+
+        
         outingArray.value.push({
           ...adoc.data(),
           date: formattedDate,
           creatorname: creatorname,
           id: adoc.id,
+          involved:involved,
         });
       });
         

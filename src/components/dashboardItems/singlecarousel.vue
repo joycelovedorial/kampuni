@@ -35,9 +35,14 @@
                             <li id="location" class="list-group-item bg-white" style="list-style-image:url('../assets/icons/clock.svg')">
                             <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/>
-                            
-
                             </svg>{{location}} </li> <!--{{location}}--> 
+
+                            <li id="joined" class="list-group-item bg-white" style="list-style-image:url('../assets/icons/clock.svg')">
+                            <svg class="inline w-5 h-5 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/>
+                            </svg><span v-for="(name,i) in joined" :key="i">{{ name + " "}}</span> </li> <!--{{location}}--> 
+
+
                         </ul> 
                     </div>
                     <div class="row grid-col-2">
@@ -93,6 +98,7 @@ export default {
         const uid = user.uid
         const photourl = ref("")
         const creatorname = ref("")
+        const joined = ref([])
 
         const formatDate = (timestamp) => {
             const dateObj = new Date(timestamp.toMillis());
@@ -135,7 +141,18 @@ export default {
 
         const q = query(collection(db,"outings",outID.value,"usersInvolved"),where("user","==",uid))
         const subcollectionRef = collection(db, "outings", outID.value, "usersInvolved"); // Reference to the subcollection
-     
+        getDocs(subcollectionRef)
+        .then(async(usersSnap)=>{
+            usersSnap.forEach(async(udoc)=>{
+                const udata = udoc.data()
+                if(udata.imIn){
+                    const dsnap = await getDoc(doc(db,"users",udata.user))
+                    const ddata= dsnap.data()
+                    joined.value.push(ddata.firstname)
+                }
+            })
+        })
+        
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const results = []
             snapshot.forEach(async(doc)=>{
@@ -210,7 +227,7 @@ export default {
             fetchData()
         })
 
-        return { has_clicked_green,has_clicked_red,
+        return { has_clicked_green,has_clicked_red,joined,
             title,desc,location,date,eCost,time,isHovered_green,isHovered_red,involved,photourl,creatorname
         }
     }
