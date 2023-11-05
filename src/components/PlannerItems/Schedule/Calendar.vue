@@ -1,70 +1,50 @@
 <template>
+  <div class="flex flex-col space-y-2">
+    <div class="header flex justify-center space-x-2">
+      <button @click="previousMonth">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <p class="bg-bnorm rounded-lg px-2 border-black border-2 align-middle inline-block font-fredoka font-bold">{{ months[month] }} {{ year }}</p>
+      <button @click="nextMonth">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="border-2 bg-bpop border-black rounded-lg w-10/12 mx-auto">
+      <div class="grid grid-cols-7">
+        <div class="" v-for="(day, index) in daysOfWeek" :key="index">
+          <p class="text-black font-bold font-fredoka text-center">
+            {{ day }}
+          </p>
+        </div>
+      </div>
+      <div class="bg-bnorm grid grid-cols-7 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)">
+        <div class="" v-for="dayIndex in 7" :key="dayIndex">
+          <div v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
+            <p class="text-sm text-left pr-2 pt-2">
+              {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
+            </p>
+            <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)">
+              <div v-for="task in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
+                <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
+                <span class="bg-bpop/20 rounded-sm block">
+                  {{ task.title }} <!-- Display task title or relevant task property -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- prev -->
   <div class="container">
     <div class="left">
-      <div class="calendar">
-        <div class="month">
-          <button @click="prevMonth">Prev</button>
-          <div class="date">{{ currentMonth }} {{ currentYear }}</div>
-          <button @click="nextMonth">Next</button>
-        </div>
-
-        <div class="weekdays">
-          <div v-for="(day,idx) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="idx">{{ day }}</div>
-        </div>
-
-
-
-        <div class="days">
-          <div v-for="(day,idx) in days" :key="idx" :class="{ 'today': day === today }">{{ day }}</div>
-        </div>
-
-        
-      </div>
-
-  
-<!--
-        <div class="days">
-          <div class="day prev-date">30</div>
-          <div class="day prev-date">31</div>
-          <div class="day">1</div>
-          <div class="day">2</div>
-          <div class="day">3</div>
-          <div class="day today active">4</div>
-          <div class="day">5</div>
-          <div class="day">6</div>
-          <div class="day">7</div>
-          <div class="day">8</div>
-          <div class="day">9</div>
-          <div class="day">10</div>
-          <div class="day">11</div>
-          <div class="day">12</div>
-          <div class="day">13</div>
-          <div class="day">14</div>
-          <div class="day">15</div>
-          <div class="day">16</div>
-          <div class="day">17</div>
-          <div class="day">18</div>
-          <div class="day">19</div>
-          <div class="day">20</div>
-          <div class="day">21</div>
-          <div class="day">22</div>
-          <div class="day">23</div>
-          <div class="day">24</div>
-          <div class="day">25</div>
-          <div class="day">26</div>
-          <div class="day">27</div>
-          <div class="day">28</div>
-          <div class="day">29</div>
-          <div class="day">30</div>
-          <div class="day next-date">1</div>
-          <div class="day next-date">2</div>
-          <div class="day next-date">3</div>
-           </div>
--->
-
-
-</div>
-    <div class="right">
+      
       <div>
       <!-- Display the properties of the outing here -->
       <table>
@@ -90,8 +70,40 @@
 
       <!-- Add more properties as needed -->
     </div>
+  </div>
+
+  
+    <div class="right">
+      <div class="calendar">
+    
+    <!-- <div class="days grid grid-cols-7">
+      <div class="day " v-for="day in daysOfWeek" :key="day">{{ day }}</div>
+      <div v-for="blank in firstDayOfWeek" class=" empty"></div>
+      <div v-for="day in daysInMonth" :key="day" class=" day">{{ day }}</div>
+    </div>
+  </div> -->
+      <!-- <div class="calendar">
+        <div class="month">
+          <button @click="prevMonth">Prev</button>
+          <div class="date">{{ currentMonth }} {{ currentYear }}</div>
+          <button @click="nextMonth">Next</button>
+        </div>
+
+        <div class="weekdays">
+          <div v-for="(day,idx) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="idx">{{ day }}</div>
+        </div>
+
+
+
+        <div class="days">
+          <div v-for="(day,idx) in days" :key="idx" :class="{ 'today': day === today }">{{ day }}</div>
+        </div>
+
+        
+      </div> -->
       
 
+  </div>
   </div>
 
   </div>
@@ -125,27 +137,65 @@ export default {
     const outingArray = ref([]);
     const comid = ref("");
     const userid = ref("");
-    const today = new Date();
+    // prev code
+    // const today = new Date();
     
-    //for the calendar
-    const date = ref(new Date());
-    const currentMonth = computed(() => date.value.getMonth() + 1);
-    const currentYear = computed(() => date.value.getFullYear());
-    const today_calendar = new Date().getDate();
+    // //for the calendar
+    // const date = ref(new Date());
+    // const currentMonth = computed(() => date.value.getMonth() + 1);
+    // const currentYear = computed(() => date.value.getFullYear());
+    // const today_calendar = new Date().getDate();
 
-    const days = computed(() => {
-      const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
-      return Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    });
+    // const days = computed(() => {
+    //   const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
+    //   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    // });
+
+    // new code
+    const filterTasksByDate = (year, month, day) => {
+        return taskArray.value.filter((task) => {
+          const taskDate = new Date(task.date); // Assuming task.date is a valid Date object
+          return (
+            taskDate.getFullYear() === year &&
+            taskDate.getMonth() === month &&
+            taskDate.getDate() === day
+          );
+        });
+      };
+
+    const currentDate = new Date();
+
+    const year = ref(currentDate.getFullYear());
+    const month = ref(currentDate.getMonth());
+    const firstDay = ref(new Date(year.value, month.value, 1));
+    const lastDay = computed(() => new Date(year.value, month.value + 1, 0));
+    const daysInMonth = computed(() => lastDay.value.getDate());
+    const firstDayOfWeek = computed(() => new Date(year.value, month.value, 1).getDay());
+
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+    const previousMonth = () => {
+      if (month.value > 0) {
+        month.value--;
+      } else {
+        year.value--;
+        month.value = 11;
+      }
+    };
 
     const nextMonth = () => {
-      date.value.setMonth(date.value.getMonth() + 1);
+      if (month.value < 11) {
+        month.value++;
+      } else {
+        year.value++;
+        month.value = 0;
+      }
     };
-
-    const prevMonth = () => {
-      date.value.setMonth(date.value.getMonth() - 1);
-    };
-
 
     const fetchData = async () => {
       console.log("fetching");
@@ -205,15 +255,23 @@ export default {
 
     return { 
       taskArray,
-      currentMonth,
-      currentYear,
-      days,
-      today,
-      nextMonth,
-      prevMonth,
-      userid,
-      comid,
       outingArray,
+      comid,
+      userid,
+      currentDate,
+      year,
+      month,
+      daysOfWeek,
+      daysInMonth,
+      firstDayOfWeek,
+      previousMonth,
+      nextMonth,
+      months,
+      filterTasksByDate
+      // currentMonth,
+      // currentYear,
+      // days,
+      // today,
 
     }; // Outings that users are in
   },
@@ -255,7 +313,7 @@ template {
   padding: 15px;
 }
 
-.calendar {
+/* .calendar {
   position: relative;
   width: 100%;
   height: 100%;
@@ -266,7 +324,7 @@ template {
   color: #86b8b1;
   border-radius: 5px;
   background-color: #fff;
-}
+} */
 
 .calendar⸬before,
 .calendar⸬after {
@@ -386,5 +444,39 @@ template {
   border-radius: 30px;
   transform: translateX(-50%);
   background-color: var(#86b8b1);
+}
+
+.calendar {
+  text-align: center;
+  margin: 0 auto;
+  width: 300px;
+  font-family: Arial, sans-serif;
+}
+
+/* .header {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+} */
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+} */
+
+.day {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.empty {
+  visibility: hidden;
 }
 </style>
