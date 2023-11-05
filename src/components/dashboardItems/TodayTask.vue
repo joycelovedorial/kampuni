@@ -81,15 +81,19 @@
               return []
             }
         })
-      const eventQuery = query(collection(db,"events"),where("userid","==",uid))
+      const eventQuery = query(collection(db,"events"),where("userid","==",uid),where("date", ">=", today), where("date", "<=", endOfDay))
       const esub = onSnapshot(eventQuery,(esnap)=>{
         esnap.forEach((edoc)=>{
-          const eventTime = edoc.date instanceof Date ? edoc.date.toLocaleTimeString() : "";
+          const eventData = edoc.data()
+          const dateObj = eventData.date.toDate()
+          const timeOptions = { hour: '2-digit', minute: '2-digit' }; // Add time options
+          const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions); // Format time
 
-          eventsArray.value.push({...edoc.data(),id:edoc.id,date:eventTime})
+
+          eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
         })
       })
-   
+      console.log(eventsArray.value);
       //outings querying
       const outingsQuery = query(collection(db, "outings"),where("community","==",comid),where("date", ">=", today), where("date", "<=", endOfDay));
       const usub = onSnapshot(outingsQuery,(snap)=>{
@@ -112,7 +116,13 @@
               if (!userSnap.empty) {
                 // If the user is involved in the outing, add it to userOutings
 
-                const outingTime = outing.date instanceof Date ? outing.date.toLocaleTimeString() : "";
+                const outingData = outing.data();
+                if (outingData.date) {
+                  const dateObj = outingData.date.toDate();
+                  const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                  const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions);
+                  outingData.date = formattedTime;
+                }
                 userOutings.push({ ...outing, date: outingTime });
               }
             })
@@ -123,6 +133,7 @@
 
         return userOutings;
       });
+      console.log(outingsFormatted);
             
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
