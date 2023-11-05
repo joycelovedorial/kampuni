@@ -30,10 +30,13 @@
                 </div>
               </div>
               <div v-else class="self">
-                <span class="name-self">
+                <router-link :to="{ name: 'Profiles', params: { id: doc.userid }}">
+                  <span class="name-self" >
                     <img :src="doc.photoURL">
                            {{ doc.name }}
-                </span>
+                  </span>
+                </router-link>
+                
                 <div class="single-chat-container-self" >
                   <span class="message-self">{{ doc.message }}</span>
                   <div class="datetime-thing">
@@ -95,6 +98,8 @@ export default {
       const expensesArray = ref([])
       const displayCreateExpense = ref(false)
       const isContentAVisible = ref(true)
+      const user = auth.currentUser
+      const uid = user.uid
       const toggleContent = () => {
         isContentAVisible.value = !isContentAVisible.value;
       };
@@ -149,9 +154,22 @@ export default {
       let unsubscribe = onSnapshot(q,(snapshot)=> {
         console.log("unsub", props.selectedchat);
         let results = []
-        snapshot.docs.forEach(doc => {
-              doc.data().createdAt && results.push({ ...doc.data(), id: doc.id })
-          })
+        snapshot.docs.forEach(async(adoc) => {
+
+              const mdata = adoc.data()
+              // let photoURL = mdata.photoURL
+              // let userid = uid
+              // if(mdata.userid!=null){
+              //   const usnap = await getDoc(doc(db,'users',mdata.userid))
+              //   const udata= usnap.data()
+              //   photoURL=udata.photoURL
+              //   userid=mdata.userid
+              // }
+
+              // adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id,photoURL:photoURL,userid:userid });
+              adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id });
+
+            });
         documents.value = results
         error.value = null
       },(err)=>{
@@ -172,6 +190,13 @@ export default {
       })
       console.log(formattedDocuments)
       console.log(typeof(formattedDocuments))
+
+
+      const routeToProfile = async(uid) =>{
+
+      }
+
+
 
       watch(() => props.selectedchat, (newChatRoom, oldChatRoom) => {
         console.log("chatwindow watch");
@@ -209,8 +234,20 @@ export default {
           const q = query(collection(db, "chatrooms", newChatRoom, "messages"), orderBy("createdAt"));
           unsubscribe = onSnapshot(q, (snapshot) => {
             let results = [];
-            snapshot.docs.forEach((doc) => {
-              doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
+            snapshot.docs.forEach(async(adoc) => {
+              const mdata = adoc.data()
+              // let photoURL = mdata.photoURL 
+              // let userid = null
+              // if(mdata.userid!=null){
+              //   const usnap = await getDoc(doc(db,'users',mdata.userid))
+              //   const udata= usnap.data()
+              //   photoURL=udata.photoURL
+              //   userid=mdata.userid
+              // }
+
+              // adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id,photoURL:photoURL || null,userid:userid });
+              adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id });
+
             });
             documents.value = results;
             error.value = null;
