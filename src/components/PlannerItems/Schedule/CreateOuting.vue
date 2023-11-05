@@ -24,8 +24,11 @@
             <label for="date">Date</label>
             <input class="form-control" type="datetime-local" id="date" v-model="date">
         </div>
-       
-        <button>Create Outing</button>
+       <!--It is not this button u want to edit-->
+        <button class="h-10 px-3 text-white font-bold text-sm rounded-sm bg-cyanp hover: hover:drop-shadow-md hover:shadow-oranges">Create Outing</button>
+
+        
+        
     </form>
   </div>
 </template>
@@ -118,10 +121,13 @@ export default {
         return{ createOuting,
             title,desc,location,date,emitCo
         }
+
+    
     }
 }
 </script>
 
 <style>
+
 
 </style>
