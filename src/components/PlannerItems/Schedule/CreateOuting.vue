@@ -108,6 +108,7 @@ export default {
             location.value=""
             desc.value = ""
             title.value=""
+            context.emit("emitCo")
         }
             
         const emitCo = () =>{

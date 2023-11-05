@@ -182,7 +182,7 @@ export default {
 
         if (newChatRoom) {
           // Create a new query for the new chat room and start a new listener
-
+            errorMessage.value = ""
             getDoc(doc(db,"chatrooms",props.selectedchat))
               .then((docSnap)=>{
                 const data = docSnap.data()
