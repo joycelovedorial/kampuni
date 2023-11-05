@@ -110,22 +110,6 @@ export default {
 
 
 
-    const addToList = async () => {
-      try {
-        selectedUsers.value += a_user.id
-        console.log(selectedUsers.value,"payees");
-      } catch (error) {
-        console.log(error.message)
-      }
-    };
-
-    const laoban = async () => {
-      try {
-        whopaid.value += a_user.id
-      } catch (error) {
-        console.log(error.message)
-      }
-    };
 
     const addExpense = async () => {
       try {
@@ -211,7 +195,7 @@ export default {
 
     
     return {
-      addExpense, addToList, laoban, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid, displayHelp
+      addExpense,  selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid, displayHelp
 
     };
   }

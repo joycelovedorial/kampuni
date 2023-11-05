@@ -39,7 +39,7 @@ export default {
             alert("Please update your profile!")
             router.push({name:"Profile"})
           }
-          console.log(name.value,"name");
+          
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -51,12 +51,12 @@ export default {
     onMounted(() => {
       fetchCid();
 
-      document.addEventListener('DOMContentLoaded', function() {
-    const bgContainer = document.getElementById('bg-container');
-    const blurOverlay = document.createElement('div');
-    blurOverlay.className = 'blur-overlay';
-    bgContainer.appendChild(blurOverlay);
-    });
+    //   document.addEventListener('DOMContentLoaded', function() {
+    // const bgContainer = document.getElementById('bg-container');
+    // const blurOverlay = document.createElement('div');
+    // blurOverlay.className = 'blur-overlay';
+    // bgContainer.appendChild(blurOverlay);
+    // });
   })
   
   return { name, comid };
