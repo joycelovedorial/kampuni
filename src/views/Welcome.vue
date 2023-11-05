@@ -191,11 +191,8 @@ export default {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         
-
         // Set the user's email after initializing user
-       
 
-       
         const uid = user.uid;
         const docRef = doc(db, 'users', uid);
 
@@ -216,9 +213,7 @@ export default {
                 points: 0,
                 photoURL:pfp.value,
             });
-            await cred.user.updateProfile({
-              photoURL:pfp.value,
-            })
+            
 
             router.push({ name: 'joinCommunity' });
         }
