@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc} from 'firebase/firestore';
 
 
 export default {
@@ -83,7 +83,7 @@ export default {
         
       })
 
-      //point allocation
+      //point allocation - task deletion
       const now = new Date()
       now.setHours(0,0,0,0)
       const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",now))
@@ -92,6 +92,23 @@ export default {
         await deleteDoc(tdoc.ref)
       })
 
+      const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<",now))
+      const overduesnap = await getDocs(overdue)
+      overduesnap.forEach(async (odoc) => {
+        const data = odoc.data();
+        const deadline = data.dateline.toDate(); // Convert dateline to a Date object
+        const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+        const daysPassed = Math.floor((now - deadline) / millisecondsPerDay); // Calculate days passed
+
+        // Calculate new points
+        const newpoints = Math.max(0, data.points - (daysPassed * 5)); // Use Math.max to ensure it doesn't go below zero
+
+        await updateDoc(odoc.ref, {
+          overdue: true,
+          points: newpoints
+        });
+      });
+      
 
 
 
