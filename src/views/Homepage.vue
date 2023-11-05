@@ -3,7 +3,9 @@
   <Navbar />
     <body id="bg-container">
       <!-- <div class='overflow-y-auto'> -->
-      <h1 class="text-black font-fredoka index1 p-4" id="welcome">Welcome back, {{ name }}</h1>
+        <h1 class="text-black font-fredoka index1 p-4 relative" id="welcome" style="font-size: 6rem;">
+          <span  style="position: relative;">Welcome back, {{ name }}</span>
+        </h1>
       <Dashboard :community="comid" class="index2"/>
       <!-- </div> -->
     </body>
@@ -24,6 +26,8 @@ export default {
     const name = ref("");
     const router = useRouter();
     const comid = ref(null)
+    const photo=ref('')
+
     const fetchCid = async () => {
       const user = auth.currentUser;
       if (user) {
@@ -35,6 +39,7 @@ export default {
           const userData = docSnap.data();
           comid.value= userData.community;
           name.value = userData.firstname;
+          photo.value=userData.photoURL
           if(name.value==null){
             alert("Please update your profile!")
             router.push({name:"Profile"})
@@ -59,7 +64,7 @@ export default {
     // });
   })
   
-  return { name, comid };
+  return { name, comid,photo};
   },
 };
 </script>
@@ -93,7 +98,20 @@ export default {
     height: 170vh;
   }
 }
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
+.rainbow-text {
+  font-family: sans-serif;
+  font-size: 6rem;
+  background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+  background-clip: text;
+  -webkit-background-clip: text; /* For WebKit-based browsers like Safari */
+  color: transparent;
+  animation: rainbow 5s linear infinite;
+}
 /* @media (min-width: 998px) {
   #bg-container {
     height: 185vh;

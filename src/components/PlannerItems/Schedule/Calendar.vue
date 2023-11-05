@@ -184,13 +184,23 @@ export default {
       );
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(doc)=>{
+        const odata= doc.data()
+        let creatorname = null; 
+
+        if(odata.creator){
+          const usnap = await getDoc(db,"users",odata.creator)
+          creatorname = usnap.data().firstname
+        }else{
+          creatorname = "It's a Mystery"
+        }
         const uiq = query(collection(db,"outings",doc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
         const uisnap = await getDocs(uiq)
         if(uisnap.size>0){
           const convertedData = {
           ...doc.data(),
-          date: doc.data().date.toDate()}
-
+          date: doc.data().date.toDate(),
+          creatorname: creatorname,}
+          
           outingArray.value.push({...convertedData,id:doc.id})
         }
       })
