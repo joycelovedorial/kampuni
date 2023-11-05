@@ -37,7 +37,10 @@ props:{
 transacid: Object,
 
 },
+
+
 setup(props) {
+  
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
@@ -52,8 +55,7 @@ setup(props) {
     console.log(props.transacid,"tobject");
     amount.value = props.transacid.amount
 
-    //fill in values for the shit
-
+    
     const user = auth.currentUser
     const uid = user.uid
 
@@ -101,16 +103,13 @@ setup(props) {
         youowetext.value = name.value + "Owes you"
     }
     }
-    
-
-
-
 
     console.log("hi");
     const textAnimationClass = computed(() => {
     return isAnimationActive.value ? 'text-animation' : '';
     });
 // Use onMounted to trigger the toggleText method every 3 seconds
+}
 
 
 return {
@@ -125,8 +124,9 @@ return {
   name,
   category,
   outing,
+  }
     };
-    },
+  }
 };
 </script>
 
