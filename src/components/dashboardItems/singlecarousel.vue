@@ -11,7 +11,6 @@
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                 </div>
-                                <div class="my-auto mx-2"><img class="h-fit w-12" id='icon' :src="photourl"></div> 
                             </div>
                     </div>
                         

@@ -95,7 +95,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 110vh; /* 100% of viewport height */
+    height: 140vh; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 
