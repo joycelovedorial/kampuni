@@ -104,8 +104,8 @@
               </div>
               <div class="w-full rounded-lg h-64 scrollbar overflow-y-scroll overflow-x-auto">
                 <div v-for="peepo in peopleOweYou" :key="peepo.id">
-                  <singleExpenseReceiver id="whooweyou" :transacid="peepo.id" />
-                </div>
+                  <singleExpenseReceiver :transacid="peepo.id" />
+                </div> 
               </div>
             </div>
           </div>

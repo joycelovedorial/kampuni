@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc} from 'firebase/firestore';
 
 
 export default {
@@ -53,7 +53,68 @@ export default {
       .then((docSnap)=>{
         comid.value = docSnap.data().community
       })
+    const q = query(collection(db,"expenses"))
+    
+
+
+
+
+
+
+
+    onMounted(async()=>{
+      //clearing expenses
+      const expensesnap = await getDocs(q)
+      expensesnap.forEach(async(doc)=>{
+          const transacq = query(collection(db,"transactions"),where("expense","==",doc.id))
+          const querySnap = await getDocs(transacq)
+          const fullypaid = ref(true)
+          querySnap.forEach(async(snapDoc)=>{
+            const data = snapDoc.data()
+            if(data.paid==false){
+              fullypaid.value=false
+            }else if(querySnap.size==0){
+              await deleteDoc(doc.ref)
+            }
+          })
+          if (fullypaid.value==true){
+            await deleteDoc(doc.ref)
+          }
+        
+      })
+
+      //point allocation - task deletion
+      const now = new Date()
+      now.setHours(0,0,0,0)
+      const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",now))
+      const tasksnap = await getDocs(taskquery)
+      tasksnap.forEach(async(tdoc)=>{
+        await deleteDoc(tdoc.ref)
+      })
+
+      const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<",now))
+      const overduesnap = await getDocs(overdue)
+      overduesnap.forEach(async (odoc) => {
+        const data = odoc.data();
+        const deadline = data.dateline.toDate(); // Convert dateline to a Date object
+        const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+        const daysPassed = Math.floor((now - deadline) / millisecondsPerDay); // Calculate days passed
+
+        // Calculate new points
+        const newpoints = Math.max(0, data.points - (daysPassed * 5)); // Use Math.max to ensure it doesn't go below zero
+
+        await updateDoc(odoc.ref, {
+          overdue: true,
+          points: newpoints
+        });
+      });
       
+
+
+
+
+    })
+    
     
     return { comid };
   },

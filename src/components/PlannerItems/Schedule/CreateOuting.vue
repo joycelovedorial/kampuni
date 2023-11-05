@@ -65,7 +65,8 @@ export default {
                     location: location.value,
                     description: desc.value,
                     title: title.value,
-                    photoURL:photourl.value
+                    photoURL:photourl.value,
+                    creator:uid,
                 });
 
             if (outRef) {

@@ -6,11 +6,15 @@
                 
                     <div class="row"> 
                         <div class="col-12 " id="detail-container">
-                            <div class="w-auto self-center justify-content-center align-middle card-title border-2 d-flex justify-content-between truncate" :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" id="name_container" style="height:fit-content; width:fit-content">
-                                <div class="">
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-2 d-flex justify-content-between truncate" 
+                            :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" 
+                            id="name_container" 
+                            style="height:fit-content; width:fit-content;display: flex; flex-direction: column; align-items: flex-start;">
+                                
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
-                                </div>
+                                    <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
+                                
                             </div>
                     </div>
                         
@@ -89,6 +93,7 @@ export default {
         const user = auth.currentUser
         const uid = user.uid
         const photourl = ref("")
+        const creatorname = ref("")
 
         const formatDate = (timestamp) => {
             const dateObj = new Date(timestamp.toMillis());
@@ -115,6 +120,13 @@ export default {
                 time.value = formattedTime;
                 photourl.value = outData.photoURL;
                 //probably need to use snap shot here... shag...
+                if(outData.creator){
+                    const csnap = await getDoc(db,'users',outData.creator)
+                    const cdata = csnap.data()
+                    creatorname.value=cdata.firstname
+                }else{
+                    creatorname.value="It's a mystery"
+                }
             }catch{
 
             }
@@ -127,7 +139,8 @@ export default {
      
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const results = []
-            snapshot.forEach((doc)=>{
+            snapshot.forEach(async(doc)=>{
+                
                 results.push({ ...doc.data(),id:doc.id})
                
             })
@@ -199,7 +212,7 @@ export default {
         })
 
         return { has_clicked_green,has_clicked_red,
-            title,desc,location,date,eCost,time,isHovered_green,isHovered_red,involved,photourl
+            title,desc,location,date,eCost,time,isHovered_green,isHovered_red,involved,photourl,creatorname
         }
     }
 }

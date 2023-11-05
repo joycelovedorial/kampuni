@@ -32,7 +32,7 @@
         <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="number" step="0.01" v-model="cost" id="expense_name" placeholder="cost of expense" required>
         <select v-model="category" class="bg-bnorm focus:bg-y rounded-lg border-0 pl-2 ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" required>
           <option class="bg-bnorm hover:bg-bpop" selected disabled value="">select category</option>
-          <option class="bg-bnorm hover:bg-bpop" :value=null>Non-Outing</option>
+          <option class="bg-bnorm hover:bg-bpop" :value=null>General</option>
           <option class="bg-bnorm hover:bg-bpop" v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>
         </select>
       </div>
@@ -162,7 +162,7 @@ export default {
       for (const hommie of comData.homies) {
         const curr_user = await getDoc(doc(db,"users", hommie))
         const my_user = curr_user.data()
-        const name = my_user.firstname
+        const name = my_user.firstname.toLowerCase()
         users.value.push({id:hommie, name:name})
       }
 
