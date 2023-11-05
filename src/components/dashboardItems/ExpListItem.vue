@@ -56,7 +56,13 @@ setup(props) {
 
     const user = auth.currentUser
     const uid = user.uid
-    if(props.transacid.outing){
+
+
+
+
+    if(props.transacid){
+      
+      if(props.transacid.outing){
         getDoc(doc(db,"outings",props.transacid.outing))
         .then((snap)=>{
             const data=snap.data()
@@ -94,6 +100,8 @@ setup(props) {
 
         youowetext.value = name.value + "Owes you"
     }
+    }
+    
 
 
 

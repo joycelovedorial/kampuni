@@ -140,6 +140,8 @@ export default {
             } else {
               errorMessage.value = 'Outing data not found';
             }
+          }else{
+            errorMessage.value="Can't delete this chatroom!"
           }
         };
       

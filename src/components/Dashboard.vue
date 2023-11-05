@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs} from 'firebase/firestore';
 
 
 export default {
@@ -53,7 +53,13 @@ export default {
       .then((docSnap)=>{
         comid.value = docSnap.data().community
       })
-      
+    const q = query(collection(db,"expenses"))
+    getDocs(q)
+      .then((snap)=>{
+        snap.forEach(async(doc)=>{
+          const transacq = query(collection(db,"transactions"))
+        })
+      })
     
     return { comid };
   },

@@ -206,8 +206,8 @@ export default {
         } else {
             // Check if result.additionalUserInfo exists and has a profile property
             setDoc(doc(db, "users", uid), {
-                firstname: null,
-                lastname: null,
+                firstname: "temp",
+                lastname: "temp",
                 email: user.email,
                 birthday: null,
                 country: null,
