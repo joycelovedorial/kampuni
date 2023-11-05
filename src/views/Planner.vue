@@ -26,6 +26,7 @@
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
           <CreateOuting @emitCo="handleCreateOuting"/>
         </div>
+        <button @click="displayCreateEvent= !displayCreateEvent">Create Event</button>
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateEvent">
           <CreateEvent @emitCe="handleCreateEvent"/>
         </div>
