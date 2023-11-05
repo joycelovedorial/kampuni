@@ -1,22 +1,22 @@
 <template>
   <Navbar />
   <div id="calendar-page">
-    <nav class="flex items-center justify-center h-16">
-      <a
-        class="button font-fredoka text-sm text-black rounded-l-md border-1 border-black p-2"
-        :class="{ 'bg-white': !displayCalendar, 'bg-y': displayCalendar }"
+    <div class="flex items-center justify-center space-x-2 p-3">
+      <button
+        class="button-left font-fredoka text-sm text-black rounded-lg border-2 font-bold border-black px-2 shadow-md"
+        :class="{ 'bg-bnorm': !displayCalendar, 'bg-bpop': displayCalendar }"
         @click="displayTask = false; displayCalendar = true; displayOutings = false"
       >
         Calendar
-      </a>
-      <a
-        class="button font-fredoka text-sm text-black rounded-r-md border-1 border-black p-2"
-        :class="{ 'bg-white': !displayTask, 'bg-y': displayTask }"
+    </button>
+      <button
+        class="button-right font-fredoka text-sm text-black rounded-lg border-2 font-bold border-black px-2 shadow-md"
+        :class="{ 'bg-bnorm': !displayTask, 'bg-bpop': displayTask }"
         @click="displayTask = true; displayCalendar = false; displayOutings = false"
       >
         Tasklist
-      </a>
-    </nav>
+    </button>
+    </div>
 
 
       <div v-if="displayCalendar">
@@ -145,6 +145,15 @@ export default {
   @media (max-width: 1024px) {
   #bg-container {
     height: 130vh;
+  }
+
+.button-left {
+  margin-right: -1px;
+  transition: background-color 0.3s ease;
+}
+
+  .button-right {
+    margin-left: -1px;
   }
 }
 </style>
