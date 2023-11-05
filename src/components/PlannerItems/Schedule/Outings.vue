@@ -1,6 +1,4 @@
 <template>
-  <p>outing</p>
-  <div>
       <!-- Display the properties of the outing here -->
       <table>
   <thead>
@@ -24,7 +22,7 @@
     
 
       <!-- Add more properties as needed -->
-    </div>
+   
 </template>
 
 <script>
@@ -101,34 +99,42 @@ export default {
         collection(db, "outings"),
         where("community", "==", comid.value)
       );
-      const qoutingSnap = await getDocs(qouting)
-      qoutingSnap.forEach( async(adoc)=>{
-        const odata= adoc.data()
-        console.log(adoc.data());
-        let creatorname = "mystery"; 
-        console.log(odata.creator,'ocrawete');
-        if(odata.creator){
-          const usnap = await getDoc(doc(db,"users",odata.creator))
-          const udata=usnap.data()
-         
+      const qoutingSnap = await getDocs(qouting);
 
-          creatorname = udata.firstname
-        }else{
-          creatorname = "It's a Mystery"
+      qoutingSnap.forEach(async (adoc) => {
+        const odata = adoc.data();
+        let creatorname = null;
+        
+        if (odata.creator) {
+          const usnap = await getDoc(doc(db, "users", odata.creator));
+          const udata = usnap.data();
+          creatorname = udata.firstname;
+        } else {
+          creatorname = "It's a Mystery";
         }
-        const uiq = query(collection(db,"outings",adoc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
-        const uisnap = await getDocs(uiq)
-        if(uisnap.size>0){
-          const convertedData = {
+
+        const dateObj = adoc.data().date.toDate();
+        const options = {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        };
+        const formattedDate = dateObj.toLocaleString(undefined, options);
+
+        outingArray.value.push({
           ...adoc.data(),
-          date: adoc.data().date.toDate(),
-          creatorname: creatorname,}
-          
-          outingArray.value.push({...convertedData,id:adoc.id})
-        }
+          date: formattedDate,
+          creatorname: creatorname,
+          id: adoc.id,
+        });
+      });
+        
+        
       })
       console.log(outingArray.value,"outingarray");
-    })
+    
    
 
 

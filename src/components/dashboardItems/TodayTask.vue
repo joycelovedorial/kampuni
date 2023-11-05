@@ -123,7 +123,7 @@
                   const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions);
                   outingData.date = formattedTime;
                 }
-                userOutings.push({ ...outing, date: outingTime });
+                userOutings.push({ ...outingData });
               }
             })
             .catch((error) => {

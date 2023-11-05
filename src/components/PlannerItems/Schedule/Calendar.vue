@@ -45,7 +45,31 @@
   <div class="container">
     <div class="left">
       
-      
+      <div>
+      <!-- Display the properties of the outing here -->
+      <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  v-for="outing in outingArray" :key="outing.id">
+      <td>{{ outing.title }}{{ outing.creatorname }}</td>
+      <td>{{ outing.date }}</td>
+      <td>{{ outing.description }}</td>
+      <td>{{ outing.location }}</td>
+    </tr>
+  </tbody>
+  </table>
+ 
+    
+
+      <!-- Add more properties as needed -->
+    </div>
   </div>
 
   
@@ -111,6 +135,7 @@ export default {
   setup() {
     const taskArray = ref([]);
     const outingArray = ref([]);
+    const eventsArray=ref([])
     const comid = ref("");
     const userid = ref("");
     // prev code
@@ -212,7 +237,7 @@ export default {
       qoutingSnap.forEach( async(adoc)=>{
         const odata= adoc.data()
         console.log(adoc.data());
-        let creatorname = "mystery"; 
+        let creatorname = null; 
         console.log(odata.creator,'ocrawete');
         if(odata.creator){
           const usnap = await getDoc(doc(db,"users",odata.creator))
@@ -226,15 +251,42 @@ export default {
         const uiq = query(collection(db,"outings",adoc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
         const uisnap = await getDocs(uiq)
         if(uisnap.size>0){
-          const convertedData = {
+          const dateObj = adoc.data().date.toDate();
+          const options = {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+          };
+        const formattedDate = dateObj.toLocaleString(undefined, options);
+
+
+        outingArray.value.push({
           ...adoc.data(),
-          date: adoc.data().date.toDate(),
-          creatorname: creatorname,}
-          
-          outingArray.value.push({...convertedData,id:adoc.id})
+          date: formattedDate,
+          creatorname: creatorname,
+          id: adoc.id,
+        });
         }
       })
       console.log(outingArray.value,"outingarray");
+
+
+
+      const eventQuery = query(collection(db,"events"),where("userid","==",userid.value))
+      const esub = onSnapshot(eventQuery,(esnap)=>{
+        esnap.forEach((edoc)=>{
+          const eventData = edoc.data()
+          const dateObj = eventData.date.toDate()
+          const timeOptions = { hour: '2-digit', minute: '2-digit' }; // Add time options
+          const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions); // Format time
+
+
+          eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
+        })
+      })
+
     })
    
 
@@ -257,7 +309,8 @@ export default {
       previousMonth,
       nextMonth,
       months,
-      filterTasksByDate
+      filterTasksByDate,
+      eventsArray
       // currentMonth,
       // currentYear,
       // days,

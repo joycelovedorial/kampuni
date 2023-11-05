@@ -14,7 +14,6 @@
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                     <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
-                                
                             </div>
                     </div>
                         
