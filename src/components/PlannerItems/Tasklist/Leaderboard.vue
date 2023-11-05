@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 class='text-center text-xl'>TOP 3</h1>
+      <h1 class='text-center text-6xl p-3'>TOP 3</h1>
     </div>
     <!-- <div v-for="homie in userPoints" :key="homie.id">
         {{ homie.name }} - Points: {{ homie.points }}

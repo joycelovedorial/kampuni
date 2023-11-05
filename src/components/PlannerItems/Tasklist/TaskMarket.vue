@@ -182,17 +182,18 @@ td {
     }
 } */
 .carousel_container::-webkit-scrollbar{
-    width:4px;
-    height:8px;
+    width:6px;
+    height:10px;
   }
 
 .carousel_container::-webkit-scrollbar{
     background-color: transparent;
   }
   .carousel_container::-webkit-scrollbar-thumb{
-    background-color: black;
+    background-color:#F2D694;
     border-radius: 10px;
-    width:8px;
+    width:10px;
+    height:3px;
   }
 
 </style>
