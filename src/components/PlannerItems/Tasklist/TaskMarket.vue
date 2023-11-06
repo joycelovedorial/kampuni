@@ -84,6 +84,7 @@ import { formatDistanceToNow } from "date-fns";
 export default {
     components: {
     },
+    emits: ["eCreate"], // Declare the custom event here
     setup() {
         const tasks = ref([])
         
