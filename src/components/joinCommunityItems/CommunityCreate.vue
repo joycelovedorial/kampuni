@@ -1,13 +1,19 @@
 <template>
-    <div>form</div>
-    <div>
-        <form @submit.prevent>
-            <input class="form-control name" type="text" required placeholder="Community Name" v-model="comName">
-            <input class="form-control name" type="text" required placeholder="Password" v-model="password">
-            <input class="form-control name" type="text" required placeholder="Confirm Password" v-model="cfmpassword">
-            <button type="submit" @click="ComCreate">Create</button>
-        </form>
+
+<div class='container'>
+    <div class="row h1 p-4 flex justify-center">Your Community's Detail</div>
+    <div class="row">
+    <form class="border-2 border-black border-solid flex flex-col bg-y" @submit.prevent>
+        <input class="form-control mt-3 mb-3 name" type="text" required placeholder="Community Name" v-model="comName">
+        <input class="form-control mt-3 mb-3 first-letter:first-line:name" type="text" required placeholder="Password" v-model="password">
+        <input class="form-control mt-3 mb-3 name" type="text" required placeholder="Confirm Password" v-model="cfmpassword">
+        <button type="submit" @click="ComCreate">Create</button>
+    </form>
     </div>
+
+</div>
+
+    
 </template>
 
 <script>
