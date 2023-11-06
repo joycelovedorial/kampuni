@@ -1,9 +1,12 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-2">
+  <div class="overflow-x-scroll overflow-y-hidden outer_container1 border-black rounded-xl bg-opacity-30 bg-white h-30 border-2 ">
   
-    <div class="flex flex-nowrap content-center snap-proximity snap-x"  >
-      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
-        <singlecarousel :outid="out.id"/>
+    <div class="flex flex-nowrap content-center snap-proximity snap-x "  >
+      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 mb-4 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
+        <div v-if="outingArray.length === 0">
+    No task
+  </div>
+  <singlecarousel :outid="out.id" v-else/>
       </div>
     </div>
   </div>
@@ -75,7 +78,7 @@ export default {
 </script>
 
   
-<style>
+<style scoped>
 
 
 .testing {
@@ -84,7 +87,7 @@ export default {
 
 .outer_container {
   width: auto;
-  height: 345px;
+  /* height: 460px; */
 
 }
 
@@ -93,35 +96,36 @@ export default {
   --secondary: #999999;
 }
 
-.outer_container::-webkit-scrollbar {
-  width: 12px;
+.outer_container1::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
   border-radius:16px;
   /* padding:30px; */
   
 } 
-.outer_container::-webkit-scrollbar-thumb:hover {
+.outer_container1::-webkit-scrollbar-thumb:hover {
   background-color:rgb(47, 47, 47)
 }
 
-.outer_container::-webkit-scrollbar-track {
+.outer_container1::-webkit-scrollbar-track {
   background: transparent;
   margin-left:5px;
 }
 
-.outer_container::-webkit-scrollbar-thumb {
+.outer_container1::-webkit-scrollbar-thumb {
   background-color: var(--secondary);
   width:1px !important;
   border-radius:10px;
 } 
 
 @media (min-height: 480px) {
-  .outer_container {
+  .outer_container1 {
     height: 345px;
   }
 }
 
 @media (min-height: 600px) {
-  .outer_container {
+  .outer_container1 {
     height: 345px;
   }
 }

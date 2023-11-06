@@ -1,6 +1,6 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3 mb-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg ">
                 
