@@ -58,7 +58,7 @@
     </thead>
     <tbody>
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }} by: <br> {{ outing.creatorname }}</td>
+      <td>{{ outing.title }} <br> by: {{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>

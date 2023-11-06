@@ -1,6 +1,7 @@
 <template>
       <!-- Display the properties of the outing here -->
-      <table>
+
+  <table>
   <thead>
     <tr>
       <th>Name</th>
