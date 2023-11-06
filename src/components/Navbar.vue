@@ -1,12 +1,12 @@
 <template>
   <div class="object-right w-auto font-fredoka font-bold">
-    <nav class="bg-bnorm flex justify-between items-center h-18">
+    <nav class="bg-bnorm flex justify-between items-center h-16">
       <div class="relative inline-block text-right mx-3">
         <img class="logo inline ml-3" :src="logo" alt="">
         <!-- <img class="logo inline ml-3" src="../assets/logo.png"> -->
       </div>
-      <div class="flex space-x-4 mr-10">
-        <div class="button text-sm rounded-lg w-30 place-content-center flex items-center"
+      <ul class="flex space-x-4 mr-10 main-menu">
+        <li class="button text-sm rounded-lg w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Homepage',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Homepage',   // Apply 'bg-white' when active
@@ -21,10 +21,10 @@
             </svg>
             <span class="ml-1">Home</span>
           </router-link>
-        </div>
+        </li>
         <!--  -->
         
-        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
+        <li class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Chatrooms',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Chatrooms',   // Apply 'bg-white' when active
@@ -41,8 +41,8 @@
               Chats
             </span>
           </router-link>
-        </div>
-        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
+        </li>
+        <li class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Planner',  // Apply 'bg-cyans' when not active
             'shadow-inner': $route.name === 'Planner',   // Apply 'bg-white' when active
@@ -59,8 +59,8 @@
               Planner
             </span>
           </router-link>
-        </div>
-        <div class="button text-sm rounded-md w-30 place-content-center flex items-center"
+        </li>
+        <li class="button text-sm rounded-md w-30 place-content-center flex items-center"
           :class="{
             'drop-shadow-lg': $route.name !== 'Expenses',  // Apply 'bg-cyans' when not active
             // 'text-cyanp': $route.name !== 'Expenses', // Apply 'text-white' when not active
@@ -78,10 +78,30 @@
               Expenses
             </span>
           </router-link>
-        </div>
-      </div>
+        </li>
+      </ul>
+
+      <!-- <div class="dropdown flex justify-center ">
+    <select v-model="selectedRoute" @change="navigateToRoute">
+      <option value="">Select a route</option>
+      <option value="../Homepage">Home</option>
+      <option value="../Chatrooms">Chat</option>
+      <option value="../Planner">Planner</option>
+      <option value="../Expenses">Expenses</option>
+    </select>
+
+
+    <router-link :to="selectedRoute">{{ selectedRoute }}</router-link>
+  </div> -->
+
+
+
+
+
+
+
       <div class="relative inline-block mr-3 w-36">
-        <img class="inline cursor-pointer h-12 w-12 rounded-full border-3 border-black" :src="imageURL" alt="" @click="toggleDropdown">
+        <img class=" cursor-pointer icon rounded-full border-3 border-black" :src="imageURL" alt="" @click="toggleDropdown">
         <div :class="{ 'hidden': !dropdownVisible }" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
           <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <router-link to="../Profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">View Profile</router-link>
@@ -90,12 +110,26 @@
         </div>
       </div>
 
+  <button class="hamburger--collapse hamburger" @click="toggleisactive" type="button">
+    <span class="hamburger-box">
+      <div class="hamburger-inner "></div>
+    </span>
+  </button>
+
+    <div class="mobile-nav">
+      <router-link to="../Homepage" class=" nav-item p-2 place-content-center flex items-center"> Home </router-link>
+      <router-link to="../Chatrooms" class=" nav-item p-2 place-content-center flex items-center"> Chat </router-link>
+      <router-link to="../Planner" class=" nav-item p-2 place-content-center flex items-center"> Planner </router-link>
+      <router-link to="../Expenses" class=" nav-item p-2 place-content-center flex items-center"> Expenses </router-link>
+  </div>
+
     </nav>
   </div>
 </template>
 
 <script>
 import '@/assets/main.css';
+import { onMounted } from "vue";
 import { ref } from 'vue';
 import { auth,storage,db } from '@/firebase/config';
 import { useRouter } from 'vue-router'; // Import the useRouter function
@@ -105,7 +139,29 @@ import {  ref as fref } from "firebase/storage";
 
 
 export default {
+  data() {
+    return {
+      selectedRoute: '', // Initialize with an empty value
+    };
+  },
+  methods: {
+    toggleisactive(){
+      const menu_btn = document.querySelector('.hamburger--collapse');
+      const mobile_nav = document.querySelector('.mobile-nav');
+
+      menu_btn.classList.toggle('is-active');
+      mobile_nav.classList.toggle('is-active');
+    },
+    
+    navigateToRoute() {
+      if (this.selectedRoute) {
+        // Use Vue Router to navigate when an option is selected
+        this.$router.push(this.selectedRoute);
+      }
+    },
+  },
     setup() {
+        
         const router = useRouter(); // Initialize the router
         const dropdownVisible = ref(false);
         const imageURL = ref("")
@@ -146,12 +202,42 @@ export default {
         }
 
         return { handleLogout, dropdownVisible, toggleDropdown,imageURL,logo};
+    },
+    mounted(){
+      window.onload = function(){
+        window.addEventListener("scroll" , function(e){
+          if (window.scrollY > 0){
+          this.document.querySelector("header").classList.add('is-scrolling');
+        } else{
+          document.querySelector('header').classList.remove('is-scrolling');
+        }
+        });
+
+        const menu_btn = document.querySelector('.hamburger--collapse');
+
+        menu_btn.addEventListener('click', function() {
+          menu_btn.classList.toggle('is-active');
+        });
+      }
     }
 };
 </script>
 
 
-<style>
+<style scoped>
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .main-menu {
+    display: none;
+  }
+  .hamburger {
+    display: block; 
+  }
+}
+
   ul {
     list-style-type: none;
     margin: 0;
@@ -159,10 +245,18 @@ export default {
     display: flex;
   }
 
-  .logo {
-    width: 180px;
+  .icon {
+    min-width: 50px;
+    min-height: 50px;
+    margin-top:5px;
+    margin-bottom:5px
   }
 
+  .logo{
+    min-width: 180px;
+    min-height: 50px;
+
+  }
   img {
     width: 20px;
   }
@@ -170,4 +264,35 @@ export default {
   a {
     padding: 0 24px;
   }
+
+
+
+/* Style the select element */
+select {
+  padding: 8px; /* Add padding for spacing */
+  font-size: 16px; /* Adjust the font size */
+  border: 3px solid black; /* Add a border */
+  border-radius: 4px; /* Add rounded corners */
+  background-color: white; /* Set the background color */
+  color: white; /* Set the text color */
+  width: 50%; /* Set the width of the dropdown */
+}
+
+/* Style the options within the dropdown */
+select option {
+  background-color: #fff; /* Set background color for options */
+  color: #333; /* Set text color for options */
+}
+
+/* Style the dropdown arrow icon (if it's visible) */
+select::-ms-expand {
+  display: none; /* Hide the default arrow icon for Microsoft browsers */
+}
+
+/* Style the dropdown when it's focused or hovered */
+select:focus, select:hover {
+  border-color: black; /* Change border color on focus or hover */
+  box-shadow: 0 0 5px black; /* Add a shadow effect */
+}
+
 </style>

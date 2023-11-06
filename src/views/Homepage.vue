@@ -3,8 +3,8 @@
   <Navbar />
     <body id="bg-container">
       <!-- <div class='overflow-y-auto'> -->
-        <h1 class="text-black font-fredoka index1 p-4 relative font-lg" id="welcome" >
-          <span  style="position: relative;">Welcome back, {{ name }}</span>
+        <h1 class="text-black font-fredoka index1 p-4 relative text-4xl font-lg sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl" id="welcome" >
+          <span style="position: relative;">Welcome back, {{ name }}</span>
         </h1>
       <Dashboard :community="comid" class="index2"/>
       <!-- </div> -->
@@ -73,7 +73,7 @@ export default {
 #welcome {
   margin: 0 auto;
   text-align: center;
-  font-size: 4.5rem;
+  /* font-size: 4.5rem; */
   font-weight: lighter;
   /* color: #2ec4b6; */
   color:black;
@@ -137,6 +137,8 @@ export default {
     height: 120vh;
   }
 } */
+
+
 
 
 
