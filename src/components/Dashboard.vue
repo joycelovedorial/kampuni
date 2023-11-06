@@ -2,7 +2,7 @@
   <div class="container ">
     <div class="row mb-3">
       <div class="col-12">
-        <h1 class="mb-2 font-bold text-black text-3xl" >Upcoming Outings</h1>
+        <h1 class="mb-3 font-bold text-black text-3xl" >Upcoming Outings</h1>
         <OutingsCarousel :community="comid"/>
       </div>
     </div>

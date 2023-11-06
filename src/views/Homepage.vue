@@ -3,7 +3,7 @@
   <Navbar />
     <body id="bg-container">
       <!-- <div class='overflow-y-auto'> -->
-        <h1 class="text-black font-fredoka index1 p-4 relative" id="welcome" style="font-size: 6rem;">
+        <h1 class="text-black font-fredoka index1 p-4 relative font-lg" id="welcome" >
           <span  style="position: relative;">Welcome back, {{ name }}</span>
         </h1>
       <Dashboard :community="comid" class="index2"/>
@@ -95,7 +95,7 @@ export default {
 
 @media (min-width: 635px) {
   #bg-container {
-    height: 170vh;
+    height: 180vh;
   }
 }
 @keyframes rainbow {
@@ -120,13 +120,13 @@ export default {
 
 @media (min-width: 1440px) {
   #bg-container {
-    height: 105vh;
+    height: 110vh;
   }
 }
 
 @media (min-width: 2550px) {
   #bg-container {
-    height: 115vh;
+    height: 120vh;
   }
 }
 

@@ -28,7 +28,7 @@
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
             <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length">
-              <div v-for="task in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
+              <div v-for="(task,i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
                 <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
                 <span class="bg-bpop/20 rounded-sm block">
                   {{ task.title }} <!-- Display task title or relevant task property -->

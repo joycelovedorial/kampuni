@@ -2,36 +2,36 @@
 <html>    
   <body class="flex">
     <img src="@/assets/logo.png" id="logo">
-    <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
-      <div class="form-container register-container ">
+    <div class="outermost-container  mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive , 'bottom-panel-active': isRightPanelActive }" id="container">
+      <div class="form-container register-container bg-r">
         <form @submit.prevent="handleRegister" class="overflow-y-auto register-form rounded-r-3xl ">
           <h1 class="text-black text-3xl font-medium">Register here</h1>
           <div >
-            <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
-            <input class="form-control mb-1" type="text" required placeholder="Last Name" v-model ="lastName">
-            <input class="form-control mb-1" type="email" required placeholder="email" v-model="email">
-            <input class="form-control mb-1" type="password" required placeholder='password' v-model="password">
-            <input class="form-control mb-1" type="date" id="birthday" v-model="birthday">
-            <input class="form-control mb-1" type="text" placeholder="country" id="country" v-model="country">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="text" required placeholder="First Name" v-model ="firstName">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="text" required placeholder="Last Name" v-model ="lastName">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="email" required placeholder="email" v-model="email">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="password" required placeholder='password' v-model="password">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="date" id="birthday" v-model="birthday">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="text" placeholder="country" id="country" v-model="country">
             <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
-          <button type="submit" value="submit" class="flex-initial w-64" @click="handleRegister">Register
+          <button type="submit" value="submit" class="flex-initial w-32" @click="handleRegister">Register
 
           </button>
 
         </div>
         <div v-if="Rerror" class="error">{{ Rerror.value }}</div>
 
-          <span>or Sign Up using your google account</span>
+          <span class="text-xs sm:text-sm md:text-normal lg:text-normal">or Sign Up using your google account</span>
           <div class="social-container">
             <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
           </div>
         </form>
       </div>
         <div v-if="registered" class="form-container login-container">
-          <form @submit.prevent="handleLogin" class="form-lg rounded-l-3xl">
-            <h1 class="text-black text-4xl font-medium">Login here</h1>
-            <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
-            <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
+          <form @submit.prevent="handleLogin" class="form-lg rounded-l-3xl login-form">
+            <h1 class="text-black text-xl font-medium sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">Login here</h1>
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="email" required placeholder="email" v-model="loginEmail">
+            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="password" required placeholder='password' v-model="loginPassword">
             
             <div class="flex">
                 <button type="submit" value="submit" class="flex-initial w-64" @click="handleLogin">Login</button>
@@ -40,7 +40,7 @@
             <div v-if="error" class="error">{{ error.value }}</div>
 
         
-            <div>Or login using your Google account</div>
+            <div class="text-sm sm:text- md:text-base lg:text-xl">Or login using your Google account</div>
             <div class="social-container">
               <a href="#" class="social" @click="signinGoogle"><i class="fa-brands fa-google"></i></a>
             </div>
@@ -50,8 +50,8 @@
       <div class="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left" >
-            <h1 class="title">
-              <br> Hello <br/>
+            <h1 class="title text-black font-medium text-4xl tracking-wide sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl">
+              Hello <br/>
               friends 
             </h1>
             <p>If you have an account, login here and have fun</p>
@@ -64,11 +64,11 @@
           </div>
 
           <div class="overlay-panel overlay-right ">
-            <h1 class="title">
+            <h1 class="text-black mb-5 text-4xl tracking-wide font-medium sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl title">
               Live with <br />
               Kampuni now
             </h1>
-            <p>
+            <p class="text-sm sm:text- md:text-base lg:text-xl">
               If you do not have an account yet, click here to join us
             </p>
             <button class="ghost flex" id="register" @click="togglePanel" >
@@ -328,8 +328,8 @@ h1 {
 }
 
 h1.title {
-  font-size: 45px;
-  line-height: 45px;
+  /* font-size: 45px; */
+  /* line-height: 45px; */
   margin: 0;
   text-shadow: 0 0 10px rgba(237, 247, 249, 0.5);
   
@@ -482,6 +482,7 @@ input {
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
+
 }
 
 .form-control {
@@ -609,6 +610,7 @@ input {
   transform: translate(-100%);
 }
 
+
 .overlay {
   /* background-image: url("@/assets/background_img/newnew.jpg");
    */
@@ -699,7 +701,42 @@ input {
   border: 1px solid #4bb6b7;
 }
 
+@media (max-width: 768px) {
+  .register-form {
+    padding:10px;
+  }
+}
 
+@media (max-width: 600px) {
+            .login-form {
+                font-size: 8px;
+                padding: 10px;
+                max-width: 300px;
+            }
+        }
+        
+@media (max-width: 600px) {
+            .register-form {
+                font-size: 10px;
+                padding: 10px;
+                max-width: 300px;
+            }
+        }      
+@media (max-width: 600px) {
+            .google_account {
+                font-size: 10px;
+                padding: 10px;
+                max-width: 300px;
+            }
+        }      
+
+
+/* Horizontal animation for "md" and above screens */
+/* @media (min-width: 768px) {
+  .outermost-container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+  }
+} */
 
 
 </style>

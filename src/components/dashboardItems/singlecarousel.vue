@@ -1,6 +1,6 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3 mb-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg ">
                 
@@ -10,7 +10,7 @@
                             :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" 
                             id="name_container" 
                             style="height:fit-content; width:fit-content;display: flex; flex-direction: column; align-items: flex-start;">
-                                
+                                    <img :src="photourl" alt="">
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                     <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
@@ -123,12 +123,14 @@ export default {
                 const { date: formattedDate, time: formattedTime } = formatDate(outData.date);
                 date.value = formattedDate;
                 time.value = formattedTime;
-                photourl.value = outData.photoURL;
+                // photourl.value = outData.photoURL;
                 //probably need to use snap shot here... shag...
                 if(outData.creator){
-                    const csnap = await getDoc(db,'users',outData.creator)
+                    console.log(outData.creator);
+                    const csnap = await getDoc(doc(db,'users',outData.creator))
                     const cdata = csnap.data()
                     creatorname.value=cdata.firstname
+                    photourl.value = cdata.photoURL
                 }else{
                     creatorname.value="It's a mystery"
                 }
