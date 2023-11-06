@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { db } from '@/firebase/config';
 export default {
   setup() {
     const tasks = ref([]);

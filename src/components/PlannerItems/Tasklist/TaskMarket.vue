@@ -67,7 +67,7 @@
 <script>
 import "@/assets/main.css";
 import { db, auth } from "@/firebase/config";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed,watch } from "vue";
 import {
   collection,
   onSnapshot,
@@ -87,9 +87,6 @@ export default {
     emits: ["eCreate"], // Declare the custom event here
     setup() {
         const tasks = ref([])
-        
-        const today = new Date();
-        const todayTimestamp = Timestamp.fromDate(today);
         const minpoints = ref(0)
         const minid=ref("")
         const comid=ref('')
@@ -99,48 +96,60 @@ export default {
         getDoc(doc(db,'users',uid))
           .then((snap)=>{
             comid.value = snap.data().community
-            console.log(comid.value,"comid task market");
+            // console.log(comid.value,"comid task market");
+
+
+
           })
+        watch(comid, (newComid, oldComid) => {
+          if(newComid){
+            const today = new Date();
+            const todayTimestamp = Timestamp.fromDate(today);
+            console.log(todayTimestamp,"tst");
+            console.log(comid.value,"comid");
+            const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">=",todayTimestamp),where("commid","==",comid.value))
+            const unsub = onSnapshot(q,(snap)=>{
+            console.log(comid.value,"comid");
 
-        const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<=",todayTimestamp),where("commid","==",comid.value))
-        // const assign = query(collection(db,"tasks"),where("userid","==",null),where("commid","==",comid.value))
+                const results= [];
+                snap.forEach((doc)=>{
+                    results.push({ ...doc.data(), id: doc.id })
+                })
 
-      //   const assub = onSnapshot(assign,async(snap)=>{
-      //     snap.forEach(async(docu)=>{
-      //       const user = auth.currentUser
-      //         const uid = user.uid
-      //         const usnap = await getDoc(doc(db,'users',uid))
-      //         const comid= usnap.data().community
-      //         minpoints.value = usnap.data().minpoints
-      //         minid.value = uid
-      //         const comsnap = await getDoc(doc(db,'communities',comid))
-      //         const comdata = comsnap.data()
-      //         comdata.homies.forEach(async(homi)=>{
-      //           console.log(homi,"should be homi id");
-      //           const hsnap = await getDoc(doc(db,'users',homi))
-      //           if (hsnap.data().points<minpoints.value){  
-      //             minpoints.value = hsnap.data()
-      //             minid.value=homi
-      //           }
-      //         })
-            
-      //         await updateDoc(docu.ref,{
-      //           userid:minid.value,
-      //         })
-      //     })
-      // })
+                tasks.value=results
+                console.log(tasks.value,"tasks in tm");
 
-        const q = query(collection(db,"tasks"),where("userid","==",null),where("commid","==",comid.value))
-        
-        // const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">=",todayTimestamp),where("commid","==",comid.value))
-        const unsub = onSnapshot(q,(snap)=>{
-            const results= [];
-            snap.forEach((doc)=>{
-                results.push({ ...doc.data(), id: doc.id })
             })
-            tasks.value=results
+            
+            const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<=",todayTimestamp),where("commid","==",comid.value))
+            const assub = onSnapshot(assign,async(snap)=>{
+                snap.forEach(async(docu)=>{
+                  const user = auth.currentUser
+                    const uid = user.uid
+                    const usnap = await getDoc(doc(db,'users',uid))
+                    const comid= usnap.data().community
+                    minpoints.value = usnap.data().minpoints
+                    minid.value = uid
+                    const comsnap = await getDoc(doc(db,'communities',comid))
+                    const comdata = comsnap.data()
+                    comdata.homies.forEach(async(homi)=>{
+                      console.log(homi,"should be homi id");
+                      const hsnap = await getDoc(doc(db,'users',homi))
+                      if (hsnap.data().points<minpoints.value){  
+                        minpoints.value = hsnap.data()
+                        minid.value=homi
+                      }
+                    })
+                  
+                    await updateDoc(docu.ref,{
+                      userid:minid.value,
+                    })
+                })
+            })
+
+          }
         })
-        console.log(tasks.value,"tasks in tm");
+       
 
         
         
@@ -169,6 +178,17 @@ export default {
           }
           
       })
+
+      onMounted(() => {
+      // Fetch comid data and populate comid
+      const user = auth.currentUser;
+      const uid = user.uid;
+      getDoc(doc(db, 'users', uid))
+        .then((snap) => {
+          comid.value = snap.data().community;
+          // console.log(comid.value, "comid task market");
+        });
+    });
         
         
 
