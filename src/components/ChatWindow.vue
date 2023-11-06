@@ -244,6 +244,11 @@ export default {
               //   photoURL=udata.photoURL
               //   userid=mdata.userid
               // }
+              const user = auth.currentUser
+              const uid = user.uid
+              if(mdata.userid == undefined){
+                mdata.userid = uid
+              }
 
               // adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id,photoURL:photoURL || null,userid:userid });
               adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id });

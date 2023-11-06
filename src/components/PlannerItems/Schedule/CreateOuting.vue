@@ -106,13 +106,8 @@ export default {
             if (chatRef){
                 console.log("Chatroom created for outing",chatRef.id);
             }
-            const chatID = chatRef.id
-            const newSubcollectionRef = collection(db, "chatrooms", chatID, "messages");
-            addDoc(newSubcollectionRef,{
-                createdAt: new Date(),
-                title:title.value,
-                message:"Welcome to " + title.value,
-            });
+          
+            
             location.value=""
             desc.value = ""
             title.value=""
