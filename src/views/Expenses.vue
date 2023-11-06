@@ -18,7 +18,7 @@
           </button>
         </div>
         <div class="create-expense-bar" v-if="displayCreate">
-          <createExpenses @closeExpense="displayCreate=!displayCreate"/>
+          <createExpenses @closeExpense="displayCreate=!displayCreate" @onPaid="fetchData"/>
         </div>
         <div class="flex mx-auto justify-content-around space-x-3 w-10/12" v-else>
           <div v-if="!payeecount" class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
@@ -131,10 +131,11 @@ export default {
 
 
     const fetchData = async () => {
-         //fetching of stuff
+      console.log("emitted");
       const user = auth.currentUser
       const uid = user.uid
-    
+      peopleOweYou.value = []
+      youOwePeople.value =[]
       payeecount.value=0
       receivercount.value = 0
       const oyqresult = []
@@ -159,6 +160,10 @@ export default {
     };
 
     fetchData()
+    const compiledFetch = () =>{
+      console.log("compiled fetch, emit")
+      fetchData();
+    }
 
     return {
 
@@ -169,6 +174,7 @@ export default {
       payeecount,
       receivercount,
       fetchData,
+      compiledFetch
     };
   },
 };

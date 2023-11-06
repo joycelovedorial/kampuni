@@ -142,6 +142,7 @@ export default {
         }}
         }
         context.emit("closeExpense")
+        context.emit("onPaid")
       } catch (error) {
         console.log(error.message);
       }

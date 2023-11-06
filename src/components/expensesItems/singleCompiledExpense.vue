@@ -49,6 +49,7 @@ export default {
         homieid: String,
         amount: Number,
     },
+    emits: ['onPaid'],
     setup(props,context){
         console.log(props.amount,"if change");
         const homieid = ref(props.homieid)
@@ -88,21 +89,40 @@ export default {
         }
         fetchData()
 
-        const onPay = async()=>{
-            const user=auth.currentUser
-            const uid = user.uid
-            const delquery = query(collection(db,'transactions'),where("payer","==",uid),where("receiver","==",props.homieid))
-            const eldquery = query(collection(db,'transactions'),where("receiver","==",uid),where("payer","==",props.homieid))
-            const delsnap = await getDocs(delquery)
-            delsnap.forEach(async(ddoc)=>{
-                await deleteDoc(doc(db,"transactions",ddoc.id))
-            })
-            const eldsnap = await getDocs(eldquery)
-            eldsnap.forEach(async(edoc)=>{
-                await deleteDoc(doc(db,"transactions",edoc.id))
-            })
-            context.emit("onPaid")
-        }
+        const onPay = async () => {
+
+            const deletePromises = [];
+
+      
+            const user = auth.currentUser;
+            const uid = user.uid;
+            const delquery = query(collection(db, 'transactions'), where("payer", "==", uid), where("receiver", "==", props.homieid));
+            const eldquery = query(collection(db, 'transactions'), where("receiver", "==", uid), where("payer", "==", props.homieid));
+
+       
+            const delsnap = await getDocs(delquery);
+            const eldsnap = await getDocs(eldquery);
+
+        
+            delsnap.docs.forEach((ddoc) => {
+                deletePromises.push(deleteDoc(doc(db, "transactions", ddoc.id)));
+                context.emit("onPaid");
+
+            });
+
+            eldsnap.docs.forEach((edoc) => {
+                deletePromises.push(deleteDoc(doc(db, "transactions", edoc.id)));
+                context.emit("onPaid");
+            });
+
+            // Wait for all delete operations to complete
+            await Promise.all(deletePromises);
+
+            // Emit the event after all deletes have completed
+        };
+
+           
+    
         watch([() => props.amount, () => props.homieid], ([newAmount, newHomieid], [oldAmount, oldHomieid]) => {
       // Update your component's state based on prop changes
             neutral.value = false
@@ -122,7 +142,7 @@ export default {
         });
 
         return {
-            homiename,displayamount,owe,neutral,onPay, imgstr, money, coin
+            homiename,displayamount,owe,neutral,onPay, imgstr, money, coin, 
         }
     }
 }
