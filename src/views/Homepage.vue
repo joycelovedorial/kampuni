@@ -93,16 +93,9 @@ export default {
   /* overflow: hidden; */
 }
 
-@media (max-width: 1400px) {
+@media (min-width: 635px) {
   #bg-container {
-    height: 165vh;
-  }
-}
-
-
-@media (max-width: 425px) {
-  #bg-container {
-    height: 175vh;
+    height: 180vh;
   }
 }
 @keyframes rainbow {
@@ -119,11 +112,11 @@ export default {
   color: transparent;
   animation: rainbow 5s linear infinite;
 }
-@media (min-width: 998px) {
+/* @media (min-width: 998px) {
   #bg-container {
-    height: 165vh;
+    height: 185vh;
   }
-}
+} */
 
 @media (min-width: 1440px) {
   #bg-container {
@@ -131,11 +124,11 @@ export default {
   }
 }
 
-/* @media (max-width: 2550px) {
+@media (min-width: 2550px) {
   #bg-container {
     height: 120vh;
   }
-} */
+}
 
 
 
