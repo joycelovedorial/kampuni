@@ -4,9 +4,11 @@
     <div class="flex flex-nowrap content-center snap-proximity snap-x "  >
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 mb-4 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
         <div v-if="outingArray.length === 0">
-    No task
-  </div>
-  <singlecarousel :outid="out.id" v-else/>
+        no one has initiated an outing yet~ 🍃
+        </div>
+        <div v-else>
+          <singlecarousel :outid="out.id"/>
+        </div>
       </div>
     </div>
   </div>

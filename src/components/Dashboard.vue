@@ -1,34 +1,36 @@
 <template>
-  <div class="container ">
-    <div class="row mb-3">
-      <div class="col-12">
-        <h1 class="mb-3 font-bold text-black text-3xl" >Upcoming Outings</h1>
-        <OutingsCarousel :community="comid"/>
-      </div>
-    </div>
-
-    <div class="row">
-      <!-- <div class="col-1"></div> -->
-
-      <div class="col-xl-6 col-12 ">
-        <h1 class="mb-2 font-bold text-black text-3xl ">Today's Task</h1>
-        <div class="flex-nowrap overflow-y-scroll overflow-x-auto test border-black border-solid border-2 bg-white rounded-xl will-change-scroll" style="height:50vh">
-          <TodayTask v-if="comid" :community="comid"/>
+  <body>
+    <div class="container ">
+      <div class="row mb-3">
+        <div class="col-12">
+          <h1 class="pb-3 font-bold text-black text-lg font-fredoka">Upcoming Outings</h1>
+          <OutingsCarousel :community="comid"/>
         </div>
       </div>
-
-      <!-- <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
-       <!--<div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
-
-      <div class="col-xl-6 col-12 " >
-      <h1 class="mb-2 font-bold text-black text-3xl">Expenses</h1>
-       <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto" style="height:50vh">
-          <ExpensesList/>
+  
+      <div class="row">
+        <!-- <div class="col-1"></div> -->
+  
+        <div class="col-xl-6 col-12 ">
+          <h1 class="mb-2 font-bold text-black text-lg font-fredoka ">Today's Task</h1>
+          <div class="flex-nowrap overflow-y-scroll overflow-x-auto test border-black border-solid border-2 bg-white rounded-xl will-change-scroll" style="height:50vh">
+            <TodayTask v-if="comid" :community="comid"/>
+          </div>
         </div>
+  
+        <!-- <div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
+         <!--<div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
+  
+        <div class="col-xl-6 col-12 " >
+        <h1 class="mb-2 font-bold text-black text-lg font-fredoka">Expenses</h1>
+         <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto mb-3" style="height:50vh">
+            <ExpensesList/>
+          </div>
+        </div>
+        <!-- <div class="col-lg-1 col-md-1 col-sm-1"></div> -->
       </div>
-      <!-- <div class="col-lg-1 col-md-1 col-sm-1"></div> -->
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -131,6 +133,12 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #FFC96B;
+  /* color: #ffdc9f; */
+  height: fit-content;
+}
+
 :root {
 --primary: #2ec4b6;
 --secondary: #d2cfcf;
