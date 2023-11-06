@@ -27,13 +27,13 @@ export default {
 
 
     const fetchData = async () => {
-      console.log("leaderboard fetch");
+      // console.log("leaderboard fetch");
       const user = auth.currentUser;
       const uid = user.uid;
       const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
       comid.value = docSnap.data().community;
-      console.log(comid.value, "leaderboard");
+      // console.log(comid.value, "leaderboard");
       const comRef = doc(db, "communities", comid.value);
       const comSnap = await getDoc(comRef);
       const comData = comSnap.data();

@@ -91,35 +91,47 @@ export default {
         const todayTimestamp = Timestamp.fromDate(today);
         const minpoints = ref(0)
         const minid=ref("")
+        const comid=ref('')
 
-        const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">",todayTimestamp))
-        const assub = onSnapshot(assign,async(snap)=>{
-          snap.forEach(async(docu)=>{
-            const user = auth.currentUser
-              const uid = user.uid
-              const usnap = await getDoc(doc(db,'users',uid))
-              const comid= usnap.data().community
-              minpoints.value = usnap.data().minpoints
-              minid.value = uid
-              const comsnap = await getDoc(doc(db,'communities',comid))
-              const comdata = comsnap.data()
-              comdata.homies.forEach(async(homi)=>{
-                console.log(homi,"should be homi id");
-                const hsnap = await getDoc(doc(db,'users',homi))
-                if (hsnap.data().points<minpoints.value){
-                  minpoints.value = hsnap.data()
-                  minid.value=homi
-                }
-              })
-            
-              await updateDoc(docu.ref,{
-                userid:minid.value,
-              })
+        const user = auth.currentUser
+        const uid = user.uid
+        getDoc(doc(db,'users',uid))
+          .then((snap)=>{
+            comid.value = snap.data().community
+            console.log(comid.value,"comid task market");
           })
-      })
 
-      
-        const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<",todayTimestamp))
+        const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<=",todayTimestamp),where("commid","==",comid.value))
+        // const assign = query(collection(db,"tasks"),where("userid","==",null),where("commid","==",comid.value))
+
+      //   const assub = onSnapshot(assign,async(snap)=>{
+      //     snap.forEach(async(docu)=>{
+      //       const user = auth.currentUser
+      //         const uid = user.uid
+      //         const usnap = await getDoc(doc(db,'users',uid))
+      //         const comid= usnap.data().community
+      //         minpoints.value = usnap.data().minpoints
+      //         minid.value = uid
+      //         const comsnap = await getDoc(doc(db,'communities',comid))
+      //         const comdata = comsnap.data()
+      //         comdata.homies.forEach(async(homi)=>{
+      //           console.log(homi,"should be homi id");
+      //           const hsnap = await getDoc(doc(db,'users',homi))
+      //           if (hsnap.data().points<minpoints.value){  
+      //             minpoints.value = hsnap.data()
+      //             minid.value=homi
+      //           }
+      //         })
+            
+      //         await updateDoc(docu.ref,{
+      //           userid:minid.value,
+      //         })
+      //     })
+      // })
+
+        const q = query(collection(db,"tasks"),where("userid","==",null),where("commid","==",comid.value))
+        
+        // const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">=",todayTimestamp),where("commid","==",comid.value))
         const unsub = onSnapshot(q,(snap)=>{
             const results= [];
             snap.forEach((doc)=>{
@@ -127,15 +139,24 @@ export default {
             })
             tasks.value=results
         })
+        console.log(tasks.value,"tasks in tm");
+
+        
+        
     
         const claimTask = async (taskId) => {
             const user = auth.currentUser
             const uid = user.uid
             const taskRef = doc(db,"tasks",taskId)
-            await updateDoc(taskRef,{
+            
+            const refs=await updateDoc(taskRef,{
                 userid:uid
             });
+            if(refs){
+              console.log("task claimed",refs.id);
+            }
         }
+
         const tasksFormatted = computed(()=>{
           if (tasks.value){
               return tasks.value.map(doc => {
@@ -145,6 +166,7 @@ export default {
           }else{
             return []
           }
+          
       })
         
         
