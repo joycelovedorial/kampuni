@@ -1,6 +1,6 @@
 <template>
     <div v-for="single in compiled" :key="single.id">
-        <singleCompiledExpense :homieid="single.id" :amount="single.compiledamount"/>
+        <singleCompiledExpense :homieid="single.id" :amount="single.compiledamount" @onPaid="payemit"/>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     singleCompiledExpense
   },
 
-  setup() {
+  setup(props,context) {
     const compiled = ref([]);
     const user = auth.currentUser;
     const uid = user.uid;
@@ -49,8 +49,12 @@ export default {
 
     console.log(compiled.value,"compiled");
 
+    const payemit = () =>{
+      context.emit("onPaid")
+    }
+
     return {
-      compiled
+      compiled,payemit
     };
   }
 };

@@ -60,7 +60,7 @@
               </div>
               <div class="w-full rounded-lg h-64 scrollbar overflow-y-scroll overflow-x-auto">
                 <div v-for="peep in youOwePeople" :key="peep.id">
-                  <singleExpensePayer :transacid="peep.id" />
+                  <singleExpensePayer :transacid="peep.id" @onPaid="fetchData"/>
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@
       <div class="font-fredoka text-center text-lg font-bold">
         Overview
       </div>
-      <compiledExpense/>
+      <compiledExpense @onPaid="fetchData"/>
     </div>
   </body>
 </template>
@@ -135,6 +135,7 @@ import createExpenses from '@/components/expensesItems/createExpense.vue';
 import { ref, computed } from 'vue';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import {auth,db} from '@/firebase/config'
+import { get } from 'jquery';
 
 
 export default {
@@ -211,6 +212,21 @@ export default {
 
     setInterval(toggleText, 3000);
 
+    const fetchData = async() =>{
+      const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
+      const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
+      // const oyq = await getDocs(oweyouquery)
+      // const yoq = await getDocs(youOwequery)
+      //   oyq.forEach(async(adoc)=>{
+          
+      //   })
+      //   yoq.forEach(async(adoc)=>{
+          
+      //   })
+      unsubOweYou()
+      unsubyouOwe()
+    }
+
     return {
       showInput,
       textInput,
@@ -224,7 +240,8 @@ export default {
       youOwePeople,
       peopleOweYou,
       payeecount,
-      receivercount
+      receivercount,
+      fetchData,
     };
   },
 };

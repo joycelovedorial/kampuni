@@ -42,15 +42,16 @@
 <script>
 
 import { ref } from 'vue'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, query,collection,getDocs,deleteDoc,where } from 'firebase/firestore'
 import { auth, storage, db } from '@/firebase/config'
 import {  ref as fref, getDownloadURL } from "firebase/storage";
+
 export default {
     props:{
         homieid: String,
         amount: Number,
     },
-    setup(props){
+    setup(props,context){
         
         const homieid = ref(props.homieid)
         const amount = ref(props.amount)
@@ -90,7 +91,19 @@ export default {
         fetchData()
 
         const onPay = async()=>{
-
+            const user=auth.currentUser
+            const uid = user.uid
+            const delquery = query(collection(db,'transactions'),where("payer","==",uid),where("receiver","==",props.homieid))
+            const eldquery = query(collection(db,'transactions'),where("receiver","==",uid),where("payer","==",props.homieid))
+            const delsnap = await getDocs(delquery)
+            delsnap.forEach(async(ddoc)=>{
+                await deleteDoc(doc(db,"transactions",ddoc.id))
+            })
+            const eldsnap = await getDocs(eldquery)
+            eldsnap.forEach(async(edoc)=>{
+                await deleteDoc(doc(db,"transactions",edoc.id))
+            })
+            context.emit("onPaid")
         }
 
         return {
