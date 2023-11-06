@@ -50,15 +50,16 @@
       <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Title</th>
       <th>Date</th>
       <th>Description</th>
       <th>Location</th>
     </tr>
-    </thead>
+  </thead>
+
     <tbody>
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }}{{ outing.creatorname }}</td>
+      <td>{{ outing.title }} <br> by: {{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
@@ -70,43 +71,18 @@
 
       <!-- Add more properties as needed -->
     </div>
-  </div>
-
-  
-    <div class="right">
-      <div class="calendar">
-    
-    <!-- <div class="days grid grid-cols-7">
-      <div class="day " v-for="day in daysOfWeek" :key="day">{{ day }}</div>
-      <div v-for="blank in firstDayOfWeek" class=" empty"></div>
-      <div v-for="day in daysInMonth" :key="day" class=" day">{{ day }}</div>
-    </div>
-  </div> -->
-      <!-- <div class="calendar">
-        <div class="month">
-          <button @click="prevMonth">Prev</button>
-          <div class="date">{{ currentMonth }} {{ currentYear }}</div>
-          <button @click="nextMonth">Next</button>
-        </div>
-
-        <div class="weekdays">
-          <div v-for="(day,idx) in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="idx">{{ day }}</div>
-        </div>
-
-
-
-        <div class="days">
-          <div v-for="(day,idx) in days" :key="idx" :class="{ 'today': day === today }">{{ day }}</div>
-        </div>
-
-        
-      </div> -->
       
 
   </div>
-  </div>
 
-  </div>
+    </div>
+
+
+      
+
+
+
+
 
 
 
@@ -130,7 +106,10 @@ import {
   onSnapshot,
   Timestamp,
   collectionGroup,
-} from "firebase/firestore";
+} 
+from "firebase/firestore";
+import { startOfDay,addDays } from "date-fns"; // Import the startOfDay function
+
 export default {
   setup() {
     const taskArray = ref([]);
@@ -139,6 +118,10 @@ export default {
     const comid = ref("");
     const userid = ref("");
     const toLoopOutings = ref([])
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
+    const endOfWeek = addDays(startOfToday.toDate(), 7);
     // prev code
     // const today = new Date();
     
@@ -215,6 +198,7 @@ export default {
 
       // Watch for changes in userid
 
+      // For tasks
       const qtask = query(
         collection(db, "tasks"),
         where("userid", "==", userid.value)
@@ -230,9 +214,12 @@ export default {
 
       console.log(comid.value, "comid")
 
+      // For outings 
       const qouting = query(
         collection(db, "outings"),
-        where("community", "==", comid.value)
+        where("community", "==", comid.value),
+        where('date', '>=', startOfToday),
+        where('date', '<=', endOfWeek),
       );
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(adoc)=>{
@@ -243,10 +230,9 @@ export default {
         if(odata.creator){
           const usnap = await getDoc(doc(db,"users",odata.creator))
           const udata=usnap.data()
-         
-
           creatorname = udata.firstname
-        }else{
+        }
+        else{
           creatorname = "It's a Mystery"
         }
         const uiq = query(collection(db,"outings",adoc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
@@ -290,12 +276,6 @@ export default {
 
     })
    
-
-
-      
-    
-  
-
     return { 
       taskArray,
       outingArray,
@@ -323,21 +303,9 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --primary-clr: #b38add;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-template {
-  min-height: 20vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #e2e1dc;
+
+.month{
+  background-color:#86B8B1;
 }
 
 .container {
@@ -352,12 +320,14 @@ template {
   background-color: rgb(255, 255, 255);
 }
 
-.left {
-  width: 60%;
-  padding: 15px;
+.outings_list {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
-/* .calendar {
+.calendar {
   position: relative;
   width: 100%;
   height: 100%;
@@ -368,7 +338,7 @@ template {
   color: #86b8b1;
   border-radius: 5px;
   background-color: #fff;
-} */
+}
 
 .calendar⸬before,
 .calendar⸬after {
@@ -393,79 +363,35 @@ template {
   width: 100%;
   height: 100px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  text-transform: capitalize;
-}
-
-.calendar .month .prev,
-.calendar .month .next {
-  cursor: pointer;
-}
-
-.calendar .month .prev:hover,
-.calendar .month .next:hover {
-  color: #86b8b1;
-}
-
-.calendar .weekdays {
-  width: 100%;
-  height: 50px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  font-size: 1rem;
-  font-weight: 500;
-  text-transform: capitalize;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
 }
 
-.calendar .weekdays div {
-  width: 14.28%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.weekdays, .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
-.calendar .days {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 5px;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 20px;
+.weekdays div, .days div {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
 }
 
-.calendar .days .day {
-  width: 14.28%;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #86b8b1;
-  border: 1px solid #86b8b1;
+.today {
+  color: purple;
 }
 
-.calendar .day:not(.prev-date, .next-date):hover {
-  color: black;
-  background-color: #86b8b1;
+.date{
+  background-color: '#86B8B1';
 }
 
-.calendar .days .prev-date .calendar.days.prev-date {
-  color: #86b8b1;
-}
-
-.calendar .days .active {
-  position: relative;
-  font-size: 1rem;
-  color: red;
-  background-color: #86b8b1;
+tbody{
+  text-align: center;
+  border-radius: 15px;
 }
 
 .calendar .days .active⸬before {
@@ -489,38 +415,6 @@ template {
   transform: translateX(-50%);
   background-color: var(#86b8b1);
 }
-
-.calendar {
-  text-align: center;
-  margin: 0 auto;
-  width: 300px;
-  font-family: Arial, sans-serif;
-}
-
-/* .header {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-} */
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* .days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-} */
-
-.day {
-  border: 1px solid #ddd;
-  padding: 5px;
-}
-
-.empty {
-  visibility: hidden;
-}
 </style>
+
+
