@@ -312,7 +312,7 @@ export default {
   position: relative;
   width: auto;
   min-height: auto;
-  margin: 0 auto;
+  margin: 10px;
   padding: 5px;
   color: black;
   display: flex;
