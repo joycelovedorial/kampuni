@@ -1,24 +1,23 @@
 <template>
 
-    <div class="cardbg-orange-100 rounded-lg border-2 hovering bg-white p-2 pt-3 mb-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
+    <div class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3 mb-3" :class="{'border-g bg-g' : involved, 'border-r bg-g' : !involved , 'border-orange' : null}" id="custom-container" > 
          <!--v-for{{outing}}-->
                 <div class="container bg-white rounded-lg ">
                 
                     <div class="row"> 
-                        <div class="col-12" id="detail-container">
-                            <div class="w-auto self-center border-2 flex truncate p-2" 
+                        <div class="col-12 " id="detail-container">
+                            <div class="w-auto self-center justify-content-center align-middle card-title border-2 d-flex justify-content-between truncate" 
                             :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" 
-                            id="name_container">
-                            <div class="w-2/12 align-middle">
-                                <img class="bg-white rounded-full border-2 border-black block h-12 w-12 align-middle mx-auto" :src="photourl" alt="">
+                            id="name_container" 
+                            style="height:fit-content; width:fit-content;display: flex; flex-direction: column; align-items: flex-start;">
+                                    <img :src="photourl" alt="">
+                                    <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
+                                    <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
+                                    <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
                             </div>
-                            <div class="w-10/12">
-                                <h5 class="fw-bold truncate ">{{title}}</h5> <!--{{name}}--> 
-                                <p class="text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
-                                <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
-                            </div>
-                            </div>
-                        </div>
+                    </div>
+                        
+                                
                     </div> 
                     <div class="row ">
                         <ul class="list-group list-group-flush p-0"  style="list-style-image:url('../../assets/icons/clock.svg')" > 
@@ -46,19 +45,23 @@
 
                         </ul> 
                     </div>
-                    <div class="row flex justify-around">
-                            <button class="bg-white option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
+                    <div class="row grid-col-2">
+                        <div class="col-6">
+                            <button class="w-100 bg-white option_box text-green-700" @mouseover="isHovered_green = true" @mouseout="isHovered_green = false" :class="{ 'hovered_green': isHovered_green , 'clicked_style_green' : involved}" @click="has_clicked_green" > 
                                 <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
                                 </svg>
                             I'm in</button>
+                        </div> 
         
                         <!-- <div class="col-xl-0 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
         
-                            <button class="bg-white option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
+                        <div class="col-6">
+                            <button class="w-100 bg-white option_box text-red-700" @mouseover="isHovered_red = true" @mouseout="isHovered_red = false" :class="{ 'hovered_red': isHovered_red, 'clicked_style_red shadow-inner': !involved }" @click="has_clicked_red"  >
                             <svg class="w-5 h-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
                             I'm out</button>
+                        </div> 
                     </div>
                 </div>
             </div> 
@@ -251,7 +254,7 @@ export default {
 
 .clicked_style_green{
     background-color: #99B898 !important;
-    /* transform: scale(1.05); */
+    transform: scale(1.05);
     color: rgb(255, 255, 255) !important;
     font-size: 30px;
     /* border:rgb(4, 84, 4) solid 1px; */
@@ -259,7 +262,7 @@ export default {
 }
 .clicked_style_red{
     background-color: #FF847C!important;
-    /* transform: scale(1.05); */
+    transform: scale(1.05);
     color: rgb(255, 255, 255) !important;
     /* border:rgb(255, 255, 255)  solid 1px; */
     
@@ -279,14 +282,14 @@ export default {
     color: white !important;;
 }
 
-/* .custom-container{
+.custom-container{
 padding-bottom:0px;
 transition: transform 1s ease-in-out;
 display: inline;
 background-color: white;
 margin-bottom:5px;
 
-} */
+}
 
 .card{
 display:inline-block;
@@ -294,13 +297,13 @@ background-color: orange !important;
 }
 
 .option_box{
-/* border-radius: 10px;
+border-radius: 10px;
 font-size:18px;
 padding-top:10px;
 padding-right:5px;
 padding-right:5px;
 padding-bottom:10px;
-margin-bottom:10px; */
+margin-bottom:10px;
 height:fit-content;
 width:fit-content;
 border:black 2px solid;
