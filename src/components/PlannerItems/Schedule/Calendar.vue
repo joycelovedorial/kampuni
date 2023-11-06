@@ -157,14 +157,14 @@ export default {
     };
 
     const fetchData = async () => {
-      console.log("fetching");
+   
       const user = auth.currentUser;
       userid.value = user.uid;
       const docRef = doc(db, "users", userid.value);
       const docSnap = await getDoc(docRef);
       const docData = docSnap.data();
       comid.value = docData.community;
-      console.log(comid.value, "fetch");
+
     };
 
     onMounted(async () => {
@@ -186,7 +186,7 @@ export default {
         // console.log("tasks fetched", taskArray.value);
       });
 
-      console.log(comid.value, "comid")
+    
 
       // For outings 
       const qouting = query(
@@ -198,9 +198,9 @@ export default {
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(adoc)=>{
         const odata= adoc.data()
-        console.log(adoc.data());
+    
         let creatorname = null; 
-        console.log(odata.creator,'ocrawete');
+      
         if(odata.creator){
           const usnap = await getDoc(doc(db,"users",odata.creator))
           const udata=usnap.data()
@@ -231,7 +231,7 @@ export default {
         });
         }
       })
-      console.log(outingArray.value,"outingarray");
+
 
 
 

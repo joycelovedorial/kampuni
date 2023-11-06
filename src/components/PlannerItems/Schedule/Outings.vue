@@ -57,6 +57,7 @@
           </div>
         </div> -->
         <div>
+  
           <p class="text-p font-bold text-xs">friends attending:</p>
           
           <p class="px-2 text-xs" v-for="(frens, i) in outing.involved" :key="i">
@@ -93,11 +94,7 @@
     </tr>
   </tbody>
   </table>
- 
-    
 
-      <!-- Add more properties as needed -->
-   
 </template>
 
 <script>
@@ -132,28 +129,17 @@ export default {
     const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
     const endOfWeek = addDays(startOfToday.toDate(), 7);
     const uphotoURL=ref('')
-    // prev code
-    // const today = new Date();
-    
-    // //for the calendar
-    // const date = ref(new Date());
-    // const currentMonth = computed(() => date.value.getMonth() + 1);
-    // const currentYear = computed(() => date.value.getFullYear());
-    // const today_calendar = new Date().getDate();
 
-    // const days = computed(() => {
-    //   const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
-    //   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    // });
+
     const fetchData = async () => {
-      console.log("fetching");
+    
       const user = auth.currentUser;
       userid.value = user.uid;
       const docRef = doc(db, "users", userid.value);
       const docSnap = await getDoc(docRef);
       const docData = docSnap.data();
       comid.value = docData.community;
-      console.log(comid.value, "fetch");
+      
       
     };
 
@@ -172,16 +158,15 @@ export default {
           results.push({ ...doc.data(), id: doc.id });
         });
         taskArray.value = results;
-        // console.log("tasks fetched", taskArray.value);
+       
       });
 
-      console.log(comid.value, "comid")
+    
 
       const qouting = query(
         collection(db, "outings"),
         where("community", "==", comid.value),
         where('date', '>=', startOfToday),
-        where('date', '<=', endOfWeek),
       );
       const qoutingSnap = await getDocs(qouting);
 
@@ -190,13 +175,13 @@ export default {
         let creatorname = null;
         let photoURL = null
 
-        console.log(odata.photoURL,"in snap");
+        
         if (odata.creator) {
           const usnap = await getDoc(doc(db, "users", odata.creator));
           const udata = usnap.data();
           creatorname = udata.firstname;
           photoURL= udata.photoURL
-          console.log(photoURL,"post assignment");
+       
         } else {
           creatorname = "it's a mystery";
         }
@@ -216,29 +201,35 @@ export default {
           };
         const formattedTime = dateObj.toLocaleString(undefined, timeFormatOptions);
 
-        let involved = []
         
         const usersSnap = await getDocs(collection(db,"outings",adoc.id,"usersInvolved"))
-        usersSnap.forEach(async(udoc)=>{
-          const udata = udoc.data()
-          if(udata.imIn){
-            const dsnap = await getDoc(doc(db,"users",udata.user))
-            const ddata= dsnap.data()
-            involved.push(ddata.firstname)
+        const usersDocs = usersSnap.docs; // Convert QuerySnapshot to an array of QueryDocumentSnapshots
+        const userPromises = usersDocs.map(async (udoc) => {
+          const udata = udoc.data();
+          if (udata.imIn) {
+            const dsnap = await getDoc(doc(db, "users", udata.user));
+            const ddata = dsnap.data();
+            return ddata.firstname;
           }
-        })
+          return null;
+        });
 
+        // Use Promise.all to resolve all Promises
+        const involvedPromises = await Promise.all(userPromises);
 
-        
+        // Filter out null values and create a list of involved names
+        const involved = involvedPromises.filter((name) => name !== null);
+
         outingArray.value.push({
           ...adoc.data(),
           date: formattedDate,
-          time: formattedTime, // Separate time
+          time: formattedTime,
           creatorname: creatorname,
           id: adoc.id,
-          involved: involved,
+          involved: involved, // Set the populated involved array
           imgstr: photoURL,
         });
+        
       });
         
         
