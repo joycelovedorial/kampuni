@@ -47,7 +47,7 @@
       
       <div>
       <!-- Display the properties of the outing here -->
-      <table>
+  <table>
   <thead>
     <tr>
       <th>Name</th>
@@ -58,7 +58,7 @@
     </thead>
     <tbody>
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }}{{ outing.creatorname }}</td>
+      <td>{{ outing.title }} by: <br> {{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
@@ -215,6 +215,7 @@ export default {
 
       // Watch for changes in userid
 
+      // For tasks
       const qtask = query(
         collection(db, "tasks"),
         where("userid", "==", userid.value)
@@ -230,6 +231,7 @@ export default {
 
       console.log(comid.value, "comid")
 
+      // For outings 
       const qouting = query(
         collection(db, "outings"),
         where("community", "==", comid.value)
@@ -243,10 +245,9 @@ export default {
         if(odata.creator){
           const usnap = await getDoc(doc(db,"users",odata.creator))
           const udata=usnap.data()
-         
-
           creatorname = udata.firstname
-        }else{
+        }
+        else{
           creatorname = "It's a Mystery"
         }
         const uiq = query(collection(db,"outings",adoc.id,"usersInvolved"),where("user",'==',userid.value),where("imIn","==",true))
@@ -340,11 +341,15 @@ template {
   background-color: #e2e1dc;
 }
 
+table{
+  width: 80vh;
+}
+
 .container {
   position: relative;
   width: auto;
   min-height: auto;
-  margin: 0 auto;
+  margin: 10px;
   padding: 5px;
   color: black;
   display: flex;
