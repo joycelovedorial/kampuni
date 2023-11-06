@@ -21,7 +21,7 @@
       Create a task
     </button>
     <div class="my-2">
-      <div class="overflow-y-auto flex overflow-x-auto w-full flex-row bg-white border-black border-2 border-solid rounded-lg carousel_container">
+      <div class="overflow-x-auto flex overflow-y-auto w-full flex-row bg-white border-black border-2 border-solid rounded-lg carousel_container">
         <div
           v-for="task in tasksFormatted"
           :key="task.id"

@@ -1,7 +1,7 @@
 <template>
 
 <div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="task in tasksFormatted" :key="task.id"> 
-  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus,'bg-r':task.overdue}">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-r':task.overdue,'bg-b' :!task.taskstatus,}">
      <div>
       <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
         <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
@@ -10,7 +10,7 @@
     </div>
       <div class="absolute h-21 w-20 right-2 bottom-1 mb-1 p-0">
         <p class="text-center font-bold" :class=" {'text-white' : task.taskstatus , 'text-black' :!task.taskstatus}" >{{ task.points }}</p>
-      <p class="text-center rounded px-2" :class="{'bg-gray-500 text-white' : task.taskstatus , 'bg-b' :!task.taskstatus}" >POINTS</p>
+      <p class="text-center rounded px-2" >POINTS</p>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
           eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
         })
       })
-      console.log(eventsArray.value);
+      // console.log(eventsArray.value);
       //outings querying
       const outingsQuery = query(collection(db, "outings"),where("community","==",comid),where("date", ">=", today), where("date", "<=", endOfDay));
       const usub = onSnapshot(outingsQuery,(snap)=>{
@@ -133,7 +133,7 @@
 
         return userOutings;
       });
-      console.log(outingsFormatted);
+      // console.log(outingsFormatted); 
             
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
@@ -151,7 +151,7 @@
         
         const userData = userSnap.data()
         const val = userData.points
-        console.log(status,"status");
+        
         if(!status){
           const total = val + docData.points
         await updateDoc(doc(db,"users",uid),{
@@ -169,7 +169,7 @@
   
       const is_checked = () => {
         isChecked.value = !isChecked.value;
-        console.log(isChecked.value)
+        // console.log(isChecked.value)
       };
 
       return { tasks, isChecked, is_checked, tasksFormatted,taskDone,outingsFormatted,eventsArray };

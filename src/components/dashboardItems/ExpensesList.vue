@@ -5,6 +5,7 @@
   <div v-for="peepo in peopleOweYou" :key="peepo.id">
     <ExpListItem :transacid="peepo" />
   </div>
+  <div><p>Expense List</p></div>
 </template>
 
 <script>
@@ -20,9 +21,7 @@ export default {
     const showInput = ref(false);
     const textInput = ref('');
     const buttonText = ref('pay');
-    const isAnimationActive = ref(false);
-    console.log(props.transobject,"tobject");
- 
+    const isAnimationActive = ref(false); 
     const peopleOweYou = ref([])
     const youOwePeople = ref([])
 
@@ -36,7 +35,7 @@ export default {
           result.push({...doc.data(),id:doc.id})
         })
         peopleOweYou.value=result
-        console.log(peopleOweYou.value,"poy");
+        // console.log(peopleOweYou.value,"poy");
       })
 
 
@@ -49,7 +48,7 @@ export default {
        
       })
       youOwePeople.value=result
-      console.log(youOwePeople.value,"yop");
+      // console.log(youOwePeople.value,"yop");
 
 
     })
