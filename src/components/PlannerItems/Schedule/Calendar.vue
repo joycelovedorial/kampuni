@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col space-y-2">
+  <div class="flex flex-col space-y-2 mx-auto">
     <div class="header flex justify-center space-x-2">
       <button @click="previousMonth">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
@@ -27,8 +27,8 @@
             <p class="text-sm text-left pr-2 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
-            <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)">
-              <div v-for="(task,taskIndex) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="taskIndex" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1" >
+            <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length">
+              <div v-for="task in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
                 <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
                 <span class="bg-bpop/20 rounded-sm block">
                   {{ task.title }} <!-- Display task title or relevant task property -->
@@ -40,50 +40,6 @@
       </div>
     </div>
   </div>
-
-<!-- prev -->
-  <div class="container">
-    <div class="left">
-      
-      <div>
-      <!-- Display the properties of the outing here -->
-      <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Location</th>
-    </tr>
-  </thead>
-
-    <tbody>
-    <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }} <br> by: {{ outing.creatorname }}</td>
-      <td>{{ outing.date }}</td>
-      <td>{{ outing.description }}</td>
-      <td>{{ outing.location }}</td>
-    </tr>
-  </tbody>
-  </table>
- 
-    
-
-      <!-- Add more properties as needed -->
-    </div>
-      
-
-  </div>
-
-    </div>
-
-
-      
-
-
-
-
-
 
 
 </template>
