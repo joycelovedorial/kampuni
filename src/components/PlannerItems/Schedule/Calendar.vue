@@ -27,13 +27,31 @@
             <p class="text-sm text-left pr-2 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
-            <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length">
+            <div class="h-10 bg-r" v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0">
               <div v-for="(task,i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
                 <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
                 <span class="bg-bpop/20 rounded-sm block">
                   {{ task.title }} <!-- Display task title or relevant task property -->
                 </span>
               </div>
+            </div>
+            <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs" >
+              <span class="border-b rounded-sm h-4 border-2 block"></span>
+              <span class="bg-b/80 rounded-sm block h-4 w-full px-1">
+                outings <!-- Display task title or relevant task property -->
+              </span>
+            </div>
+            <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
+              <span class="border-r rounded-sm h-4 border-2 block"></span>
+              <span class="bg-r/80 rounded-sm block h-4 w-full px-1">
+                tasks <!-- Display task title or relevant task property -->
+              </span>
+            </div>
+            <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
+              <span class="border-bpop rounded-sm h-4 border-2 block"></span>
+              <span class="bg-bpop/80 rounded-sm block h-4 w-full px-1">
+                schedule <!-- Display task title or relevant task property -->
+              </span>
             </div>
           </div>
         </div>
