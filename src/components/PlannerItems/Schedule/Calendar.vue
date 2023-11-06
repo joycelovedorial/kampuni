@@ -225,7 +225,7 @@ export default {
           results.push({ ...doc.data(), id: doc.id });
         });
         taskArray.value = results;
-        console.log("tasks fetched", taskArray.value);
+        // console.log("tasks fetched", taskArray.value);
       });
 
       console.log(comid.value, "comid")
