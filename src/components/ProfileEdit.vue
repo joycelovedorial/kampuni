@@ -178,7 +178,7 @@ export default {
     padding: 40px;
 }
 .editForm{
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
 }
 label{

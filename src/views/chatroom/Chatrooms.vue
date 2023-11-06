@@ -116,7 +116,7 @@ export default {
   justify-content:flex;
   flex-direction: column;
   overflow: scroll;
-  height: 60vh;
+  height: 80vh;
   padding-right: 2%;
 }
 .chatlist-container::-webkit-scrollbar{
@@ -163,6 +163,6 @@ input[type="text"]{
 }
 #chatrooms {
   background-color: #B492B8;
-  height: 140vh;
+  height: 100vh;
 }
 </style>

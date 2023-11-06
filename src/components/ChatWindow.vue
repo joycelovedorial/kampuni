@@ -1,6 +1,6 @@
 <template>
   <div class="row" style=" display: flex;">
-    <div class="col-9">
+    <div class="col-12">
     <div class="chat-window">
       <!-- <div v-if="error">{{ error }}</div> -->
       <div class="chatTitle">
@@ -53,7 +53,7 @@
       
       <div v-else>
 
-        <div id="rightside" v-if="outid" class="col-3">
+        <div id="rightside" v-if="outid" class="col-12">
           <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
           <div v-if="displayCreateExpense">
             <createExpense :outingid="outid"/>

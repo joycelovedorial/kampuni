@@ -18,25 +18,13 @@
                 </h1>
                 <div class="container p-3 font-jakarta">
                     <div v-if="toEdit" class="profile mx-auto">
-                        <!-- <div class="column">
-                        <img :src="photourl" alt="">
-                        </div> -->
                         <div class="column1">
-                            <!-- <div class="text1"> First Name: </div>
-                            <div class="text1"> Last Name: </div> -->
                             <div class="text1"> Email: </div>
                             <div class="text1"> Country: </div>
                             <div class="text1"> Birthday: </div>
-                            <!-- <div class="text1"> Bio: </div> -->
                             <div class="text1"> Community: </div>
                         </div>
                         <div class="column1">
-                        <!-- <div class="text" id="firstname">
-                            {{firstname}}
-                        </div>
-                        <div class="text" id="lastname">
-                            {{lastname}}
-                        </div> -->
                         <div class="text" id="profileEmail">
                             {{email}}
                         </div>
@@ -46,9 +34,6 @@
                         <div class="text" id="birthday">
                             {{birthday}}
                         </div>
-                        <!-- <div class="text" id="bio"> 
-                            {{bio}}
-                        </div> -->
                         <div class="text" id="community">
                             {{community}}
                         </div>
@@ -127,6 +112,7 @@ export default {
 <style scoped>
 #profilepage {
     min-height: 100vh;
+    background-color: #F2D694;
 }
 
 .profile {
@@ -143,11 +129,7 @@ export default {
     /* font-size: 3vw; */
     font-weight: bold;
 }
-/* #profilepage{
-    background-color: #F2D694;
-    height: 100vh;
-    margin: 0;
-} */
+
 .middle{
     justify-content: center;
     align-items: center;
@@ -161,21 +143,12 @@ export default {
     border-radius: 20px;
     background-color: #FFFDF0;
 }
-/* img{
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    border: solid;
-} */
-.column{
-    margin: 10px;
-    width: 50%;
-}
+
 .button{
 border: solid 2px;
 /* border-radius: 5px; */
 cursor: pointer;
-background-color: #F2D694;
+background-color: #F4EDCA;
 /* padding: 5px 5px; */
 transition: background-color 0.3s ease;
 }
