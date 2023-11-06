@@ -132,7 +132,7 @@ import singleExpenseReceiver from '@/components/expensesItems/singleExpenseRecei
 import Navbar from '@/components/Navbar.vue';
 import compiledExpense from '@/components/expensesItems/compiledExpense.vue';
 import createExpenses from '@/components/expensesItems/createExpense.vue';
-import { ref, computed } from 'vue';
+import { ref, computed ,onUnmounted} from 'vue';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import {auth,db} from '@/firebase/config'
 import { get } from 'jquery';
@@ -212,20 +212,22 @@ export default {
 
     setInterval(toggleText, 3000);
 
-    const fetchData = async() =>{
-      const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
-      const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
-      // const oyq = await getDocs(oweyouquery)
-      // const yoq = await getDocs(youOwequery)
-      //   oyq.forEach(async(adoc)=>{
-          
-      //   })
-      //   yoq.forEach(async(adoc)=>{
-          
-      //   })
-      unsubOweYou()
-      unsubyouOwe()
-    }
+    const unsubscribeOweYou = () => {
+      oweYouSnapshot();
+    };
+
+    const unsubscribeYouOwe = () => {
+      youOweSnapshot();
+    };
+
+    const fetchData = async () => {
+      // Fetch the data using getDocs if needed, or remove this function if you only need real-time updates
+    };
+
+    onUnmounted(() => {
+      unsubscribeOweYou();
+      unsubscribeYouOwe();
+    });
 
     return {
       showInput,

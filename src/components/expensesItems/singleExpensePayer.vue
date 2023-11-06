@@ -78,7 +78,7 @@ export default {
             })
         const paid = async () => {
             await deleteDoc(doc(db,"transactions",props.transacid))
-            context.emit(onPaid)
+            context.emit("onPaid")
         }
         return{
             message,
