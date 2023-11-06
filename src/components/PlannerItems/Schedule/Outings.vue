@@ -87,7 +87,9 @@
     </thead>
     <tbody class="allbody">
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }} <br> by: {{ outing.creatorname }}</td>
+      <td>{{ outing.title }} <br> by: 
+        <img :src="outing.imgstr" >
+        {{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
@@ -135,6 +137,7 @@ export default {
     now.setHours(0, 0, 0, 0);
     const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
     const endOfWeek = addDays(startOfToday.toDate(), 7);
+    const uphotoURL=ref('')
     // prev code
     // const today = new Date();
     
@@ -192,11 +195,14 @@ export default {
       qoutingSnap.forEach(async (adoc) => {
         const odata = adoc.data();
         let creatorname = null;
-        
+        let photoURL = null
+        console.log(odata.photoURL,"in snap");
         if (odata.creator) {
           const usnap = await getDoc(doc(db, "users", odata.creator));
           const udata = usnap.data();
           creatorname = udata.firstname;
+          photoURL= udata.photoURL
+          console.log(photoURL,"post assignment");
         } else {
           creatorname = "It's a Mystery";
         }
@@ -224,13 +230,14 @@ export default {
         })
 
 
-        
+        console.log(uphotoURL.value,"photo");
         outingArray.value.push({
           ...adoc.data(),
           date: formattedDate,
           creatorname: creatorname,
           id: adoc.id,
           involved:involved,
+          imgstr:photoURL
         });
       });
         

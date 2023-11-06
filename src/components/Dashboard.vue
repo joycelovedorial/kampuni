@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc, Timestamp} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc, Timestamp, collectionGroup} from 'firebase/firestore';
 
 
 export default {
@@ -53,111 +53,118 @@ export default {
       .then((docSnap)=>{
         comid.value = docSnap.data().community
       })
-    const q = query(collection(db,"expenses"))
     
-
-
-
-
-
-
-
-    onMounted(async()=>{
-      //clearing expenses
-      const expensesnap = await getDocs(q)
-      expensesnap.forEach(async(doc)=>{
-          const transacq = query(collection(db,"transactions"),where("expense","==",doc.id))
-          const querySnap = await getDocs(transacq)
-          const fullypaid = ref(true)
-          querySnap.forEach(async(snapDoc)=>{
-            const data = snapDoc.data()
-            if(data.paid==false){
-              fullypaid.value=false
-            }else if(querySnap.size==0){
-              await deleteDoc(doc.ref)
-            }
-          })
-          if (fullypaid.value==true){
-            await deleteDoc(doc.ref)
-          }
-        
-      })
-
-      //point allocation - task deletion
-      const now = new Date()
-      now.setHours(0,0,0,0)
-      const timestamp = Timestamp.fromDate(now);
-
-      const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",timestamp))
-      const tasksnap = await getDocs(taskquery)
+    const now = new Date()
+  
+    
+    const timestamp = Timestamp.fromDate(now);
+    // console.log(timestamp);
+    const cref =collection(db,"tasks")
+    const taskquery = query(cref,where('taskstatus','==',true),where("dateline","<=",timestamp))
+    const tsub = onSnapshot(taskquery,(tasksnap)=>{
       tasksnap.forEach(async(tdoc)=>{
-        await deleteDoc(tdoc.ref)
+        await deleteDoc(doc(db,"tasks",tdoc.id))
       })
-
-      const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<",timestamp))
-      const overduesnap = await getDocs(overdue)
-      overduesnap.forEach(async (odoc) => {
-        const data = odoc.data();
-        const deadline = data.dateline.toDate(); // Convert dateline to a Date object
-        const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
-        const daysPassed = Math.floor((now - deadline) / millisecondsPerDay); // Calculate days passed
-
-        // Calculate new points
-        const newpoints = Math.max(0, data.points - (daysPassed * 5)); // Use Math.max to ensure it doesn't go below zero
-
-        await updateDoc(odoc.ref, {
-          overdue: true,
-          points: newpoints
-        });
-      });
-      
-
-
-
-
     })
     
+    const q = query(collection(db,"expenses"))
+    getDocs(q)
+    .then((expensesnap)=>{
+      expensesnap.forEach(async(edoc)=>{
+        const transacq = query(collection(db,"transactions"),where("expense","==",edoc.id))
+        const querySnap = await getDocs(transacq)
+        
+        const fullypaid = ref(true)
+        querySnap.forEach(async(snapDoc)=>{
+          const data = snapDoc.data()
+          if(data.paid==false){
+            fullypaid.value=false
+          }else if(querySnap.size==0){
+            await deleteDoc(doc(db,"expenses",edoc.id))
+          console.log("expense deleted");
+
+          }
+        })
+        if (fullypaid.value==true){
+          await deleteDoc(doc(db,"expenses",edoc.id))
+          console.log("expense deleted");
+          
+        }
+      
+    })
+    })
     
-    return { comid };
-  },
+
+
+    
+//overudue
+    const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<=",timestamp))
+    const odsub = onSnapshot(overdue,(oversnap)=>{
+
+      oversnap.forEach(async(odoc)=>{
+        // console.log("in tasksnap overdue");
+
+        const odata = odoc.data()
+        // console.log(odata.taskname);
+        const deadline = odata.dateline.toDate()
+        // console.log(deadline,'deadline');
+        const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+        const daysPassed = Math.floor((now - deadline) / millisecondsPerDay); // Calculate days passed
+        // console.log(daysPassed,'daypassed');
+        const newpoints = Math.max(0, odata.points - (daysPassed * 5)); // Use Math.max to ensure it doesn't go below zero
+        
+        await updateDoc(odoc.ref, {
+        overdue: true,
+        points: newpoints
+      });
+      console.log("taskoverdue updated");
+
+      })
+    })
+
+  
+  
+  
+  return { comid };
+},
 };
 </script>
 
 <style>
 :root {
-  --primary: #2ec4b6;
-  --secondary: #d2cfcf;
+--primary: #2ec4b6;
+--secondary: #d2cfcf;
 }
 
 .test::-webkit-scrollbar {
-  width: 12px;
-  border-radius:16px;
-  /* margin-left: 5px; */
-  /* height:5px; */
+width: 12px;
+border-radius:16px;
+/* margin-left: 5px; */
+/* height:5px; */
 }
 
 .test::-webkit-scrollbar-track {
-  background: transparent;
-  width:10px;
-  height:5px;
-  margin-top:5px;
-  margin-right:10px;
-  margin-bottom:5px;
+background: transparent;
+width:10px;
+height:5px;
+margin-top:5px;
+margin-right:10px;
+margin-bottom:5px;
 }
 
 .test::-webkit-scrollbar-thumb:hover {
-  background-color:rgb(47, 47, 47)
+background-color:rgb(47, 47, 47)
 }
 
 .test::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border-radius: 10px;
-  width:5px;
-  height:5px;
+background-color: var(--secondary);
+border-radius: 10px;
+width:5px;
+height:5px;
 }
 
 .containerbg{
-  /* background-color: #d9b99b; */
-  background-color:white
+/* background-color: #d9b99b; */
+background-color:white
 }
 </style>

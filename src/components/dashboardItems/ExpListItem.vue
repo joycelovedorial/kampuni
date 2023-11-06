@@ -52,7 +52,6 @@ setup(props) {
     const imgurl=ref('')
     const outing=ref('')
     const category=ref('')
-    console.log(props.transacid,"tobject");
     amount.value = props.transacid.amount
 
     
@@ -83,7 +82,6 @@ setup(props) {
                   const data=snap.data()
                   name.value=data.firstname
                   imgurl.value=data.photoURL
-                  console.log(name.value);
               })
 
         youowetext.value="You owe " + name.value
@@ -93,14 +91,12 @@ setup(props) {
                       const data=snap.data()
                       name.value=data.firstname
                       imgurl.value=data.photoURL  
-                      console.log(name.value);
                   })
 
         youowetext.value = name.value + "Owes you"
       }
     }
 
-    console.log("hi");
     const textAnimationClass = computed(() => {
       return isAnimationActive.value ? 'text-animation' : '';
     });

@@ -66,8 +66,11 @@
 
       <div v-if="displayTask" class="container " id="tasklist">
         <div class="row">
-        <div class="col-12">
+        <div class="col-3">
           <TaskMarket @eCreate="handleCreateTask"/>
+        </div>
+        <div class="col-9">
+          <Tasklist/>
         </div>
         </div>
         <div class="row">
@@ -84,6 +87,7 @@
 </template>
 
 <script>
+import Tasklist from '@/components/PlannerItems/Tasklist/Tasklist.vue';
 import Navbar from '@/components/Navbar.vue';
 import createTask from '@/components/PlannerItems/Tasklist/createTask.vue';
 import Calendar from '@/components/PlannerItems/Schedule/Calendar.vue';
@@ -97,6 +101,7 @@ import { ref } from 'vue';
 export default {
   components: {
     Navbar,
+    Tasklist,
     Outings,
     Calendar,
     TaskMarket,
