@@ -42,12 +42,14 @@
             try {
                 const chatRoom = selectedChat.value; // Capture selectedchat in a local variable
                 console.log("handleEvent",chatRoom);
-
+                const user = auth.currentUser
+                const uid = user.uid
                 const docRef = await addDoc(collection(db, "chatrooms", chatRoom, "messages"), {
                     name: displayName.value,
                     message: message.value,
                     createdAt: serverTimestamp(),
                     photoURL:photourl.value,
+                    userid:uid,
                     });
                 console.log("doc added ",docRef.id)
                 message.value = '';

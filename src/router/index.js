@@ -13,7 +13,7 @@ import joyce from '@/assets/profiles/joyce.jpg'
 import snekha from '@/assets/profiles/snekha.jpg'
 import sandra from '@/assets/profiles/sandra.jpg'
 
-
+import ProfilePage from '../views/ProfilePage.vue'
 // import { projectAuth } from '../firebase/config'
 
 
@@ -40,6 +40,12 @@ const routes = [
     path: '/',
     name: 'Welcome',
     component: Welcome
+  },
+  {
+    path:'/Profiles/:id',
+    name:'Profiles',
+    component: ProfilePage,
+    props:true
   },
   {
     path:'/homepage',

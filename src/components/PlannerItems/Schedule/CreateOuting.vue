@@ -1,7 +1,11 @@
 <template>
   <div class="create-outing container-fluid">
-    <span><button @click="emitCo">X</button></span>
     <form class="form-control font-bold leading-loose text-center text-cyanp font-fredoka text-x" @submit.prevent="createOuting">
+        <button @click="emitCo" class="float-left">
+            <svg class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+        </button>
         Create Outing
         <div class="row">
             <div>
@@ -64,7 +68,8 @@ export default {
                     location: location.value,
                     description: desc.value,
                     title: title.value,
-                    photoURL:photourl.value
+                    photoURL:photourl.value,
+                    creator:uid,
                 });
 
             if (outRef) {
@@ -111,6 +116,7 @@ export default {
             location.value=""
             desc.value = ""
             title.value=""
+            context.emit("emitCo")
         }
             
         const emitCo = () =>{

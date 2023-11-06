@@ -1,11 +1,11 @@
 <template>
 <html>    
   <body class="flex">
-    <img src="@/assets/kampuni_logo.png" id="logo">
+    <img src="@/assets/logo.png" id="logo">
     <div class="outermost-container mb-32 ml-24 mr-24" :class="{ 'right-panel-active': isRightPanelActive }" id="container">
       <div class="form-container register-container ">
         <form @submit.prevent="handleRegister" class="overflow-y-auto register-form rounded-r-3xl ">
-          <h1 class="text-orangep text-3xl font-medium">Register here</h1>
+          <h1 class="text-black text-3xl font-medium">Register here</h1>
           <div >
             <input class="form-control mb-1" type="text" required placeholder="First Name" v-model ="firstName">
             <input class="form-control mb-1" type="text" required placeholder="Last Name" v-model ="lastName">
@@ -29,7 +29,7 @@
       </div>
         <div v-if="registered" class="form-container login-container">
           <form @submit.prevent="handleLogin" class="form-lg rounded-l-3xl">
-            <h1 class="text-orangep text-3xl font-medium">Login here</h1>
+            <h1 class="text-black text-4xl font-medium">Login here</h1>
             <input class="form-control mb-1" type="email" required placeholder="email" v-model="loginEmail">
             <input class="form-control" type="password" required placeholder='password' v-model="loginPassword">
             
@@ -191,11 +191,8 @@ export default {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         
-
         // Set the user's email after initializing user
-       
 
-       
         const uid = user.uid;
         const docRef = doc(db, 'users', uid);
 
@@ -206,8 +203,8 @@ export default {
         } else {
             // Check if result.additionalUserInfo exists and has a profile property
             setDoc(doc(db, "users", uid), {
-                firstname: null,
-                lastname: null,
+                firstname: "temp",
+                lastname: "temp",
                 email: user.email,
                 birthday: null,
                 country: null,
@@ -216,9 +213,7 @@ export default {
                 points: 0,
                 photoURL:pfp.value,
             });
-            await cred.user.updateProfile({
-              photoURL:pfp.value,
-            })
+            
 
             router.push({ name: 'joinCommunity' });
         }
@@ -269,7 +264,7 @@ export default {
 
 <style scoped>
 .register-form{
-  border-radius:0px, 55px, 55px, 0px
+  border-radius:0px, 0px, 0px, 0px
 }
 .register-form::-webkit-scrollbar {
   display:none
@@ -277,8 +272,10 @@ export default {
 
 #logo {
   margin-bottom: 5px auto;
-  margin-top:60px;
+  margin-top:120px;
   /* padding-top:20px; */
+  height:auto;
+  width:auto;
   padding-bottom:10px;
   
 
@@ -311,7 +308,7 @@ export default {
 }
 
 body {
-  background: url(@/assets/background_img/keith.gif)
+  background: url(@/assets/background_img/socute.jpeg)
     top center / cover no-repeat;
   /* display: flex; */
   justify-content: center;
@@ -334,7 +331,8 @@ h1.title {
   font-size: 45px;
   line-height: 45px;
   margin: 0;
-  text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
+  text-shadow: 0 0 10px rgba(237, 247, 249, 0.5);
+  
 }
 
 p {
@@ -343,7 +341,7 @@ p {
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
-  text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
+  text-shadow: 0 0 10px rgba(241, 253, 255, 0.5);
 }
 
 span {
@@ -392,8 +390,8 @@ a:hover {
 button {
   position: relative;
   border-radius: 20px;
-  border: 1px solid #86b8b1;
-  background-color: #86b8b1;
+  border: 1px solid rgb(91, 103, 125);
+  background-color: rgb(91, 103, 125);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -419,8 +417,8 @@ button:focus {
 
 button.ghost {
   background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid #fff;
-  color: #fff;
+  border: 2px solid #000000;
+  color: #000000;
 }
 
 #login i {
@@ -577,7 +575,7 @@ input {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
-  border:5px rgb(255, 255, 255) solid;
+  /* border:5px rgb(0, 0, 0) solid; */
   border-radius:0px 25px 25px 0px;
   animation: show 0.6s;
 }
@@ -614,11 +612,11 @@ input {
 .overlay {
   /* background-image: url("@/assets/background_img/newnew.jpg");
    */
-  background-image: url("@/assets/background_img/blurred.jpg");
+  background-image: url("@/assets/background_img/socuteblur.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
-  color: #fff;
+  color: #000000;
   position: relative;
   left: -100%;
   height: 100%;

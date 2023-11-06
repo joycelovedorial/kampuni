@@ -1,7 +1,7 @@
 <template>
 
 <div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="task in tasksFormatted" :key="task.id"> 
-  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus}">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus,'bg-r':task.overdue}">
     <div :class="['col', { 'checked_style': task.taskstatus }]">
       <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
         <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
@@ -14,13 +14,31 @@
       </div>
     </div>
   </div>
+
+  <!-- outings -->
+<div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="outing in outingsFormatted" :key="outing.id">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2'>
+    <h5>{{outing.title}}</h5>
+    <p>Location:{{ outing.location }}</p>
+    <p>Time:{{ outing.date }}</p>
+  </div>
+</div>
+
+<!-- events -->
+<div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="event in eventsArray" :key="event.id">
+  <div class ='row relative rounded p-3 w-105 border-black border-solid border-2'>
+    <h5>{{event.title}}</h5>
+    <p>Location:{{ event.location }}</p>
+    <p>Time:{{ event.date }}</p>
+  </div>
+</div>
   
   </template>
   
   <script>
   import { ref, onMounted,computed } from 'vue';
   import { auth, db } from "@/firebase/config";
-  import { collection, query, where, getDoc,getDocs, onSnapshot, setDoc, doc, updateDoc} from "firebase/firestore";
+  import { collection, query, where, getDoc,getDocs, onSnapshot, setDoc, doc, updateDoc, Timestamp} from "firebase/firestore";
   import { formatDistanceToNow } from 'date-fns';
   
   
@@ -31,10 +49,12 @@
     setup(props) {
       const user = auth.currentUser;
       const comid = props.community
+
       const uid = user.uid;
       const tasks = ref([]);
       const isChecked = ref(false);
       const outingsArray = ref([])
+      const eventsArray = ref([])
   
       // Create a date object for today's date at midnight (00:00:00)
       const today = new Date();
@@ -61,10 +81,22 @@
               return []
             }
         })
+      const eventQuery = query(collection(db,"events"),where("userid","==",uid),where("date", ">=", today), where("date", "<=", endOfDay))
+      const esub = onSnapshot(eventQuery,(esnap)=>{
+        esnap.forEach((edoc)=>{
+          const eventData = edoc.data()
+          const dateObj = eventData.date.toDate()
+          const timeOptions = { hour: '2-digit', minute: '2-digit' }; // Add time options
+          const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions); // Format time
 
+
+          eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
+        })
+      })
+      console.log(eventsArray.value);
       //outings querying
       const outingsQuery = query(collection(db, "outings"),where("community","==",comid),where("date", ">=", today), where("date", "<=", endOfDay));
-      const usub = onSnapshot(q,(snap)=>{
+      const usub = onSnapshot(outingsQuery,(snap)=>{
         snap.forEach((doc)=>{
           outingsArray.value.push({...doc.data(),id:doc.id})
         })
@@ -83,7 +115,15 @@
             .then((userSnap) => {
               if (!userSnap.empty) {
                 // If the user is involved in the outing, add it to userOutings
-                userOutings.push(outing);
+
+                const outingData = outing.data();
+                if (outingData.date) {
+                  const dateObj = outingData.date.toDate();
+                  const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                  const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions);
+                  outingData.date = formattedTime;
+                }
+                userOutings.push({ ...outingData });
               }
             })
             .catch((error) => {
@@ -93,6 +133,7 @@
 
         return userOutings;
       });
+      console.log(outingsFormatted);
             
       const taskDone = async(taskid) =>{
         const user = auth.currentUser;
@@ -105,6 +146,7 @@
     
         await updateDoc(doc(db,"tasks",taskid),{
           taskstatus:!status,
+          dateline:Timestamp.now()
         })
         
         const userData = userSnap.data()
@@ -130,7 +172,7 @@
         console.log(isChecked.value)
       };
 
-      return { tasks, isChecked, is_checked, tasksFormatted,taskDone };
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,outingsFormatted,eventsArray };
     }
     
   };

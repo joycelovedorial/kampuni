@@ -1,91 +1,127 @@
 <template>
   <Navbar/>
   <body id="expenses-page" class="bg-g bg-full">
-    <div class="body-div w-10/12 mx-auto">
-      <button @click="compiled=!compiled">
-        Compile
-      </button>
-      <compiledExpense/>
-      <div v-if="compiled">
-        
-      </div>
-
-
-      <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2">
-        <div class="create-task-bar w-8/12 mx-auto">
-          <button v-if="!displayCreate" @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
+    <!-- <div class=""> -->
+      <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
+        <div class="create-expenses-bar w-8/12 mx-auto">
+          <button v-if="!displayCreate" @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-fredoka font-bold drop-shadow-xl text-black">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             Create Expense
           </button>
-          <button v-else @click="displayCreate=!displayCreate" class="w-full bg-r border-black border-2 rounded-full py-3 font-extrabold drop-shadow-xl text-white">
+          <button v-else @click="displayCreate=!displayCreate" class="w-full bg-r border-black border-2 rounded-full py-3 font-fredoka font-bold drop-shadow-xl text-white">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
             </svg>
             Discard Expense
           </button>
         </div>
-        <div class="create-task-bar" v-if="displayCreate">
-          <createExpenses/>
+        <div class="create-expense-bar" v-if="displayCreate">
+          <createExpenses @closeExpense="displayCreate=!displayCreate"/>
         </div>
-        <div class="flex mx-auto justify-content-around space-x-3" v-else>
-          <div v-if="!payeecount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
-            <div class="mx-auto text-center my-auto">
-              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-              </svg>
-              <h1>
-                cleared!
-              </h1>
-              <p>
-                you do not owe anyone anything~
-              </p>
-            </div>
-          </div>
-          <div v-else>
-            <div class="w-full rounded-lg p-3 h-84 test overflow-y-hidden">
+        <div class="flex mx-auto justify-content-around space-x-3 w-10/12" v-else>
+          <div v-if="!payeecount" class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+            <div class="text-center my-auto block w-full space-y-4">
               <div>
-                <p class="text-xl font-fredoka font-extrabold text-center pb-2">
-                  to pay
-                </p>
-              </div>
-              <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                <div v-for="peep in youOwePeople" :key="peep.id">
-                  <singleExpensePayer :transacid="peep.id" />
-                </div>
-              </div>
-            </div>
-          </div>
-            <div v-if="!receivercount" class="mx-auto w-full rounded-lg p-3 h-84 flex">
-              <div class="mx-auto text-center my-auto">
-                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bg-g text-white w-12 h-12">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-black w-12 h-12 mx-auto">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                 </svg>
-                <h1>
+                <h1 class="text-xs text-black font-fredoka">
+                  cleared!
+                </h1>
+              </div>
+              <div class="bg-y text-black rounded-lg px-2">
+                <p>
+                  congrats! you have payed off your debts 😊
+                </p>
+              </div>
+            </div>
+            <!-- <div class="block text-center m-auto bg-y w-12/12 h-100">
+              <div class="content">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+                <h1 class="text-g font-fredoka">
                   cleared!
                 </h1>
                 <p>
                   you wont be receiving extra money anywhere~
                 </p>
               </div>
-            </div>
-            <div v-else>
-              <div class="w-full rounded-lg p-3 h-84 test overflow-y-hidden">
-                <div>
-                  <p class="text-xl font-fredoka font-extrabold text-center pb-2">
-                    to receive
-                  </p>
-                </div>
-                <div class="w-full rounded-lg h-72 test overflow-y-scroll overflow-x-auto">
-                  <div v-for="peepo in peopleOweYou" :key="peepo.id">
-                    <singleExpenseReceiver id="whooweyou" :transacid="peepo.id" />
-                  </div>
+            </div> -->
+          </div>
+          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+            <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
+              <div>
+                <p class="text-xl font-fredoka font-extrabold text-center pb-2">
+                  to pay
+                </p>
+              </div>
+              <div class="w-full rounded-lg h-64 scrollbar overflow-y-scroll overflow-x-auto">
+                <div v-for="peep in youOwePeople" :key="peep.id">
+                  <singleExpensePayer :transacid="peep.id" />
                 </div>
               </div>
             </div>
           </div>
+          <div v-if="!receivercount" class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+            <div class="text-center my-auto block w-full space-y-4">
+              <div>
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-black w-12 h-12 mx-auto">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+                <h1 class="text-xs text-black font-fredoka">
+                  cleared!
+                </h1>
+              </div>
+              <div class="bg-y text-black rounded-lg px-2">
+                <p>
+                  you wont be receiving extra money anywhere today~
+                </p>
+              </div>
+            </div>
+            <!-- <div class="block text-center m-auto bg-y w-12/12">
+              <div class="content h-80">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+                <h1 class="text-g font-fredoka">
+                  cleared!
+                </h1>
+                <p>
+                  you wont be receiving extra money anywhere~
+                </p>
+              </div>
+            </div> -->
+          </div>
+          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar shadow-inner flex">
+            <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
+              <div>
+                <p class="text-xl font-fredoka font-extrabold text-center pb-2">
+                  to receive
+                </p>
+              </div>
+              <div class="w-full rounded-lg h-64 scrollbar overflow-y-scroll overflow-x-auto">
+                <div v-for="peepo in peopleOweYou" :key="peepo.id">
+                  <singleExpenseReceiver :transacid="peepo.id" />
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <button @click="compiled=!compiled">
+        </button> -->
+        <!-- <div v-if="compiled">
+          
+        </div> -->
+      <!-- </div> -->
       </div>
+    <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
+      <div class="font-fredoka text-center text-lg font-bold">
+        Overview
+      </div>
+      <compiledExpense/>
     </div>
   </body>
 </template>
@@ -200,7 +236,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height: 100vh;
+    height: max-content;
     margin: 0;
     overflow: scroll;
     overflow: hidden;
@@ -216,6 +252,34 @@ export default {
 
     /*  bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm */
   /* } */
+
+  .scrollbar::-webkit-scrollbar {
+  width: 8px;
+  border-radius:16px;
+  /* margin-left: 5px; */
+  /* height:5px; */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  width:10px;
+  height:5px;
+  /* margin-top:5px;
+  margin-right:10px;
+  margin-bottom:5px; */
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color:rgb(47, 47, 47)
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #F4EDCA;
+  border-radius: 10px;
+  width:5px;
+  height:5px;
+}
+
 
   .text-animation {
     animation: marquee 14s linear infinite;

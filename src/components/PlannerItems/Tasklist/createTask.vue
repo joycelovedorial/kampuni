@@ -117,7 +117,7 @@ export default {
                 });
 
                 if (docRef) {
-                console.log("Task created");
+                console.log("Task created",docRef.id);
                 }
                 } else {
                     console.error("Invalid date format in Allocate By");

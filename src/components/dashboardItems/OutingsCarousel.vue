@@ -1,8 +1,8 @@
 <template>
   <div class="overflow-x-scroll overflow-y-hidden outer_container border-black rounded-xl bg-opacity-30 bg-white border-2">
   
-    <div class="flex flex-nowrap content-center "  >
-      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3"  v-for="out in outingArray" :key="out.id">
+    <div class="flex flex-nowrap content-center snap-proximity snap-x"  >
+      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-3 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
         <singlecarousel :outid="out.id"/>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default {
           const docSnap = await getDoc(docRef);
           const userData = docSnap.data();
           comid.value = userData.community;
-          console.log('in fetch', comid.value);
+          // console.log('in fetch', comid.value);
 
           // Now that you have comid, you can perform the query here
           const q = query(
@@ -58,10 +58,10 @@ export default {
               results.push({ ...doc.data(), id: doc.id });
             });
             outingArray.value = results;
-            console.log(outingArray.value);
+            // console.log(outingArray.value);
           });
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          // console.error('Error fetching user data:', error);
         }
       } else {
         router.push({ name: 'Welcome' });
