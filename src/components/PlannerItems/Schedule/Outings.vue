@@ -24,7 +24,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
           </svg>
           <div class="block w-10/12">
-            {{ outing.formattedDate.split(', ')[1] }}
+            {{ outing.date }}
           </div>
         </div>
         <div class="flex">
@@ -32,7 +32,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
           </svg>
           <div class="block w-10/12">
-            Time: {{ outing.formattedTime.split(', ')[1] }}
+            Time: {{ outing.time }}
           </div>
         </div>
         <div class="flex">
@@ -122,7 +122,6 @@ export default {
     //   const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
     //   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
     // });
-
     const fetchData = async () => {
       console.log("fetching");
       const user = auth.currentUser;
@@ -167,6 +166,7 @@ export default {
         const odata = adoc.data();
         let creatorname = null;
         let photoURL = null
+
         console.log(odata.photoURL,"in snap");
         if (odata.creator) {
           const usnap = await getDoc(doc(db, "users", odata.creator));
@@ -179,14 +179,19 @@ export default {
         }
 
         const dateObj = adoc.data().date.toDate();
-        const options = {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-        };
-        const formattedDate = dateObj.toLocaleString(undefined, options);
+        const dateFormatOptions = {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          };
+        const formattedDate = dateObj.toLocaleString(undefined, dateFormatOptions);
+
+          // Format the time
+        const timeFormatOptions = {
+            hour: '2-digit',
+            minute: '2-digit',
+          };
+        const formattedTime = dateObj.toLocaleString(undefined, timeFormatOptions);
 
         let involved = []
         
@@ -201,16 +206,15 @@ export default {
         })
 
 
-        console.log(uphotoURL.value,"photo");
+        
         outingArray.value.push({
           ...adoc.data(),
           date: formattedDate,
-          formatteDate: date.toLocaleString(undefined, options),
-          formattedTime: date.toLocaleString(undefined, timeOptions), 
+          time: formattedTime, // Separate time
           creatorname: creatorname,
           id: adoc.id,
-          involved:involved,
-          imgstr:photoURL
+          involved: involved,
+          imgstr: photoURL,
         });
       });
         
