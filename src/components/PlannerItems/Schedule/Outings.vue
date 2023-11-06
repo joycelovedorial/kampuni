@@ -2,7 +2,7 @@
       <!-- Display the properties of the outing here -->
 
   <table>
-  <thead>
+  <thead class="allhead">
     <tr>
       <th>Name</th>
       <th>Date</th>
@@ -11,9 +11,9 @@
       <th>Going!</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="allbody">
     <tr  v-for="outing in outingArray" :key="outing.id">
-      <td>{{ outing.title }}{{ outing.creatorname }}</td>
+      <td>{{ outing.title }} <br> by: {{ outing.creatorname }}</td>
       <td>{{ outing.date }}</td>
       <td>{{ outing.description }}</td>
       <td>{{ outing.location }}</td>
@@ -189,5 +189,13 @@ export default {
 </script>
 
 <style>
+
+.allhead{
+  background-color: #95fff3;
+}
+
+.allbody{
+  background-color: #fff;
+}
 
 </style>

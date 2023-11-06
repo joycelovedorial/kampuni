@@ -75,7 +75,7 @@
 
   </div>
 
-  </div>
+    </div>
 
 
       
@@ -108,6 +108,8 @@ import {
   collectionGroup,
 } 
 from "firebase/firestore";
+import { startOfDay,addDays } from "date-fns"; // Import the startOfDay function
+
 export default {
   setup() {
     const taskArray = ref([]);
@@ -116,6 +118,10 @@ export default {
     const comid = ref("");
     const userid = ref("");
     const toLoopOutings = ref([])
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
+    const endOfWeek = addDays(startOfToday.toDate(), 7);
     // prev code
     // const today = new Date();
     
@@ -211,7 +217,9 @@ export default {
       // For outings 
       const qouting = query(
         collection(db, "outings"),
-        where("community", "==", comid.value)
+        where("community", "==", comid.value),
+        where('date', '>=', startOfToday),
+        where('date', '<=', endOfWeek),
       );
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(adoc)=>{
