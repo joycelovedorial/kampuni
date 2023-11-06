@@ -81,19 +81,6 @@
                 </p>
               </div>
             </div>
-            <!-- <div class="block text-center m-auto bg-y w-12/12">
-              <div class="content h-80">
-                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
-                <h1 class="text-g font-fredoka">
-                  cleared!
-                </h1>
-                <p>
-                  you wont be receiving extra money anywhere~
-                </p>
-              </div>
-            </div> -->
           </div>
           <div v-else class="w-full rounded-lg p-3 h-84 scrollbar shadow-inner flex">
             <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
@@ -110,12 +97,6 @@
             </div>
           </div>
         </div>
-        <!-- <button @click="compiled=!compiled">
-        </button> -->
-        <!-- <div v-if="compiled">
-          
-        </div> -->
-      <!-- </div> -->
       </div>
     <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
       <div class="font-fredoka text-center text-lg font-bold">
@@ -133,18 +114,13 @@ import Navbar from '@/components/Navbar.vue';
 import compiledExpense from '@/components/expensesItems/compiledExpense.vue';
 import createExpenses from '@/components/expensesItems/createExpense.vue';
 import { ref, computed ,onUnmounted} from 'vue';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc,getDocs,doc} from 'firebase/firestore';
 import {auth,db} from '@/firebase/config'
-import { get } from 'jquery';
 
 
 export default {
   components: { Navbar, createExpenses,singleExpensePayer,singleExpenseReceiver,compiledExpense},
   setup() {
-    const showInput = ref(false);
-    const textInput = ref('');
-    const buttonText = ref('pay');
-    const isAnimationActive = ref(false);
     const compiled=ref(false);
     const payeecount = ref(0);
     const receivercount = ref(0);
@@ -153,90 +129,39 @@ export default {
     const peopleOweYou = ref([])
     const youOwePeople = ref([])
 
-    //fetching of stuff
-    const user = auth.currentUser
-    const uid = user.uid
-    const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
-    const unsubOweYou = onSnapshot(oweyouquery,(oweYouSnap)=>{
-      const result = []
-      const count = 0
-      oweYouSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
-        const data = doc.data()
-      
-        receivercount.value += 1
-      })
-      peopleOweYou.value=result
-      console.log(peopleOweYou.value,"poy");
-    })
-
-
-    const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
-    const unsubyouOwe = onSnapshot(youOwequery,(youOweSnap)=>{
-      const result = []
-      youOweSnap.forEach((doc)=>{
-        result.push({...doc.data(),id:doc.id})
-        const data = doc.data()
-        
-        payeecount.value += 1
-       
-      })
-      youOwePeople.value=result
-      console.log(youOwePeople.value,"yop");
-
-
-    })
-
-    //anyu functions
-    const textAnimationClass = computed(() => {
-      return isAnimationActive.value ? 'text-animation' : '';
-    });
-
-    const toggleText = () => {
-      if (buttonText.value === 'you better pay me! or I will steal your money!!!') {
-        buttonText.value = 'pay';
-        isAnimationActive.value = false; // Remove animation class
-      } else {
-        buttonText.value = 'you better pay me! or I will steal your money!!!';
-        isAnimationActive.value = true; // Add animation class
-      }
-    };
-
-    const createBump = () => {
-      showInput.value = true;
-    };
-
-    const sendMessage = () => {
-      showInput.value = false;
-    };
-
-    setInterval(toggleText, 3000);
-
-    const unsubscribeOweYou = () => {
-      oweYouSnapshot();
-    };
-
-    const unsubscribeYouOwe = () => {
-      youOweSnapshot();
-    };
 
     const fetchData = async () => {
-      // Fetch the data using getDocs if needed, or remove this function if you only need real-time updates
+         //fetching of stuff
+      const user = auth.currentUser
+      const uid = user.uid
+    
+      payeecount.value=0
+      receivercount.value = 0
+      const oyqresult = []
+      const yoqresult = []
+      const oweyouquery = query(collection(db,"transactions"),where("receiver","==",uid),where("paid","==",false))
+      const youOwequery = query(collection(db,"transactions"),where("payer","==",uid),where("paid","==",false))
+      const oyq = await getDocs(oweyouquery)
+      oyq.forEach((adoc)=>{
+          oyqresult.push({...adoc.data(),id:adoc.id})
+          receivercount.value += 1
+        })
+      peopleOweYou.value=oyqresult
+      console.log(peopleOweYou.value,"poy");
+
+      const yoq = await getDocs(youOwequery)
+      yoq.forEach((adoc)=>{
+        yoqresult.push({...adoc.data(),id:adoc.id})
+        payeecount.value += 1
+      })
+      youOwePeople.value=yoqresult
+      console.log(youOwePeople.value,"yop");
     };
 
-    onUnmounted(() => {
-      unsubscribeOweYou();
-      unsubscribeYouOwe();
-    });
+    fetchData()
 
     return {
-      showInput,
-      textInput,
-      buttonText,
-      isAnimationActive,
-      textAnimationClass,
-      createBump,
-      sendMessage,
+
       compiled,
       displayCreate,
       youOwePeople,

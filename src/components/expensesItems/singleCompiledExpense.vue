@@ -11,7 +11,7 @@
                 <div v-if="owe" class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
                     <div class="flex justify-between">
                         <p>You owe {{ homiename }} ${{ Number(displayamount).toFixed(2) }}</p>
-                        <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md">
+                        <button class="bg-g text-black rounded-full border-black border-2 my-auto px-3 drop-shadow-md" @click="onPay">
                             pay
                         </button>
                     </div>
@@ -20,7 +20,6 @@
                             <img class="logo inline ml-3 h-6 w-6 rounded-full" :src="money" alt="">
                         </span>
                     </span>
-                    <!-- <p>You owe {{ homiename }} {{ displayamount }}</p> -->
                 </div>
                 <div v-else class="same-three block p-2 rounded-lg bg-bpop border-2 border-black">
                     
@@ -32,7 +31,6 @@
                             </span>
                         </span>
                     </div>
-                    <!-- <p>{{ homiename }} owes you {{ displayamount }}</p> -->
                 </div>
             </div>
         </div>
@@ -41,7 +39,7 @@
 
 <script>
 
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 import { doc, getDoc, query,collection,getDocs,deleteDoc,where } from 'firebase/firestore'
 import { auth, storage, db } from '@/firebase/config'
 import {  ref as fref, getDownloadURL } from "firebase/storage";
@@ -52,10 +50,10 @@ export default {
         amount: Number,
     },
     setup(props,context){
-        
+        console.log(props.amount,"if change");
         const homieid = ref(props.homieid)
         const amount = ref(props.amount)
-        const  homiename = ref("")
+        const homiename = ref("")
         const owe = ref(true)
         const displayamount = ref('')
         const neutral = ref(false)
@@ -105,6 +103,23 @@ export default {
             })
             context.emit("onPaid")
         }
+        watch([() => props.amount, () => props.homieid], ([newAmount, newHomieid], [oldAmount, oldHomieid]) => {
+      // Update your component's state based on prop changes
+            neutral.value = false
+            owe.value=true
+            if (newAmount > 0) {
+                owe.value = true;
+                displayamount.value = newAmount;
+            } else if (newAmount < 0) {
+                owe.value = false;
+                displayamount.value = -1 * newAmount;
+            } else {
+                neutral.value = true;
+            }
+
+      // Fetch data based on the new 'homieid'
+            fetchData();
+        });
 
         return {
             homiename,displayamount,owe,neutral,onPay, imgstr, money, coin
