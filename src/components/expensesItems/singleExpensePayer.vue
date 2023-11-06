@@ -32,7 +32,7 @@ export default {
     props:{
         transacid: String,
     },
-    setup(props){
+    setup(props,context){
         console.log("payer",props.transacid);
         const message=ref('')
         const tname =ref('')
@@ -78,6 +78,7 @@ export default {
             })
         const paid = async () => {
             await deleteDoc(doc(db,"transactions",props.transacid))
+            context.emit("onPaid")
         }
         return{
             message,

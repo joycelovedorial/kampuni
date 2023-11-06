@@ -1,14 +1,14 @@
 
 <template>
-  <Navbar />
-    <body id="bg-container">
+  <body id="bg-container">
+    <Navbar />
       <!-- <div class='overflow-y-auto'> -->
         <h1 class="text-black font-fredoka index1 p-4 relative text-4xl font-lg sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl" id="welcome" >
           <span style="position: relative;">Welcome back, {{ name }}</span>
         </h1>
       <Dashboard :community="comid" class="index2"/>
       <!-- </div> -->
-    </body>
+  </body>
 
 </template>
 
@@ -80,30 +80,22 @@ export default {
 }
 
 #bg-container {
-  position: relative;
+  /* position: relative; */
   /* background-image: url("@/assets/background_img/background3.png"); */
   background-color:#FFC96B; 
   /* FFC96B F2D694*/
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: auto;
-  overflow-y: auto; 
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+  /* background-attachment: fixed; */
+  height: fit-content;
   margin: 0;
-  overflow: scroll;
-  overflow: hidden; /* Ensure the overlay doesn't extend beyond the container */
+  /* overflow: scroll; */
+  /* overflow: hidden; */
 }
 
-@media (max-width: 1400px) {
+@media (min-width: 635px) {
   #bg-container {
-    height: 165vh;
-  }
-}
-
-
-@media (max-width: 425px) {
-  #bg-container {
-    height: 175vh;
+    height: 180vh;
   }
 }
 @keyframes rainbow {
@@ -120,11 +112,11 @@ export default {
   color: transparent;
   animation: rainbow 5s linear infinite;
 }
-@media (min-width: 998px) {
+/* @media (min-width: 998px) {
   #bg-container {
-    height: 165vh;
+    height: 185vh;
   }
-}
+} */
 
 @media (min-width: 1440px) {
   #bg-container {
@@ -132,11 +124,11 @@ export default {
   }
 }
 
-/* @media (max-width: 2550px) {
+@media (min-width: 2550px) {
   #bg-container {
     height: 120vh;
   }
-} */
+}
 
 
 
