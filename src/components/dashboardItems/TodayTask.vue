@@ -2,7 +2,7 @@
 
 <div class="container py-3 mx-auto w-11/12 rounded-xl hovering1" v-for="task in tasksFormatted" :key="task.id"> 
   <div class ='row relative rounded p-3 w-105 border-black border-solid border-2' :class="{'bg-gray-500' : task.taskstatus , 'bg-b' :!task.taskstatus,'bg-r':task.overdue}">
-    <div :class="['col', { 'checked_style': task.taskstatus }]">
+     <div>
       <input :id="task.id" type="checkbox" @click="taskDone(task.id)" :checked="task.taskstatus" class='larger'>
         <label :for="task.id" :style="{'text-decoration-line' : task.taskstatus ? 'line-through' : 'none'}" class='pl-2 rounded text-xl'>
           <h5>{{task.taskname}}</h5>

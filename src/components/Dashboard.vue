@@ -37,7 +37,7 @@ import OutingsCarousel from "./dashboardItems/OutingsCarousel.vue";
 import ExpensesList from "./dashboardItems/ExpensesList.vue";
 import { db, auth } from "@/firebase/config";
 import { onMounted, ref } from "vue";
-import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc} from 'firebase/firestore';
+import { collection, onSnapshot, query, where,getDoc, doc, getDocs, deleteDoc, updateDoc, Timestamp} from 'firebase/firestore';
 
 
 export default {
@@ -86,13 +86,15 @@ export default {
       //point allocation - task deletion
       const now = new Date()
       now.setHours(0,0,0,0)
-      const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",now))
+      const timestamp = Timestamp.fromDate(now);
+
+      const taskquery = query(collection(db,'tasks'),where('taskstatus','==',true),where('dateline',"<",timestamp))
       const tasksnap = await getDocs(taskquery)
       tasksnap.forEach(async(tdoc)=>{
         await deleteDoc(tdoc.ref)
       })
 
-      const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<",now))
+      const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<",timestamp))
       const overduesnap = await getDocs(overdue)
       overduesnap.forEach(async (odoc) => {
         const data = odoc.data();
