@@ -1,11 +1,15 @@
 <template>
     <div class="artboard artboard-horizontal phone-2 centered-component">
       <div>
-        Title: {{ taskname }}
-        Description: {{ description }}
-        Deadline: {{ deadline }}
-      </div>
+          Title: {{ taskname }}
+          Description: {{ description }}
+          Deadline: {{ deadline }}
+        </div>
     </div>
+
+  
+
+
   </template>
   
   <script>

@@ -51,7 +51,7 @@
                 </div>
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
                 <div class="centered-component-outing" v-if="expandedOutingId === outing.id" @click="expandedOutingId = null">
-                  <calendarouting :oobj="outing" @close="closeOuting"/>>
+                  <calendarouting :oobj="outing" @close="closeOuting"/>
                 </div>
               </div>
             </div>
