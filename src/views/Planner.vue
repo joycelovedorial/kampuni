@@ -177,8 +177,7 @@ export default {
     #bg-container {
       height: 120vh;
     }
-  }
-    
+    }
     
     @media (max-width: 425px) {
       #bg-container {
