@@ -1,6 +1,6 @@
 <template>
       <!-- Display the properties of the outing here -->
-  <div class="flex flex-col space-y-2 bg-bnorm p-3 rounded-lg border-black border-2 overflow-y-scroll overflow-x-hidden overflow-scroll h-2/5 scrollbar">
+  <div class="flex flex-col space-y-2 bg-bnorm p-3 rounded-lg border-black border-2 overflow-y-scroll overflow-x-scroll overflow-scroll h-2/5 scrollbar">
     <div class="bg-bnorm border-2 rounded-lg radius-2 border-black p-2" v-for="outing in outingArray" :key="outing.id">
       <div class="flex w-full space-x-2 mb-2">
         <div class="block my-auto mx-auto">
@@ -19,8 +19,8 @@
         </div>
       </div>
       <div class="p-2 bg-bpop rounded-lg flex flex-col space-y-2">
-        <div class="block">
-          <div class="block">
+        <div>
+          <div>
             <span class="block w-10/12">
               <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 inline-block" >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <table>
+  <!-- <table>
   <thead class="allhead">
     <tr>
       <th>Name</th>
@@ -93,7 +93,7 @@
       </td>
     </tr>
   </tbody>
-  </table>
+  </table> -->
 
 </template>
 
