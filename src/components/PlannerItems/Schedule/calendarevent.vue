@@ -1,5 +1,5 @@
 <template>
-    <div class="centered-component bg-r">
+    <div class="centered-component rounded-lg p-5 rounded-2 border-2 border-black space-y-2 font-fredoka">
         <div class="container" v-if="toEdit">
         <div class= "row" >
             {{ title }}
@@ -109,11 +109,10 @@ export default {
 <style>
 .centered-component {
   position: fixed;
+  background-color: #FFFBE6;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color:red;
-  height:50%;
 }
 
 </style>
