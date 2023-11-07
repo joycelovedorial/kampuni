@@ -87,10 +87,8 @@ export default {
         const description = ref("")
         const countdown = ref("")
         const dateline = ref("")
-        //task: autoid
-        //uid:null
-        //points:20
-        //overdue:false
+   
+
         const createTask = async () => {
             const currentDateTime = new Date();
             const cd = new Date(countdown.value) - currentDateTime;

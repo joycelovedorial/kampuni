@@ -189,111 +189,94 @@ export default {
           timeOptions
         ); // Format time
 
-        eventsArray.value.push({
-          ...edoc.data(),
-          id: edoc.id,
-          date: formattedTime,
-        });
-      });
-    });
-    // console.log(eventsArray.value);
-    //outings querying
-    const outingsQuery = query(
-      collection(db, "outings"),
-      where("community", "==", comid),
-      where("date", ">=", today),
-      where("date", "<=", endOfDay)
-    );
-    
-    const usub = onSnapshot(outingsQuery, (snap) => {
-      snap.forEach((doc) => {
-        outingsArray.value.push({ ...doc.data(), id: doc.id });
-      });
-    });
-    const outingsFormatted = computed(() => {
-      const userOutings = [];
 
-      for (const outing of outingsArray.value) {
-        const userQuery = query(
-          collection(db, "outings", outing.id, "usersInvolved"),
-          where("user", "==", uid),
-          where("imIm", "==", true)
-        );
+          eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
+        })
+      })
+      // console.log(eventsArray.value);
+      //outings querying
+      const outingsQuery = query(
+        collection(db, "outings"),
+        where("community", "==", comid),
+        where("date", ">=", today),
+        where("date", "<=", endOfDay)
+      );
 
-        getDocs(userQuery)
-          .then((userSnap) => {
-            if (!userSnap.empty) {
-              // If the user is involved in the outing, add it to userOutings
+      const usub = onSnapshot(outingsQuery, (snap) => {
+      const outusers=[]
+      snap.forEach(async(doc) => {
+      const userQuery = query(collection(db, "outings", doc.id, "usersInvolved"),where("user",'==',uid),where("imIn","==",true))
+      const userSnap = await getDocs(userQuery);
+      if(userSnap.size>0){
+        const dateObj = doc.data().date.toDate();
+          const options = {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+          };
+        const formattedDate = dateObj.toLocaleString(undefined, options);
 
-              const outingData = outing.data();
-              if (outingData.date) {
-                const dateObj = outingData.date.toDate();
-                const timeOptions = { hour: "2-digit", minute: "2-digit" };
-                const formattedTime = dateObj.toLocaleTimeString(
-                  undefined,
-                  timeOptions
-                );
-                outingData.date = formattedTime;
-              }
-              userOutings.push({ ...outingData });
-            }
-          })
-          .catch((error) => {
-            // Handle any errors
+        outingsArray.value.push({
+          ...doc.data(),
+          fdate: formattedDate,
+          id: doc.id,
           });
-      }
-    
-      return userOutings;
-    });
-    // console.log(outingsFormatted);
-
-    const taskDone = async (taskid) => {
-      const user = auth.currentUser;
-      const uid = user.uid;
-      const userSnap = await getDoc(doc(db, "users", uid));
-
-      const docSnap = await getDoc(doc(db, "tasks", taskid));
-      const docData = docSnap.data();
-      const status = docData.taskstatus;
-
-      await updateDoc(doc(db, "tasks", taskid), {
-        taskstatus: !status,
-        dateline: Timestamp.now(),
+        }
       });
+    });
 
-      const userData = userSnap.data();
-      const val = userData.points;
+  console.log(outingsArray.value,'outings task');
 
-      if (!status) {
-        const total = val + docData.points;
-        await updateDoc(doc(db, "users", uid), {
-          points: total,
-        });
-      } else {
-        const total = val - docData.points;
-        await updateDoc(doc(db, "users", uid), {
-          points: total,
-        });
+      // console.log(outingsFormatted); 
+            
+      const taskDone = async(taskid) =>{
+        const user = auth.currentUser;
+        const uid = user.uid;
+        const userSnap = await getDoc(doc(db,"users",uid))
+        
+        const docSnap = await getDoc(doc(db,"tasks",taskid))
+        const docData = docSnap.data()
+        const status = docData.taskstatus
+    
+        await updateDoc(doc(db,"tasks",taskid),{
+          taskstatus:!status,
+          dateline:Timestamp.now()
+        })
+        
+        const userData = userSnap.data()
+        const val = userData.points
+        
+        if(!status){
+          const total = val + docData.points
+        await updateDoc(doc(db,"users",uid),{
+          points:total,
+        })
+        }else{
+          const total = val - docData.points
+        await updateDoc(doc(db,"users",uid),{
+          points:total,
+        })
+     
+        }
+        
       }
-    };
+  
+      const is_checked = () => {
+        isChecked.value = !isChecked.value;
+        // console.log(isChecked.value)
+      };
 
-    const is_checked = () => {
-      isChecked.value = !isChecked.value;
-      // console.log(isChecked.value)
-    };
-
-    return {
-      tasks,
-      isChecked,
-      is_checked,
-      tasksFormatted,
-      taskDone,
-      outingsFormatted,
-      eventsArray,
-    };
-  },
-};
-</script>
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,eventsArray };
+    }
+    
+  };
+  
+  
+  
+  
+  </script>
   
   <style>
 .hovering1 {

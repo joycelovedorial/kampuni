@@ -279,6 +279,7 @@ export default {
         where("community", "==", comid.value),
         where('date', '>=', startOfToday),
       );
+      
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(adoc)=>{
         const odata= adoc.data()

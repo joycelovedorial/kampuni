@@ -105,11 +105,10 @@ export default {
           if(newComid){
             const today = new Date();
             const todayTimestamp = Timestamp.fromDate(today);
-            console.log(todayTimestamp,"tst");
-            console.log(comid.value,"comid");
+        
             const q = query(collection(db,"tasks"),where("userid","==",null),where("countdown",">=",todayTimestamp),where("commid","==",comid.value))
             const unsub = onSnapshot(q,(snap)=>{
-            console.log(comid.value,"comid");
+        
 
                 const results= [];
                 snap.forEach((doc)=>{
