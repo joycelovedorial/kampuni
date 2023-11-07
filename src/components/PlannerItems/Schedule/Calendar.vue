@@ -32,8 +32,8 @@
             <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(task, i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
                 <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="h-20 flex m-1 space-x-1 cursor-pointer text-sm">
-                  <span class="border-r rounded-sm border-2 block h-20"></span>
-                  <span class="hover:bg-r/20 bg-r/80 text-center rounded-sm block h-20 w-24 px-1 overflow-ellipsis overflow-hidden" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <span class="border-r rounded-sm border-2 block h-6"></span>
+                  <span class="hover:bg-r/20 bg-r/80 rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ task.taskname }} <!-- Display task title or relevant task property -->
                   </span>
                 </div>
@@ -48,7 +48,7 @@
               <div v-for="(outing,i) in filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
                 <div @click="expandedOutingId = expandedOutingId === outing.id ? null : outing.id" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
                   <span class="border-b rounded-sm h-6 border-2 block"></span>
-                  <span class="hover:bg-b/20 bg-b/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <span class="hover:bg-b/20 bg-b/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ outing.title }} <!-- Display Outing title or relevant Outing property -->
                   </span>
                 </div>
@@ -65,7 +65,7 @@
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
                 <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm ">
                   <span class="border-g rounded-sm h-6 border-2 block"></span>
-                  <span class="hover:bg-g/20 bg-g/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <span class="hover:bg-g/20 bg-g/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ event.title }} <!-- Display Event title or relevant Event property -->
                 </span>
                 </div>
@@ -103,19 +103,19 @@
     <div class="flex justify-around bg-bnorm rounded-lg border-2 border-black ">
       <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm" >
         <span class="border-b rounded-sm h-6 border-2 block"></span>
-        <span class="bg-b/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+        <span class="bg-b/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
           outings <!-- Display task title or relevant task property -->
         </span>
       </div>
       <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
         <span class="border-r rounded-sm h-6 border-2 block"></span>
-        <span class="bg-r/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+        <span class="bg-r/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
           tasks <!-- Display task title or relevant task property -->
         </span>
       </div>
       <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
         <span class="border-g rounded-sm h-6 border-2 block"></span>
-        <span class="bg-g/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+        <span class="bg-g/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
           schedule <!-- Display task title or relevant task property -->
         </span>
       </div>

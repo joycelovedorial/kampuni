@@ -2,19 +2,18 @@
   <Navbar/>
   <div id="chatrooms">
     <div class="row" id="chat-container">
-      <div class="chat-list-left col-3">
-        <input type="text" placeholder="Search for Chats" class="search font-jakarta overflow-hidden mx-2 px-2 rounded-lg flex space-x-1"
+      <div class="chat-list-left col-3 justify-center">
+        <input type="text" placeholder="Search for Chats" class="search font-jakarta overflow-hidden  border-black rounded-lg border-2 flex space-x-1 mx-auto bg-bnorm px-2 font-fredoka font-bold focus:border-p"
        v-model="searchtag">
-        <ul class="chatlist-container overflow-x-hidden">
+        <div class="chatlist-container overflow-x-hidden">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
-          class="singlelist">
-            <div class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1" style="margin-left: 10px;">
-              <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  {{ chatroom.name }} <!-- Display Event title or relevant Event property -->
-                </span>
+          class="singlelist bg-bnorm hover:bg-bpop hover:border-bpop hover:shadow-inner"
+          :class="{'bg-bpop': chatroom.id === selectedchat}">
+            <div class="font-fredoka overflow-hidden overflow-ellipsis col-12 mx-auto px-2 rounded-lg flex space-x-1" style="margin-left: 10px;">
+              {{ chatroom.name }} <!-- Display Event title or relevant Event property -->
             </div>
           </li>
-        </ul>
+        </div>
       </div>
 
       <div class="chatroom-right col-9">
@@ -142,17 +141,11 @@ export default {
 }
 .singlelist{
   border: 2px solid ;
-  padding: 5px; 
+  padding: 10px;
   border-radius: 10px; 
   margin-bottom: 10px; 
   font-weight: bold;
-  background-color: #FFFDF0;
   display: flex;
-}
-.singlelist:hover{
-  border: 2px solid #FFFDF0;
-  background-color: rgba(#FFFDF0, 0.5);
-  
 }
 
 /* @media (max-width: 425px) {
@@ -171,7 +164,6 @@ export default {
 input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
-  background-color: #FFFDF0;
   color:black;
   size: 3;
   width: 100%

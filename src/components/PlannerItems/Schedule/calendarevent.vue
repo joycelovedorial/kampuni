@@ -2,7 +2,7 @@
     <div class="centered-component bg-r">
         <div class="container">
         <div class= "row">
-            Title:{{ title }}
+            {{ title }}
             </div>
             <div class= "row">
                 Description: {{ description }}
@@ -66,7 +66,7 @@ export default {
   /* top: 50%;
   left: 50%; */
   transform: translate(-50%, -50%);
-  background-color:red;
+
   height:10px;
   width:10px;
 }

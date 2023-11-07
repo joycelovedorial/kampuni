@@ -1,6 +1,7 @@
 <template>
     <form>
       <textarea
+      class="bg-p/50 rounded-lg focus:border-p"
       placeholder="Type a message and hit enter to send..."
       v-model="message"
       @keypress.enter.prevent="handleSubmit"
@@ -83,11 +84,9 @@
           max-width: 100%;
           padding: 10px;
           box-sizing: border-box;
-          border: #B492B8 solid;
-          border-radius: 20px;
+          border: #B492B8 solid 2px;
           font-family: inherit;
           outline: none;
-          background-color: #FFFDF0;
           color: black;
 
       }

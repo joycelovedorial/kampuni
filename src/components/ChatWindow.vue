@@ -58,16 +58,47 @@
           <div v-if="displayCreateExpense">
             <createExpense :outingid="outid"/>
           </div>
-          <table>
-              <tr>
-                <th>Item</th>
-                <th>Cost</th>
-              </tr>
-              <tr v-for="exp in expensesArray" :key="exp.id">
-                <td>{{ exp.desc }}</td>
-                <td>{{ exp.amount }}</td>
-              </tr>
-            </table>
+          <div v-if="expensesArray.length==0">No expenses yet!</div>
+          <div v-else class="">
+            <div class="grid grid-cols-4 mx-auto">
+              <div>
+                who paid
+              </div>
+              <div>
+                item name
+              </div>
+              <div>
+                cost
+              </div>
+              <div>
+                people involved
+              </div>
+            </div>
+            <div class="grid grid-cols-4 mx-auto">
+              <div>
+                {{  }}
+              </div>
+              <div>
+                {{ }}
+              </div>
+              <div>
+                {{  }}
+              </div>
+              <div>
+                {{  }}
+              </div>
+            </div>
+            <table>
+                <tr class="rounded-t-lg border-2 border-black">
+                  <th>Item</th>
+                  <th>Cost</th>
+                </tr>
+                <tr v-for="exp in expensesArray" :key="exp.id">
+                  <td>{{ exp.desc }}</td>
+                  <td>{{ exp.amount }}</td>
+                </tr>
+              </table>
+          </div>
         </div>
         </div>
     
@@ -354,32 +385,37 @@ export default {
     user-select: none;
   }
   .delete-button {
-    background-color: red;
+    background-color: #FF847C;
+    border: black 2px solid;
     padding: 5px 10px;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     margin-left: 10px;
   }
   .delete-button:hover {
-    background-color: rgb(237, 151, 151);
-  }
-  table {
+    background-color: #ed9797ce  }
+  /* table {
     width: 50%;
     padding: 20px 10px;
     border-spacing: 0;
     border-collapse: separate;
     border-radius: 10px;
     overflow: hidden;
+  } */
+  /* th {
+    border: 2px solid #B492B8;
+    text-align: center;
+    border-radius: 10px;
   }
-  th, td {
+  td {
     border: 2px solid #B492B8;
     text-align: center;
     border-radius: 10px;
   }
   th {
     background-color: #B492B8;
-  }
+  } */
   #rightside {
     align-items: center;
     justify-content: center;
