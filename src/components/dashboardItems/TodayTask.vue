@@ -48,7 +48,7 @@
   <!-- outings -->
   <div
     class="container py-3 mx-auto w-11/12 rounded-xl hovering1"
-    v-for="outing in outingsFormatted"
+    v-for="outing in outingsArray"
     :key="outing.id"
   >
     <div
@@ -188,8 +188,6 @@ export default {
           undefined,
           timeOptions
         ); // Format time
-
-
           eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
         })
       })
@@ -268,7 +266,7 @@ export default {
         // console.log(isChecked.value)
       };
 
-      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,eventsArray };
+      return { tasks, isChecked, is_checked, tasksFormatted,taskDone,eventsArray,outingsArray};
     }
     
   };
@@ -311,19 +309,4 @@ input.larger {
   color: white;
 }
 
-/* input.larger{
-    width: 20px;
-    height: 20px;
-    accent-color: #f0f9ff !important;
-  }
-  
-  .checked_style{
-    background-color:#fb5454;
-    color:white;
-  }
-  
-  .checked_style2{
-    background-color:#fb5454;
-    color:white;
-  } */
 </style>
