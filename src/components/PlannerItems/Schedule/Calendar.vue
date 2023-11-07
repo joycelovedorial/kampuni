@@ -1,30 +1,30 @@
 <template>
-  <div class="flex flex-col space-y-2 mx-auto">
+  <div class="flex flex-col space-y-2 mx-auto w-full h-4/5">
     <div class="header flex justify-center space-x-2">
       <button @click="previousMonth">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
-      <p class="bg-bnorm rounded-lg px-2 border-black border-2 align-middle inline-block font-fredoka font-bold">{{ months[month] }} {{ year }}</p>
+      <p class="w-36 bg-bnorm rounded-lg px-2 border-black border-2 align-middle inline-block font-fredoka font-bold text-center">{{ months[month] }} {{ year }}</p>
       <button @click="nextMonth">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>
     </div>
-    <div class="border-2 bg-bpop border-black rounded-lg w-10/12 mx-auto">
-      <div class="grid grid-cols-7">
+    <div class="border-2 bg-bpop border-black rounded-lg w-full mx-auto">
+      <div class="grid grid-cols-7 w-100">
         <div class="" v-for="(day, index) in daysOfWeek" :key="index">
           <p class="text-black font-bold font-fredoka text-center">
             {{ day }}
           </p>
         </div>
       </div>
-      <div class="bg-bnorm grid grid-cols-7 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)" :key="weekIndex">
+      <div class="bg-bnorm grid grid-cols-7 w-100 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)" :key="weekIndex">
         <div class="" v-for="dayIndex in 7" :key="dayIndex">
           <div v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
-            <p class="text-sm text-left pr-2 pt-2">
+            <p class="text-sm text-left pl-4 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
 
@@ -91,6 +91,32 @@
 
           </div>
         </div>
+      </div>
+    </div>
+    <div class="flex justify-around bg-bnorm rounded-lg border-2 border-black ">
+      <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm" >
+        <span class="border-b rounded-sm h-6 border-2 block"></span>
+        <span class="bg-b/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+          outings <!-- Display task title or relevant task property -->
+        </span>
+      </div>
+      <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
+        <span class="border-r rounded-sm h-6 border-2 block"></span>
+        <span class="bg-r/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+          tasks <!-- Display task title or relevant task property -->
+        </span>
+      </div>
+      <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
+        <span class="border-bpop rounded-sm h-6 border-2 block"></span>
+        <span class="bg-bpop/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+          schedule <!-- Display task title or relevant task property -->
+        </span>
+      </div>
+      <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
+        <span class="border-bpop rounded-sm h-6 border-2 block"></span>
+        <span class="bg-bpop/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
+          schedule <!-- Display task title or relevant task property -->
+        </span>
       </div>
     </div>
   </div>
