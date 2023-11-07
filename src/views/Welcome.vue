@@ -11,7 +11,7 @@
             <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="text" required placeholder="Last Name" v-model ="lastName">
             <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="email" required placeholder="email" v-model="email">
             <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="password" required placeholder='password' v-model="password">
-            <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="date" id="birthday" v-model="birthday">
+            <input class="mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="date" id="birthday" v-model="birthday">
             <input class="form-control mb-1 sm:mb-2 md:mb-3 lg:mb-4" type="text" placeholder="country" id="country" v-model="country">
             <textarea class="form-control" id="bio" cols="30" rows="5" placeholder="bio" v-model="bio"></textarea>
           <button type="submit" value="submit" class="flex-initial w-32" @click="handleRegister">Register

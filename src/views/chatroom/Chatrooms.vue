@@ -3,11 +3,16 @@
   <Navbar/>
     <div class="row" id="chat-container">
       <div class="chat-list-left col-3">
-        <input type="text" placeholder="Search for Chats" class="search" v-model="searchtag">
+        <input type="text" placeholder="Search for Chats" class="search font-jakarta overflow-hidden mx-2 px-2 rounded-lg flex space-x-1"
+       v-model="searchtag">
         <ul class="chatlist-container">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
           class="singlelist">
-            <div style="margin-left: 10px;">{{chatroom.name}}</div>
+            <div class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1" style="margin-left: 10px;">
+              <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ chatroom.name }} <!-- Display Event title or relevant Event property -->
+                </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -163,12 +168,26 @@ input[type="text"]{
   border-radius: 75px;
   margin-bottom: 20px;
   background-color: #FFFDF0;
-  color:#FFFDF0;
+  color:black;
   size: 3;
   width: 100%
 }
 #chatrooms {
   background-color: #B492B8;
   height: 100vh;
+}
+@media (max-width: 575px) {
+  .search {
+    max-width: 100%; /* Allow the input field to expand to full width */
+    width: 100%; /* Allow the input field to expand to full width */
+  }
+}
+
+/* For screens larger than 575px */
+@media (min-width: 576px) {
+  .search {
+    max-width: 200px; /* Set a maximum width for the input field */
+    width: 100%; /* Make the input field take the full width of the parent */
+  }
 }
 </style>
