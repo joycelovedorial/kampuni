@@ -13,12 +13,8 @@
       <input type="date" id="birthday" v-model="editbirthday" :placeholder="birthday">
       <label for="bio">Bio</label>
       <input type="text" id="bio" v-model="editbio" :placeholder="bio">
+      <button class="updateBtn" @click="updateEdit" style="margin-top: 10px;">Update</button>
     </div>
-      <div class="text" id="community">
-        Community: {{ community }}
-      </div>
-      <div class="text" id="country">{{ country}}</div>
-      <button class="updateBtn" @click="updateEdit">Update</button>
     </form>
     </div>  
   </template>
@@ -169,14 +165,6 @@ export default {
 </script>
 
 <style scoped>
-.profile {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-}
-.text{
-    padding: 40px;
-}
 .editForm{
     display: inline-flex;
     flex-direction: column;
@@ -187,7 +175,18 @@ label{
 }
 input{ 
     margin-left: 10px;
-    width: 500px;
+    width: 300px;
+    background-color: #FFFDF0;
+}
+.updateBtn{
+border: solid 2px;
+border-radius: 10px;
+cursor: pointer;
+background-color: #F4EDCA;
+/* padding: 5px 5px; */
+transition: background-color 0.3s ease;
+}
+.updateBtn:hover{
     background-color: #FFFDF0;
 }
 </style>

@@ -51,17 +51,24 @@
         </div>
       </div>
       
-      <div v-else>
-
+      <div v-else class="expenses">
+        <div class="exptable">
         <div id="rightside" v-if="outid" class="col-12">
-          <button @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
+          <button class="newexpenses" @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
           <div v-if="displayCreateExpense">
             <createExpense :outingid="outid"/>
           </div>
-          <div class="container" v-for="exp in expensesArray" :key="exp.id">
-            {{ exp.desc }}
-            {{ exp.amount }}
-          </div>
+          <table>
+              <tr>
+                <th>Item</th>
+                <th>Cost</th>
+              </tr>
+              <tr v-for="exp in expensesArray" :key="exp.id">
+                <td>{{ exp.desc }}</td>
+                <td>{{ exp.amount }}</td>
+              </tr>
+            </table>
+        </div>
         </div>
     
       </div>
@@ -384,5 +391,39 @@ export default {
   }
   .delete-button:hover {
     background-color: rgb(237, 151, 151);
+  }
+  table {
+    width: 50%;
+    padding: 20px 10px;
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  th, td {
+    border: 2px solid #B492B8;
+    text-align: center;
+    border-radius: 10px;
+  }
+  th {
+    background-color: #B492B8;
+  }
+  #rightside {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .newexpenses{
+    background-color: #B492B8;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .newexpenses:hover {
+    background-color: #fffbe4;
+    border: #B492B8 2px;
   }
 </style>
