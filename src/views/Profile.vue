@@ -12,7 +12,7 @@
                     <button class="mx-auto block button px-2 rounded-lg w-40" @click="toEdit=!toEdit">Edit</button>
                 </div>
             </div>
-            <div class="middle mx-auto flex-col md:w-48">
+            <div class="middle mx-auto flex-col">
                 <h1 class="font-fredoka font-bold">
                     About 
                 </h1>
