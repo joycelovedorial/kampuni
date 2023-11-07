@@ -8,30 +8,30 @@
     <table class="w-full text-sm text-left text-black rounded-xl border-black border-2 border-solid">
         <thead class="text-xs uppercase text-black rounded-xl border-black border-2 border-solid bg-white dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 truncate">
+                <th scope="col" class="px-6 py-3 truncate border-black border-solid border-2">
                   Title
                 </th>
-                <th scope="col" class="px-6 py-3 truncate">
+                <th scope="col" class="px-6 py-3 truncate border-black border-solid border-2">
                   To-Do
                 </th>
-                <th scope="col" class="px-6 py-3 truncate">
+                <th scope="col" class="px-6 py-3 truncate border-black border-solid border-2">
                     Deadline
                 </th>
-                <th scope="col" class="px-6 py-3 truncate">
+                <th scope="col" class="px-6 py-3 truncate border-black border-solid border-2">
                     Points
                 </th>
-                <th scope="col" class="px-6 py-3 truncate">
+                <th scope="col" class="px-6 py-3 truncate border-black border-solid border-2">
                     Done?
                 </th>
             </tr>
         </thead>
         <tbody>
 
-            <tr v-for="task in tasks" :key="task.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-        <td class="px-6 py-4">{{task.taskname}}</td>
-        <td class="px-6 py-4">{{task.description}}</td>
-        <td class="px-6 py-4">{{ task.date }}</td>
-        <td class="px-6 py-4">{{ task.points}}</td>
+            <tr v-for="task in tasks" :key="task.id" class="bg-white  ">
+        <td class="px-6 py-4 border-black border-solid border-2">{{task.taskname}}</td>
+        <td class="px-6 py-4 border-black border-solid border-2">{{task.description}}</td>
+        <td class="px-6 py-4 border-black border-solid border-2">{{ task.date }}</td>
+        <td class="px-6 py-4 border-black border-solid border-2">{{ task.points}}</td>
         <td>
           <div v-if="task.taskstatus" class="flex justify-center items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#99B898" aria-hidden="true" class="w-12 h-12">
