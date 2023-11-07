@@ -20,8 +20,8 @@
         <div class="create-expense-bar" v-if="displayCreate">
           <createExpenses @closeExpense="displayCreate=!displayCreate" @onPaid="fetchData"/>
         </div>
-        <div class="flex mx-auto justify-content-around space-x-3 w-10/12" v-else>
-          <div v-if="!payeecount" class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+        <div class=" tablet:flex tablet:space-x-0 tablet:space-y-3 tablet:m-0 flex-col mx-auto justify-content-around space-x-3 w-10/12" v-else>
+          <div v-if="!payeecount" class="tablet:my-3 w-full rounded-lg p-3 h-84 scrollbar1 bg-bpop shadow-inner flex">
             <div class="text-center my-auto block w-full space-y-4">
               <div>
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-black w-12 h-12 mx-auto">
@@ -38,7 +38,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar1 bg-bpop shadow-inner flex">
             <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
               <div>
                 <p class="text-xl font-fredoka font-extrabold text-center pb-2">
@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!receivercount" class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
+          <div v-if="!receivercount" class="w-full rounded-lg p-3 h-84 scrollbar2 bg-bnorm shadow-inner flex">
             <div class="text-center my-auto block w-full space-y-4">
               <div>
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-black w-12 h-12 mx-auto">
@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar shadow-inner flex">
+          <div v-else class="w-full rounded-lg p-3 h-84 scrollbar2 shadow-inner flex">
             <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
               <div>
                 <p class="text-xl font-fredoka font-extrabold text-center pb-2">
@@ -189,14 +189,14 @@ export default {
     /*  bg-bnorm rounded-md border-black border-2 flex space-x-2 justify-around text-sm */
   /* } */
 
-  .scrollbar::-webkit-scrollbar {
+  .scrollbar2::-webkit-scrollbar2 {
   width: 8px;
   border-radius:16px;
   /* margin-left: 5px; */
   /* height:5px; */
 }
 
-.scrollbar::-webkit-scrollbar-track {
+.scrollbar2::-webkit-scrollbar2-track {
   background: transparent;
   width:10px;
   height:5px;
@@ -205,12 +205,38 @@ export default {
   margin-bottom:5px; */
 }
 
-.scrollbar::-webkit-scrollbar-thumb:hover {
+.scrollbar2::-webkit-scrollbar2-thumb:hover {
   background-color:rgb(47, 47, 47)
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
+.scrollbar2::-webkit-scrollbar2-thumb {
   background-color: #F4EDCA;
+  border-radius: 10px;
+  width:5px;
+  height:5px;
+}
+  .scrollbar1::-webkit-scrollbar1 {
+  width: 8px;
+  border-radius:16px;
+  /* margin-left: 5px; */
+  /* height:5px; */
+}
+
+.scrollbar1::-webkit-scrollbar1-track {
+  background: transparent;
+  width:10px;
+  height:5px;
+  /* margin-top:5px;
+  margin-right:10px;
+  margin-bottom:5px; */
+}
+
+.scrollbar1::-webkit-scrollbar1-thumb:hover {
+  background-color:rgb(47, 47, 47)
+}
+
+.scrollbar1::-webkit-scrollbar1-thumb {
+  background-color: #FFFBE6;
   border-radius: 10px;
   width:5px;
   height:5px;
