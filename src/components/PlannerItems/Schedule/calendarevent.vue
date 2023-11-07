@@ -1,24 +1,49 @@
 <template>
-    <div class="centered-component rounded-lg p-5 rounded-2 border-2 border-black space-y-2 font-fredoka">
-        <div class="container" v-if="toEdit">
-        <div class= "row" >
-            {{ title }}
-            </div>
-            <div class= "row">
-                Description: {{ description }}
-            </div>
-            <div class= "row">
-                Location: {{  location }}
-            </div>
-            <div class= "row">
-                Date: {{ date }}
-            </div>
-            <div class= "row">
-            Time: {{ time }}
-        </div>
-        <button @click="toEdit=!toEdit">Edit</button>
-    </div>
-    <div class="container" v-else>
+        <div>
+       
+
+       <div class="centered-component rounded-lg p-5 rounded-2 border-2 border-black space-y-2 font-fredoka">
+           <button @click="emitC">X</button>
+           <div class="text-g">
+               <h1 class="text-2xl font-bold text-center font-fredoka">
+                   {{ title }}
+               </h1>
+               <p class="text-center">
+                   {{ description }}
+               </p>
+           </div>
+           <div class="bg-g rounded-lg shadow-inner p-3">
+               <p>
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+     <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+   </svg>
+   
+   
+                   {{  location }}
+               </p>
+               <p>
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+   </svg>
+   
+                   {{ date }}
+               </p>
+               <p>
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline">
+     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+   </svg>
+   
+                   {{ time }}
+               </p>
+           </div>
+          <div class="flex justify-center">
+           <button class="rounded-lg border-g border-2 text-g px-2" @click="emitC">
+               Close
+           </button>
+          </div>
+   
+       </div>
+    <!-- <div class="container" v-else>
         <div class= "row" >
             <input type="text" :placeholder="title" v-model="etitle">
             </div>
@@ -34,15 +59,15 @@
             <div class= "row">
             <input type="time" :placeholder="time" v-model="etime">
         </div>
-        <button @click="editEvent,toEdit=true">Confirm Edit Event</button>
+        <button @click="editEvent(); toEdit = true">Confirm Edit Event</button>
 
-    </div>
+    </div> -->
 
     </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import { db } from '@/firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 export default {
@@ -63,15 +88,26 @@ export default {
         const etime =ref('')
         const edate=ref('')
 
-        console.log("calendar event");
+        
         const updateDateAndTime = () => {
             if (props.oobj && props.oobj.date) {
-                const timestamp = props.oobj.date.seconds;
+                const timestamp = props.oobj.date.seconds * 1000
                 const dateObj = new Date(timestamp);
-                
-        
-                date.value = dateObj.toISOString().split('T')[0];
-                time.value = dateObj.toTimeString().split(' ')[0];
+             
+                const dateOptions = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                };
+
+                const timeOptions = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                };
+
+                date.value = dateObj.toLocaleString(undefined, dateOptions);
+                time.value = dateObj.toLocaleString(undefined, timeOptions);
             } else {
                 date.value = null;
                 time.value = null;
@@ -80,27 +116,36 @@ export default {
 
 
         updateDateAndTime();
+          
 
-        const editEvent = async()=>{
-            const combinedDateTime = new Date(`${edate.value}T${etime.value}`);
+        const combinedDateTime = computed(() => {
+            if (edate.value && etime.value) {
+                return new Date(`${edate.value}T${etime.value}`);
+            }
+            return null; // Return null if either date or time is missing
+            });
 
-                // Check if combinedDateTime is a valid Date
-                if (isNaN(combinedDateTime)) {
-                // Handle the case where the date and time input are invalid
+            const editEvent = async () => {
+            if (!combinedDateTime.value) {
                 console.error('Invalid date or time input');
                 return;
-                }
+            }
 
-            const uref = updateDoc(doc(db,"events",props.eobj.id),{
-                description:edesc.value,
-                title:etitle.value,
-                location:elocation.value,
-                date:combinedDateTime,
-            })
-        }
+            const uref = updateDoc(doc(db, "events", props.eobj.id), {
+                description: edesc.value,
+                title: etitle.value,
+                location: elocation.value,
+                date: combinedDateTime.value, // Update with the combined timestamp
+            });
+        context.emit("close")
+
+        };
+        const emitC=()=>{
+        context.emit("close")
+      }
 
        return{
-           title,location,description,date,time,toEdit,editEvent,etitle,elocation,edesc,edate,etime
+           title,location,description,date,time,toEdit,editEvent,etitle,elocation,edesc,edate,etime,emitC
        }
    }
 }

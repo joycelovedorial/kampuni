@@ -31,14 +31,14 @@
           <div id="calender-box" class="h-24 overflow-y-scroll">
             <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(task, i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
-                <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="h-20 flex m-1 space-x-1 cursor-pointer text-sm">
+                <div class="h-20 flex m-1 space-x-1 cursor-pointer text-sm" @click="showTask=!showTask">
                   <span class="border-r rounded-sm border-2 block h-6"></span>
                   <span class="hover:bg-r/20 bg-r/80 rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ task.taskname }} <!-- Display task title or relevant task property -->
                   </span>
                 </div>
-                <div class="centered-component-task" v-if="expandedTaskId === task.id" @click="expandedTaskId = null">
-                  <calendartask :tobj="task" @close="closeTask"/>
+                <div class="centered-component-task" v-if="showTask">
+                  <calendartask :tobj="task" @close="showTask=!showTask"/>
                 </div>
               </div>
             </div>
@@ -46,15 +46,15 @@
 
             <div v-if="filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(outing,i) in filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
-                <div @click="expandedOutingId = expandedOutingId === outing.id ? null : outing.id" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
+                <div @click="showOuting=!showOuting" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
                   <span class="border-b rounded-sm h-6 border-2 block"></span>
                   <span class="hover:bg-b/20 bg-b/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ outing.title }} <!-- Display Outing title or relevant Outing property -->
                   </span>
                 </div>
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
-                <div class="centered-component-outing" v-if="expandedOutingId === outing.id" @click="expandedOutingId = null">
-                  <calendarouting :oobj="outing" @close="closeOuting"/>
+                <div class="centered-component-outing" v-if="showOuting">
+                  <calendarouting :oobj="outing" @close="showOuting=!showOuting"/>
                 </div>
               </div>
             </div>
@@ -63,14 +63,14 @@
             <div v-if="filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(event,i) in filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i">
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
-                <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm ">
+                <div @click="showEvent=!showEvent" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm ">
                   <span class="border-g rounded-sm h-6 border-2 block"></span>
                   <span class="hover:bg-g/20 bg-g/80 text-left rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ event.title }} <!-- Display Event title or relevant Event property -->
                 </span>
                 </div>
-                <div class="centered-component-event " v-if="expandedEventId === event.id" @click="expandedEventId = null">
-                    <calendarevent :eobj="event" @close="closeEvent"/>
+                <div class="centered-component-event" v-if="showEvent">
+                <calendarevent :eobj="event" @close="showEvent=!showEvent"/>
                 </div>
               </div>
             </div>
@@ -168,6 +168,9 @@ export default {
     const expandedTaskId = ref(null);
     const expandedOutingId = ref(null);
     const expandedEventId = ref(null);
+    const clickedTask = ref(null);
+const clickedOuting = ref(null);
+const clickedEvent = ref(null); // Add this line
 
     // new code
     const filterTasksByDate = (year, month, day) => {
@@ -341,7 +344,17 @@ export default {
       showOuting.value = false;
     };
 
-   
+    const showTaskDetail = (task) => {
+  clickedTask.value = task;
+    };
+
+    const showOutingDetail = (outing) => {
+      clickedOuting.value = outing;
+    };
+
+    const showEventDetail = (event) => {
+      clickedEvent.value = event;
+};
     return { 
       taskArray,
       outingArray,

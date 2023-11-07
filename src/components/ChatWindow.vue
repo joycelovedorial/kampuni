@@ -60,34 +60,6 @@
           </div>
           <div v-if="expensesArray.length==0">No expenses yet!</div>
           <div v-else class="">
-            <div class="grid grid-cols-4 mx-auto">
-              <div>
-                who paid
-              </div>
-              <div>
-                item name
-              </div>
-              <div>
-                cost
-              </div>
-              <div>
-                people involved
-              </div>
-            </div>
-            <div class="grid grid-cols-4 mx-auto">
-              <div>
-                {{  }}
-              </div>
-              <div>
-                {{ }}
-              </div>
-              <div>
-                {{  }}
-              </div>
-              <div>
-                {{  }}
-              </div>
-            </div>
             <table>
                 <tr class="rounded-t-lg border-2 border-black">
                   <th>Item</th>
