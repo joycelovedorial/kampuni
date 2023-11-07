@@ -28,7 +28,7 @@ https://kampuni-85a88.web.app/
   user: keithfwa3@gmail.com, password: keith123
   
   #### Register: 
-  click the register button and fill in relevant details *password should be > 6 characters and have a mix of alphabets and numbers
+  If u want to register with different account details, click the register button and fill in relevant details *password should be > 6 characters and have a mix of alphabets and numbers
 
 ### 2. Join a community
 join "the main gang 👽" community, password: 123
@@ -44,3 +44,4 @@ view expenses on home page, create expenses in chatrooms, create and view expens
 
 ### 6. Profile page
 edit personal details
+
