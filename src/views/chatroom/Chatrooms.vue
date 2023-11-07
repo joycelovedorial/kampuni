@@ -1,6 +1,6 @@
 <template>
-  <div id="chatrooms">
   <Navbar/>
+  <div id="chatrooms">
     <div class="row" id="chat-container">
       <div class="chat-list-left col-3">
         <input type="text" placeholder="Search for Chats" class="search font-jakarta overflow-hidden mx-2 px-2 rounded-lg flex space-x-1"
@@ -179,6 +179,7 @@ input[type="text"]{
 }
 #chatrooms {
   background-color: #B492B8;
+  padding: 10px;
   height: content;
 }
 @media (max-width: 575px) {
