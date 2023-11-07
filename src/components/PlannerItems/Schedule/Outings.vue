@@ -1,6 +1,6 @@
 <template>
       <!-- Display the properties of the outing here -->
-  <div class="flex flex-col space-y-2 bg-bnorm p-3 rounded-lg border-black border-2 overflow-y-scroll overflow-x-scroll overflow-scroll h-2/5 scrollbar">
+  <div class="flex flex-col space-y-2 bg-bnorm p-3 rounded-lg border-black border-2 overflow-y-scroll overflow-x-hidden overflow-scroll h-2/5 scrollbar">
     <div class="bg-bnorm border-2 rounded-lg radius-2 border-black p-2" v-for="outing in outingArray" :key="outing.id">
       <div class="flex w-full space-x-2 mb-2">
         <div class="block my-auto mx-auto">
@@ -271,6 +271,7 @@ export default {
   background: transparent;
   width:10px;
   height:5px;
+  border-radius: 10px;
   /* margin-top:5px;
   margin-right:10px;
   margin-bottom:5px; */

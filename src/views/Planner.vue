@@ -18,45 +18,11 @@
     </button>
     </div>
 
-
+    
       <div v-if="displayCalendar">
-        <div class="row">
-          <div class="col-9">
-            <button class="block bg-bpop text-black font-bold rounded-full py-2 hover:drop-shadow-md hover:opacity-90 border-black border-solid border-3 mx-auto"
-            @click="displayCreateEvent= !displayCreateEvent">
-            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Add a personal event</button>
-            <Calendar/>
-          </div>
-          <div class="col-s-12 col-lg-3 flex flex-col space-y-2">
-            <div class="block">
-            </div>
-            <div class="flex flex-col space-y-1">
-              <div class="bg-bnorm border-black border-2 rounded-lg flex justify-between px-2">
-                <h1 class="font-fredoka font-black text-lg">upcoming outings</h1>
-                <button 
-                  @click="displayCreateOuting = !displayCreateOuting">
-                  <svg class="inline w-5 h-5 bg-bpop text-black font-bold rounded-full drop-shadow-lg hover:shadow-none hover:opacity-90 hover:bg-b border-black border-solid border-3" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="4"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <Outings/>
-            </div>
-          </div>
-          <div class="w-7/12 flex flex-col space-y-2">
+        
+        <div class="row space-y-2">
+          <div class="mobile:mx-auto mobile:w-10/12 laptop:w-7/12 flex flex-col space-y-2">
             <div class="flex flex-col space-y-1">
               <div class="bg-y border-black border-2 rounded-lg flex justify-between px-2">
                 <h1 class="font-fredoka font-black text-lg">your calendar</h1>
@@ -74,6 +40,40 @@
               <Calendar/>
             </div>
           </div>
+          <!-- <div class="col-9">
+            <button class="block bg-bpop text-black font-bold rounded-full py-2 hover:drop-shadow-md hover:opacity-90 border-black border-solid border-3 mx-auto"
+            @click="displayCreateEvent= !displayCreateEvent">
+            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            Add a personal event</button>
+            <Calendar/>
+          </div> -->
+          <div class="mobile:mx-auto mobile:w-10/12 laptop:mt-0 laptop:w-3/12 flex flex-col space-y-2">
+            <div class="flex flex-col space-y-1">
+              <div class="bg-y border-black border-2 rounded-lg flex justify-between px-2">
+                <h1 class="font-fredoka font-black text-lg">upcoming outings</h1>
+                <button 
+                  @click="displayCreateOuting = !displayCreateOuting">
+                  <svg class="inline w-5 h-5 bg-bpop text-black font-bold rounded-full drop-shadow-lg hover:shadow-none hover:opacity-90 hover:bg-b border-black border-solid border-3" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="4"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <Outings/>
+            </div>
+          </div>
+          
         </div>
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateOuting">
           <CreateOuting @emitCo="handleCreateOuting"/>

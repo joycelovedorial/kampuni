@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col space-y-2 mx-auto w-full h-4/5">
-    <div class="header flex justify-stretch space-x-2">
+    <div class="header flex justify-center space-x-2">
       <button @click="previousMonth">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 bg-bpop border-2 rounded-full border-black">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
