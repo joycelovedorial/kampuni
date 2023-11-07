@@ -248,7 +248,7 @@ export default {
   }
 
   .content-container {
-    height: 80-vh;
+    height: 80vh;
   }
 
   .category {
