@@ -22,7 +22,7 @@
          <!--<div class="col-xl-0 col-lg-1 col-md-1 col-sm-1"></div> -->
   
         <div class="col-xl-6 col-12 " >
-        <h1 class="mb-2 font-bold text-black text-lg font-fredoka">Expenses</h1>
+        <h1 class="mb-2 font-bold text-black text-lg font-fredoka">Expense</h1>
          <div class="containerbg rounded-lg border-black border-solid test border-2 overflow-y-scroll overflow-x-auto mb-3" style="height:50vh">
             <ExpensesList/>
           </div>
