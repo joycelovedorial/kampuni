@@ -50,13 +50,14 @@ export default {
         amount: Number,
     },
     emits: ['onPaid'],
+
     setup(props,context){
         console.log(props.amount,"if change");
         const homieid = ref(props.homieid)
         const amount = ref(props.amount)
         const homiename = ref("")
         const owe = ref(true)
-        const displayamount = ref('')
+        const displayamount = ref(0)
         const neutral = ref(false)
         const imgstr = ref("")
         const money = ref("")
@@ -76,7 +77,9 @@ export default {
             displayamount.value = props.amount
         }else if(amount.value<0){
             owe.value= false
+            console.log(displayamount.value,"before");
             displayamount.value = -1 * props.amount
+            console.log(displayamount.value,"after");
         }else{
             neutral.value = true
         }
@@ -121,23 +124,26 @@ export default {
             // Emit the event after all deletes have completed
         };
 
-           
+        
     
         watch([() => props.amount, () => props.homieid], ([newAmount, newHomieid], [oldAmount, oldHomieid]) => {
       // Update your component's state based on prop changes
             neutral.value = false
             owe.value=true
+            console.log(displayamount.value);
+            console.log(newAmount,newAmount);
             if (newAmount > 0) {
                 owe.value = true;
                 displayamount.value = newAmount;
             } else if (newAmount < 0) {
                 owe.value = false;
-                displayamount.value = -1 * newAmount;
+                displayamount.value = -newAmount;
             } else {
                 neutral.value = true;
             }
+            console.log(displayamount.value);
 
-      // Fetch data based on the new 'homieid'
+      
             fetchData();
         });
 

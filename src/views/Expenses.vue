@@ -37,19 +37,6 @@
                 </p>
               </div>
             </div>
-            <!-- <div class="block text-center m-auto bg-y w-12/12 h-100">
-              <div class="content">
-                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-g w-12 h-12 mx-auto">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
-                <h1 class="text-g font-fredoka">
-                  cleared!
-                </h1>
-                <p>
-                  you wont be receiving extra money anywhere~
-                </p>
-              </div>
-            </div> -->
           </div>
           <div v-else class="w-full rounded-lg p-3 h-84 scrollbar bg-bpop shadow-inner flex">
             <div class="w-full rounded-lg p-3 h-84 scrollbar overflow-y-hidden">
@@ -166,7 +153,6 @@ export default {
     }
 
     return {
-
       compiled,
       displayCreate,
       youOwePeople,

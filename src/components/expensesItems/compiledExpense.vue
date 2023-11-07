@@ -21,10 +21,10 @@ export default {
 
     const query1 = query(collection(db, 'transactions'), where('payer', '==', uid), where("paid", "==", false));
     const unsub1 = onSnapshot(query1, (snapshot) => {
+      
       snapshot.docChanges().forEach((change) => {
-        if (change.type === "added" || change.type === "modified") {
+        if (change.type === "added") {
           const data = change.doc.data();
-        //   console.log(data);
           const index = compiled.value.findIndex(item => item.id === data.receiver);
           if (index !== -1) {
             compiled.value[index].compiledamount += data.amount;
@@ -32,10 +32,6 @@ export default {
             compiled.value.push({ id: data.receiver, compiledamount: data.amount });
           }
         } else if (change.type === "removed") {
-          // Handle document removal here
-        //   console.log("removed doc", change.doc.data());
-          // You need to remove the corresponding entry from compiled
-          // Find and remove the entry with the same ID
           const idToRemove = change.doc.data().receiver;
           const indexToRemove = compiled.value.findIndex(item => item.id === idToRemove);
           if (indexToRemove !== -1) {
@@ -48,7 +44,7 @@ export default {
     const query2 = query(collection(db, 'transactions'), where('receiver', '==', uid), where("paid", "==", false));
     const unsub2 = onSnapshot(query2, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        if (change.type === "added" || change.type === "modified") {
+        if (change.type === "added" ) {
           const data = change.doc.data();
         //   console.log(data);
           const index = compiled.value.findIndex(item => item.id === data.payer);
@@ -58,10 +54,6 @@ export default {
             compiled.value.push({ id: data.payer, compiledamount: -data.amount });
           }
         } else if (change.type === "removed") {
-          // Handle document removal here
-        //   console.log("removed doc", change.doc.data());
-          // You need to remove the corresponding entry from compiled
-          // Find and remove the entry with the same ID
           const idToRemove = change.doc.data().payer;
           const indexToRemove = compiled.value.findIndex(item => item.id === idToRemove);
           if (indexToRemove !== -1) {
