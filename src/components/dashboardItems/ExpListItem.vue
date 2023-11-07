@@ -8,14 +8,11 @@
             <p class="text-xs font-black">{{ name }}</p>
           </div>
           <div class="w-75 details p-2">
-            <p class="font-bold">${{ amount }}</p>
+            <p class="font-bold">${{ Number(amount).toFixed(2) }}</p>
             <div class="flex space-x-2">
               <span class="category">{{outing}}</span>
-              <span class="title">{{category}}</span>
             </div>
-            <button class="inline-block w-100 bg-bnorm rounded-md p-1 text-xs font-bold border-black border-2 whitespace-nowrap overflow-hidden">
-              <span :class="textAnimationClass">{{ buttonText }}</span>
-            </button>
+            
           </div>
         </div>
       </div>
