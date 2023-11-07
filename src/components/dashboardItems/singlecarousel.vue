@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-lg bg-bpop border-2 border-black p-2 w-100"
+    class="rounded-lg bg-b border-2 border-black p-2 w-100"
     :class="{
       // 'border-g': involved,
       // 'border-r': !involved,
@@ -9,72 +9,48 @@
     id="custom-container"
   >
     <!--v-for{{outing}}-->
-        <div class="col-12" id="detail-container">
-          <div
-          class="w-auto justify-content-center align-middle border-2 truncate"
-            :class="{
-              'border-black bg-g': involved,
-              'border-black bg-r': !involved,
-              'border-orange': null,
-            }"
-            id="name_container"
-            style="
-              height: fit-content;
-              width: fit-content;
-              display: flex;
-              flex-direction: column;
-              align-items: stretch;
-            "
-          >
-            <div class='flex justify-between w-full'>
-                <div class="block p-2">
-                    <h1 class="font-bold font-sm font-fredoka truncate">{{ title }} </h1>
-                    <p class="text-ellipsis">{{ desc }}</p>
-                </div>
-                <div class="block m-2">
-                    <img
-                        v-if="photourl == ''"
-                        class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
-                    />
-                    <img
-                        v-else
-                        :src="photourl"
-                        alt=""
-                        class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
-                    />
-                </div>
-            </div>
-
-            
-            <!--{{name}}-->
-
-            <!--{{message}}-->
-            <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
+    <div class="col-12" id="detail-container">
+      <div
+        class="w-auto justify-content-center align-middle border-2 bg-bnorm border-black truncate"
+        id="name_container"
+        style="
+          height: fit-content;
+          width: fit-content;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        "
+      >
+        <div class="flex justify-between w-full">
+          <div class="block p-2">
+            <h1 class="font-bold font-sm font-fredoka truncate">{{ title }}</h1>
+            <p class="text-ellipsis">{{ desc }}</p>
           </div>
-          <!-- <img v-if="outing.creatorname != 'it\'s a mystery'" :src="outing.imgstr" class="h-12 w-12 bg-white rounded-full border-2 border-black">
-            <img v-else  class="h-12 w-12 bg-white rounded-full border-2 border-black"> -->
+          <div class="block m-2">
+            <img
+              v-if="photourl == ''"
+              class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
+            />
+            <img
+              v-else
+              :src="photourl"
+              alt=""
+              class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
+            />
           </div>
-      <div class="space-y-2 m-2">
-        <div class="flex justify-start">
-            <svg
-            class="inline w-5 h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-              >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
-              />
-            </svg>
-          <p>{{ date }}</p>
         </div>
-        <div class="flex justify-start">
-          <svg
+
+        <!--{{name}}-->
+
+        <!--{{message}}-->
+        <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
+      </div>
+      <!-- <img v-if="outing.creatorname != 'it\'s a mystery'" :src="outing.imgstr" class="h-12 w-12 bg-white rounded-full border-2 border-black">
+            <img v-else  class="h-12 w-12 bg-white rounded-full border-2 border-black"> -->
+    </div>
+    <div class="space-y-2 m-2">
+      <div class="flex justify-start">
+        <svg
           class="inline w-5 h-5"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -82,42 +58,90 @@
           stroke-width="1.5"
           stroke="currentColor"
           aria-hidden="true"
-            >
-            <path
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+          />
+        </svg>
+        <p>{{ date }}</p>
+      </div>
+      <div class="flex justify-start">
+        <svg
+          class="inline w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
-          <p>{{ time }}</p>
-        </div>
-        <div class="flex justify-start">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-          </svg>
+          />
+        </svg>
+        <p>{{ time }}</p>
+      </div>
+      <div class="flex justify-start">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="inline w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+          />
+        </svg>
 
-              <p>
-                {{ location }}
-              </p>
-            </div>
-            <div class="flex justify-start">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-              </svg>
-              <p v-for="(name, i) in joined" :key="i">{{ name + " " }}</p>
-            </div>
-          </div>
-          <div class="row grid-col-2">
-            <div class="col-6">
-              <button
-              class="w-100 bg-bnorm option_box rounded-lg text-green-700"
-              
-              :class="{
-                clicked_style_green: involved,
-              }"
-            @click="has_clicked_green"
-            >
+        <p>
+          {{ location }}
+        </p>
+      </div>
+      <div class="flex justify-start">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+          />
+        </svg>
+        <p v-for="(name, i) in joined" :key="i">
+          {{ name }}
+          <svg fill="fill" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-2 h-2 inline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div class="row grid-col-2">
+      <div class="col-6">
+        <button
+          class="w-100 bg-bnorm option_box rounded-lg text-green-700"
+          :class="{
+            clicked_style_green: involved,
+          }"
+          @click="has_clicked_green"
+        >
           <svg
             class="w-5 h-5 inline"
             xmlns="http://www.w3.org/2000/svg"
@@ -126,49 +150,48 @@
             stroke-width="2"
             stroke="currentColor"
             aria-hidden="true"
-            >
+          >
             <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m4.5 12.75 6 6 9-13.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m4.5 12.75 6 6 9-13.5"
             />
           </svg>
           I'm in
         </button>
       </div>
-        
-        <!-- <div class="col-xl-0 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
-        
-        <div class="col-6">
-          <button
-            class="w-100 bg-bnorm option_box text-red-700 rounded-lg"
-            
-            :class="{
-              'clicked_style_red shadow-inner': !involved,
-            }"
-            @click="has_clicked_red"
-            >
-            <svg
-              class="w-5 h-5 inline"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              aria-hidden="true"
-              >
-              <path
+
+      <!-- <div class="col-xl-0 col-lg-0 col-sm-0 col-md-0 pl-0 pr-0"></div> -->
+
+      <div class="col-6">
+        <button
+          class="w-100 bg-bnorm option_box text-red-700 rounded-lg"
+          :class="{
+            'clicked_style_red shadow-inner': !involved,
+          }"
+          @click="has_clicked_red"
+        >
+          <svg
+            class="w-5 h-5 inline"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
               stroke-linecap="round"
               stroke-linejoin="round"
               d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-            I'm out
-          </button>
-        </div>
+            />
+          </svg>
+          I'm out
+        </button>
       </div>
     </div>
-  </template>
+  </div>
+</template>
 
 <script>
 import "@/assets/main.css";
