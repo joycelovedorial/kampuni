@@ -54,6 +54,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'), // Enable form styles
-    require('@tailwindcss/typography'), // Typography plugin
+    require('@tailwindcss/typography'),
+    require("daisyui"), // Typography plugin
   ],
 };

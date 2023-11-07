@@ -41,7 +41,6 @@ export default {
         collection(db, "users"),
         where("community", "==", comid.value),
         orderBy("points", "desc"),
-        limit(3)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -77,14 +76,21 @@ export default {
       new Chart(ctx, {
         type: "bar",
         data: {
-          labels: [labels.value[1],labels.value[0],labels.value[2]],
+          labels: labels.value,
           datasets: [
             {
               label: "Points",
-              data: [pointData.value[1],pointData.value[0],pointData.value[2]],
+              data: pointData.value,
               borderWidth: 3,
               borderColor:"black",
-              backgroundColor:["#FF847C","#F2D694","#B492B8"],
+              backgroundColor: pointData.value.map((_, index) => {
+          if (index >= pointData.value.length - 2) {
+            // Set a different background color for the last two data points
+            return "#FF847C"; // Your desired color
+          } else {
+            return "#99B898"; // Default color for other points
+          }
+        }),
               borderRadius: 25,
               
             },

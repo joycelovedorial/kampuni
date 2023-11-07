@@ -27,32 +27,68 @@
             <p class="text-sm text-left pl-4 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
-            <!-- <div class="h-10 bg-r" v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0">
-              <div v-for="(task,i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
-                <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
-                <span class="bg-bpop/20 rounded-sm block">
-                  {{ task.title }} 
-                </span>
+
+            <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+              <div v-for="(task, i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="rounded-xl border-black border-solid border-2 bg-r">
+                <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
+                  <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ task.taskname }} <!-- Display task title or relevant task property -->
+                  </span>
+                </div>
+                <div class="centered-component-task" v-if="expandedTaskId === task.id" @click="expandedTaskId = null">
+                  <calendartask :tobj="task" @close="closeTask"/>
+                </div>
               </div>
+            </div>
+        
+
+            <div v-if="filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+              <div v-for="(outing,i) in filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="rounded-xl border-black border-solid border-2 bg-b">
+                <div @click="expandedOutingId = expandedOutingId === outing.id ? null : outing.id" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
+                  <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ outing.title }} <!-- Display Outing title or relevant Outing property -->
+                  </span>
+                </div>
+                <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
+                <div class="centered-component-outing" v-if="expandedOutingId === outing.id" @click="expandedOutingId = null">
+                  <calendarouting :oobj="outing" @close="closeOuting"/>
+                </div>
+              </div>
+            </div>
+
+           
+            <div v-if="filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+              <div v-for="(event,i) in filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" @click="showEvent=!showEvent" class="rounded-xl border-black border-solid border-2 bg-g">
+                <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
+                <div class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1 ">
+                  <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ event.title }} <!-- Display Event title or relevant Event property -->
+                </span>
+                </div>
+                <div class="centered-component-event" v-if="showEvent" @click="closeEvent" >
+                  <calendarevent :eobj="event"/>>
+                </div>
+              </div>
+            </div>
+                  <!-- <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
+              <span class="border-r rounded-sm h-4 border-2 block"></span>
+              <span class="bg-r/80 rounded-sm block h-4 w-full px-1"> 
+                tasks  Display task title or relevant task property 
+               </span>
             </div> -->
-            <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm" >
-              <span class="border-b rounded-sm h-6 border-2 block"></span>
-              <span class="bg-b/80 rounded-sm block h-6 w-full px-1 overflow-ellipsis overflow-hidden">
-                outings <!-- Display task title or relevant task property -->
+           <!-- <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs" >
+              <span class="border-b rounded-sm h-4 border-2 block"></span>
+              <span class="bg-b/80 rounded-sm block h-4 w-full px-1">
+                outings  Display Outing title or relevant task property 
               </span>
-            </div>
-            <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
-              <span class="border-r rounded-sm h-6 border-2 block"></span>
-              <span class="bg-r/80 rounded-sm block h-6 w-full px-1 overflow-ellipsis overflow-hidden">
-                tasks <!-- Display task title or relevant task property -->
+            </div> -->
+            <!-- <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
+              <span class="border-bpop rounded-sm h-4 border-2 block"></span>
+              <span class="bg-bpop/80 rounded-sm block h-4 w-full px-1">
+                schedule Display task title or relevant task property 
               </span>
-            </div>
-            <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
-              <span class="border-bpop rounded-sm h-6 border-2 block"></span>
-              <span class="bg-bpop/80 rounded-sm block h-6 w-full px-1 overflow-ellipsis overflow-hidden">
-                schedule <!-- Display task title or relevant task property -->
-              </span>
-            </div>
+            </div> -->
+
           </div>
         </div>
       </div>
@@ -89,9 +125,8 @@
 </template>
 
 <script>
-import { onMounted, onBeforeMount, ref, watch, computed } from "vue";
-// import { capitalize } from './helpers'
 
+import { onMounted, onBeforeMount, ref, watch, computed, onBeforeUnmount } from "vue";
 import { db, auth } from "../../../firebase/config.js";
 import {
   query,
@@ -109,8 +144,14 @@ import {
 } 
 from "firebase/firestore";
 import { startOfDay,addDays } from "date-fns"; // Import the startOfDay function
+import calendarevent from './calendarevent.vue';
+import calendarouting from './calendarouting.vue';
+import calendartask from './calendartask.vue';
 
 export default {
+  components:{
+    calendarevent,calendartask,calendarouting
+  },
   setup() {
     const taskArray = ref([]);
     const outingArray = ref([]);
@@ -122,24 +163,17 @@ export default {
     now.setHours(0, 0, 0, 0);
     const startOfToday = Timestamp.fromDate(now); // Use the startOfDay function
     const endOfWeek = addDays(startOfToday.toDate(), 7);
-    // prev code
-    // const today = new Date();
-    
-    // //for the calendar
-    // const date = ref(new Date());
-    // const currentMonth = computed(() => date.value.getMonth() + 1);
-    // const currentYear = computed(() => date.value.getFullYear());
-    // const today_calendar = new Date().getDate();
-
-    // const days = computed(() => {
-    //   const daysInMonth = new Date(currentYear.value, currentMonth.value, 0).getDate();
-    //   return Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    // });
+    const showTask = ref(false)
+    const showEvent=ref(false)
+    const showOuting=ref(false)
+    const expandedTaskId = ref(null);
+    const expandedOutingId = ref(null);
+    const expandedEventId = ref(null);
 
     // new code
     const filterTasksByDate = (year, month, day) => {
         return taskArray.value.filter((task) => {
-          const taskDate = new Date(task.date); // Assuming task.date is a valid Date object
+          const taskDate = new Date(task.dateline.toDate()); // Assuming task.date is a valid Date object
           return (
             taskDate.getFullYear() === year &&
             taskDate.getMonth() === month &&
@@ -147,6 +181,30 @@ export default {
           );
         });
       };
+
+    const filterEventsByDate = (year, month, day) => {
+      return eventsArray.value.filter((event) => {
+
+        const eventDate = new Date(event.date.toDate()); // Assuming event.date is a valid Date object
+        return (
+          eventDate.getFullYear() === year &&
+          eventDate.getMonth() === month &&
+          eventDate.getDate() === day
+        );
+      });
+    };
+
+    const filterOutingsByDate = (year, month, day) => {
+      return outingArray.value.filter((outing) => {
+
+        const outingDate = new Date(outing.date.toDate()); // Assuming outing.date is a valid Date object
+        return (
+          outingDate.getFullYear() === year &&
+          outingDate.getMonth() === month &&
+          outingDate.getDate() === day
+        );
+      });
+    };
 
     const currentDate = new Date();
 
@@ -183,14 +241,14 @@ export default {
     };
 
     const fetchData = async () => {
-      console.log("fetching");
+   
       const user = auth.currentUser;
       userid.value = user.uid;
       const docRef = doc(db, "users", userid.value);
       const docSnap = await getDoc(docRef);
       const docData = docSnap.data();
       comid.value = docData.community;
-      console.log(comid.value, "fetch");
+
     };
 
     onMounted(async () => {
@@ -212,21 +270,20 @@ export default {
         // console.log("tasks fetched", taskArray.value);
       });
 
-      console.log(comid.value, "comid")
+    
 
       // For outings 
       const qouting = query(
         collection(db, "outings"),
         where("community", "==", comid.value),
         where('date', '>=', startOfToday),
-        where('date', '<=', endOfWeek),
       );
       const qoutingSnap = await getDocs(qouting)
       qoutingSnap.forEach( async(adoc)=>{
         const odata= adoc.data()
-        console.log(adoc.data());
+    
         let creatorname = null; 
-        console.log(odata.creator,'ocrawete');
+      
         if(odata.creator){
           const usnap = await getDoc(doc(db,"users",odata.creator))
           const udata=usnap.data()
@@ -251,15 +308,12 @@ export default {
 
         outingArray.value.push({
           ...adoc.data(),
-          date: formattedDate,
+          fdate: formattedDate,
           creatorname: creatorname,
           id: adoc.id,
         });
         }
       })
-      console.log(outingArray.value,"outingarray");
-
-
 
       const eventQuery = query(collection(db,"events"),where("userid","==",userid.value))
       const esub = onSnapshot(eventQuery,(esnap)=>{
@@ -270,11 +324,23 @@ export default {
           const formattedTime = dateObj.toLocaleTimeString(undefined, timeOptions); // Format time
 
 
-          eventsArray.value.push({...edoc.data(),id:edoc.id,date:formattedTime})
+          eventsArray.value.push({...edoc.data(),id:edoc.id,fdate:formattedTime})
         })
       })
 
     })
+
+    const closeTask = () => {
+      showTask.value = false;
+    };
+        const closeEvent = () => {
+      showEvent.value = false;
+    };
+
+    const closeOuting = () => {
+      showOuting.value = false;
+    };
+
    
     return { 
       taskArray,
@@ -291,12 +357,20 @@ export default {
       nextMonth,
       months,
       filterTasksByDate,
-      eventsArray
-      // currentMonth,
-      // currentYear,
-      // days,
-      // today,
+      filterEventsByDate,
+      filterOutingsByDate,
+      eventsArray,
+      showTask,
+      showEvent,
+      showOuting,
+      closeTask,
+      closeOuting,
+      closeEvent,
+      expandedTaskId,
+      expandedOutingId,
+      expandedEventId,
 
+      
     }; // Outings that users are in
   },
 };
@@ -415,6 +489,7 @@ tbody{
   transform: translateX(-50%);
   background-color: var(#86b8b1);
 }
+
 </style>
 
 

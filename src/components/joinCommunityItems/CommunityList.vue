@@ -1,56 +1,37 @@
 <template>
-    <!-- <div class="container">
-        <div class="row">
-                <div class="custom-container col-12 text-center border-5 border-solid border-black bg-y"> -->
-                
-                    <div v-if="communityArray.length > 0">
-                        <div v-for="com in communityArray" :key="com.id" class="bg-white m-3 rounded-lg p-2 border-black border-2">
-                            <div class="flex justify-between">
-                                <p class="font-fredoka text-left text-lg font-semibold">
-                                    {{ com.communityName }}
-                                </p>
-                                <button class="text-sm bg-y px-2 rounded-lg button_styling border-black font-medium hover:text-black" @click="joinCom(com.id)">
-                                    Join
-                                </button>
-                                <!-- <button class="grow text-sm button_styling w-full" @click="joinCom(com.id)">Join</button> -->
-                            </div>
-                            <div v-if="com.names" class="text-left">
-                                <p v-for="(name,idx) in com.names" :key="idx">
-                                    {{ name }}
-                                </p>
-                            </div>
-                            <!-- <div class="flex flex-wrap justify-start p-3 mt-4 component-container">
-                                <div class="col-md-9 col-12 flex">
-                                    <div class=""> 
-                                        <p class="flex flex-wrap text-3xl font-semibold comm_name">{{ com.communityName }} </p>
-                                        
-
-                                        <ul class="flex flex-wrap" v-if="com.names">
-                                            <li class="flex flex-wrap text-m hoomans" v-for="(name,idx) in com.names" :key="idx">
-                                                {{name}}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-md-3 col-12 flex">
-                                    <button class="grow text-2xl button_styling" @click="joinCom(com.id)">Join</button>
-                                </div> -->
-                            </div>
-    
-                    <div v-if="error">
-                        <p class="text-red-500">{{ error }}</p>
-                    </div>
-                </div>
-                <div v-else>
-                    <p>No communities available.</p>
-                </div>
-                
-                <!-- </div>
+    <div v-if="communityArray.length > 0">
+      <div v-for="com in communityArray" :key="com.id" class="bg-white m-3 rounded-lg p-2 border-black border-2">
+        <div class="flex justify-between">
+            <div class="flex-grow text-left">
+                <div class="font-bold text-left text-lg font-semibold ml-0" style="display: inline;">
+              {{ com.communityName }}&nbsp;
+            </div>
+            <div class="text-left" style="display: inline;">
+              <span v-for="(name, idx) in com.names" :key="idx">
+                <span v-if="idx < 3" >
+                  {{ name }}&nbsp;
+                </span>
+             
+              </span>
+            </div>
+          </div>
+          <button class="text-sm bg-y px-2 rounded-lg button_styling border-black font-medium hover:text-black" @click="joinCom(com.id)">
+            Join
+          </button>
         </div>
-    </div> -->
-</template>
+      </div>
+  
+      <div v-if="error">
+        <p class="text-red-500">{{ error }}</p>
+      </div>
+    </div>
+    <div v-else>
+      <p>No communities available.</p>
+    </div>
+  </template>
+  
+  
+
 
 <script>
 import { ref, onMounted } from 'vue'
@@ -62,31 +43,32 @@ export default {
      const communityArray = ref([])
      const router = useRouter()
      const error = ref(null);
-     const nameArray =ref([])
 
      const fetchData = async () => {
             const querySnapshot = await getDocs(collection(db, "communities"));
-            nameArray.value = [];
-            querySnapshot.forEach((sdoc) => {
-                // console.log(communityArray)// Access the ref using .value
+            const result = []
+
+            await Promise.all(querySnapshot.docs.map(async (sdoc) => {
                 const data = sdoc.data()
-                const homie_list= data.homies
-                nameArray.value= []
+                const homie_list = data.homies
+                const nameArray = []
 
-                for (const homie_id of homie_list){
-                    getDoc(doc(db, "users", homie_id))
-                        .then((snap)=>{
-                            const sdata = snap.data()
-                            const name = sdata.firstname
-                            nameArray.value.push(name)
-                        })
-                    }
-                    communityArray.value.push({...sdoc.data(),id:sdoc.id,names:nameArray.value}); 
-                    console.log(communityArray.value,"com")
+                await Promise.all(homie_list.map(async (id) => {
+                    const snap = await getDoc(doc(db, "users", id))
+                    const sdata = snap.data()
+                    const name = sdata.firstname
+                    nameArray.push(name)
+                }))
 
-            });
+                result.push({ ...sdoc.data(), id: sdoc.id, names: nameArray })
+            }))
 
+            communityArray.value = result
+            console.log(communityArray.value);
         };
+
+        
+    fetchData()
      
     const joinCom = async (comId) => {
         
@@ -150,9 +132,9 @@ export default {
         //updating community doc where the user is added into the array
         
 
-        onMounted(() => {
-            fetchData(); // Fetch data after the component is mounted
-        });
+        // onMounted(() => {
+        //     fetchData(); // Fetch data after the component is mounted
+        // });
             return { communityArray, joinCom, error }
     } 
 }
