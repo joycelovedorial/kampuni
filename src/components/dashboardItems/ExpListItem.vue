@@ -59,14 +59,15 @@ setup(props) {
     const uid = user.uid
 
     if(props.transacid){
-      
+      console.log("transid",props.transacid);
+      console.log("expid",props.transacid.expense);
       if(props.transacid.outing){
         getDoc(doc(db,"outings",props.transacid.outing))
         .then((snap)=>{
             const data=snap.data()
             outing.value=data.title
         })
-          }else{
+          }else{    
               outing.value="General"
           }
         if(props.transacid.expense){
