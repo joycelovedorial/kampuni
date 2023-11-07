@@ -27,10 +27,10 @@
       </div> -->
    
       <div class="font-fredoka font-bold">Spending detail</div>
-      <div class="space-x-3 flex justify-stretch">
+      <div class="laptop:space-x-3 laptop:flex laptop:justify-stretch">
         <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="text" v-model="expense_desc" id="expense_name" placeholder="name of expense" required>
         <input class="bg-bnorm focus:bg-y w-6/12 rounded-lg border-0 pl-2 placeholder-black ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" type="number" step="0.01" v-model="cost" id="expense_name" placeholder="cost of expense" required>
-        <select v-model="category" class="bg-bnorm focus:bg-y rounded-lg border-0 pl-2 ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" required>
+        <select v-model="category" class="bg-bnorm focus:bg-y w-full rounded-lg border-0 pl-2 ring-2 ring-inset ring-black placeholder:black focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" required>
           <option class="bg-bnorm hover:bg-bpop" selected disabled value="">select category</option>
           <option class="bg-bnorm hover:bg-bpop" :value=null>General</option>
           <option class="bg-bnorm hover:bg-bpop" v-for="out in outingslist" :key="out.id" :value="out.id" :selected="out.id === outid">{{out.title}}</option>

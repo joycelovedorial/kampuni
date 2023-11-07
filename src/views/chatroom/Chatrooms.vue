@@ -117,6 +117,11 @@ export default {
 </script>
 
 <style scoped>
+/* #chatrooms {
+  background-color:#B492B8;
+  background-size: 100%;
+  background-position: cover;
+} */
 .chatlist-container{
   justify-content:flex;
   flex-direction: column;
