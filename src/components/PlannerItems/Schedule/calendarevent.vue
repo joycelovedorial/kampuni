@@ -1,12 +1,22 @@
 <template>
-    <div class="centered-component artboard artboard-horizontal phone-2">
-       <div>
-           Title:{{ title }}
-           Description: {{ description }}
-           Location: {{  location }}
-           Date: {{ date }}
-           Time: {{ time }}
-       </div>
+    <div class="centered-component bg-r">
+        <div class="container">
+        <div class= "row">
+            Title:{{ title }}
+            </div>
+            <div class= "row">
+                Description: {{ description }}
+            </div>
+            <div class= "row">
+                Location: {{  location }}
+            </div>
+            <div class= "row">
+                Date: {{ date }}
+            </div>
+            <div class= "row">
+            Time: {{ time }}
+        </div>
+    </div>
 
     </div>
 </template>
@@ -52,10 +62,13 @@ export default {
 
 <style>
 .centered-component {
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  /* position: fixed; */
+  /* top: 50%;
+  left: 50%; */
   transform: translate(-50%, -50%);
+  background-color:red;
+  height:10px;
+  width:10px;
 }
 
 </style>

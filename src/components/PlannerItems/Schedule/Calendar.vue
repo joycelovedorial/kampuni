@@ -21,18 +21,19 @@
           </p>
         </div>
       </div>
-      <div class="bg-bnorm grid grid-cols-7 w-100 rounded-b-lg" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)" :key="weekIndex">
+      <div class="bg-bnorm grid grid-cols-7 w-100 rounded-b-lg" style="min-height: unset" v-for="(week, weekIndex) in Math.ceil((daysInMonth + firstDayOfWeek) / 7)" :key="weekIndex">
         <div class="" v-for="dayIndex in 7" :key="dayIndex">
-          <div v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
+          <div class="h-15" v-if="dayIndex + (weekIndex * 7) >= firstDayOfWeek + 1 && dayIndex + (weekIndex * 7) <= daysInMonth + firstDayOfWeek">
             <p class="text-sm text-left pl-4 pt-2">
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
 
+          <div id="calender-box" class="h-24 overflow-y-scroll">
             <div v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(task, i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
-                <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
-                  <span class="border-r rounded-sm h-6 border-2 block"></span>
-                  <span class="bg-r/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="h-20 flex m-1 space-x-1 cursor-pointer text-sm">
+                  <span class="border-r rounded-sm border-2 block h-20"></span>
+                  <span class="hover:bg-r/20 bg-r/80 text-center rounded-sm block h-20 w-24 px-1 overflow-ellipsis overflow-hidden" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ task.taskname }} <!-- Display task title or relevant task property -->
                   </span>
                 </div>
@@ -47,7 +48,7 @@
               <div v-for="(outing,i) in filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" class="">
                 <div @click="expandedOutingId = expandedOutingId === outing.id ? null : outing.id" class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
                   <span class="border-b rounded-sm h-6 border-2 block"></span>
-                  <span class="bg-b/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <span class="hover:bg-b/20 bg-b/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ outing.title }} <!-- Display Outing title or relevant Outing property -->
                   </span>
                 </div>
@@ -64,15 +65,18 @@
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
                 <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm ">
                   <span class="border-g rounded-sm h-6 border-2 block"></span>
-                  <span class="bg-g/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <span class="hover:bg-g/20 bg-g/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ event.title }} <!-- Display Event title or relevant Event property -->
                 </span>
                 </div>
-                <div class="centered-component-event" v-if="showEvent" @click="closeEvent" >
-                  <calendarevent :eobj="event"/>>
+                <div class="centered-component-event " v-if="showEvent" @click="closeEvent" >
+                  <div>
+                    <div calendarevent :eobj="event"/>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
                   <!-- <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
               <span class="border-r rounded-sm h-4 border-2 block"></span>
               <span class="bg-r/80 rounded-sm block h-4 w-full px-1"> 
@@ -374,6 +378,33 @@ export default {
 </script>
 
 <style scoped>
+#calender-box::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+  border-radius:16px;
+  /* display:hidden; */
+  /* padding:30px; */
+  
+} 
+#calender-box::-webkit-scrollbar-thumb:hover {
+  /* background-color:rgb(47, 47, 47); */
+   display:hidden;
+}
+
+#calender-box::-webkit-scrollbar-track {
+  background: transparent;
+  margin-left:5px;
+  display:hidden;
+}
+
+#calender-box::-webkit-scrollbar-thumb {
+  /* background-color: var(--secondary); */
+  /* background-color:black; */
+  width:1px !important;
+  border-radius:10px;
+  /* display:hidden; */
+} 
+
 
 .month{
   background-color:#86B8B1;

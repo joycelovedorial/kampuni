@@ -17,10 +17,10 @@ module.exports = {
 
   theme: {
     screens: {
-      'mobile': '575px',
+      'mobile': '576px',
       // => @media (min-width: 640px) { ... }
       
-      'tablet': '640px',
+      'tablet': '768px',
       // => @media (min-width: 640px) { ... }
 
       'laptop': '1024px',

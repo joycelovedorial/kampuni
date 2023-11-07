@@ -19,10 +19,10 @@
     </div>
 
     
-      <div v-if="displayCalendar">
+      <div class="h-40" v-if="displayCalendar">
         
-        <div class="row space-y-2">
-          <div class="mobile:mx-auto mobile:w-10/12 laptop:w-7/12 flex flex-col space-y-2">
+        <div class="row laptop:space-y-0 space-y-2 flex justify-around" style='height:108px'>
+          <div class="mobile:mx-auto laptop:ml-6 laptop:mr-2 mobile:w-10/12 laptop:w-2/3 flex flex-col space-y-2">
             <div class="flex flex-col space-y-1">
               <div class="bg-y border-black border-2 rounded-lg flex justify-between px-2">
                 <h1 class="font-fredoka font-black text-lg">your calendar</h1>
@@ -54,8 +54,8 @@
             Add a personal event</button>
             <Calendar/>
           </div> -->
-          <div class="mobile:mx-auto mobile:w-10/12 laptop:mt-0 laptop:w-3/12 flex flex-col space-y-2">
-            <div class="flex flex-col space-y-1">
+          <div class="mobile:mx-auto laptop:ml-2 laptop:mr-6 mobile:w-10/12 laptop:w-3/12 flex flex-col space-y-2">
+            <div class="flex flex-col tablet:space-y-0 space-y-2">
               <div class="bg-y border-black border-2 rounded-lg flex justify-between px-2">
                 <h1 class="font-fredoka font-black text-lg">upcoming outings</h1>
                 <button 
@@ -167,14 +167,16 @@ export default {
     /* background-size: content; */
     /* background-repeat: no-repeat; */
     /* background-attachment: fixed; */
-    height: content; /* 100% of viewport height */
+    min-height:100vh;
+    height: fit-content; /* 100% of viewport height */
     margin: 0; /* Remove default margin to cover the entire viewport */
   }
 
-  @media (max-width: 1024px) {
-  #bg-container {
-    height: 120vh;
+  /* @media (min-width: 1024px) {
+  #calendar-page {
+    height: 150vh;
   }
+} */
 
 .button-left {
   margin-right: -1px;
@@ -184,6 +186,6 @@ export default {
   .button-right {
     margin-left: -1px;
   }
-}
+
 </style>
 
