@@ -197,7 +197,7 @@ export default {
 
     
     return {
-      addExpense,  selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid, displayHelp
+      addExpense, selectedUsers, expense_desc, cost, category, users, whopaid,outingslist,outid, displayHelp
 
     };
   }
