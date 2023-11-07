@@ -69,12 +69,14 @@ setup(props) {
           }else{
               outing.value="General"
           }
-        
-        getDoc(doc(db,"expenses",props.transacid.expense))
+        if(props.transacid.expense){
+            getDoc(doc(db,"expenses",props.transacid.expense))
             .then((snap)=>{
                 const data=snap.data()
                 category.value=data.desc
             })
+        }
+      
 
       if(uid==props.transacid.payer){
           getDoc(doc(db,"users",props.transacid.receiver))
