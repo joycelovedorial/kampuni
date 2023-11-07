@@ -2,7 +2,7 @@
   <Navbar/>
   <body id="expenses-page" class="bg-g bg-full">
     <!-- <div class=""> -->
-      <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
+      <div class="bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
         <div class="create-expenses-bar w-8/12 mx-auto">
           <button v-if="!displayCreate" @click="displayCreate=!displayCreate" class="w-full bg-y border-black border-2 rounded-full py-3 font-fredoka font-bold drop-shadow-xl text-black">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 inline">
@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-    <div class="content-container bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
+    <div class="bg-bnorm m-3 p-3 rounded-lg border-black border-2 space-y-3 w-10/12 mx-auto">
       <div class="font-fredoka text-center text-lg font-bold">
         Overview
       </div>
