@@ -10,13 +10,15 @@
                             :class="{'border-black bg-g' : involved, 'border-black bg-r' : !involved , 'border-orange' : null}" 
                             id="name_container" 
                             style="height:fit-content; width:fit-content;display: flex; flex-direction: column; align-items: flex-start;">
-                                    <img :src="photourl" alt="">
+                            <img v-if="photourl == '' "  class="h-12 w-12 bg-white rounded-full border-2 border-black"> 
+                            <img v-else :src="photourl" alt="" class="h-12 w-12 bg-white rounded-full border-2 border-black">
                                     <h5 class="fw-bold pt-2 pb-1 px-3 truncate ">{{title}}</h5> <!--{{name}}--> 
                                     <p class=" pb-2 pt-1 px-3 text-ellipsis" >{{ desc }}</p> <!--{{message}}--> 
                                     <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
                             </div>
                     </div>
-                        
+                    <!-- <img v-if="outing.creatorname != 'it\'s a mystery'" :src="outing.imgstr" class="h-12 w-12 bg-white rounded-full border-2 border-black">
+          <img v-else  class="h-12 w-12 bg-white rounded-full border-2 border-black"> -->
                                 
                     </div> 
                     <div class="row ">
