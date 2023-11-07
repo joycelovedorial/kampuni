@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-hidden outer_container1 border-black rounded-xl bg-opacity-30 bg-white flex flex-col align-middle border-2 ">
-    <div class="flex flex-nowrap content-center " v-if="outingArray.length>0">
-      <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-4 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
+  <div class="overflow-x-scroll overflow-y-hidden outer_container1 border-black rounded-xl bg-bnorm flex flex-col align-middle border-2 p-4">
+    <div class="flex flex-nowrap content-center space-x-4 my-auto" v-if="outingArray.length>0">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-12 snap-center"  v-for="out in outingArray" :key="out.id">
         <singlecarousel :outid="out.id"/>
       </div>
     </div>

@@ -6,7 +6,7 @@
         <h1 class="text-black font-fredoka index1 p-4 relative text-4xl font-lg sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl" id="welcome" >
           <span style="position: relative;">Welcome back, {{ name }}</span>
         </h1>
-      <Dashboard :community="comid" class="index2"/>
+      <Dashboard :community="comid" class=""/>
       <!-- </div> -->
   </body>
 
