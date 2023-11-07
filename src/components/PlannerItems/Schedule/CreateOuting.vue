@@ -1,5 +1,6 @@
 <template>
   <div class="create-outing container-fluid">
+   
     <form class="form-control font-bold leading-loose text-center text-cyanp font-fredoka text-x" @submit.prevent="createOuting">
         <button @click="emitCo" class="float-left">
             <svg class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
