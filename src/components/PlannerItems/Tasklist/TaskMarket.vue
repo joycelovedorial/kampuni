@@ -123,20 +123,23 @@ export default {
             
             const assign = query(collection(db,"tasks"),where("userid","==",null),where("countdown","<=",todayTimestamp),where("commid","==",comid.value))
             const assub = onSnapshot(assign,async(snap)=>{
+                
                 snap.forEach(async(docu)=>{
                   const user = auth.currentUser
                     const uid = user.uid
                     const usnap = await getDoc(doc(db,'users',uid))
                     const comid= usnap.data().community
-                    minpoints.value = usnap.data().minpoints
+
+                    minpoints.value = usnap.data().points
                     minid.value = uid
+
                     const comsnap = await getDoc(doc(db,'communities',comid))
                     const comdata = comsnap.data()
                     comdata.homies.forEach(async(homi)=>{
                       console.log(homi,"should be homi id");
                       const hsnap = await getDoc(doc(db,'users',homi))
-                      if (hsnap.data().points<minpoints.value){  
-                        minpoints.value = hsnap.data()
+                      if (hsnap.data().points < minpoints.value){  
+                        minpoints.value = hsnap.data().points
                         minid.value=homi
                       }
                     })
