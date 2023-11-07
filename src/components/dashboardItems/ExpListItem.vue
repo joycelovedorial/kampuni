@@ -30,6 +30,7 @@ import { ref, computed, onMounted } from 'vue';
 
 import { auth, db} from '@/firebase/config';
 import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, updateDoc,onSnapshot} from "firebase/firestore";
+import { elements } from 'chart.js';
 
 
 export default {
@@ -59,21 +60,24 @@ setup(props) {
     const uid = user.uid
 
     if(props.transacid){
-      
+      console.log("transid",props.transacid);
+      console.log("expid",props.transacid.expense);
       if(props.transacid.outing){
         getDoc(doc(db,"outings",props.transacid.outing))
         .then((snap)=>{
             const data=snap.data()
             outing.value=data.title
         })
-          }else{
+          }else{    
               outing.value="General"
           }
-        if(props.transacid.expense){
+        if(props.transacid.expense==undefined){
+            category.value="General"
+        }else{
             getDoc(doc(db,"expenses",props.transacid.expense))
             .then((snap)=>{
                 const data=snap.data()
-                category.value=data.desc
+                // category.value=data.desc
             })
         }
       
