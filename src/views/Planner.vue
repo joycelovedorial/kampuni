@@ -73,6 +73,11 @@
 
       <div v-if="displayTask" class="container " id="tasklist">
         <div class="row">
+          <div class="col-12">
+            <Leaderboard />
+          </div>
+        </div>
+        <div class="row">
         <div class="col-3">
           <TaskMarket @eCreate="handleCreateTask"/>
         </div>
@@ -80,11 +85,11 @@
           <Tasklist/>
         </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
         <div class="col-12">
           <Leaderboard />
         </div>
-      </div>
+      </div> -->
         <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 flex items-center justify-center" v-if="displayCreateTask">
           <createTask @closeCreateTask="displayCreateTask=false"/>
         </div>

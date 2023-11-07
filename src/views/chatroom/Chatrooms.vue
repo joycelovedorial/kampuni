@@ -145,6 +145,12 @@ export default {
   background-color: rgba(#FFFDF0, 0.5);
   
 }
+
+/* @media (max-width: 425px) {
+  #chatrooms {
+    height: 200vh;
+  }
+} */
 .chatroom-right col-9{
   max-height: 100%;
 }
