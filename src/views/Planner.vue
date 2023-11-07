@@ -89,11 +89,11 @@
             <Leaderboard />
           </div>
         </div>
-        <div class="row">
-        <div class="col-3">
+        <div class="row flex justify-center">
+        <div class="block col-sm-12 col-md-3">
           <TaskMarket @eCreate="handleCreateTask"/>
         </div>
-        <div class="col-9">
+        <div class="block col-sm-12 col-md-7">
           <Tasklist/>
         </div>
         </div>
