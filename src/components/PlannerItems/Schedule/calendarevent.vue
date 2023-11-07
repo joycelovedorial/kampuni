@@ -1,22 +1,12 @@
 <template>
-    <div class="centered-component bg-r">
-        <div class="container">
-        <div class= "row">
-            {{ title }}
-            </div>
-            <div class= "row">
-                Description: {{ description }}
-            </div>
-            <div class= "row">
-                Location: {{  location }}
-            </div>
-            <div class= "row">
-                Date: {{ date }}
-            </div>
-            <div class= "row">
-            Time: {{ time }}
-        </div>
-    </div>
+    <div class="centered-component">
+       <div class="bg-r text-r">
+           Title:{{ title }}
+           Description: {{ description }}
+           Location: {{  location }}
+           Date: {{ date }}
+           Time: {{ time }}
+       </div>
 
     </div>
 </template>
@@ -62,13 +52,12 @@ export default {
 
 <style>
 .centered-component {
-  /* position: fixed; */
-  /* top: 50%;
-  left: 50%; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-
-  height:10px;
-  width:10px;
+  background-color:red;
+  height:50%;
 }
 
 </style>
