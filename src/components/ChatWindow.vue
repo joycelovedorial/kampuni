@@ -7,10 +7,10 @@
         {{name}}
         <span>
           <button class="delete-button" @click="deleteChatroom"> Delete </button>
-          <div v-if="errorMessage"><span>{{ errorMessage }}</span></div>
+          <div v-if="errorMessage" class="pd-0 mt-0"><span class="text-r text-sm">{{ errorMessage }}</span></div>
         </span>
         <div class="click-expenses" @click="toggleContent">
-          {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
+          {{ isContentAVisible ?  'Expenses ▲':'Expenses ▼' }}
         </div>
       </div>
       <div id="leftside" v-if="isContentAVisible">
@@ -53,7 +53,7 @@
       
       <div v-else class="expenses">
         <div class="exptable">
-        <div id="rightside" v-if="outid" class="col-12">
+        <div id="rightside" class="col-12">
           <button class="newexpenses" @click="displayCreateExpense=!displayCreateExpense">Create Expense</button>
           <div v-if="displayCreateExpense">
             <createExpense :outingid="outid"/>
@@ -238,15 +238,38 @@ export default {
                   const qExpenses = query(collection(db,"expenses"),where("outing","==",outid.value))
                   expensesArray.value = []
                   const qExSnap = getDocs(qExpenses).then((querySnap)=>{
-                    querySnap.forEach((doc)=>{
-                      expensesArray.value.push({...doc.data(),id:doc.id})
-                      console.log("expenses arrya",expensesArray.value);
+                    querySnap.forEach(async(adoc)=>{
+                      const data=adoc.data()
+                      const names = [] 
+                      data.usersInvolved.forEach(async(homi)=>{
+                        const usn = await getDoc(doc(db,'users',homi))
+                        names.push(usn.data().firstname)
+                      })
+                      console.log(data.whopaid,"whopaid");
+                      const wps = await getDoc(doc(db,'users',data.whopaid))
+                      const wpsdata=wps.data()
+                      expensesArray.value.push({...adoc.data(),id:adoc.id,names:names,whopaidname:wpsdata.firstname})
+                      console.log("expenses array",expensesArray.value);
                     })
                   })
                 }else{
                   outid.value=null
                   expensesArray.value=[]
-                  console.log("no outing");
+                  const qExpenses = query(collection(db,"expenses"),where("outing","==",null),where("usersInvolved","array-contains",uid))
+                  const qExSnap = getDocs(qExpenses).then((querySnap)=>{
+                    querySnap.forEach(async(adoc)=>{
+                      const data=adoc.data()
+                      const names = [] 
+                      data.usersInvolved.forEach(async(homi)=>{
+                        const usn = await getDoc(doc(db,'users',homi))
+                        names.push(usn.data().firstname)
+                      })
+                      console.log(data.whopaid,"whopaid");
+                      const wps = await getDoc(doc(db,'users',data.whopaid))
+                      expensesArray.value.push({...adoc.data(),id:adoc.id,names:names,whopaidname:wps.data().firstname})
+                      console.log("expenses arrya",expensesArray.value);
+                    })
+                  })
                 }
               })
 
