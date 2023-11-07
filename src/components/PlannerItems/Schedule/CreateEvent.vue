@@ -1,9 +1,17 @@
 <template>
     <div class="create-outing container-fluid">
-      <span><button @click="emitCe">X</button></span>
+        
       <form class="form-control font-bold leading-loose text-center text-cyanp font-fredoka text-x" @submit.prevent="createEvent">
+
+        <button @click="emitCe" class="float-left">
+            <svg class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+        </button>
+
           Create Event
           <div class="row">
+            
               <div>
                   <label for="title">Title</label>
                   <input class="form-control col-6 " type="text" v-model="title" id="title">
@@ -25,7 +33,7 @@
               <input class="form-control" type="datetime-local" id="date" v-model="date">
           </div>
          
-          <button>Create Event</button>
+          <button class="h-10 px-3 text-white font-bold text-sm rounded-sm bg-cyanp hover: hover:drop-shadow-md hover:shadow-oranges">Create Event</button>
       </form>
     </div>
   </template>
