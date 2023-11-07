@@ -93,7 +93,7 @@ export default {
   /* overflow: hidden; */
 }
 
-@media (min-width: 635px) {
+@media (max-width: 425px) {
   #bg-container {
     height: 180vh;
   }
