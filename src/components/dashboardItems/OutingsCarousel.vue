@@ -1,17 +1,40 @@
 <template>
-  <div class="overflow-x-scroll overflow-y-scroll outer_container1 border-black rounded-xl bg-opacity-30 bg-white h-30 border-2 ">
-  
-    <div class="flex flex-nowrap content-center snap-proximity snap-x "  >
+  <div class="overflow-x-scroll overflow-y-hidden outer_container1 border-black rounded-xl bg-opacity-30 bg-white flex flex-col align-middle border-2 ">
+    <div class="flex flex-nowrap content-center " v-if="outingArray.length>0">
       <div class="col-xl-5 col-lg-6 col-md-6 col-12 px-4 pb-3 pt-3 snap-center"  v-for="out in outingArray" :key="out.id">
-        <div v-if="outingArray.length === 0">
-        no one has initiated an outing yet~ 🍃
-        </div>
-        <div v-else>
-          <singlecarousel :outid="out.id"/>
+        <singlecarousel :outid="out.id"/>
+      </div>
+    </div>
+    <div v-else class="block mx-auto my-auto p-2">
+      <div class="border-2 rounded-lg border-black p-2 bg-bpop text-center shadow-md">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="text-black w-12 h-12 mx-auto">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M10.5 8.25h3l-3 4.5h3" />
+        </svg>
+        <div class="m-2 p-2 rounded-lg bg-bnorm shadow-inner">
+          <p class="font-bold">no one has initiated an outing yet</p>
+          <p class="text-xs">
+            create one by clicking on the 
+            <svg
+              class="inline w-5 h-5 border-2 rounded-full border-black"
+              fill="none"
+              stroke="currentColor"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            button in planner!
+          </p>
         </div>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -73,6 +96,7 @@ export default {
       }
     });
 
+    console.log(outingArray.value.length)
     return { outingArray }
     // ...
   },

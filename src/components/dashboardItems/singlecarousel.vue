@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cardbg-orange-100 rounded-md border-2 hovering bg-white p-2 pt-3 mb-3"
+    class="cardbg-orange-100 rounded-md border-2 bg-white p-2 pt-3 mb-3"
     :class="{
       'border-g bg-g': involved,
       'border-r bg-g': !involved,
@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-12" id="detail-container">
           <div
-            class="w-auto self-center justify-content-center align-middle card-title border-2 d-flex justify-content-between truncate"
+            class="w-auto self-center justify-content-center align-middle border-2 d-flex justify-content-between truncate"
             :class="{
               'border-black bg-g': involved,
               'border-black bg-r': !involved,
@@ -31,24 +31,28 @@
  
             
             
-            <span class='flex justify-between'>
-                <h5 class="fw-bold pt-2 pb-1 px-3 truncate">{{ title }} </h5>
-              <img
-                v-if="photourl == ''"
-                class="h-12 w-12 bg-white rounded-full border-2 border-black mt-0 mr-0"
-              />
-              <img
-                v-else
-                :src="photourl"
-                alt=""
-                class="h-12 w-12 bg-white rounded-full border-2 border-black mt-0 mr-0"
-              />
-            </span>
+            <div class='flex justify-between'>
+                <div class="block p-2">
+                    <h1 class="font-bold font-sm font-fredoka truncate">{{ title }} </h1>
+                    <p class="text-ellipsis">{{ desc }}</p>
+                </div>
+                <div class="block m-2">
+                    <img
+                        v-if="photourl == ''"
+                        class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
+                    />
+                    <img
+                        v-else
+                        :src="photourl"
+                        alt=""
+                        class="h-12 w-12 bg-bnorm rounded-full border-2 border-black mt-0 mr-0"
+                    />
+                </div>
+            </div>
 
             
             <!--{{name}}-->
 
-            <p class="pb-2 pt-1 px-3 text-ellipsis">{{ desc }}</p>
             <!--{{message}}-->
             <!-- <h5 class="mt-1 mr-3">{{creatorname}}</h5> -->
           </div>
@@ -156,10 +160,8 @@
         <div class="col-6">
           <button
             class="w-100 bg-white option_box text-green-700"
-            @mouseover="isHovered_green = true"
-            @mouseout="isHovered_green = false"
+           
             :class="{
-              hovered_green: isHovered_green,
               clicked_style_green: involved,
             }"
             @click="has_clicked_green"
@@ -188,10 +190,8 @@
         <div class="col-6">
           <button
             class="w-100 bg-white option_box text-red-700"
-            @mouseover="isHovered_red = true"
-            @mouseout="isHovered_red = false"
+            
             :class="{
-              hovered_red: isHovered_red,
               'clicked_style_red shadow-inner': !involved,
             }"
             @click="has_clicked_red"
@@ -421,50 +421,20 @@ export default {
 </script>
 
 <style>
-.hovering:hover {
-  animation: changeSize 1.2s infinite alternate; /* Add a smooth transition effect */
-}
-
-@keyframes changeSize {
-  0% {
-    transform: scale(1); /* Initial size */
-  }
-  100% {
-    transform: scale(1.05); /* Slightly larger size */
-  }
-}
-
 .clicked_style_green {
   background-color: #99b898 !important;
-  transform: scale(1.05);
   color: rgb(255, 255, 255) !important;
   font-size: 30px;
   /* border:rgb(4, 84, 4) solid 1px; */
 }
 .clicked_style_red {
   background-color: #ff847c !important;
-  transform: scale(1.05);
   color: rgb(255, 255, 255) !important;
   /* border:rgb(255, 255, 255)  solid 1px; */
 }
 
-.hovered_green {
-  background-color: #99b898 !important;
-  transform: scale(1.05);
-  transition: all 0.15s ease-in-out;
-  color: white !important;
-}
-
-.hovered_red {
-  background-color: #ff847c !important;
-  transform: scale(1.05);
-  transition: all 0.15s ease-in-out;
-  color: white !important;
-}
-
 .custom-container {
   padding-bottom: 0px;
-  transition: transform 1s ease-in-out;
   display: inline;
   background-color: white;
   margin-bottom: 5px;
@@ -472,7 +442,6 @@ export default {
 
 .card {
   display: inline-block;
-  background-color: orange !important;
 }
 
 .option_box {
