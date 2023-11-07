@@ -55,9 +55,15 @@ export default {
 
                 await Promise.all(homie_list.map(async (id) => {
                     const snap = await getDoc(doc(db, "users", id))
-                    const sdata = snap.data()
-                    const name = sdata.firstname
-                    nameArray.push(name)
+                    console.log(id,"userid");
+                        const sdata = snap.data()
+                    console.log(sdata,snap.id);
+
+                        const name = sdata.firstname
+                        nameArray.push(name)
+                    
+                    
+                    
                 }))
 
                 result.push({ ...sdoc.data(), id: sdoc.id, names: nameArray })
@@ -105,7 +111,7 @@ export default {
             }
 
             const communityData = communityDoc.data();
-            const chatQuery = query(collection(db,'chatrooms'),where('community',"==",comId))
+            const chatQuery = query(collection(db,'chatrooms'),where('community',"==",comId),where('outing',"==",null))
             const chatSnapshot = await getDocs(chatQuery);
 
             if (!chatSnapshot.empty){

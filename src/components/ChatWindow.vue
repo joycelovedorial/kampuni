@@ -164,16 +164,7 @@ export default {
         snapshot.docs.forEach(async(adoc) => {
 
               const mdata = adoc.data()
-              // let photoURL = mdata.photoURL
-              // let userid = uid
-              // if(mdata.userid!=null){
-              //   const usnap = await getDoc(doc(db,'users',mdata.userid))
-              //   const udata= usnap.data()
-              //   photoURL=udata.photoURL
-              //   userid=mdata.userid
-              // }
-
-              // adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id,photoURL:photoURL,userid:userid });
+          
               adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id });
 
             });
@@ -198,20 +189,11 @@ export default {
       console.log(formattedDocuments)
       console.log(typeof(formattedDocuments))
 
-
-      const routeToProfile = async(uid) =>{
-
-      }
-
-
-
       watch(() => props.selectedchat, (newChatRoom, oldChatRoom) => {
         console.log("chatwindow watch");
         
         if (oldChatRoom) {
-          // Unsubscribe from the previous listener (if it exists)
           unsubscribe();
-  
         }
 
         if (newChatRoom) {
@@ -243,23 +225,13 @@ export default {
             let results = [];
             snapshot.docs.forEach(async(adoc) => {
               const mdata = adoc.data()
-              // let photoURL = mdata.photoURL 
-              // let userid = null
-              // if(mdata.userid!=null){
-              //   const usnap = await getDoc(doc(db,'users',mdata.userid))
-              //   const udata= usnap.data()
-              //   photoURL=udata.photoURL
-              //   userid=mdata.userid
-              // }
               const user = auth.currentUser
               const uid = user.uid
               if(mdata.userid == undefined){
                 mdata.userid = uid
               }
-
-              // adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id,photoURL:photoURL || null,userid:userid });
-              adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id });
-
+              adoc.data().createdAt && results.push({ ...adoc.data(), id: adoc.id })
+  
             });
             documents.value = results;
             error.value = null;

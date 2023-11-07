@@ -50,8 +50,7 @@ export default {
 
         const q = query(
           collection(db, 'chatrooms'),
-          where('usersInvolved', 'array-contains', uid)
-          );
+          where('usersInvolved', 'array-contains', uid));
         try{
           const querySnapshot = await getDocs(q);
           chatlist.value = querySnapshot.docs.map(doc => ({
@@ -78,7 +77,7 @@ export default {
 
           console.log("Query Successful");
         }catch(error){
-          console.error("Could not fetch data",error);
+          console.error("Could not fetch data",error);  
         }
                 
       }else{

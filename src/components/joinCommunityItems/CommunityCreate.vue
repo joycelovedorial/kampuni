@@ -46,18 +46,10 @@ export default {
                         const chatRef = await addDoc(collection(db,"chatrooms"),{
                             usersInvolved: [uid],
                             name:comName.value,
-                            //comId is the id of the communities document created above
                             community: comId,
-                            //want to add another collection here called "messages"
+                            outing:null,
                         })
-                        const chatID = chatRef.id
-                        const newSubcollectionRef = collection(db, "chatrooms", chatID, "messages");
-                        addDoc(newSubcollectionRef,{
-                            createdAt: new Date(),
-                            name:comName.value,
-                            message:"Welcome to " + comName.value,
-                        });
-
+                        
                         router.push({ name: "Homepage", params: {community:comId} });
                     } catch (error) {
                         console.error("Error creating community:", error);

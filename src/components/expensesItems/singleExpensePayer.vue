@@ -5,7 +5,7 @@
                 <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="imgstr" alt="">
                 <div class="inline-block my-auto mobile:hidden">
                     you owe {{ tname }} 
-                    <div class="block mobile:hidden">
+                    <div class="block">
                         <span class="bg-b rounded-md text-xs px-1">{{ category }}: {{ desc }}</span>
                     </div>
                 </div>
