@@ -226,10 +226,7 @@ export default {
     });
 
   console.log(outingsArray.value,'outings task');
-
-      // console.log(outingsFormatted); 
-            
-      const taskDone = async(taskid) =>{
+        const taskDone = async(taskid) =>{
         const user = auth.currentUser;
         const uid = user.uid;
         const userSnap = await getDoc(doc(db,"users",uid))
@@ -270,13 +267,9 @@ export default {
     }
     
   };
-  
-  
-  
-  
-  </script>
-  
-  <style>
+</script>
+
+<style>
 .hovering1 {
   transition: transform 2s ease-in-out;
 }
