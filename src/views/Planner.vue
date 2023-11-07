@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div id="calendar-page" class="overflow-x-hidden">
+  <div id="calendar-page">
     <div class="flex items-center justify-center space-x-2 p-3">
       <button
         class="button-left font-fredoka text-sm text-black rounded-lg border-2 font-bold border-black px-2 shadow-md"
@@ -165,25 +165,22 @@ export default {
 
   #calendar-page {
     background-color: #86B8B1;
-    /* background-size: content; */
-    /* background-repeat: no-repeat; */
-    /* background-attachment: fixed; */
-    min-height: 100vh;
-    height: fit-content; /* 100% of viewport height */
-    margin: 0; /* Remove default margin to cover the entire viewport */
+    height: content;
+    padding:10px;
   }
   
-  @media (max-width: 1024px) {
-    #bg-container {
-      height: 120vh;
+  @media (min-width: 575px) {
+    #calendar-page {
+      min-height: 150vh
+    }
+    }
+    @media (max-width: 425px) {
+    #calendar-page {
+      min-height: 300vh
     }
     }
     
-    @media (max-width: 425px) {
-      #bg-container {
-        height: 180vh;
-      }
-    }
+  
 
 .button-left {
   margin-right: -1px;
