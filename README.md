@@ -31,5 +31,16 @@ https://kampuni-85a88.web.app/
   click the register button and fill in relevant details *password should be > 6 characters and have a mix of alphabets and numbers
 
 ### 2. Join a community
-join "the main gang 👽" communtiy
+join "the main gang 👽" community
   
+### 3. Outings 
+join any outing on home page, create and view your outings on planner page 
+
+### 4. Tasks
+view your tasks of the day on home page (and check them off), create task and view task leaderboard on planner page
+
+### 5. Expenses
+view expenses on home page, create expenses in chatrooms, create and view expense on expense page
+
+### 6. Profile page
+edit personal details
