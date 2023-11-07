@@ -107,13 +107,12 @@ export default {
 
 <style>
 .centered-component {
-  /* position: fixed; */
-  /* top: 50%;
-  left: 50%; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-
-  height:10px;
-  width:10px;
+  background-color:red;
+  height:50%;
 }
 
 </style>
