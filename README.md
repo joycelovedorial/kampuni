@@ -31,7 +31,7 @@ https://kampuni-85a88.web.app/
   click the register button and fill in relevant details *password should be > 6 characters and have a mix of alphabets and numbers
 
 ### 2. Join a community
-join "the main gang 👽" community
+join "the main gang 👽" community, password: 123
   
 ### 3. Outings 
 join any outing on home page, create and view your outings on planner page 
