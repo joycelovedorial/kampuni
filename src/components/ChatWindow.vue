@@ -420,10 +420,22 @@ export default {
     font-size: 16px;
     border-radius: 10px;
     cursor: pointer;
-    margin-left: 10px;
+    margin: 10px;
   }
   .newexpenses:hover {
     background-color: #fffbe4;
     border: #B492B8 2px;
+  }
+  .expenses {
+    max-height: 400px;
+    overflow: auto;
+    padding-right: 1%;
+  }
+  .expenses::-webkit-scrollbar{
+    background-color: transparent;
+  }
+  .expenses::-webkit-scrollbar-thumb{
+    background-color: #B492B8;
+    border-radius: 10px;
   }
 </style>
