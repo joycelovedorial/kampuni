@@ -28,10 +28,10 @@
               {{ dayIndex + (weekIndex * 7) - firstDayOfWeek }}
             </p>
 
-            <div class="h-10 bg-r" v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+            <div class="bg-r" v-if="filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(task, i) in filterTasksByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i">
                 <div @click="expandedTaskId = expandedTaskId === task.id ? null : task.id" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
-                  <span class="bg-bpop/20 rounded-sm block">
+                  <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ task.taskname }} <!-- Display task title or relevant task property -->
                   </span>
                 </div>
@@ -42,14 +42,14 @@
             </div>
         
 
-            <div class="h-10 bg-b/80" v-if="filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+            <div class="bg-b/80" v-if="filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(outing,i) in filterOutingsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i">
                 <div @click="expandedOutingId = expandedOutingId === outing.id ? null : outing.id" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1">
-                  <span class="bg-bpop/20 rounded-sm block">
+                  <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ outing.title }} <!-- Display Outing title or relevant Outing property -->
                   </span>
                 </div>
-                <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
+                <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
                 <div class="centered-component-outing" v-if="expandedOutingId === outing.id" @click="expandedOutingId = null">
                   <calendarouting :oobj="outing" @close="closeOuting"/>>
                 </div>
@@ -57,15 +57,16 @@
             </div>
 
            
-            <div class="h-10 bg-pop/80" v-if="filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
+            <div class="bg-g" v-if="filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
               <div v-for="(event,i) in filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" @click="showEvent=!showEvent" class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1 ">
-                <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span>
-                <div class="centered-component-event" v-if="showEvent" @click="closeEvent">
-                  <calendarevent :eobj="event"/>>
-                </div>
-                <span class="bg-bpop/20 rounded-sm block">
+                <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
+                
+                <span class="bg-bpop/20 rounded-sm block font-fredoka text-sm text-black" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                   {{ event.title }} <!-- Display Event title or relevant Event property -->
                 </span>
+                <div class="centered-component-event" v-if="showEvent" @click="closeEvent" >
+                  <calendarevent :eobj="event"/>>
+                </div>
               </div>
             </div>
                   <!-- <div class="h-4 flex m-1 space-x-1 cursor-pointer text-xs">
