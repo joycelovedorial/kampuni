@@ -75,29 +75,16 @@ export default {
       expensesnap.forEach(async(edoc)=>{
         const transacq = query(collection(db,"transactions"),where("expense","==",edoc.id))
         const querySnap = await getDocs(transacq)
-        
-        const fullypaid = ref(true)
         querySnap.forEach(async(snapDoc)=>{
           const data = snapDoc.data()
-          if(data.paid==false){
-            fullypaid.value=false
-          }else if(querySnap.size==0){
+          if(querySnap.size==0){
             await deleteDoc(doc(db,"expenses",edoc.id))
           console.log("expense deleted");
 
           }
         })
-        if (fullypaid.value==true){
-          await deleteDoc(doc(db,"expenses",edoc.id))
-          console.log("expense deleted");
-          
-        }
-      
     })
     })
-    
-
-
     
 //overudue
     const overdue = query(collection(db,'tasks'),where('taskstatus','==',false),where('dateline',"<=",timestamp))

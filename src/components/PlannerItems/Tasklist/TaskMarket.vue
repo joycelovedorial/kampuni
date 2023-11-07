@@ -21,18 +21,18 @@
       Create a task
     </button>
     <div class="my-2">
-      <div class="overflow-x-auto flex overflow-y-auto w-full flex-col bg-white border-black border-2 border-solid rounded-lg carousel_container">
+      <div class="mobile:flex overflow-x-auto flex overflow-y-auto w-full laptop:flex-col bg-white border-black border-2 border-solid rounded-lg">
         <div
           v-for="task in tasksFormatted"
           :key="task.id"
           class="bg-b flex items-center m-2 rounded-md h-24 p-3 border-black border-3 border-solid"
         >
           <!-- Add a flex container for side-by-side elements -->
-          <div class=" w-9/12 p-2 custom_class flex flex-col">
+          <div class=" w-9/12 p-2 flex flex-col ">
             <p class="text-black font-extrabold truncate">
               {{ task.taskname }}
             </p>
-            <p class="text-black text-sm overflow-x-scroll">
+            <p class="text-black text-sm">
               automatically assigned in &nbsp;{{ task.countdown }}.
             </p>
           </div>

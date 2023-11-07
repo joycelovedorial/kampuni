@@ -5,7 +5,7 @@
       <div class="chat-list-left col-3">
         <input type="text" placeholder="Search for Chats" class="search font-jakarta overflow-hidden mx-2 px-2 rounded-lg flex space-x-1"
        v-model="searchtag">
-        <ul class="chatlist-container">
+        <ul class="chatlist-container overflow-x-hidden">
           <li v-for="chatroom in chatlist" :key="chatroom.id" @click="selectChat(chatroom.id,chatroom.name)" 
           class="singlelist">
             <div class="font-jakarta overflow-hidden overflow-ellipsis mx-2 px-2 rounded-lg flex space-x-1" style="margin-left: 10px;">
@@ -117,6 +117,11 @@ export default {
 </script>
 
 <style scoped>
+/* #chatrooms {
+  background-color:#B492B8;
+  background-size: 100%;
+  background-position: cover;
+} */
 .chatlist-container{
   justify-content:flex;
   flex-direction: column;
