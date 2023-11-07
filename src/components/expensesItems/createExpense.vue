@@ -163,7 +163,11 @@ export default {
       for (const hommie of comData.homies) {
         const curr_user = await getDoc(doc(db,"users", hommie))
         const my_user = curr_user.data()
-        const name = my_user.firstname.toLowerCase()
+        console.log(hommie);
+        console.log(my_user.firstname);
+        
+        const name = my_user.firstname || "Mystery"
+        
         users.value.push({id:hommie, name:name})
       }
 

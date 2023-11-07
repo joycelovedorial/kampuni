@@ -3,9 +3,9 @@
         <div class="font-bold font-jakarta text-sm flex justify-between">
             <div class="flex space-x-2 align-middle">
                 <img class="inline-block rounded-full h-8 w-8 border-2 border-black my-auto" :src="imgstr" alt="">
-                <div class="inline-block my-auto">
-                    you owe {{ tname }} $ {{ Number(amount).toFixed(2) }}
-                    <div class="block">
+                <div class="inline-block my-auto mobile:hidden">
+                    you owe {{ tname }} 
+                    <div class="block mobile:hidden">
                         <span class="bg-b rounded-md text-xs px-1">{{ category }}: {{ desc }}</span>
                     </div>
                 </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="w-full my-2 rounded-lg">
-                <div class="message-bar bg-y rounded-md px-1 shadow-inner">
+                <div class="message-bar bg-y rounded-md px-1 shadow-inner overflow-x-auto overflow-y-hidden">
                     <span>{{ message }}</span>
                 </div>
         </div>
