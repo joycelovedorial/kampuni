@@ -5,13 +5,13 @@
       <!-- <div v-if="error">{{ error }}</div> -->
       <div class="chatTitle">
         {{name}}
+        <span>
+          <button class="delete-button" @click="deleteChatroom"> Delete </button>
+          <div v-if="errorMessage"><span>{{ errorMessage }}</span></div>
+        </span>
         <div class="click-expenses" @click="toggleContent">
           {{ isContentAVisible ? 'Expenses ▼' : 'Expenses ▲' }}
         </div>
-      </div>
-      <div>
-        <button @click="deleteChatroom">Delete Button</button>
-        <div v-if="errorMessage"><span>{{ errorMessage }}</span></div>
       </div>
       <div id="leftside" v-if="isContentAVisible">
         <div v-if="documents" class="messages" ref="messages">
@@ -321,7 +321,8 @@ export default {
   .name img{
     margin-right: 6px;
     display:inline-block;
-
+    width: 30px;
+    height: 30px;
   }
   .name-self{
     color:#B492B8;
@@ -330,6 +331,8 @@ export default {
 
   .name-self img{
     display:inline-block;
+    width: 30px;
+    height: 30px;
   }
   .chat-window {
     background: #fffbe4;
@@ -370,5 +373,16 @@ export default {
     font-size: 16px;
     cursor: pointer;
     user-select: none;
+  }
+  .delete-button {
+    background-color: red;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .delete-button:hover {
+    background-color: rgb(237, 151, 151);
   }
 </style>
