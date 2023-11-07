@@ -34,7 +34,7 @@
             <div class= "row">
             <input type="time" :placeholder="time" v-model="etime">
         </div>
-        <button @click="editEvent">Confirm Edit Event</button>
+        <button @click="editEvent,toEdit=true">Confirm Edit Event</button>
 
     </div>
 
@@ -49,6 +49,7 @@ export default {
    props:{
        eobj:Object,
    },
+   
    setup(props,context){
         const date = ref(null); // To store the date part
         const time = ref(null); // To store the time part
@@ -62,7 +63,7 @@ export default {
         const etime =ref('')
         const edate=ref('')
 
-
+        console.log("calendar event");
         const updateDateAndTime = () => {
             if (props.oobj && props.oobj.date) {
                 const timestamp = props.oobj.date.seconds;

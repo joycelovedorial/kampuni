@@ -61,7 +61,7 @@
 
            
             <div v-if="filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek).length > 0" >
-              <div v-for="(event,i) in filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i" @click="showEvent=!showEvent" class="">
+              <div v-for="(event,i) in filterEventsByDate(year, month, dayIndex + (weekIndex * 7) - firstDayOfWeek)" :key="i">
                 <!-- <span class="border-bpop rounded-sm h-6 border-2 block my-auto"></span> -->
                 <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm ">
                   <span class="border-g rounded-sm h-6 border-2 block"></span>
@@ -69,10 +69,8 @@
                   {{ event.title }} <!-- Display Event title or relevant Event property -->
                 </span>
                 </div>
-                <div class="centered-component-event " v-if="showEvent" @click="closeEvent" >
-                  <div>
-                    <div calendarevent :eobj="event"/>
-                  </div>
+                <div class="centered-component-event " v-if="expandedEventId === event.id" @click="expandedEventId = null">
+                    <calendarevent :eobj="event" @close="closeEvent"/>
                 </div>
               </div>
             </div>
