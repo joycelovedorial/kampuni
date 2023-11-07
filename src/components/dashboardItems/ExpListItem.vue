@@ -30,6 +30,7 @@ import { ref, computed, onMounted } from 'vue';
 
 import { auth, db} from '@/firebase/config';
 import { addDoc, collection, getDoc, doc, query, where, getDocs, Timestamp, updateDoc,onSnapshot} from "firebase/firestore";
+import { elements } from 'chart.js';
 
 
 export default {
@@ -69,11 +70,13 @@ setup(props) {
           }else{
               outing.value="General"
           }
-        if(props.transacid.expense){
+        if(props.transacid.expense==undefined){
+            category.value="General"
+        }else{
             getDoc(doc(db,"expenses",props.transacid.expense))
             .then((snap)=>{
                 const data=snap.data()
-                category.value=data.desc
+                // category.value=data.desc
             })
         }
       

@@ -55,15 +55,15 @@
                 </div>
 
                 <div class="flex gap-4">
-                    <div class="d-block py-2 w-6/12">
+                    <div class="d-block py-2 w-5/12">
                         <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="dateline">Deadline</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="dateline" required v-model="dateline">
                         </div>
                     </div>
 
-                    <div class="d-block py-2 w-6/12">
-                        <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="countdown">Automatically assigned in</label>
+                    <div class="d-block py-2 w-5/12">
+                        <label class="font-bold leading-loose text-center text-cyanp font-fredoka text-xl" for="countdown">Assigned in</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <input class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-cyanp sm:text-sm" type="datetime-local" id="countdown" required v-model="countdown">
                         </div>
