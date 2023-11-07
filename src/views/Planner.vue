@@ -21,9 +21,22 @@
 
       <div v-if="displayCalendar">
         <div class="row">
-          <div class="col-3 flex flex-col space-y-2">
+          <div class="col-9">
+            <button class="block bg-bpop text-black font-bold rounded-full py-2 hover:drop-shadow-md hover:opacity-90 border-black border-solid border-3 mx-auto"
+            @click="displayCreateEvent= !displayCreateEvent">
+            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            Add a personal event</button>
+            <Calendar/>
+          </div>
+          <div class="col-s-12 col-lg-3 flex flex-col space-y-2">
             <div class="block">
-              
             </div>
             <div class="flex flex-col space-y-1">
               <div class="bg-y border-black border-2 rounded-lg flex justify-between px-2">
@@ -42,20 +55,6 @@
               </div>
               <Outings/>
             </div>
-          </div>
-          <div class="col-9">
-            <button class="bg-bpop text-black font-bold rounded-full py-2 hover:drop-shadow-md hover:opacity-90 border-black border-solid border-3"
-            @click="displayCreateEvent= !displayCreateEvent">
-            <svg class="inline w-5 h-5" fill="none" stroke="currentColor" aria-hidden="true" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Add a personal event</button>
-            <Calendar/>
           </div>
         </div>
         <div class="row">
