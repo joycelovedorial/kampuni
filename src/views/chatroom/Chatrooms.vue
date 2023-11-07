@@ -174,7 +174,7 @@ input[type="text"]{
 }
 #chatrooms {
   background-color: #B492B8;
-  height: 100vh;
+  height: content;
 }
 @media (max-width: 575px) {
   .search {
