@@ -112,12 +112,6 @@
           schedule <!-- Display task title or relevant task property -->
         </span>
       </div>
-      <div class="h-6 flex m-1 space-x-1 cursor-pointer text-sm">
-        <span class="border-bpop rounded-sm h-6 border-2 block"></span>
-        <span class="bg-bpop/80 text-center rounded-sm block h-6 w-24 px-1 overflow-ellipsis overflow-hidden">
-          schedule <!-- Display task title or relevant task property -->
-        </span>
-      </div>
     </div>
   </div>
 
