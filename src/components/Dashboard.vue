@@ -3,7 +3,7 @@
     <div class="container ">
       <div class="row mb-3">
         <div class="col-12">
-          <h1 class="pb-3 font-bold text-black text-lg font-fredoka">Upcoming Outings</h1>
+          <h1 class="font-bold text-black text-lg font-fredoka">Upcoming Outings</h1>
           <OutingsCarousel :community="comid"/>
         </div>
       </div>
