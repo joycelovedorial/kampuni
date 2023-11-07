@@ -16,27 +16,30 @@
                 <h1 class="font-fredoka font-bold">
                     About 
                 </h1>
-                <div class="container p-3 font-jakarta">
+                <div class="container p-3 font-jakarta ">
                     <div v-if="toEdit" class="profile mx-auto">
-                        <div class="column1">
+                        <div class="column1-xs">
                             <div class="text1"> Email: </div>
-                            <div class="text1"> Country: </div>
                             <div class="text1"> Birthday: </div>
                             <div class="text1"> Community: </div>
+                            <div class="text1"> Country: </div>
+                            
                         </div>
-                        <div class="column1">
+                        <div class="column2-xs">
                         <div class="text" id="profileEmail">
                             {{email}}
                         </div>
-                        <div class="text" id="country">
-                            {{country}}
-                        </div>
+                        
                         <div class="text" id="birthday">
                             {{birthday}}
                         </div>
                         <div class="text" id="community">
                             {{community}}
                         </div>
+                        <div class="text" id="country">
+                            {{country}}
+                        </div>
+                        
                         </div>
                     </div>
                     <div v-else>

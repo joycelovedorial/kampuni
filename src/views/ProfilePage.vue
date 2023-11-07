@@ -102,13 +102,9 @@ export default {
 <style scoped>
 #profilepage {
     min-height: 100vh;
+    background-color: #F2D694;
 }
 
-.profile {
-  display: flex;
-  flex-direction: row; 
-  /* align-items: flex-start;  */
-}
 .text{ 
     /* font-size: 3vw; */
     display: flex;
@@ -118,11 +114,7 @@ export default {
     /* font-size: 3vw; */
     font-weight: bold;
 }
-/* #profilepage{
-    background-color: #F2D694;
-    height: 100vh;
-    margin: 0;
-} */
+
 .middle{
     justify-content: center;
     align-items: center;
@@ -142,21 +134,8 @@ export default {
     height: 100%;
     border: solid;
 } */
-.column{
-    margin: 10px;
-    width: 50%;
-}
-.button{
-border: solid 2px;
-/* border-radius: 5px; */
-cursor: pointer;
-background-color: #F2D694;
-/* padding: 5px 5px; */
-transition: background-color 0.3s ease;
-}
-.button:hover{
-    background-color: #FFFDF0;
-}
+
+
 .column1{
     width: 25%;
 }
