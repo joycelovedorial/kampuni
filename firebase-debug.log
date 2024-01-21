@@ -1,0 +1,71 @@
+[debug] [2024-01-21T07:42:01.132Z] ----------------------------------------------------------------------
+[debug] [2024-01-21T07:42:01.135Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init
+[debug] [2024-01-21T07:42:01.135Z] CLI Version:   13.0.3
+[debug] [2024-01-21T07:42:01.135Z] Platform:      darwin
+[debug] [2024-01-21T07:42:01.135Z] Node Version:  v18.18.2
+[debug] [2024-01-21T07:42:01.146Z] Time:          Sun Jan 21 2024 15:42:01 GMT+0800 (GMT+08:00)
+[debug] [2024-01-21T07:42:01.146Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-01-21T07:42:01.214Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-01-21T07:42:01.214Z] > authorizing via signed-in user (amoschan20011@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Applications/MAMP/htdocs/IS216/kampuni
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-01-21T07:42:16.612Z] Using project from CLI flag: kampuni-85a88
+[debug] [2024-01-21T07:42:16.615Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 [none]
+[debug] [2024-01-21T07:42:17.065Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 200
+[debug] [2024-01-21T07:42:17.065Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 {"projectId":"kampuni-85a88","projectNumber":"983837246823","displayName":"Kampuni","name":"projects/kampuni-85a88","resources":{"hostingSite":"kampuni-85a88","storageBucket":"kampuni-85a88.appspot.com","locationId":"asia-southeast1"},"state":"ACTIVE","etag":"1_c2c249f1-f5f9-4c2c-8df8-803d11436102"}
+[info] i  Using project kampuni-85a88 (Kampuni) 
+[info] 
+=== Database Setup
+[info] i  database: ensuring required API firebasedatabase.googleapis.com is enabled... 
+[debug] [2024-01-21T07:42:17.123Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com [none]
+[debug] [2024-01-21T07:42:17.123Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com x-goog-quota-user=projects/kampuni-85a88
+[debug] [2024-01-21T07:42:18.787Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com 200
+[debug] [2024-01-21T07:42:18.787Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com [omitted]
+[warn] ⚠  database: missing required API firebasedatabase.googleapis.com. Enabling now... 
+[debug] [2024-01-21T07:42:18.788Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com:enable [none]
+[debug] [2024-01-21T07:42:18.788Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com:enable x-goog-quota-user=projects/kampuni-85a88
+[debug] [2024-01-21T07:42:20.660Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com:enable 200
+[debug] [2024-01-21T07:42:20.660Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com:enable [omitted]
+[debug] [2024-01-21T07:42:30.662Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com [none]
+[debug] [2024-01-21T07:42:30.662Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com x-goog-quota-user=projects/kampuni-85a88
+[debug] [2024-01-21T07:42:32.118Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com 200
+[debug] [2024-01-21T07:42:32.118Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/kampuni-85a88/services/firebasedatabase.googleapis.com [omitted]
+[info] ✔  database: required API firebasedatabase.googleapis.com is enabled 
+[info] 
+[debug] [2024-01-21T07:42:32.122Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 [none]
+[debug] [2024-01-21T07:42:32.424Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 200
+[debug] [2024-01-21T07:42:32.424Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/kampuni-85a88 {"projectId":"kampuni-85a88","projectNumber":"983837246823","displayName":"Kampuni","name":"projects/kampuni-85a88","resources":{"hostingSite":"kampuni-85a88","storageBucket":"kampuni-85a88.appspot.com","locationId":"asia-southeast1"},"state":"ACTIVE","etag":"1_c2c249f1-f5f9-4c2c-8df8-803d11436102"}
+[debug] [2024-01-21T07:42:41.795Z] >>> [apiv2][query] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances databaseId=kampuni-85a88-default-rtdb&validateOnly=true
+[debug] [2024-01-21T07:42:41.796Z] >>> [apiv2][body] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances {"type":"default_database"}
+[debug] [2024-01-21T07:42:43.260Z] <<< [apiv2][status] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances 200
+[debug] [2024-01-21T07:42:43.260Z] <<< [apiv2][body] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances {"name":"projects/983837246823/locations/asia-southeast1/instances/kampuni-85a88-default-rtdb","project":"projects/983837246823","databaseUrl":"https://kampuni-85a88-default-rtdb.asia-southeast1.firebasedatabase.app","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[debug] [2024-01-21T07:42:43.261Z] >>> [apiv2][query] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances databaseId=kampuni-85a88-default-rtdb
+[debug] [2024-01-21T07:42:43.261Z] >>> [apiv2][body] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances {"type":"default_database"}
+[debug] [2024-01-21T07:42:44.871Z] <<< [apiv2][status] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances 200
+[debug] [2024-01-21T07:42:44.871Z] <<< [apiv2][body] POST https://firebasedatabase.googleapis.com/v1beta/projects/kampuni-85a88/locations/asia-southeast1/instances {"name":"projects/983837246823/locations/asia-southeast1/instances/kampuni-85a88-default-rtdb","project":"projects/983837246823","databaseUrl":"https://kampuni-85a88-default-rtdb.asia-southeast1.firebasedatabase.app","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[info] 
+[info] Firebase Realtime Database Security Rules allow you to define how your data should be
+[info] structured and when your data can be read from and written to.
+[info] 

@@ -16,7 +16,7 @@
     "chart.js": "^4.4.0",
     "core-js": "^3.8.3",
     "date-fns": "^2.30.0",
-    "firebase": "^10.5.2",
+    "firebase": "^10.7.2",
     "firebase-admin": "^11.11.0",
     "firebase-tools": "^12.7.0",
     "install": "^0.13.0",
