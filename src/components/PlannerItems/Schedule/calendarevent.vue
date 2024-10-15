@@ -87,32 +87,29 @@ export default {
         const edesc = ref('')
         const etime =ref('')
         const edate=ref('')
-
+        console.log(props.eobj.date);
         
         const updateDateAndTime = () => {
-            if (props.oobj && props.oobj.date) {
-                const timestamp = props.oobj.date.seconds * 1000
-                const dateObj = new Date(timestamp);
-             
-                const dateOptions = {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                };
+            if (props.eobj && props.eobj.date) {
+            const dateObj = props.eobj.date.toDate(); 
+            const dateOptions = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            };
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            };
 
-                const timeOptions = {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                };
-
-                date.value = dateObj.toLocaleString(undefined, dateOptions);
-                time.value = dateObj.toLocaleString(undefined, timeOptions);
+            date.value = dateObj.toLocaleString(undefined, dateOptions);
+            time.value = dateObj.toLocaleString(undefined, timeOptions);
             } else {
-                date.value = null;
-                time.value = null;
+            date.value = null;
+            time.value = null;
             }
-        };
+            };
 
 
         updateDateAndTime();
